@@ -3,7 +3,8 @@ import { FC, PropsWithChildren } from 'react';
 
 import type { Metadata } from 'next';
 
-import '@/assets/styles/global.css';
+import '@/assets/styles/globals.css';
+import StoreProvider from '@/store/components/StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,9 +14,11 @@ export const metadata: Metadata = {
 };
 
 const RootLayout: FC<PropsWithChildren> = ({ children }) => (
-  <html lang="en">
-    <body className={inter.className}>{children}</body>
-  </html>
+  <StoreProvider>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
+  </StoreProvider>
 );
 
 export default RootLayout;
