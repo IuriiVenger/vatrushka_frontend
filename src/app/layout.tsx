@@ -1,3 +1,4 @@
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { Inter } from 'next/font/google';
 import { FC, PropsWithChildren } from 'react';
 
@@ -16,7 +17,9 @@ export const metadata: Metadata = {
 const RootLayout: FC<PropsWithChildren> = ({ children }) => (
   <StoreProvider>
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AntdRegistry>{children}</AntdRegistry>
+      </body>
     </html>
   </StoreProvider>
 );
