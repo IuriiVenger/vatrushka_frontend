@@ -71,4 +71,7 @@ module.exports = {
       },
     },
   },
+  globals: {
+    TValueOf: true,
+  },
 };

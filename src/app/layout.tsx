@@ -1,13 +1,12 @@
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-import { Inter } from 'next/font/google';
+import { ConfigProvider } from 'antd';
 import { FC, PropsWithChildren } from 'react';
 
 import type { Metadata } from 'next';
 
 import '@/assets/styles/globals.css';
 import StoreProvider from '@/store/components/StoreProvider';
-
-const inter = Inter({ subsets: ['latin'] });
+import { theme } from '@/theme';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,8 +16,10 @@ export const metadata: Metadata = {
 const RootLayout: FC<PropsWithChildren> = ({ children }) => (
   <StoreProvider>
     <html lang="en">
-      <body className={inter.className}>
-        <AntdRegistry>{children}</AntdRegistry>
+      <body>
+        <ConfigProvider theme={theme}>
+          <AntdRegistry>{children}</AntdRegistry>
+        </ConfigProvider>
       </body>
     </html>
   </StoreProvider>
