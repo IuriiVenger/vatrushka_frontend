@@ -23,8 +23,8 @@ export const ProductsList: FC<TProps> = ({ products }) => {
   const screens = useBreakpoint();
 
   return (
-    <Flex vertical className="max-xs:max-w-82 mx-auto max-w-320 gap-12 p-10 max-xs:px-0 max-md:gap-4">
-      <Flex justify="space-between" className="max-md:w-full items-end max-md:flex-col max-md:items-start max-md:gap-6">
+    <Flex vertical className="mx-auto max-w-320 gap-12 p-10 max-md:gap-4 max-xs:max-w-82 max-xs:px-0">
+      <Flex justify="space-between" className="items-end max-md:w-full max-md:flex-col max-md:items-start max-md:gap-6">
         <Flex vertical className="gap-2">
           <p className="text-3xl font-medium leading-3xl">Каталог продукции</p>
           <p className="text-lg leading-lg">
@@ -33,8 +33,8 @@ export const ProductsList: FC<TProps> = ({ products }) => {
         </Flex>
         <Dropdown sort={sort} setSort={setSort} />
       </Flex>
-      <Flex vertical align="center" className="max-xs:max-w-82 max-w-320 gap-6">
-        <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 max-md:gap-4 max-lg:grid-cols-2">
+      <Flex vertical align="center" className="max-w-320 gap-6 max-xs:max-w-82">
+        <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1">
           {products.map((item, index) => (
             <ItemCard key={index} info={item} />
           ))}

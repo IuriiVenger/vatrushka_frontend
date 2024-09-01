@@ -20,7 +20,7 @@ export const ItemCard: FC<TProps> = ({ info }) => {
   return (
     <Flex
       vertical
-      className="w-full relative cursor-pointer rounded-2xl border border-border max-md:rounded-t-lg"
+      className="relative w-full cursor-pointer rounded-2xl border border-border max-md:rounded-t-lg"
       onClick={() => message.info('клик')}
     >
       <span
@@ -32,7 +32,7 @@ export const ItemCard: FC<TProps> = ({ info }) => {
       <img
         alt={name}
         src={pic}
-        className="min-h-64 max-md:min-h-54.5 max-h-64 max-md:max-h-54.5 rounded-t-2xl object-cover object-center max-md:rounded-t-lg"
+        className="max-h-64 min-h-64 rounded-t-2xl object-cover object-center max-md:max-h-54.5 max-md:min-h-54.5 max-md:rounded-t-lg"
       />
       <Flex vertical justify="space-between" className="h-full flex-grow p-6 max-md:p-4">
         <Flex vertical>
