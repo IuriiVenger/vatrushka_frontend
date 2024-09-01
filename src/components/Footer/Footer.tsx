@@ -1,0 +1,50 @@
+'use client';
+
+import { Button, Divider, Grid } from 'antd';
+import Link from 'next/link';
+import { FC } from 'react';
+
+import { Contacts } from './Contacts';
+import { FooterLinks } from './FooterLinks';
+
+const { useBreakpoint } = Grid;
+
+export const Footer: FC = () => {
+  const screens = useBreakpoint();
+
+  return (
+    <div className="w-full bg-bgLayout">
+      <div className="max-xs:max-w-82 mx-auto max-w-320 gap-12 px-9 pt-9 max-xs:gap-6 max-xs:px-0">
+        <div className=" flex justify-between text-text max-lg:flex-col max-lg:flex-wrap max-lg:justify-around max-lg:gap-6">
+          <div className="order-1 flex flex-col justify-between max-lg:items-center max-lg:gap-6">
+            <div className="w-45 h-13.75 bg-primaryBg" />
+            <div className="flex flex-col justify-between gap-2 max-lg:items-center">
+              <p className="text-xl font-medium leading-xl">+ 7 (351) 700-79-81</p>
+              <p className="text-nowrap">Доставка ежедневно с 8:00 до 20:00</p>
+            </div>
+          </div>
+          {screens.lg ? (
+            <FooterLinks />
+          ) : (
+            <div className="order-3 flex justify-around max-sm:flex-col max-sm:gap-6">
+              <FooterLinks />
+            </div>
+          )}
+          <div className="order-4 flex flex-col items-end justify-between max-lg:order-2 max-lg:items-center max-lg:gap-6">
+            <Button size={screens.md ? 'middle' : 'small'} className="w-fit">
+              Связаться с нами
+            </Button>
+            <Contacts />
+          </div>
+        </div>
+      </div>
+      <Divider />
+      <div className=" max-xs:max-w-82 w-full mx-auto flex max-w-320 justify-between gap-4 px-9 pb-9 max-xs:px-0 max-sm:items-start  max-lg:flex-col-reverse max-lg:items-center">
+        <p className="text-text">(с) 2010-{new Date().getFullYear()} Ватрушка - доставка еды на дом в Челябинске</p>
+        <Link href="https://www.google.com" className="text-text">
+          Пользовательское соглашение
+        </Link>
+      </div>
+    </div>
+  );
+};

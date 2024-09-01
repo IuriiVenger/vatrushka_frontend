@@ -12,4 +12,5 @@ export type TCard = {
   description: string;
   price: number;
   tag: TTagType;
+  inStock: boolean;
 };

@@ -55,3 +55,39 @@ body {
     text-wrap: balance;
   }
 }
+
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next {
+  font-size: 20px !important;
+  color: currentColor !important;
+  background: #ffffffb2 !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+}
+
+.slick-arrow.slick-prev {
+  inset-inline-start: 70px !important;
+}
+.slick-arrow.slick-next {
+  inset-inline-end: 70px !important;
+}
+
+.ant-carousel .slick-prev::after,
+.ant-carousel .slick-next::after {
+  color: currentColor !important;
+  top: 36% !important;
+}
+
+.ant-carousel .slick-prev::after {
+  left: 42% !important;
+}
+
+.ant-carousel .slick-next::after {
+  left: 30% !important;
+}
+
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-next:hover {
+  color: currentColor !important;
+}

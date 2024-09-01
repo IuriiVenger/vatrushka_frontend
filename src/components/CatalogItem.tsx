@@ -2,31 +2,48 @@ import { FC } from 'react';
 
 import { TItem } from './Catalog';
 
+import { getNounWithDeclension } from '@/utils/getNounWithDeclension';
+
 type TProps = {
   item: TItem;
+  subCatalog?: boolean;
 };
 
-export const CatalogItem: FC<TProps> = ({ item }) => {
-  const { name, pic } = item;
+export const CatalogItem: FC<TProps> = ({ item, subCatalog }) => {
+  const { name, pic, count } = item;
 
   return (
-    <div className="w-full h-282 w-282 overflow-hidden rounded-xl bg-primaryBg shadow-lg">
-      <div className="h-48 w-full relative">
-        <p className="z-2 relative h-282 w-282 p-4 text-2xl leading-2xl">{name}</p>
+    <div
+      className={`w-full overflow-hidden rounded-xl bg-primaryBg shadow-lg ${subCatalog ? 'h-47 max-xs:h-28' : 'aspect-square'}`}
+    >
+      <div className="h-full w-full relative">
+        <div className="z-10 flex flex-col gap-1 p-6 max-sm:p-2 max-md:p-4">
+          <p
+            className={`w-full relative ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'text-2xl leading-2xl max-sm:text-base max-sm:leading-base max-md:text-lg max-md:leading-lg'}`}
+          >
+            {name}
+          </p>
+          {subCatalog && count && (
+            <p
+              className={`w-full relative text-primary ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'text-2xl leading-2xl max-sm:text-base max-sm:leading-base max-md:text-lg max-md:leading-lg'}`}
+            >
+              {count} {getNounWithDeclension(count, 'товар', 'товара', 'товаров')}
+            </p>
+          )}
+        </div>
         <img
           src={pic}
           alt={name}
-          className="clip-path-custom h-full w-full absolute bottom-0 right-0 h-282 w-282 object-cover"
+          className={`z-1  ${subCatalog ? 'clip-path-custom' : 'clip-path-custom-square'} h-full w-full absolute bottom-0 right-0 aspect-square object-cover`}
         />
         <style>{`
-            .clip-path-custom {
-             clip-path: circle(75% at right 100%);
+            .clip-path-custom-square {
+             clip-path: circle(95% at right 120%);
+        }
+             .clip-path-custom {
+             clip-path: circle(100% at right 150%);
           `}</style>
       </div>
     </div>
   );
 };
-
-// clip-path: polygon(
-//     22% 100%, 21.5% 98%, 21% 96%, 20.5% 94%, 20% 92%,  20.5% 90%, 21% 88%, 21.5% 86%, 22% 84%, 23% 81%,  24% 79%, 25% 76%, 27.5% 72.5%, 30% 69%, 33% 65.5%, 36% 62%, 40.5% 58.5%, 45% 56%, 51% 52%, 57% 47%,   61.5% 45%, 66% 43%, 69.5% 41.5%, 73% 40%, 77.5% 38%,  82% 36%, 84% 35.5%, 86% 35%, 88% 35%, 90% 35%,  93% 35.5%, 96% 36%, 98% 37.5%, 100% 39%, 100% 100%
-//   );}

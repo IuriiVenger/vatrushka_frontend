@@ -4,14 +4,17 @@ import { FC } from 'react';
 import { Carousel } from './Carousel';
 import { Catalog } from './Catalog';
 
+import { Footer } from './Footer/Footer';
 import { ProductsList } from './ProductsList';
 
-import { products, slides, categories } from '@/constants';
+import { products, slides, categories } from '@/mocks';
 
 export const Test: FC = () => (
-  <Flex vertical className="gap-12">
+  <Flex vertical className="w-full gap-12 max-xs:gap-6">
     <Carousel slides={slides} />
     <ProductsList products={products} />
     <Catalog categories={categories} />
+    <Catalog subCatalogName="Еда на каждый день, бизнес ланчи" categories={categories} />
+    <Footer />
   </Flex>
 );

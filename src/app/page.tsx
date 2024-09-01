@@ -1,7 +1,7 @@
 import { Test } from '../components/Test';
 
 const Home = () => (
-  <main className="min-h-screen flex flex-col items-center justify-between p-24">
+  <main className="flex min-h-screen flex-col items-center justify-between">
     <Test />
   </main>
 );
