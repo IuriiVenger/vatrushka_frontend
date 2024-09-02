@@ -65,6 +65,10 @@ const colors = {
   bgLayout: color.bg.layout,
   bgMask: color.bg.mask,
 
+  shadow: color.shadow.default,
+  shadowMedium: color.shadow.medium,
+  shadowLight: color.shadow.light,
+
   success: color.success,
   warning: color.warning,
   error: color.error.default,
@@ -93,6 +97,8 @@ const lineHeight = {
 };
 
 const config: Config = {
+  important: true,
+
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -133,7 +139,11 @@ const config: Config = {
 
     fontSize,
     lineHeight,
+    boxShadow: {
+      card: `0px 6px 16px 0px ${colors.shadowMedium}, 0px 3px 6px -4px ${colors.shadow}, 0px 9px 28px 8px ${colors.shadowLight}`,
+    },
   },
   plugins: [],
 };
+
 export default config;

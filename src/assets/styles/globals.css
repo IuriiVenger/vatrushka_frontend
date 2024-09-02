@@ -91,3 +91,12 @@ body {
 .ant-carousel .slick-next:hover {
   color: currentColor !important;
 }
+
+.collapsed_description {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}

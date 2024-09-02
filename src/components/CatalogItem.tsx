@@ -14,7 +14,7 @@ export const CatalogItem: FC<TProps> = ({ item, subCatalog }) => {
 
   return (
     <div
-      className={`w-full overflow-hidden rounded-xl bg-primaryBg shadow-lg ${subCatalog ? 'h-47 max-xs:h-28' : 'aspect-square'}`}
+      className={`shadow-lg box-border w-full overflow-hidden rounded-xl bg-primaryBg transition-all hover:cursor-pointer hover:shadow-card hover:outline hover:outline-1 hover:outline-primaryBorderHover ${subCatalog ? 'h-47 max-xs:h-28' : 'aspect-square'} `}
     >
       <div className="relative h-full w-full">
         <div className="z-10 flex flex-col gap-1 p-6 max-md:p-4 max-sm:p-2">

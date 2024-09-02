@@ -40,9 +40,14 @@ export const color = {
     secondary: '#F0F0F0',
   },
   bg: {
-    default: '#fff',
+    default: '#FFF',
     layout: '#F8F7F6',
     mask: 'rgba(0, 0, 0, 0.40)',
+  },
+  shadow: {
+    default: 'rgba(127, 86, 64, 0.12)',
+    medium: 'rgba(127, 86, 64, 0.08)',
+    light: 'rgba(127, 86, 64, 0.05)',
   },
 
   tag: {
