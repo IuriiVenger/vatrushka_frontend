@@ -28,7 +28,6 @@ export const SliderComponent: FC<SliderComponentProps> = ({ title, slides }) => 
   const [isNextDisabled, setIsNextDisabled] = useState(false);
 
   const screens = useBreakpoint();
-  console.log('screens', screens);
 
   const handleButtons = (_: number, next: number): void => {
     if (sliderRef.current) {
