@@ -66,12 +66,12 @@ body {
   border-radius: 50% !important;
 }
 
-.slick-arrow.slick-prev {
+/* .slick-arrow.slick-prev {
   inset-inline-start: 70px !important;
 }
 .slick-arrow.slick-next {
   inset-inline-end: 70px !important;
-}
+} */
 
 .ant-carousel .slick-prev::after,
 .ant-carousel .slick-next::after {
@@ -99,4 +99,10 @@ body {
   line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+
+@layer utilities {
+  .ml-calc-center {
+    margin-left: calc((100vw - 344px) / 2) !important;
+  }
 }

@@ -23,10 +23,10 @@ export const ProductsList: FC<TProps> = ({ products }) => {
   const screens = useBreakpoint();
 
   return (
-    <Flex vertical className="mx-auto max-w-320 gap-12 p-10 max-md:gap-4 max-xs:max-w-82 max-xs:px-0">
+    <Flex vertical className="mx-auto max-w-320 gap-12 p-10 max-lg:gap-8 max-md:gap-4 max-xs:max-w-82 max-xs:px-0">
       <Flex justify="space-between" className="items-end max-md:w-full max-md:flex-col max-md:items-start max-md:gap-6">
         <Flex vertical className="gap-2">
-          <p className="text-3xl font-medium leading-3xl">Каталог продукции</p>
+          <p className="text-3xl font-medium leading-3xl max-sm:text-2xl max-sm:leading-2xl">Каталог продукции</p>
           <p className="text-lg leading-lg">
             {products.length} {getNounWithDeclension(products.length, 'товар', 'товара', 'товаров')}
           </p>
@@ -42,7 +42,13 @@ export const ProductsList: FC<TProps> = ({ products }) => {
         <Button size={screens.md ? 'middle' : 'small'} className="w-max">
           Показать ещё
         </Button>
-        <Pagination align="center" defaultCurrent={1} total={100} showSizeChanger={false} />
+        <Pagination
+          align="center"
+          defaultCurrent={1}
+          total={100}
+          showSizeChanger={false}
+          size={screens.md ? 'default' : 'small'}
+        />
       </Flex>
     </Flex>
   );

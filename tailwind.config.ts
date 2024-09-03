@@ -1,4 +1,4 @@
-import { color } from './src/assets/styles/color';
+import { breakpoint, color } from './src/assets/styles/variables';
 
 import type { Config } from 'tailwindcss';
 
@@ -107,17 +107,17 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        'max-2xl': { max: '1535px' },
-        'max-xl': { max: '1279px' },
-        'max-lg': { max: '1023px' },
-        'max-md': { max: '767px' },
-        'max-sm': { max: '639px' },
-        'max-xs': { max: '479px' },
+        'max-2xl': { max: `${breakpoint['2xl']}px` },
+        'max-xl': { max: `${breakpoint.xl}px` },
+        'max-lg': { max: `${breakpoint.lg}px` },
+        'max-md': { max: `${breakpoint.md}px` },
+        'max-sm': { max: `${breakpoint.sm}px` },
+        'max-xs': { max: `${breakpoint.xs}px` },
         xs: '480px',
-        'sm-height': { raw: '(min-height: 640px)' },
-        'md-height': { raw: '(min-height: 768px)' },
-        'sm-only': { min: '640px', max: '767px' },
-        'md-only': { min: '768px', max: '1023px' },
+        'sm-height': { raw: `${breakpoint.sm + 1}px` },
+        'md-height': { raw: `${breakpoint.md + 1}px` },
+        'sm-only': { min: `${breakpoint.sm + 1}px`, max: `${breakpoint.md}px` },
+        'md-only': { min: `${breakpoint.md + 1}px`, max: `${breakpoint.lg}px` },
         ...defaultTheme.screens,
       },
       backgroundImage: {
@@ -130,6 +130,7 @@ const config: Config = {
       spacing,
       aspectRatio: {
         '21/9': '21 / 9',
+        '3/2': '3 / 2',
       },
     },
 

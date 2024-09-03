@@ -73,3 +73,12 @@ export const color = {
     active: '#D44326',
   },
 };
+
+export const breakpoint = {
+  xs: 479,
+  sm: 639,
+  md: 767,
+  lg: 1023,
+  xl: 1279,
+  '2xl': 1535,
+};

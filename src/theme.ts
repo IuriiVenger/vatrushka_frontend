@@ -1,4 +1,4 @@
-import { color } from './assets/styles/color';
+import { breakpoint, color } from './assets/styles/variables';
 
 export const theme = {
   token: {
@@ -8,8 +8,19 @@ export const theme = {
     colorPrimary: color.accent.default,
     colorInfo: color.primary.default,
     colorTextBase: color.text.primary,
-    screenLG: 1024,
-    screenSM: 767,
+
+    screenXSMin: 1,
+    screenXS: breakpoint.xs,
+    screenXSMax: breakpoint.xs,
+    screenSMMin: breakpoint.xs + 1,
+    screenSM: breakpoint.sm,
+    screenSMMax: breakpoint.sm,
+    screenMDMin: breakpoint.sm + 1,
+    screenMD: breakpoint.md,
+    screenMDMax: breakpoint.md,
+    screenLGMin: breakpoint.md + 1,
+    screenLG: breakpoint.lg,
+    screenLGMax: breakpoint.lg,
   },
 
   components: {
@@ -48,12 +59,11 @@ export const theme = {
       colorText: color.text.primary,
       lastItemColor: color.text.primary,
       colorBgTextHover: color.text.quinary,
-      borderRadiusSM: 64,
       lineWidthFocus: 1,
-      marginXXS: 0,
-      paddingXXS: 3,
       fontSize: 16,
+      fontSizeSM: 14,
       fontHeight: 24,
+      fontHeightSM: 22,
     },
     Carousel: {
       colorBgContainer: color.accent.default,
@@ -65,12 +75,18 @@ export const theme = {
     },
     Pagination: {
       colorPrimary: color.accent.default,
-      borderRadius: 50,
-      controlHeight: 40,
       colorText: color.text.primary,
       colorPrimaryHover: color.accent.hover,
       colorTextDisabled: color.text.quaternary,
+      borderRadius: 50,
+      controlHeight: 40,
       controlHeightSM: 32,
+      fontSize: 16,
+      fontSizeSM: 14,
+      fontHeight: 24,
+      fontHeightSM: 22,
+      itemSize: 40,
+      itemSizeSM: 32,
     },
     Dropdown: {
       paddingBlock: 10,

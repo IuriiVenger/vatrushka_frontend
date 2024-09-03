@@ -22,7 +22,7 @@ export const ItemCard: FC<TProps> = ({ info, small = false, slider = false }) =>
   return (
     <Flex
       vertical
-      className={`relative h-full cursor-pointer rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-t-lg ${slider ? 'mx-3' : 'w-full'} `}
+      className={`relative h-full cursor-pointer rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-t-lg ${slider ? 'mx-3 max-md:mx-2' : 'w-full'} `}
       onClick={() => message.info('клик')}
     >
       <span
@@ -58,7 +58,7 @@ export const ItemCard: FC<TProps> = ({ info, small = false, slider = false }) =>
             size={screens.md ? 'middle' : 'small'}
             onClick={(e) => {
               e.stopPropagation();
-              inStock && message.info('Добавлено в корзину');
+              inStock && message.success('Добавлено в корзину');
             }}
           >
             {inStock ? 'Купить' : 'Нет в наличии'}
