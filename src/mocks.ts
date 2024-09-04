@@ -1,5 +1,5 @@
 import { TagType } from './constants';
-import { TCard } from './types';
+import { TMenuLevelOneOption, TCard } from './types';
 
 export const mockCardOne: TCard = {
   pic: 'https://s3-alpha-sig.figma.com/img/1cbd/6d9d/20ad1ed2e9d57489108643c0407f39e2?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=E~YT2pTIQJaSN~1EZdbb2S01zXR3xDY2xaYA8pUHbRi7yWhKXP8XdFYHA-6VCVdKcfmau~6taP4CfOyzMRstOKBYjBLFyySWSjtSFPuEEV-LcUpqafa2Rg5p7cmksk1JrWm~1lGh2w5i94GlCDCuliVMgJfN-qjCjMtFPrW-5B7dm1INg~eYABtQLiCweIj~o1RmffF~fRt~rcWfKdd~7Q-rA6r5IUDcrpcLrMmaN5HcGr9GMMhoHYdfJyH9gRNwnPBuKzedr6g1loAneDldM02Wpsel9yqbam17Z8Uv~wjRG0UCIu~agMIsy~BMVHRzazLj7pmwa4gcPops451t5g__',
@@ -36,3 +36,77 @@ const mockCategorieOne = { name: 'Пасха', pic: mockCardOne.pic, count: 3 };
 const mockCategorieTwo = { name: 'Еда на каждый день, бизнес ланчи', pic: mockCardTwo.pic, count: 654 };
 
 export const categories = [...Array(12)].map((_, index) => (index % 2 === 0 ? mockCategorieOne : mockCategorieTwo));
+
+export const menuItemsLevelTwo = [
+  {
+    value: 'Платтеры, наборы закусок',
+    label: 'Платтеры, наборы закусок',
+  },
+  {
+    value: 'Холодные закуски, канапе',
+    label: 'Холодные закуски, канапе',
+  },
+  {
+    value: 'Горячие закуски',
+    label: 'Горячие закуски',
+  },
+  {
+    value: 'Праздничные горячие блюда',
+    label: 'Праздничные горячие блюда',
+  },
+  {
+    value: 'Мини-выпечка',
+    label: 'Мини-выпечка',
+  },
+  {
+    value: 'Детское банкетное меню Детское банкетное меню',
+    label: 'Детское банкетное меню Детское банкетное меню',
+  },
+  {
+    value: 'Праздничное оформление, посуда',
+    label: 'Праздничное оформление, посуда',
+  },
+];
+
+export const MenuLevelOneOptions: TMenuLevelOneOption[] = [
+  {
+    value: '1',
+    label: 'Акции',
+    children: menuItemsLevelTwo,
+  },
+  {
+    value: '2',
+    label: 'Приготовим за 60 минут',
+    children: menuItemsLevelTwo.slice(3),
+  },
+  {
+    value: '3',
+    label: 'Пицца',
+    children: menuItemsLevelTwo.reverse(),
+  },
+  {
+    value: '4',
+    label: 'Торты фирменные',
+    children: menuItemsLevelTwo.slice(4, -1),
+  },
+  {
+    value: '5',
+    label: 'Пирожное',
+    children: menuItemsLevelTwo.slice(1),
+  },
+  {
+    value: '6',
+    label: 'Пироги',
+    children: menuItemsLevelTwo,
+  },
+  {
+    value: '7',
+    label: 'Еда на каждый день, бизнес ланчи, бизнес ланчи, бизнес ланчи',
+    children: menuItemsLevelTwo,
+  },
+  {
+    value: '8',
+    label: 'Банкетные блюда',
+    children: menuItemsLevelTwo,
+  },
+];

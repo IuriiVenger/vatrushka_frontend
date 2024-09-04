@@ -1,4 +1,3 @@
-import { Flex } from 'antd';
 import { FC } from 'react';
 
 import { CatalogItem } from './CatalogItem';
@@ -15,18 +14,14 @@ type TProps = {
 };
 
 export const Catalog: FC<TProps> = ({ categories, subCatalogName }) => (
-  <Flex
-    vertical
-    align="start"
-    className="mx-auto max-w-320 gap-12 p-10 max-lg:gap-8 max-sm:gap-6 max-xs:max-w-82 max-xs:px-0"
-  >
-    <p className="text-3xl font-medium leading-3xl max-sm:text-2xl max-sm:leading-2xl">
+  <div className="mx-auto flex max-w-320 flex-col items-start gap-12 px-10 max-lg:gap-8 max-sm:gap-6 max-xs:max-w-82 max-xs:px-0">
+    <h2 className="text-3xl font-medium leading-3xl max-sm:text-2xl max-sm:leading-2xl">
       {subCatalogName ?? 'Каталог продукции'}
-    </p>
+    </h2>
     <div className="grid w-full grid-cols-4 gap-6 max-lg:grid-cols-3 max-md:gap-4 max-sm:grid-cols-2">
       {categories.map((item, index) => (
         <CatalogItem key={index} item={item} subCatalog={!!subCatalogName} />
       ))}
     </div>
-  </Flex>
+  </div>
 );

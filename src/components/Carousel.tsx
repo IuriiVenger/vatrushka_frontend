@@ -14,7 +14,10 @@ export const Carousel: FC<TProps> = ({ slides }) => {
   const screens = useBreakpoint();
 
   return (
-    <div className="custom mx-auto grid grid-cols-1 pt-12 max-xl:px-10 max-sm:m-0 max-xs:m-auto max-xs:px-0 max-xs:pt-6">
+    <section
+      aria-label="Специальные предложения"
+      className="custom mx-auto grid grid-cols-1 max-xl:px-10 max-sm:m-0 max-xs:m-auto max-xs:px-0 max-xs:pt-6"
+    >
       <AntCarousel
         autoplay
         arrows={!screens.sm || !screens.xs}
@@ -30,6 +33,6 @@ export const Carousel: FC<TProps> = ({ slides }) => {
           </div>
         ))}
       </AntCarousel>
-    </div>
+    </section>
   );
 };

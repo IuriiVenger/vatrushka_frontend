@@ -14,3 +14,14 @@ export type TCard = {
   tag: TTagType;
   inStock: boolean;
 };
+
+export type TMenuLevelOneOption = {
+  value: string;
+  label: string;
+  children?: TMenuLevelOneOption[];
+};
+
+export type TContact = {
+  link: string;
+  icon: ReactNode;
+};

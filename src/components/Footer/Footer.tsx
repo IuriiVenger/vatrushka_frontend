@@ -6,7 +6,8 @@ import { FC } from 'react';
 
 import logo from '../../assets/images/logo_full.svg';
 
-import { Contacts } from './Contacts';
+import { Contacts } from '../Contacts';
+
 import { FooterLinks } from './FooterLinks';
 
 const { useBreakpoint } = Grid;
@@ -15,7 +16,7 @@ export const Footer: FC = () => {
   const screens = useBreakpoint();
 
   return (
-    <div className="w-full bg-bgLayout">
+    <footer className="w-full bg-bgLayout">
       <div className="mx-auto max-w-320 gap-12 px-9 pt-9 max-xs:max-w-82 max-xs:gap-6 max-xs:px-0">
         <div className=" flex justify-between text-text max-lg:flex-col max-lg:flex-wrap max-lg:justify-around max-lg:gap-6">
           <div className="order-1 flex flex-col justify-between max-lg:items-center max-lg:gap-6">
@@ -25,7 +26,7 @@ export const Footer: FC = () => {
               <p className="text-nowrap">Доставка ежедневно с 8:00 до 20:00</p>
             </div>
           </div>
-          {screens.lg ? (
+          {screens.xl ? (
             <FooterLinks />
           ) : (
             <div className="order-3 flex justify-around max-sm:flex-col max-sm:gap-6">
@@ -47,6 +48,6 @@ export const Footer: FC = () => {
           Пользовательское соглашение
         </Link>
       </div>
-    </div>
+    </footer>
   );
 };

@@ -1,8 +1,8 @@
 'use client';
 
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Button, Grid } from 'antd';
 import { FC, useRef, useState } from 'react';
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import Slider, { Settings } from 'react-slick';
 
 import { ItemCard } from './ItemCard';
@@ -79,7 +79,7 @@ export const SliderComponent: FC<SliderComponentProps> = ({ title, slides }) => 
   };
 
   return (
-    <div className="mx-auto w-full max-w-320 p-10 max-sm:p-0 max-xs:mx-0">
+    <div className="mx-auto w-full max-w-320 px-10 max-sm:px-0 max-xs:mx-0">
       <div className="flex items-center justify-between pb-12 max-lg:pb-8 max-md:box-content max-sm:mx-auto max-sm:max-w-128 max-sm:px-10 max-sm:pb-6 max-xs:box-border max-xs:max-w-82 max-xs:px-0">
         <p className="text-4xl leading-4xl max-sm:text-2xl max-sm:leading-2xl">{title}</p>
         <div className="flex flex-nowrap gap-4 max-sm:hidden">
@@ -89,7 +89,7 @@ export const SliderComponent: FC<SliderComponentProps> = ({ title, slides }) => 
             shape="circle"
             type="primary"
             className="!bg-primary hover:!bg-primaryHover active:!bg-primaryActive disabled:!bg-textQuinary max-sm:h-8 max-sm:w-8 max-sm:min-w-8"
-            icon={<LeftOutlined />}
+            icon={<IoIosArrowBack />}
           />
           <Button
             onClick={() => sliderRef.current?.slickNext()}
@@ -97,7 +97,7 @@ export const SliderComponent: FC<SliderComponentProps> = ({ title, slides }) => 
             shape="circle"
             type="primary"
             className="!bg-primary hover:!bg-primaryHover active:!bg-primaryActive disabled:!bg-textQuinary max-sm:h-8 max-sm:w-8 max-sm:min-w-8"
-            icon={<RightOutlined />}
+            icon={<IoIosArrowForward />}
           />
         </div>
       </div>

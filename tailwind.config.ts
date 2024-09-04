@@ -11,19 +11,40 @@ const spacing = {
   45: '11.25rem',
   47: '11.75rem',
   54.5: '13.625rem',
-  64: '16rem',
   70.5: '17.625rem',
+  76: '19rem',
   82: '20.5rem',
-  96: '24rem',
+  108: '27rem',
   128: '32rem',
   300: '75rem',
   320: '80rem',
+};
+
+const fontSize = {
+  '4xl': '2.375rem', // 38px
+  '3xl': '1.875rem', // 30px
+  '2xl': '1.5rem', // 24px
+  xl: '1.25rem', // 20px
+  lg: '1rem', // 16px
+  base: '0.875rem', // 14px
+  sm: '0.75rem', // 12px
+};
+
+const lineHeight = {
+  '4xl': '2.875rem', // 46px
+  '3xl': '2.375rem', // 38px
+  '2xl': '2rem', // 32px
+  xl: '1.75rem', // 28px
+  lg: '1.5rem', // 24px
+  base: '1.375rem', // 22px
+  sm: '1rem', // 16px
 };
 
 const colors = {
   transparent: color.transparent,
   black: color.black,
   white: color.white,
+  whiteTransparent: color.whiteTransparent,
 
   primary: color.primary.default,
   primaryHover: color.primary.hover,
@@ -76,26 +97,6 @@ const colors = {
   errorActive: color.error.active,
 };
 
-const fontSize = {
-  '4xl': '2.375rem', // 38px
-  '3xl': '1.875rem', // 30px
-  '2xl': '1.5rem', // 24px
-  xl: '1.25rem', // 20px
-  lg: '1rem', // 16px
-  base: '0.875rem', // 14px
-  sm: '0.75rem', // 12px
-};
-
-const lineHeight = {
-  '4xl': '2.875rem', // 46px
-  '3xl': '2.375rem', // 38px
-  '2xl': '2rem', // 32px
-  xl: '1.75rem', // 28px
-  lg: '1.5rem', // 24px
-  base: '1.375rem', // 22px
-  sm: '1rem', // 16px
-};
-
 const config: Config = {
   important: true,
 
@@ -121,20 +122,18 @@ const config: Config = {
         ...defaultTheme.screens,
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'white-fade': `linear-gradient(180deg, ${color.whiteTransparent} 0%, ${color.white} 100%)`,
       },
       fontFamily: {
         sans: ['"Gilroy"', ...defaultTheme.fontFamily.sans],
       },
       spacing,
+      maxHeight: spacing,
       aspectRatio: {
         '21/9': '21 / 9',
         '3/2': '3 / 2',
       },
     },
-
-    maxHeight: spacing,
 
     colors,
 

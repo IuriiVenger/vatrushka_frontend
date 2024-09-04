@@ -1,6 +1,7 @@
 export const color = {
   black: '#000',
   white: '#fff',
+  whiteTransparent: 'rgba(255, 255, 255, 0.20)',
   transparent: 'transparent',
 
   primary: {

@@ -18,11 +18,11 @@ export const CatalogItem: FC<TProps> = ({ item, subCatalog }) => {
     >
       <div className="relative h-full w-full">
         <div className="z-10 flex flex-col gap-1 p-6 max-md:p-4 max-sm:p-2">
-          <p
+          <h2
             className={`relative w-full ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'text-2xl leading-2xl max-md:text-lg max-md:leading-lg max-sm:text-base max-sm:leading-base'}`}
           >
             {name}
-          </p>
+          </h2>
           {subCatalog && count && (
             <p
               className={`relative w-full text-primary ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'text-2xl leading-2xl max-md:text-lg max-md:leading-lg max-sm:text-base max-sm:leading-base'}`}
