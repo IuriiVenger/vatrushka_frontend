@@ -26,8 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env
-
+.env*.local
 
 # vercel
 .vercel
@@ -36,3 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+
+#generated
+src/__generated__
