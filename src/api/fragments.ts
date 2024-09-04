@@ -5,10 +5,10 @@ export const GET_CATEGORIES = gql`
     $offset: Int!
     $first: Int
     $last: Int
-    $before: String
-    $after: String
-    $filter: CategoriesFilter
-    $orderBy: CategoriesOrderBy
+    $before: Cursor
+    $after: Cursor
+    $filter: categoriesFilter
+    $orderBy: [categoriesOrderBy!]
   ) {
     categoriesCollection(
       offset: $offset
@@ -37,70 +37,6 @@ export const GET_CATEGORIES = gql`
   }
 `;
 
-export const GET_CATEGORY_ITEMS = gql`
-  query GetCategoryItems(
-    $categoryId: String!
-    $offset: Int!
-    $first: Int
-    $last: Int
-    $before: String
-    $after: String
-    $filter: CategoryItemsFilter
-    $orderBy: CategoryItemsOrderBy
-  ) {
-    categoryItemsCollection(
-      categoryId: $categoryId
-      offset: $offset
-      first: $first
-      last: $last
-      before: $before
-      after: $after
-      filter: $filter
-      orderBy: $orderBy
-    ) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-      }
-      edges {
-        node {
-          product_id
-          id
-          item_category_id
-          products {
-            name
-            id
-            description
-            modifier_schema_id
-            tax_category_id
-            sku
-            productsizesCollection {
-              edges {
-                node {
-                  nodeId
-                  id
-                  product_id
-                  size_code
-                  size_name
-                  sku
-                  is_default
-                  portion_weight_grams
-                  nutrition_per_hundred_grams
-                  button_image_url
-                  button_image_cropped_url
-                  nutritions
-                  size_id
-                  price
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const GET_PRODUCTS = gql`
   query GetProducts(
     $offset: Int!
@@ -108,8 +44,8 @@ export const GET_PRODUCTS = gql`
     $last: Int
     $before: String
     $after: String
-    $filter: ProductsFilter
-    $orderBy: ProductsOrderBy
+    $filter: productsFilter
+    $orderBy: productsOrderBy
   ) {
     productsCollection(filter: $filter) {
       edges {

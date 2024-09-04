@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import { graphqlEndpoint } from '@/config/network';
+import { apikey, apiURL, graphqlEndpoint } from '@/config/network';
 import { ResponseStatus } from '@/constants';
 
 import {
@@ -12,8 +12,6 @@ import {
 } from '@/utils/tokensFactory';
 
 // eslint-disable-next-line no-constant-condition
-const baseURL = process.env.API_URL;
-const apikey = process.env.API_KEY || '';
 
 const commonHeaders = {
   apikey,
@@ -29,7 +27,7 @@ export const apolloClient = new ApolloClient({
 });
 
 export const axiosInstance = axios.create({
-  baseURL: baseURL || '/api/',
+  baseURL: apiURL,
   timeout: 60000,
   headers: commonHeaders,
 });
