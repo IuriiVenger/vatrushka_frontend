@@ -2,6 +2,8 @@
 
 import { FC, useEffect } from 'react';
 
+import Layout from '../layout';
+
 import { CategoriesConnection } from '@/__generated__/graphql';
 import MainPageContent from '@/components/Home';
 import { useAppDispatch } from '@/store';
@@ -18,6 +20,10 @@ const ClientHomePage: FC<ClientHomePageProps> = ({ categories }) => {
     dispatch(setCategories(categories));
   }, [categories]);
 
-  return <MainPageContent categories={categories} />;
+  return (
+    <Layout>
+      <MainPageContent categories={categories} />
+    </Layout>
+  );
 };
 export default ClientHomePage;
