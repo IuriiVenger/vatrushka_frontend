@@ -14,7 +14,6 @@
     "generate": "graphql-codegen"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.4.0",
     "@ant-design/nextjs-registry": "^1.0.1",
     "@apollo/client": "^3.11.5",
     "@reduxjs/toolkit": "^2.2.7",
