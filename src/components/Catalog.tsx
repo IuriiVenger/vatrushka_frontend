@@ -2,14 +2,10 @@ import { FC } from 'react';
 
 import { CatalogItem } from './CatalogItem';
 
-export type TItem = {
-  name: string;
-  pic: string;
-  count?: number;
-};
+import { Categories } from '@/__generated__/graphql';
 
 type TProps = {
-  categories: TItem[];
+  categories: Categories[];
   subCatalogName?: string;
 };
 

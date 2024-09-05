@@ -1,16 +1,19 @@
 import { FC } from 'react';
 
-import { TItem } from './Catalog';
-
+import { Categories } from '@/__generated__/graphql';
 import { getNounWithDeclension } from '@/utils/getNounWithDeclension';
 
 type TProps = {
-  item: TItem;
+  item: Categories & {
+    count?: number;
+  };
   subCatalog?: boolean;
 };
 
 export const CatalogItem: FC<TProps> = ({ item, subCatalog }) => {
-  const { name, pic, count } = item;
+  const { name, button_image_url, count, isHidden } = item;
+
+  if (isHidden) return null;
 
   return (
     <div
@@ -32,7 +35,7 @@ export const CatalogItem: FC<TProps> = ({ item, subCatalog }) => {
           )}
         </div>
         <img
-          src={pic}
+          src={button_image_url || ''}
           alt={name}
           className={`z-1  ${subCatalog ? 'clip-path-custom' : 'clip-path-custom-square'} absolute bottom-0 right-0 aspect-square h-full w-full object-cover`}
         />

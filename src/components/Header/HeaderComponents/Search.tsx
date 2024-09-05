@@ -38,7 +38,7 @@ export const Search: FC = () => {
           placeholder="Поиск по сайту"
           suffix={<IoSearch className="h-4 w-4 text-textTertiary" />}
           style={{ borderRadius: '10rem' }}
-          className="max-lg:w-76 h-10 px-4 max-md:w-48"
+          className="h-10 px-4 max-lg:w-76 max-md:w-48"
         />
       </AutoComplete>
     </>
