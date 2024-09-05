@@ -101,7 +101,7 @@ export const SliderComponent: FC<SliderComponentProps> = ({ title, slides }) => 
           />
         </div>
       </div>
-      <div className="slider-container max-xs:ml-calc-center mx-auto grid max-w-320 grid-cols-1 overflow-hidden max-sm:pl-10 max-xs:mr-0 max-xs:pl-0 ">
+      <div className="slider-container max-xs:ml-calc-center mx-auto grid max-w-320 grid-cols-1 overflow-hidden max-sm:pl-10 max-xs:mr-0 max-xs:pl-0">
         <Slider {...settings} ref={sliderRef}>
           {slides.map((slide, index) => (
             <ItemCard key={index} info={slide} slider small={screens.sm || screens.xs} />

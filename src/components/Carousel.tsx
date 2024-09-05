@@ -12,7 +12,6 @@ const { useBreakpoint } = Grid;
 
 export const Carousel: FC<TProps> = ({ slides }) => {
   const screens = useBreakpoint();
-
   return (
     <section
       aria-label="Специальные предложения"
@@ -20,7 +19,7 @@ export const Carousel: FC<TProps> = ({ slides }) => {
     >
       <AntCarousel
         autoplay
-        arrows={!screens.sm || !screens.xs}
+        arrows={screens.md}
         className="box-content aspect-21/9 h-full w-full max-w-300 max-sm:aspect-square max-xs:max-w-82"
       >
         {slides.map((slide, index) => (

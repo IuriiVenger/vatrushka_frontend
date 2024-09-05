@@ -33,9 +33,9 @@ export const Dropdown: FC<TProps> = ({ sort, setSort }) => {
     <AntDropdown menu={{ items, onClick: onSortClick }} placement="bottomRight" trigger={['click']}>
       <button
         type="button"
-        className="h-fit w-fit rounded-lg border border-border px-8 py-3 transition-all hover:border-primaryHover hover:text-primaryHover focus:border-primaryHover focus:text-primaryHover active:border-primaryHover active:text-primaryHover  max-xs:px-4 max-xs:py-2"
+        className="h-fit w-fit rounded-lg border border-border px-8 py-3 transition-all hover:border-primaryHover hover:text-primaryHover focus:border-primaryHover focus:text-primaryHover active:border-primaryHover active:text-primaryHover max-lg:px-6 max-lg:py-2 max-xs:px-4"
       >
-        <div className="flex flex-nowrap gap-2 align-middle">
+        <div className="flex flex-nowrap items-center gap-2 align-middle">
           <span className="text-nowrap text-lg leading-lg max-xs:text-base max-xs:leading-base">
             {SortTypeTranslation[sort]}
           </span>

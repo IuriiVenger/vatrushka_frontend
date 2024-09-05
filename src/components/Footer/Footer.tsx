@@ -18,7 +18,7 @@ export const Footer: FC = () => {
   return (
     <footer className="w-full bg-bgLayout">
       <div className="mx-auto max-w-320 gap-12 px-9 pt-9 max-xs:max-w-82 max-xs:gap-6 max-xs:px-0">
-        <div className=" flex justify-between text-text max-lg:flex-col max-lg:flex-wrap max-lg:justify-around max-lg:gap-6">
+        <div className="flex justify-between text-text max-lg:flex-col max-lg:flex-wrap max-lg:justify-around max-lg:gap-6">
           <div className="order-1 flex flex-col justify-between max-lg:items-center max-lg:gap-6">
             <img alt="1" src={logo.src} className="h-13.75 w-45" />
             <div className="flex flex-col justify-between gap-2 max-lg:items-center">
@@ -42,7 +42,7 @@ export const Footer: FC = () => {
         </div>
       </div>
       <Divider />
-      <div className=" mx-auto flex w-full max-w-320 justify-between gap-4 px-9 pb-9 max-lg:flex-col-reverse max-lg:items-center max-sm:items-start  max-xs:max-w-82 max-xs:px-0">
+      <div className="mx-auto flex w-full max-w-320 justify-between gap-4 px-9 pb-9 max-lg:flex-col-reverse max-lg:items-center max-sm:items-start max-xs:max-w-82 max-xs:px-0">
         <p className="text-text">(с) 2010-{new Date().getFullYear()} Ватрушка - доставка еды на дом в Челябинске</p>
         <Link href="https://www.google.com" className="text-text">
           Пользовательское соглашение

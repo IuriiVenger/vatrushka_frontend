@@ -23,6 +23,7 @@ const { useBreakpoint } = Grid;
 
 export const Header: FC = () => {
   const screens = useBreakpoint();
+
   const onClick: MenuProps['onClick'] = ({ key }) => {
     message.info(`Click on item ${key}`);
   };
@@ -67,7 +68,7 @@ export const Header: FC = () => {
             placement="bottomRight"
             overlayClassName="pt-2 w-60"
           >
-            <FaRegUser className="h-6 w-4 cursor-pointer text-textTertiary  transition-all hover:text-textQuaternary max-lg:h-5 max-lg:w-5" />
+            <FaRegUser className="h-6 w-4 cursor-pointer text-textTertiary transition-all hover:text-textQuaternary max-lg:h-5 max-lg:w-5" />
           </Dropdown>
           <Dropdown
             menu={{ items: cartItems, onClick }}

@@ -30,11 +30,7 @@ export const ItemCard: FC<TProps> = ({ info, small = false, slider = false }) =>
       >
         {tag}
       </span>
-      <img
-        alt={name}
-        src={pic}
-        className={`${small ? 'max-h-45 min-h-45' : 'max-h-64 min-h-64'} aspect-3/2 rounded-t-2xl object-cover object-center max-md:max-h-54.5 max-md:min-h-54.5 max-md:rounded-t-lg`}
-      />
+      <img alt={name} src={pic} className="aspect-3/2 rounded-t-2xl object-cover object-center max-md:rounded-t-lg" />
       <div className="flex h-full flex-grow flex-col justify-between p-6 max-md:p-4">
         <div className="flex flex-col">
           <div className="flex flex-col">

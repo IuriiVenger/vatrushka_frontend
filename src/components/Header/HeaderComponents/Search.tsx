@@ -1,3 +1,5 @@
+'use client';
+
 import { AutoComplete, AutoCompleteProps, Input } from 'antd';
 import { FC, useState } from 'react';
 
@@ -21,13 +23,12 @@ export const Search: FC = () => {
 
   return (
     <>
-      <IoSearch className="hidden h-5 w-5 text-textTertiary max-sm:block " />
-
+      <IoSearch className="hidden h-5 w-5 text-textTertiary max-sm:block" />
       <AutoComplete
         size="small"
         onSearch={handleSearch}
         options={options}
-        className="h-full"
+        className="h-full max-sm:hidden"
         popupClassName="w-85"
         placement="bottomRight"
         notFoundContent={<p className="py-4 text-center">Ничего не найдено</p>}
@@ -37,7 +38,7 @@ export const Search: FC = () => {
           placeholder="Поиск по сайту"
           suffix={<IoSearch className="h-4 w-4 text-textTertiary" />}
           style={{ borderRadius: '10rem' }}
-          className="h-10 px-4 max-lg:w-76 max-md:w-48 max-sm:hidden"
+          className="max-lg:w-76 h-10 px-4 max-md:w-48"
         />
       </AutoComplete>
     </>
