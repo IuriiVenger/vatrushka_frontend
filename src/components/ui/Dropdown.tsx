@@ -30,7 +30,7 @@ export const Dropdown: FC<TProps> = ({ sort, setSort }) => {
   ];
 
   return (
-    <AntDropdown menu={{ items, onClick: onSortClick }} placement="bottomRight">
+    <AntDropdown menu={{ items, onClick: onSortClick }} placement="bottomRight" trigger={['click']}>
       <button
         type="button"
         className="h-fit w-fit rounded-lg border border-border px-8 py-3 transition-all hover:border-primaryHover hover:text-primaryHover focus:border-primaryHover focus:text-primaryHover active:border-primaryHover active:text-primaryHover  max-xs:px-4 max-xs:py-2"

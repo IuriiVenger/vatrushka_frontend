@@ -99,7 +99,7 @@ export const theme = {
     },
     Cascader: {
       optionSelectedBg: color.primary.bg,
-      dropdownHeight: '75vh',
+      dropdownHeight: 'clamp(100px, 600px, 75vh)',
       menuPadding: 4,
       optionPadding: 12,
       controlItemWidth: 308,

@@ -19,11 +19,10 @@ export const PreHeader: FC = () => {
         </div>
         <div className="flex items-center gap-10 max-sm:hidden">
           <Contacts noMail />
-          {screens.xl && (
-            <Button size={screens.md ? 'middle' : 'small'} className="w-fit">
-              Связаться с нами
-            </Button>
-          )}
+
+          <Button size={screens.md ? 'middle' : 'small'} className="block w-fit max-lg:hidden">
+            Связаться с нами
+          </Button>
         </div>
       </div>
     </div>

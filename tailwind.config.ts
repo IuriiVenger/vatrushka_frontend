@@ -14,6 +14,7 @@ const spacing = {
   70.5: '17.625rem',
   76: '19rem',
   82: '20.5rem',
+  85: '21.25rem',
   108: '27rem',
   128: '32rem',
   300: '75rem',
@@ -85,6 +86,11 @@ const colors = {
   bg: color.bg.default,
   bgLayout: color.bg.layout,
   bgMask: color.bg.mask,
+
+  fill: color.fill.default,
+  fillSecondary: color.fill.secondary,
+  fillTertiary: color.fill.tertiary,
+  fillQuaternary: color.fill.quaternary,
 
   shadow: color.shadow.default,
   shadowMedium: color.shadow.medium,

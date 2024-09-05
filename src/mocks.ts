@@ -1,5 +1,5 @@
 import { TagType } from './constants';
-import { TMenuLevelOneOption, TCard } from './types';
+import { TMenuLevelOneOption, TCard, TCartListItem } from './types';
 
 export const mockCardOne: TCard = {
   pic: 'https://s3-alpha-sig.figma.com/img/1cbd/6d9d/20ad1ed2e9d57489108643c0407f39e2?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=E~YT2pTIQJaSN~1EZdbb2S01zXR3xDY2xaYA8pUHbRi7yWhKXP8XdFYHA-6VCVdKcfmau~6taP4CfOyzMRstOKBYjBLFyySWSjtSFPuEEV-LcUpqafa2Rg5p7cmksk1JrWm~1lGh2w5i94GlCDCuliVMgJfN-qjCjMtFPrW-5B7dm1INg~eYABtQLiCweIj~o1RmffF~fRt~rcWfKdd~7Q-rA6r5IUDcrpcLrMmaN5HcGr9GMMhoHYdfJyH9gRNwnPBuKzedr6g1loAneDldM02Wpsel9yqbam17Z8Uv~wjRG0UCIu~agMIsy~BMVHRzazLj7pmwa4gcPops451t5g__',
@@ -68,7 +68,7 @@ export const menuItemsLevelTwo = [
   },
 ];
 
-export const MenuLevelOneOptions: TMenuLevelOneOption[] = [
+export const menuLevelOneOptions: TMenuLevelOneOption[] = [
   {
     value: '1',
     label: 'Акции',
@@ -110,3 +110,10 @@ export const MenuLevelOneOptions: TMenuLevelOneOption[] = [
     children: menuItemsLevelTwo,
   },
 ];
+
+export const cartList: TCartListItem[] = products.map((product) => ({
+  name: product.name,
+  pic: product.pic,
+  price: product.price,
+  count: Math.floor(Math.random() * 15) + 1,
+}));

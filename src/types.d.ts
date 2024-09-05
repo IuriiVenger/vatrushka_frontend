@@ -25,3 +25,10 @@ export type TContact = {
   link: string;
   icon: ReactNode;
 };
+
+export type TCartListItem = {
+  name: string;
+  pic: string;
+  price: number;
+  count: number;
+};

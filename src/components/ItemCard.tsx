@@ -57,7 +57,7 @@ export const ItemCard: FC<TProps> = ({ info, small = false, slider = false }) =>
             size={screens.md ? 'middle' : 'small'}
             onClick={(e) => {
               e.stopPropagation();
-              inStock && message.success('Добавлено в корзину');
+              inStock && message.success('Товар добавлен в корзину');
             }}
           >
             {inStock ? 'Купить' : 'Нет в наличии'}

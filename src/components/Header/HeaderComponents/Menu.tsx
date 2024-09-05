@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IoIosArrowDown } from 'react-icons/io';
 
-import { MenuLevelOneOptions } from '@/mocks';
+import { menuLevelOneOptions } from '@/mocks';
 import { TMenuLevelOneOption } from '@/types';
 
 const clientItems: MenuProps['items'] = [
@@ -41,11 +41,11 @@ export const Menu = () => {
   const displayRender = (labels: string[]) => labels[labels.length - 1];
 
   return (
-    <nav>
+    <nav className="block max-lg:hidden">
       <ul className="flex w-max items-center gap-8">
         <li>
           <Cascader
-            options={MenuLevelOneOptions}
+            options={menuLevelOneOptions}
             onChange={onChange}
             expandTrigger="hover"
             displayRender={displayRender}

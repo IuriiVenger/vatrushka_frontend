@@ -45,6 +45,12 @@ export const color = {
     layout: '#F8F7F6',
     mask: 'rgba(0, 0, 0, 0.40)',
   },
+  fill: {
+    default: 'rgba(45, 45, 45, 0.15)',
+    secondary: 'rgba(45, 45, 45, 0.06)',
+    tertiary: 'rgba(45, 45, 45, 0.04)',
+    quaternary: 'rgba(45, 45, 45, 0.02)',
+  },
   shadow: {
     default: 'rgba(127, 86, 64, 0.12)',
     medium: 'rgba(127, 86, 64, 0.08)',
