@@ -10,10 +10,11 @@ import { Contacts } from '../Contacts';
 
 import { FooterLinks } from './FooterLinks';
 
-const { useBreakpoint } = Grid;
-
 export const Footer: FC = () => {
+  const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
+
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="w-full bg-bgLayout">
@@ -43,7 +44,7 @@ export const Footer: FC = () => {
       </div>
       <Divider />
       <div className="mx-auto flex w-full max-w-320 justify-between gap-4 px-9 pb-9 max-lg:flex-col-reverse max-lg:items-center max-sm:items-start max-xs:max-w-82 max-xs:px-0">
-        <p className="text-text">(с) 2010-{new Date().getFullYear()} Ватрушка - доставка еды на дом в Челябинске</p>
+        <p className="text-text">(с) 2010-{currentYear} Ватрушка - доставка еды на дом в Челябинске</p>
         <Link href="https://www.google.com" className="text-text">
           Пользовательское соглашение
         </Link>

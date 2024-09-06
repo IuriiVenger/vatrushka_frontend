@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { FC } from 'react';
 
 export const FooterLinks: FC = () => (
@@ -5,48 +6,48 @@ export const FooterLinks: FC = () => (
     <nav className="order-2">
       <ul className="flex flex-col gap-6">
         <li>
-          <a href="https://www.google.com" className="text-nowrap text-text">
+          <Link href="https://www.google.com" className="text-nowrap text-text">
             О нас
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="https://www.google.com" className="text-nowrap text-text">
+          <Link href="https://www.google.com" className="text-nowrap text-text">
             Контакты
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="https://www.google.com" className="text-nowrap text-text">
+          <Link href="https://www.google.com" className="text-nowrap text-text">
             Акции
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="https://www.google.com" className="text-nowrap text-text">
+          <Link href="https://www.google.com" className="text-nowrap text-text">
             Оптовые продажи
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
     <nav className="order-3">
       <ul className="flex flex-col gap-6">
         <li>
-          <a href="https://www.google.com" className="text-nowrap text-text">
+          <Link href="https://www.google.com" className="text-nowrap text-text">
             Условия доставки
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="https://www.google.com" className="text-nowrap text-text">
+          <Link href="https://www.google.com" className="text-nowrap text-text">
             Бонусная программа
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="https://www.google.com" className="text-nowrap text-text">
+          <Link href="https://www.google.com" className="text-nowrap text-text">
             Условия возврата и обмена
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="https://www.google.com" className="text-nowrap text-text">
+          <Link href="https://www.google.com" className="text-nowrap text-text">
             Ваши отзывы и предложения
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

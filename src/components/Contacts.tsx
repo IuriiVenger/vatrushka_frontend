@@ -1,23 +1,24 @@
 import { Button, Grid } from 'antd';
 import { cloneElement, FC } from 'react';
 
-import { links } from '@/assets/links';
+import { links } from '@/config/links';
 import { TContact } from '@/types';
 
-const { useBreakpoint } = Grid;
-
-type TProps = {
+type TContactsProps = {
   noMail?: boolean;
 };
 
-export const Contacts: FC<TProps> = ({ noMail = false }) => {
+export const Contacts: FC<TContactsProps> = ({ noMail = false }) => {
+  const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
-  const contacts = noMail ? Object.fromEntries(Object.entries(links).filter(([key]) => key !== 'mail')) : links;
+  const filteredLinks = Object.fromEntries(Object.entries(links).filter(([key]) => key !== 'mail'));
+
+  const contacts = Object.values<TContact>(noMail ? filteredLinks : links);
 
   return (
     <div className="flex gap-4">
-      {Object.values<TContact>(contacts).map((contact) => {
+      {contacts.map((contact) => {
         const { icon, link } = contact;
 
         const ContactIcon = cloneElement(icon, {
@@ -26,6 +27,7 @@ export const Contacts: FC<TProps> = ({ noMail = false }) => {
 
         return (
           <Button
+            key={contact.link}
             size={screens.lg ? 'middle' : 'small'}
             ghost
             href={link}

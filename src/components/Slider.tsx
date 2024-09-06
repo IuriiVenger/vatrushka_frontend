@@ -9,39 +9,27 @@ import { ItemCard } from './ItemCard';
 
 import { TCard } from '@/types';
 
-export enum buttonsPositions {
-  TOP = 'top',
-  BOTTOM = 'bottom',
-}
-
-type SliderComponentProps = {
+type TSliderComponentProps = {
   title: string;
   slides: TCard[];
 };
 
-const { useBreakpoint } = Grid;
-
-export const SliderComponent: FC<SliderComponentProps> = ({ title, slides }) => {
+export const SliderComponent: FC<TSliderComponentProps> = ({ title, slides }) => {
   const sliderRef = useRef<Slider>(null);
 
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
 
+  const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
   const handleButtons = (_: number, next: number): void => {
     if (sliderRef.current) {
-      if (next === 0) {
-        setIsPrevDisabled(true);
-      } else {
-        setIsPrevDisabled(false);
-      }
+      const isFirstSlide = next === 0;
+      const isLastSlide = next === slides.length - 3;
 
-      if (next === slides.length - 3) {
-        setIsNextDisabled(true);
-      } else {
-        setIsNextDisabled(false);
-      }
+      setIsPrevDisabled(isFirstSlide);
+      setIsNextDisabled(isLastSlide);
     }
   };
 
@@ -84,7 +72,7 @@ export const SliderComponent: FC<SliderComponentProps> = ({ title, slides }) => 
         <p className="text-4xl leading-4xl max-sm:text-2xl max-sm:leading-2xl">{title}</p>
         <div className="flex flex-nowrap gap-4 max-sm:hidden">
           <Button
-            onClick={() => sliderRef.current?.slickPrev()}
+            onClick={sliderRef.current?.slickPrev}
             disabled={isPrevDisabled}
             shape="circle"
             type="primary"
@@ -92,7 +80,7 @@ export const SliderComponent: FC<SliderComponentProps> = ({ title, slides }) => 
             icon={<IoIosArrowBack />}
           />
           <Button
-            onClick={() => sliderRef.current?.slickNext()}
+            onClick={sliderRef.current?.slickNext}
             disabled={isNextDisabled}
             shape="circle"
             type="primary"
@@ -104,7 +92,7 @@ export const SliderComponent: FC<SliderComponentProps> = ({ title, slides }) => 
       <div className="slider-container max-xs:ml-calc-center mx-auto grid max-w-320 grid-cols-1 overflow-hidden max-sm:pl-10 max-xs:mr-0 max-xs:pl-0">
         <Slider {...settings} ref={sliderRef}>
           {slides.map((slide, index) => (
-            <ItemCard key={index} info={slide} slider small={screens.sm || screens.xs} />
+            <ItemCard key={index} info={slide} slider small={!screens.md} />
           ))}
         </Slider>
       </div>

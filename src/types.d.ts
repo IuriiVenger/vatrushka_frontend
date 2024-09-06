@@ -2,8 +2,6 @@ import { TagType } from './mock';
 
 type TValueOf<T> = T[keyof T];
 
-export type TTagType = TValueOf<typeof TagType>;
-
 export type TCard = {
   pic: string;
   name: string;
@@ -11,7 +9,7 @@ export type TCard = {
   timing: string;
   description: string;
   price: number;
-  tag: TTagType;
+  tag: TagType;
   inStock: boolean;
 };
 
@@ -31,4 +29,8 @@ export type TCartListItem = {
   pic: string;
   price: number;
   count: number;
+};
+
+export type TTag = {
+  [key: string]: { textColor: string; backgroundColor: string };
 };

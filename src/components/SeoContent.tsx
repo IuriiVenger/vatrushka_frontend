@@ -4,12 +4,13 @@ import { Button, Grid } from 'antd';
 import { FC, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
-const { useBreakpoint } = Grid;
-
 export const SeoContent: FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
+  const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
+
+  const onButtonClick = () => setIsCollapsed(false);
 
   return (
     <div className="mx-auto flex max-w-320 flex-col gap-8 px-10 max-xs:max-w-82 max-xs:px-0">
@@ -54,8 +55,8 @@ export const SeoContent: FC = () => {
           icon={<IoIosArrowDown />}
           size={screens.md ? 'middle' : 'small'}
           iconPosition="start"
-          className={screens.md ? 'w-max' : ''}
-          onClick={() => setIsCollapsed(false)}
+          className="w-max max-md:w-full"
+          onClick={onButtonClick}
         >
           Показать текст
         </Button>

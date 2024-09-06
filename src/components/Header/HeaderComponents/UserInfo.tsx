@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-type TProps = {
+type TUserInfoProps = {
   user: {
     name: string;
     phone: string;
@@ -8,7 +8,7 @@ type TProps = {
   };
 };
 
-export const UserInfo: FC<TProps> = ({ user }) => {
+export const UserInfo: FC<TUserInfoProps> = ({ user }) => {
   const { name, phone, email } = user;
 
   return (

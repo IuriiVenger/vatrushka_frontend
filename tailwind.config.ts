@@ -1,4 +1,4 @@
-import { breakpoint, color } from './src/assets/styles/variables';
+import { breakpoint, color } from './src/config/variables';
 
 import type { Config } from 'tailwindcss';
 

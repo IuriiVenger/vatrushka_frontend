@@ -5,9 +5,8 @@ import { FC } from 'react';
 
 import { Contacts } from '../Contacts';
 
-const { useBreakpoint } = Grid;
-
 export const PreHeader: FC = () => {
+  const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
   return (

@@ -1,4 +1,4 @@
-import { breakpoint, color } from './assets/styles/variables';
+import { color, breakpoint } from './variables';
 
 export const theme = {
   token: {

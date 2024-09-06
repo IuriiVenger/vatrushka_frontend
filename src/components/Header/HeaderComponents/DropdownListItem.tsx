@@ -4,15 +4,18 @@ import { FC } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 
 import { StepperButton } from '@/components/ui/StepperButton';
+import { CurrencySymbol } from '@/constants';
 import { TCartListItem } from '@/types';
 
-type TProps = {
+type TDropdownListItemProps = {
   item: TCartListItem;
   cart?: boolean;
 };
 
-export const DropdownListItem: FC<TProps> = ({ item, cart = false }) => {
+export const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = false }) => {
   const { name, pic, price, count } = item;
+
+  const onButtonClick = () => message.error(`deleted ${name}`);
 
   return (
     <div className="flex w-full gap-3">
@@ -21,14 +24,14 @@ export const DropdownListItem: FC<TProps> = ({ item, cart = false }) => {
         <div className="flex items-start justify-between">
           <p className="max-w-54.5 text-wrap">{name}</p>
           {cart && (
-            <button type="button" onClick={() => message.error(`deleted ${name}`)}>
+            <button type="button" onClick={onButtonClick}>
               <RxCross2 className="h-4 w-4 text-textTertiary transition-all hover:text-accent" />
             </button>
           )}
         </div>
         <div className="flex items-center justify-between">
           <p>
-            <span>{price}</span> &#8381;
+            <span>{price}</span> {CurrencySymbol.RUB}
           </p>
           {cart && <StepperButton initialCount={count} />}
         </div>

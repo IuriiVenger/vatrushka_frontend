@@ -14,14 +14,13 @@ import { Search } from './HeaderComponents/Search';
 import { UserInfo } from './HeaderComponents/UserInfo';
 import { PreHeader } from './PreHeader';
 
-import { color } from '@/assets/styles/variables';
+import { color } from '@/config/variables';
 import { cartList } from '@/mocks';
 
 export type TMenuItem = Required<MenuProps>['items'][number];
 
-const { useBreakpoint } = Grid;
-
 export const Header: FC = () => {
+  const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
   const onClick: MenuProps['onClick'] = ({ key }) => {

@@ -9,7 +9,7 @@ export const mockCardOne: TCard = {
   description:
     'Два вида бисквита - миндальный и шоколадный, карамельный мусс, воздушный крем шантильи с ноткой сливочного ликера',
   price: 600,
-  tag: TagType.hit,
+  tag: TagType.HIT,
   inStock: true,
 };
 
@@ -21,7 +21,7 @@ export const mockCardTwo: TCard = {
   description:
     'Два вида бисквита - миндальный и шоколадный, карамельный мусс, воздушный крем шантильи с ноткой сливочного ликера. А потом еще раз два вида бисквита - миндальный и шоколадный, карамельный мусс, воздушный крем шантильи с ноткой сливочного ликера',
   price: 600000,
-  tag: TagType.recommended,
+  tag: TagType.RECOMMENDED,
   inStock: false,
 };
 

@@ -124,3 +124,13 @@
 .slick-slide > div {
   height: 100%;
 }
+
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next {
+  font-size: 20px !important;
+  color: currentColor !important;
+  background: #ffffffb2 !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+}

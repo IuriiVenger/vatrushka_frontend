@@ -1,9 +1,10 @@
 import { BiLogoTelegram, BiLogoVk } from 'react-icons/bi';
 import { IoIosMail, IoLogoWhatsapp } from 'react-icons/io';
 
+import { ContactLinks } from '@/constants';
 import { TContact } from '@/types';
 
-export const links: Record<string, TContact> = {
+export const links: Record<ContactLinks, TContact> = {
   tg: {
     link: 'https://t.me/123',
     icon: <BiLogoTelegram />,

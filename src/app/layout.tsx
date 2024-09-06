@@ -6,8 +6,8 @@ import type { Metadata } from 'next';
 
 import '@/assets/styles/globals.css';
 import '@/assets/styles/slider.css';
+import { theme } from '@/config/theme';
 import StoreProvider from '@/store/components/StoreProvider';
-import { theme } from '@/theme';
 
 export const metadata: Metadata = {
   title: 'Create Next App',

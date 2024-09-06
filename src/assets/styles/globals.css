@@ -54,16 +54,23 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
 
-.slick-arrow.slick-prev,
-.slick-arrow.slick-next {
-  font-size: 20px !important;
-  color: currentColor !important;
-  background: #ffffffb2 !important;
-  width: 40px !important;
-  height: 40px !important;
-  border-radius: 50% !important;
+  .collapsed-description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .ml-calc-center {
+    margin-left: calc((100vw - 344px) / 2) !important;
+  }
+
+  .list-bullet {
+    list-style-image: url('../images/bullet.svg');
+  }
 }
 
 .ant-carousel .slick-prev::after,
@@ -83,25 +90,6 @@ body {
 .ant-carousel .slick-prev:hover,
 .ant-carousel .slick-next:hover {
   color: currentColor !important;
-}
-
-@layer utilities {
-  .collapsed-description {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-  }
-
-  .ml-calc-center {
-    margin-left: calc((100vw - 344px) / 2) !important;
-  }
-
-  .list-bullet {
-    list-style-image: url('../images/bullet.svg');
-  }
 }
 
 .ant-cascader-dropdown .ant-cascader-menu-item:hover {

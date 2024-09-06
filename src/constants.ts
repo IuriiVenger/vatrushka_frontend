@@ -1,3 +1,5 @@
+import { TTag } from './types';
+
 export enum ResponseStatus {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
@@ -16,19 +18,29 @@ export enum RequestStatus {
   REJECTED = 'rejected',
 }
 
+export enum CurrencySymbol {
+  RUB = '&#8381;',
+}
+
+export enum TagType {
+  NEW = 'Новинка',
+  RECOMMENDED = 'Рекомендуем',
+  HIT = 'Хит',
+}
+
+export enum ContactLinks {
+  TELEGRAM = 'tg',
+  VK = 'vk',
+  WHATS_APP = 'whatsapp',
+  MAIL = 'mail',
+}
+
 export const emptyStoreDataWithStatus = {
   status: RequestStatus.NONE,
   data: null,
 };
-export const TagType = {
-  new: 'Новинка',
-  recommended: 'Рекомендуем',
-  hit: 'Хит',
-} as const;
 
-export const TagColorSchema: {
-  [key: string]: { textColor: string; backgroundColor: string };
-} = {
+export const TagColorSchema: TTag = {
   Новинка: {
     textColor: '#EB2F96',
     backgroundColor: '#FFF0F6',
@@ -44,13 +56,13 @@ export const TagColorSchema: {
 };
 
 export enum SortType {
-  mostPopular = 'mostPopular',
-  priceDescending = 'priceDescending',
-  priceAscending = 'priceAscending',
+  MOST_POPULAR = 'mostPopular',
+  PRICE_DESCENDING = 'priceDescending',
+  PRICE_ASCENDING = 'priceAscending',
 }
 
 export const SortTypeTranslation = {
-  [SortType.mostPopular]: 'По популярности',
-  [SortType.priceDescending]: 'По убыванию цены',
-  [SortType.priceAscending]: 'По возрастанию цены',
+  [SortType.MOST_POPULAR]: 'По популярности',
+  [SortType.PRICE_DESCENDING]: 'По убыванию цены',
+  [SortType.PRICE_ASCENDING]: 'По возрастанию цены',
 };
