@@ -19,7 +19,7 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => (
     <html lang="en">
       <body>
         <ConfigProvider theme={theme}>
-          <AntdRegistry>{children}</AntdRegistry>
+          <AntdRegistry layer>{children}</AntdRegistry>
         </ConfigProvider>
       </body>
     </html>

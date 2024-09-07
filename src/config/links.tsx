@@ -5,19 +5,19 @@ import { ContactLinks } from '@/constants';
 import { TContact } from '@/types';
 
 export const links: Record<ContactLinks, TContact> = {
-  tg: {
+  [ContactLinks.TELEGRAM]: {
     link: 'https://t.me/123',
     icon: <BiLogoTelegram />,
   },
-  vk: {
+  [ContactLinks.VK]: {
     link: 'https://www.vk.ru/123',
     icon: <BiLogoVk />,
   },
-  whatsapp: {
+  [ContactLinks.WHATS_APP]: {
     link: 'https://wa.me/123',
     icon: <IoLogoWhatsapp />,
   },
-  mail: {
+  [ContactLinks.MAIL]: {
     link: '123@123.ru',
     icon: <IoIosMail />,
   },

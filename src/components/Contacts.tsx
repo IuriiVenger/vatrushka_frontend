@@ -18,24 +18,16 @@ export const Contacts: FC<TContactsProps> = ({ noMail = false }) => {
 
   return (
     <div className="flex gap-4">
-      {contacts.map((contact) => {
-        const { icon, link } = contact;
-
-        const ContactIcon = cloneElement(icon, {
-          className: 'h-6 w-6',
-        });
-
-        return (
-          <Button
-            key={contact.link}
-            size={screens.lg ? 'middle' : 'small'}
-            ghost
-            href={link}
-            className="border-none text-primary transition-all hover:text-primaryActive"
-            icon={ContactIcon}
-          />
-        );
-      })}
+      {contacts.map(({ icon, link }) => (
+        <Button
+          key={link}
+          size={screens.lg ? 'middle' : 'small'}
+          ghost
+          href={link}
+          className="border-none text-primary transition-all hover:text-primaryActive"
+          icon={cloneElement(icon, { className: 'h-6 w-6' })}
+        />
+      ))}
     </div>
   );
 };
