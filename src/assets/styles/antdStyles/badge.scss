@@ -1,0 +1,13 @@
+@layer utilities {
+  .ant-badge {
+    &.small {
+      .ant-badge-count {
+        min-width: 16px;
+        height: 16px;
+        font-size: 10px;
+        line-height: 16px;
+        border-radius: 8px;
+      }
+    }
+  }
+}

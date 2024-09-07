@@ -1,0 +1,28 @@
+@layer utilities {
+  .ant-pagination {
+    &.small {
+      height: 32px;
+
+      .ant-pagination-item {
+        height: 32px;
+        line-height: 32px;
+        width: 32px;
+        min-width: 32px;
+      }
+
+      .ant-pagination-prev {
+        height: 32px;
+        line-height: 32px;
+        width: 32px;
+        min-width: 32px;
+      }
+
+      .ant-pagination-next {
+        height: 32px;
+        line-height: 32px;
+        width: 32px;
+        min-width: 32px;
+      }
+    }
+  }
+}
