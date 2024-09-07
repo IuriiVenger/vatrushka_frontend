@@ -37,8 +37,8 @@ export const ItemCard: FC<TItemCardProps> = ({ info, small = false, slider = fal
         {tag}
       </span>
       <Image
-        width={448}
-        height={299}
+        width={560}
+        height={373}
         alt={name}
         src={pic}
         className="aspect-3/2 rounded-t-2xl object-cover object-center max-md:rounded-t-lg"
