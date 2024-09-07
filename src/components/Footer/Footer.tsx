@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Divider, Grid } from 'antd';
+import { Button, Divider } from 'antd';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -8,13 +8,18 @@ import logo from '../../assets/images/logo_full.svg';
 
 import { Contacts } from '../Contacts';
 
-import { FooterLinks } from './FooterLinks';
+import { LinksList } from './LinksList';
+
+import { navigationLinks } from '@/config/links';
+import { TNavigationLink } from '@/types';
 
 export const Footer: FC = () => {
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
-
   const currentYear = new Date().getFullYear();
+
+  const links = Object.values<TNavigationLink>(navigationLinks);
+  const pivot = Math.ceil(links.length / 2);
+  const firstHalf = links.slice(0, pivot);
+  const secondHalf = links.slice(pivot);
 
   return (
     <footer className="w-full bg-bgLayout">
@@ -27,17 +32,12 @@ export const Footer: FC = () => {
               <p className="text-nowrap">Доставка ежедневно с 8:00 до 20:00</p>
             </div>
           </div>
-          {screens.xl ? (
-            <FooterLinks />
-          ) : (
-            <div className="order-3 flex justify-around max-sm:flex-col max-sm:gap-6">
-              <FooterLinks />
-            </div>
-          )}
-          <div className="order-4 flex flex-col items-end justify-between max-lg:order-2 max-lg:items-center max-lg:gap-6">
-            <Button size={screens.md ? 'middle' : 'small'} className="w-fit">
-              Связаться с нами
-            </Button>
+          <div className="order-2 flex gap-30 max-xl:gap-10 max-lg:order-3 max-lg:justify-around max-sm:flex-col max-sm:gap-6">
+            <LinksList links={firstHalf} />
+            <LinksList links={secondHalf} />
+          </div>
+          <div className="order-3 flex flex-col items-end justify-between max-lg:order-2 max-lg:items-center max-lg:gap-6">
+            <Button className="w-fit max-md:h-10 max-md:text-base">Связаться с нами</Button>
             <Contacts />
           </div>
         </div>

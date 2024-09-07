@@ -1,0 +1,32 @@
+@layer utilities {
+  .slick-slider {
+    &.no-arrows {
+      .slick-arrow.slick-prev {
+        display: none !important;
+      }
+
+      .slick-arrow.slick-next {
+        display: none !important;
+      }
+    }
+  }
+}
+
+.ant-carousel .slick-prev::after,
+.ant-carousel .slick-next::after {
+  color: currentColor;
+  top: 36%;
+}
+
+.ant-carousel .slick-prev::after {
+  left: 42%;
+}
+
+.ant-carousel .slick-next::after {
+  left: 30%;
+}
+
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-next:hover {
+  color: currentColor;
+}

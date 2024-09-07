@@ -24,6 +24,11 @@ export type TContact = {
   icon: ReactNode;
 };
 
+export type TNavigationLink = {
+  link: string;
+  title: string;
+};
+
 export type TCartListItem = {
   name: string;
   pic: string;

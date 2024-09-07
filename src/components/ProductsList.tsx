@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Grid, Pagination } from 'antd';
+import { Button, Pagination } from 'antd';
 import { FC, useMemo, useState } from 'react';
 
 import { ItemCard } from './ItemCard';
@@ -17,9 +17,6 @@ type TProductsListProps = {
 
 export const ProductsList: FC<TProductsListProps> = ({ products }) => {
   const [sort, setSort] = useState<SortType>(SortType.PRICE_ASCENDING);
-
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
 
   const productsCount = useMemo(
     () => `${products.length} ${getNounWithDeclension(products.length, 'товар', 'товара', 'товаров')}`,
@@ -41,15 +38,13 @@ export const ProductsList: FC<TProductsListProps> = ({ products }) => {
             <ItemCard key={index} info={item} />
           ))}
         </div>
-        <Button size={screens.md ? 'middle' : 'small'} className="w-max">
-          Показать ещё
-        </Button>
+        <Button className="w-max max-md:h-10 max-md:text-base">Показать ещё</Button>
         <Pagination
           align="center"
           defaultCurrent={1}
           total={100}
           showSizeChanger={false}
-          size={screens.md ? 'default' : 'small'}
+          className="max-md:small text-lg max-md:text-base"
         />
       </div>
     </div>

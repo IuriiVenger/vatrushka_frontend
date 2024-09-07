@@ -7,7 +7,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './badge.scss';
+@import './antdStyles/badge.scss';
+@import './antdStyles/carousel.scss';
+@import './antdStyles/cascader.scss';
+@import './antdStyles/dropdown.scss';
+@import './antdStyles/pagination.scss';
 @import './slider.css';
 
 @font-face {
@@ -73,48 +77,10 @@ body {
   }
 
   .ml-calc-center {
-    margin-left: calc((100vw - 344px) / 2) !important;
+    margin-left: calc((100vw - 344px) / 2);
   }
 
   .list-bullet {
     list-style-image: url('../images/bullet.svg');
   }
-}
-
-.ant-carousel .slick-prev::after,
-.ant-carousel .slick-next::after {
-  color: currentColor !important;
-  top: 36% !important;
-}
-
-.ant-carousel .slick-prev::after {
-  left: 42% !important;
-}
-
-.ant-carousel .slick-next::after {
-  left: 30% !important;
-}
-
-.ant-carousel .slick-prev:hover,
-.ant-carousel .slick-next:hover {
-  color: currentColor !important;
-}
-
-.ant-cascader-dropdown .ant-cascader-menu-item:hover {
-  background-color: #f6f0ed !important;
-}
-
-.ant-cascader-menu-item-content {
-  max-width: 16rem !important;
-  text-wrap: wrap;
-}
-
-.ant-dropdown .ant-dropdown-menu {
-  padding: 0.625rem 0.75rem !important;
-  /* margin: 19px 0 0; */
-}
-
-.ant-dropdown-menu .ant-dropdown-menu-item:hover {
-  background-color: unset !important;
-  color: #a96648 !important;
 }

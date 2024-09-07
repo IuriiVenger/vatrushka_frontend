@@ -1,7 +1,7 @@
 import { Cascader, message, CascaderProps, MenuProps, Dropdown } from 'antd';
 import React from 'react';
 
-import { IoIosArrowDown } from 'react-icons/io';
+import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 
 import { menuLevelOneOptions } from '@/mocks';
 import { TMenuLevelOneOption } from '@/types';
@@ -49,6 +49,7 @@ export const Menu = () => {
             onChange={onChange}
             expandTrigger="hover"
             displayRender={displayRender}
+            expandIcon={<IoIosArrowForward />}
             placement="bottomLeft"
             className="bg-red max-w-64 text-wrap"
           >

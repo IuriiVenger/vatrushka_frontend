@@ -9,7 +9,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '102922.selcdn.ru',
+        hostname: process.env.IMAGE_CDN,
         port: '',
         pathname: '/**',
       },

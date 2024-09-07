@@ -1,14 +1,11 @@
 'use client';
 
-import { Button, Grid } from 'antd';
+import { Button } from 'antd';
 import { FC, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
 export const SeoContent: FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
-
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
 
   const onButtonClick = () => setIsCollapsed(false);
 
@@ -53,9 +50,8 @@ export const SeoContent: FC = () => {
       {isCollapsed && (
         <Button
           icon={<IoIosArrowDown />}
-          size={screens.md ? 'middle' : 'small'}
           iconPosition="start"
-          className="w-max max-md:w-full"
+          className="w-max max-md:h-10 max-md:w-full max-md:text-base"
           onClick={onButtonClick}
         >
           Показать текст

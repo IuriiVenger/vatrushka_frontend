@@ -1,6 +1,6 @@
 'use client';
 
-import { Divider, Button, message, Grid } from 'antd';
+import { Divider, Button, message } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -16,9 +16,6 @@ type TItemCardProps = {
 
 export const ItemCard: FC<TItemCardProps> = ({ info, small = false, slider = false }) => {
   const { pic, name, timing, weight, price, description, inStock, tag } = info;
-
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
 
   const onCardClick = () => message.info('клик');
 
@@ -40,8 +37,8 @@ export const ItemCard: FC<TItemCardProps> = ({ info, small = false, slider = fal
         {tag}
       </span>
       <Image
-        width={382}
-        height={254}
+        width={448}
+        height={299}
         alt={name}
         src={pic}
         className="aspect-3/2 rounded-t-2xl object-cover object-center max-md:rounded-t-lg"
@@ -56,7 +53,7 @@ export const ItemCard: FC<TItemCardProps> = ({ info, small = false, slider = fal
               <p className="text-textSecondary max-md:text-base max-md:leading-base">Приготовление от {timing} часов</p>
             </div>
           </div>
-          <p className={`pt-4 max-md:text-base max-md:leading-base ${small ? 'collapsed-description' : ''}`}>
+          <p className={`pt-4 max-md:text-base max-md:leading-base ${small ? 'max-md:collapsed-description' : ''}`}>
             {description}
           </p>
         </div>
@@ -64,7 +61,7 @@ export const ItemCard: FC<TItemCardProps> = ({ info, small = false, slider = fal
           <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">
             {price} {CurrencySymbol.RUB}
           </p>
-          <Button type="primary" disabled={!inStock} size={screens.md ? 'middle' : 'small'} onClick={onButtonClick}>
+          <Button type="primary" disabled={!inStock} className="max-md:h-10 max-md:text-base" onClick={onButtonClick}>
             {inStock ? 'Купить' : 'Нет в наличии'}
           </Button>
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Grid } from 'antd';
+import { Button } from 'antd';
 import { FC, useRef, useState } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import Slider, { Settings } from 'react-slick';
@@ -19,9 +19,6 @@ export const SliderComponent: FC<TSliderComponentProps> = ({ title, slides }) =>
 
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
-
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
 
   const handleButtons = (_: number, next: number): void => {
     if (sliderRef.current) {
@@ -92,7 +89,7 @@ export const SliderComponent: FC<TSliderComponentProps> = ({ title, slides }) =>
       <div className="slider-container max-xs:ml-calc-center mx-auto grid max-w-320 grid-cols-1 overflow-hidden max-sm:pl-10 max-xs:mr-0 max-xs:pl-0">
         <Slider {...settings} ref={sliderRef}>
           {slides.map((slide, index) => (
-            <ItemCard key={index} info={slide} slider small={!screens.md} />
+            <ItemCard key={index} info={slide} slider small />
           ))}
         </Slider>
       </div>

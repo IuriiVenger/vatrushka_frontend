@@ -2,6 +2,8 @@ import { FC } from 'react';
 
 import { Catalog } from '../Catalog/Catalog';
 
+import { ProductsList } from '../ProductsList';
+
 import { HomeCarousel } from './HomeCarousel';
 
 import { CategoriesConnection } from '@/__generated__/graphql';
@@ -20,6 +22,7 @@ const Home: FC<THomeProps> = ({ categories }) => {
   return (
     <>
       <HomeCarousel slides={slides} />
+      <ProductsList products={products} />
       <Catalog categories={catalogCategories} />
       <Slider title="Рекомендуем" slides={products} />
       <SeoContent />

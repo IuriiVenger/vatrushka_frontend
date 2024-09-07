@@ -19,7 +19,7 @@ export enum RequestStatus {
 }
 
 export enum CurrencySymbol {
-  RUB = '&#8381;',
+  RUB = '₽',
 }
 
 export enum TagType {
@@ -33,6 +33,17 @@ export enum ContactLinks {
   VK = 'vk',
   WHATS_APP = 'whatsapp',
   MAIL = 'mail',
+}
+
+export enum NavigationLinks {
+  ABOUT = 'about',
+  CONTACTS = 'contacts',
+  OFFERS = 'offers',
+  WHOLESALE = 'wholesale',
+  DELIVERY = 'delivery',
+  BONUS = 'bonus',
+  CONDITIONS = 'conditions',
+  FEEDBACK = 'feedback',
 }
 
 export const emptyStoreDataWithStatus = {
