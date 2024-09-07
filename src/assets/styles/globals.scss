@@ -7,6 +7,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './badge.scss';
+@import './slider.css';
+
 @font-face {
   font-family: 'Gilroy';
   src:

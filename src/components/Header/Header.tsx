@@ -1,6 +1,6 @@
 'use client';
 
-import { MenuProps, Dropdown, Badge, message, Grid } from 'antd';
+import { MenuProps, Dropdown, Badge, message } from 'antd';
 import { FC } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
@@ -20,9 +20,6 @@ import { cartList } from '@/mocks';
 export type TMenuItem = Required<MenuProps>['items'][number];
 
 export const Header: FC = () => {
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
-
   const onClick: MenuProps['onClick'] = ({ key }) => {
     message.info(`Click on item ${key}`);
   };
@@ -75,7 +72,7 @@ export const Header: FC = () => {
             placement="bottomRight"
             overlayClassName="pt-2"
           >
-            <Badge count={cartList.length} size={screens.xs ? 'small' : 'default'} color={color.accent.default}>
+            <Badge count={cartList.length} className="max-xs:small" color={color.accent.default}>
               <LuShoppingCart className="h-5 w-5 cursor-pointer text-textTertiary transition-all hover:text-textQuaternary" />
             </Badge>
           </Dropdown>
