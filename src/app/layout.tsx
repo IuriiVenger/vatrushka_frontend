@@ -4,8 +4,8 @@ import { FC, PropsWithChildren } from 'react';
 
 import type { Metadata } from 'next';
 
-import '@/assets/styles/globals.css';
-import '@/assets/styles/slider.css';
+import '@/assets/styles/globals.scss';
+
 import { theme } from '@/config/theme';
 import StoreProvider from '@/store/components/StoreProvider';
 
