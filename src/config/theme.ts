@@ -85,13 +85,9 @@ export const theme = {
       colorTextDisabled: color.text.quaternary,
       borderRadius: 50,
       controlHeight: 40,
-      // controlHeightSM: 32,
       fontSize: 16,
-      // fontSizeSM: 14,
       fontHeight: 40,
-      // fontHeightSM: 22,
       itemSize: 40,
-      // itemSizeSM: 32,
     },
     Dropdown: {
       fontSize: 16,
