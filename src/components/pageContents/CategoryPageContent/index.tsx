@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 
-import { ProductsList } from '../ProductsList';
+import { ProductsList } from '../../ProductsList';
 
 import { TCard } from '@/types';
 

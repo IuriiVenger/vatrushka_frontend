@@ -8,13 +8,13 @@ import { FC } from 'react';
 import { CurrencySymbol, TagColorSchema } from '@/constants';
 import { TCard } from '@/types';
 
-type TItemCardProps = {
+type TProductCardProps = {
   info: TCard;
   small?: boolean;
   slider?: boolean;
 };
 
-export const ItemCard: FC<TItemCardProps> = ({ info, small = false, slider = false }) => {
+export const ProductCard: FC<TProductCardProps> = ({ info, small = false, slider = false }) => {
   const { pic, name, timing, weight, price, description, inStock, tag } = info;
 
   const onCardClick = () => message.info('клик');
@@ -28,7 +28,7 @@ export const ItemCard: FC<TItemCardProps> = ({ info, small = false, slider = fal
     <Link
       className={`relative flex h-full cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-t-lg ${slider ? 'mx-3 max-md:mx-2' : 'w-full'} `}
       onClick={onCardClick}
-      href="https://google.com"
+      href={info.href}
     >
       {tag && (
         <span

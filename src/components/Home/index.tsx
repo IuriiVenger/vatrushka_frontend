@@ -2,8 +2,6 @@ import { FC } from 'react';
 
 import { Catalog } from '../Catalog/Catalog';
 
-import { ProductsList } from '../ProductsList';
-
 import { HomeCarousel } from './HomeCarousel';
 
 import { CategoriesConnection } from '@/__generated__/graphql';

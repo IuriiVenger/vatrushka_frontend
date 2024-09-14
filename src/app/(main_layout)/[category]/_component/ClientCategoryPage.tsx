@@ -2,7 +2,7 @@
 
 import { FC, useEffect, useMemo } from 'react';
 
-import CategoryPageContent from '@/components/Category';
+import CategoryPageContent from '@/components/pageContents/CategoryPageContent';
 import { defaultPaginationParams, RequestStatus } from '@/constants';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { selectEntities } from '@/store/selectors';

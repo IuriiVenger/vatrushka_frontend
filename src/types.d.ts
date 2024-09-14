@@ -12,6 +12,7 @@ export type TCard = {
   price: number;
   tag?: TagType;
   inStock: boolean;
+  href: string;
 };
 
 export type TMenuLevelOneOption = {

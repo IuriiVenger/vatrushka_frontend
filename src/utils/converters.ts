@@ -13,4 +13,5 @@ export const convertCategoryItemsQueryProductsToCards = (categoryItems: Category
     description: node.products.short_description || node.products.description || '',
     price: node.products.productsizesCollection?.edges.find((product) => product.node.is_default)?.node.price || 0,
     inStock: true,
+    href: `/${node.products.categoryitemsCollection?.edges[0].node.categories.slug}/${node.products.slug}`,
   })) || [];
