@@ -91,4 +91,14 @@ export namespace API {
       refresh_token: string;
     };
   }
+
+  export namespace Categories {
+    export namespace GetProductsByCategorySlug {
+      export type Request = {
+        slug: string;
+        offset: number;
+        first: number;
+      };
+    }
+  }
 }

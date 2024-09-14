@@ -1,3 +1,4 @@
+import { ProductByCategorySlugQuery } from './__generated__/graphql';
 import { TagType } from './mock';
 
 type TValueOf<T> = T[keyof T];
@@ -6,11 +7,12 @@ export type TCard = {
   pic: string;
   name: string;
   weight: number;
-  timing: string;
+  timing?: string;
   description: string;
   price: number;
-  tag: TagType;
+  tag?: TagType;
   inStock: boolean;
+  href: string;
 };
 
 export type TMenuLevelOneOption = {
@@ -39,3 +41,7 @@ export type TCartListItem = {
 export type TTag = {
   [key: string]: { textColor: string; backgroundColor: string };
 };
+
+export type CategoryItemsConnectionType = NonNullable<
+  ProductByCategorySlugQuery['categoriesCollection']
+>['edges'][0]['node']['categoryitemsCollection'];
