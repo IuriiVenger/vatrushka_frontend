@@ -30,12 +30,14 @@ export const ItemCard: FC<TItemCardProps> = ({ info, small = false, slider = fal
       onClick={onCardClick}
       href="https://google.com"
     >
-      <span
-        className="z-2 absolute left-6 top-6 rounded-lg px-2 py-1 text-base leading-base max-md:px-1"
-        style={{ backgroundColor: TagColorSchema[tag].backgroundColor, color: TagColorSchema[tag].textColor }}
-      >
-        {tag}
-      </span>
+      {tag && (
+        <span
+          className="z-2 absolute left-6 top-6 rounded-lg px-2 py-1 text-base leading-base max-md:px-1"
+          style={{ backgroundColor: TagColorSchema[tag]?.backgroundColor, color: TagColorSchema[tag]?.textColor }}
+        >
+          {tag}
+        </span>
+      )}
       <Image
         width={560}
         height={373}
@@ -49,11 +51,20 @@ export const ItemCard: FC<TItemCardProps> = ({ info, small = false, slider = fal
             <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">{name}</p>
             <div className="flex items-center">
               <p className="text-nowrap text-textSecondary max-md:text-base max-md:leading-base">{weight} кг</p>
-              <Divider type="vertical" />
-              <p className="text-textSecondary max-md:text-base max-md:leading-base">Приготовление от {timing} часов</p>
+              {timing && (
+                <>
+                  <Divider type="vertical" />
+
+                  <p className="text-textSecondary max-md:text-base max-md:leading-base">
+                    Приготовление от {timing} часов
+                  </p>
+                </>
+              )}
             </div>
           </div>
-          <p className={`pt-4 max-md:text-base max-md:leading-base ${small ? 'max-md:collapsed-description' : ''}`}>
+          <p
+            className={`line-clamp-3 pt-4 max-md:text-base max-md:leading-base ${small ? 'max-md:collapsed-description' : ''}`}
+          >
             {description}
           </p>
         </div>

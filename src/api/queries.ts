@@ -31,6 +31,68 @@ export const GET_CATEGORIES = gql`
           button_image_url
           header_image_url
           isHidden
+          slug
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PRODUCTS_BY_CATEGORY_SLUG = gql`
+  query ProductByCategorySlug(
+    $filter: categoriesFilter
+    $offset: Int
+    $productsizesCollectionFilter2: productsizesFilter
+    $first: Int
+  ) {
+    categoriesCollection(filter: $filter) {
+      edges {
+        node {
+          name
+          slug
+          header_image_url
+          description
+          categoryitemsCollection(offset: $offset, first: $first) {
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+            }
+            edges {
+              node {
+                products {
+                  tags2
+                  tags
+                  slug
+                  sku
+                  short_description
+                  optional_text
+                  name
+                  labels
+                  ingredients
+                  images
+                  image_cropped
+                  id
+                  description
+                  productsizesCollection(filter: $productsizesCollectionFilter2) {
+                    edges {
+                      node {
+                        button_image_cropped_url
+                        button_image_url
+                        is_default
+                        id
+                        portion_weight_grams
+                        price
+                        size_code
+                        size_id
+                        size_name
+                        sku
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

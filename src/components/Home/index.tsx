@@ -22,7 +22,7 @@ const Home: FC<THomeProps> = ({ categories }) => {
   return (
     <>
       <HomeCarousel slides={slides} />
-      <ProductsList products={products} />
+      {/* <ProductsList products={products} /> */}
       <Catalog categories={catalogCategories} />
       <Slider title="Рекомендуем" slides={products} />
       <SeoContent />
