@@ -11,6 +11,7 @@ export const mockCardOne: TCard = {
   price: 600,
   tag: TagType.HIT,
   inStock: true,
+  href: 'https://www.google.com',
 };
 
 export const mockCardTwo: TCard = {
@@ -23,6 +24,7 @@ export const mockCardTwo: TCard = {
   price: 600000,
   tag: TagType.RECOMMENDED,
   inStock: false,
+  href: 'https://www.google.com',
 };
 
 export const products: TCard[] = [...Array(9)].map((_, index) => (index % 2 === 0 ? mockCardOne : mockCardTwo));

@@ -1,4 +1,5 @@
 import { Cascader, message, CascaderProps, MenuProps, Dropdown } from 'antd';
+import Link from 'next/link';
 import React from 'react';
 
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
@@ -10,25 +11,25 @@ const clientItems: MenuProps['items'] = [
   {
     key: '1',
     label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.google.com">
+      <Link target="_blank" rel="noopener noreferrer" href="https://www.google.com">
         1st menu item
-      </a>
+      </Link>
     ),
   },
   {
     key: '2',
     label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.google.com">
+      <Link target="_blank" rel="noopener noreferrer" href="https://www.google.com">
         2nd menu item
-      </a>
+      </Link>
     ),
   },
   {
     key: '3',
     label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.google.com">
+      <Link target="_blank" rel="noopener noreferrer" href="https://www.google.com">
         3rd menu item
-      </a>
+      </Link>
     ),
   },
 ];
@@ -68,24 +69,24 @@ export const Menu = () => {
           </Dropdown>
         </li>
         <li>
-          <a
+          <Link
             href="https://www.google.com"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-all hover:text-primaryHover"
           >
             Контакты
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href="https://www.google.com"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-all hover:text-primaryHover"
           >
             Мои заказы
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

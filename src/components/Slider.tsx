@@ -5,7 +5,7 @@ import { FC, useRef, useState } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import Slider, { Settings } from 'react-slick';
 
-import { ItemCard } from './ItemCard';
+import { ProductCard } from './ProductCard';
 
 import { TCard } from '@/types';
 
@@ -89,7 +89,7 @@ export const SliderComponent: FC<TSliderComponentProps> = ({ title, slides }) =>
       <div className="slider-container max-xs:ml-calc-center mx-auto grid max-w-320 grid-cols-1 overflow-hidden max-sm:pl-10 max-xs:mr-0 max-xs:pl-0">
         <Slider {...settings} ref={sliderRef}>
           {slides.map((slide, index) => (
-            <ItemCard key={index} info={slide} slider small />
+            <ProductCard key={index} info={slide} slider small />
           ))}
         </Slider>
       </div>

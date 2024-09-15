@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { FC } from 'react';
 
 import { CatalogItem } from './CatalogItem';
@@ -16,7 +17,9 @@ export const Catalog: FC<TCatalogProps> = ({ categories, subCatalogName }) => (
     </h2>
     <div className="grid w-full grid-cols-4 gap-6 max-lg:grid-cols-3 max-md:gap-4 max-sm:grid-cols-2">
       {categories.map((item) => (
-        <CatalogItem key={item.id} item={item} subCatalog={!!subCatalogName} />
+        <Link key={item.id} href={`/${item.slug}`}>
+          <CatalogItem key={item.id} item={item} subCatalog={!!subCatalogName} />
+        </Link>
       ))}
     </div>
   </div>

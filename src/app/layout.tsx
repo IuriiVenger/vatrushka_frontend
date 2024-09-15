@@ -1,12 +1,11 @@
-import { AntdRegistry } from '@ant-design/nextjs-registry';
-import { ConfigProvider } from 'antd';
 import { FC, PropsWithChildren } from 'react';
+
+import Providers from './providers';
 
 import type { Metadata } from 'next';
 
 import '@/assets/styles/globals.scss';
 
-import { theme } from '@/config/theme';
 import StoreProvider from '@/store/components/StoreProvider';
 
 export const metadata: Metadata = {
@@ -18,9 +17,7 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => (
   <StoreProvider>
     <html lang="en">
       <body>
-        <ConfigProvider theme={theme}>
-          <AntdRegistry layer>{children}</AntdRegistry>
-        </ConfigProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   </StoreProvider>

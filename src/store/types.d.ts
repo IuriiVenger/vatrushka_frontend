@@ -17,4 +17,12 @@ export type StoreDataWithStatus<T> = {
   data: T;
 };
 
-export type StoreDataWithStatusAndMeta<T> = StoreDataWithStatus<T> & SupabasePaginationParams;
+export type StorePaginationParams = {
+  meta: {
+    offset: number;
+    first?: number;
+    isLastPage?: boolean;
+  };
+};
+
+export type StoreDataWithStatusAndMeta<T> = StoreDataWithStatus<T> & StorePaginationParams;

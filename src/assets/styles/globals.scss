@@ -97,11 +97,12 @@ body {
 }
 
 .yarl__toolbar {
-  padding: 48px;
+  padding: 48px 0 0;
 }
 
 .yarl__button {
   padding: 12px;
+  margin: 0 48px 0;
   background-color: #fff;
   border-radius: 50%;
   filter: none;

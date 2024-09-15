@@ -46,9 +46,22 @@ export enum NavigationLinks {
   FEEDBACK = 'feedback',
 }
 
+export const defaultPaginationParams = {
+  first: 30,
+  offset: 0,
+};
+
 export const emptyStoreDataWithStatus = {
   status: RequestStatus.NONE,
   data: null,
+};
+
+export const emptyStoreDataWithStatusAndMeta = {
+  ...emptyStoreDataWithStatus,
+  meta: {
+    ...defaultPaginationParams,
+    isLastPage: false,
+  },
 };
 
 export const TagColorSchema: TTag = {
