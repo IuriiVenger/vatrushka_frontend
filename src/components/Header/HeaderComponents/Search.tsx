@@ -25,7 +25,6 @@ export const Search: FC = () => {
     <>
       <IoSearch className="hidden h-5 w-5 text-textTertiary max-sm:block" />
       <AutoComplete
-        size="small"
         onSearch={handleSearch}
         options={options}
         className="h-full max-sm:hidden"

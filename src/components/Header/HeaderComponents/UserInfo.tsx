@@ -13,7 +13,7 @@ export const UserInfo: FC<TUserInfoProps> = ({ user }) => {
 
   return (
     <div className="flex flex-col gap-1">
-      <p className="text-500 text-text">{name}</p>
+      <p className="font-medium text-text">{name}</p>
       <p className="text-textTertiary">{phone}</p>
       <p className="text-textTertiary">{email}</p>
     </div>

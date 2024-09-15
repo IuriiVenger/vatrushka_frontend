@@ -7,11 +7,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'yet-another-react-lightbox/styles.css';
+
 @import './antdStyles/badge.scss';
 @import './antdStyles/carousel.scss';
 @import './antdStyles/cascader.scss';
 @import './antdStyles/dropdown.scss';
 @import './antdStyles/pagination.scss';
+@import './antdStyles/segmented.scss';
 @import './slider.css';
 
 @font-face {
@@ -22,7 +25,7 @@
     url('../fonts/Gilroy-Regular.ttf') format('ttf'),
     url('../fonts/Gilroy-Regular.woff') format('woff'),
     url('../fonts/Gilroy-Regular.woff2') format('woff2');
-  font-weight: normal;
+  font-weight: 400;
   font-display: swap;
 }
 
@@ -34,7 +37,7 @@
     url('../fonts/Gilroy-Medium.ttf') format('ttf'),
     url('../fonts/Gilroy-Medium.woff') format('woff'),
     url('../fonts/Gilroy-Medium.woff2') format('woff2');
-  font-weight: medium;
+  font-weight: 500;
   font-display: swap;
 }
 
@@ -83,4 +86,29 @@ body {
   .list-bullet {
     list-style-image: url('../images/bullet.svg');
   }
+}
+
+.yarl__container {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.yarl__slide_error {
+  color: #f95f39;
+}
+
+.yarl__toolbar {
+  padding: 48px;
+}
+
+.yarl__button {
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 50%;
+  filter: none;
+}
+
+.yarl__icon {
+  width: 18px;
+  height: 18px;
+  color: rgba(45, 45, 45, 0.65);
 }

@@ -1,10 +1,9 @@
 import { FC } from 'react';
 
+import { Carousel } from '../Carousel';
 import { Catalog } from '../Catalog/Catalog';
 
 import { ProductsList } from '../ProductsList';
-
-import { HomeCarousel } from './HomeCarousel';
 
 import { CategoriesConnection } from '@/__generated__/graphql';
 import { SeoContent } from '@/components/SeoContent';
@@ -21,7 +20,7 @@ const Home: FC<THomeProps> = ({ categories }) => {
 
   return (
     <>
-      <HomeCarousel slides={slides} />
+      <Carousel slides={slides} />
       <ProductsList products={products} />
       <Catalog categories={catalogCategories} />
       <Slider title="Рекомендуем" slides={products} />

@@ -2,10 +2,10 @@ import { FC, useState } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 
 type TStepperButtonProps = {
-  initialCount: number;
+  initialCount?: number;
 };
 
-export const StepperButton: FC<TStepperButtonProps> = ({ initialCount }) => {
+export const StepperButton: FC<TStepperButtonProps> = ({ initialCount = 1 }) => {
   const [count, setCount] = useState(initialCount);
 
   const isMinusButtonDisabled = count === 1;
@@ -16,7 +16,7 @@ export const StepperButton: FC<TStepperButtonProps> = ({ initialCount }) => {
   };
 
   return (
-    <div className="flex w-max items-center rounded-3xl bg-textQuinary">
+    <div className="flex w-max items-center rounded-3xl bg-textQuinary max-xs:w-full max-xs:justify-between">
       <button
         type="button"
         disabled={isMinusButtonDisabled}

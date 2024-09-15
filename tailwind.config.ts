@@ -7,7 +7,9 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const spacing = {
   13.75: '3.45rem',
   17: '4.375rem',
+  18: '4.5rem',
   30: '7.5rem',
+  34: '8.5rem',
   39: '9.75rem',
   45: '11.25rem',
   47: '11.75rem',
@@ -16,8 +18,11 @@ const spacing = {
   76: '19rem',
   82: '20.5rem',
   85: '21.25rem',
+  100: '25rem',
   108: '27rem',
+  120: '30rem',
   128: '32rem',
+  144: '36rem',
   300: '75rem',
   320: '80rem',
 };
@@ -137,6 +142,7 @@ const config: Config = {
       aspectRatio: {
         '21/9': '21 / 9',
         '3/2': '3 / 2',
+        '6/2': '6 / 2',
       },
     },
 
