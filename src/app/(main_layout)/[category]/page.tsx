@@ -19,6 +19,8 @@ const CategoryPage: FC<CategoryPageProps> = async ({ params }) => {
 
   const categoryData = data.categoriesCollection?.edges[0];
 
+  console.log('server categoryData', categoryData);
+
   if (!categoryData || error) {
     return notFound();
   }
