@@ -15,6 +15,8 @@ type ProductPageProps = {
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const { category, product } = params;
 
+  // const { data, error } = await products.getBySlug('fettuchini-s-kurinim-file-i-brokkoli-300gr');
+
   const { data, error } = await products.getBySlug(product);
 
   if (!data || error) {

@@ -18,7 +18,7 @@ export const ProductImages: FC<TProps> = ({ images, title, tag }) => {
   return (
     <>
       <div className="flex w-full gap-4 max-xl:flex-col-reverse max-xl:justify-end max-md:hidden">
-        <div className="flex w-18 flex-col flex-wrap gap-2 max-xl:w-auto max-xl:flex-row">
+        <div className="flex min-w-18 max-w-18 flex-col flex-wrap gap-2 max-xl:w-auto max-xl:min-w-full max-xl:max-w-full max-xl:flex-row">
           {images.map((pic, index) => (
             <Image
               key={index}
@@ -27,7 +27,7 @@ export const ProductImages: FC<TProps> = ({ images, title, tag }) => {
               height={144}
               alt={title}
               onClick={() => setOpen(true)}
-              className="aspect-square h-18 w-18 cursor-pointer rounded-2xl border border-primary object-cover p-0.5 "
+              className="aspect-square min-w-18 max-w-18 cursor-pointer rounded-2xl border border-primary object-cover p-0.5 "
             />
           ))}
         </div>
