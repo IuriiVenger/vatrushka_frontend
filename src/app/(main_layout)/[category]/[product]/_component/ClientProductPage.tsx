@@ -1,7 +1,10 @@
+'use client';
+
 import { FC } from 'react';
 
 import { ProductBySlugQuery } from '@/__generated__/graphql';
 import ProductPageContent from '@/components/pageContents/ProductPageContent';
+import { promotions } from '@/mocks';
 
 type ClientProductPageProps = {
   product: ProductBySlugQuery;
@@ -28,7 +31,7 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
   const allergens = product.productsCollection?.edges[0].node.productallergensCollection?.edges;
   const labels = product.productsCollection?.edges[0].node.labels;
 
-  const additionalImages = Array(8).fill(image);
+  const additionalImages = Array(4).fill(image);
 
   const productInfo = {
     id,
@@ -41,6 +44,7 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
     allergens,
     weight,
     labels,
+    promotions,
   };
 
   return <ProductPageContent productInfo={productInfo} />;
