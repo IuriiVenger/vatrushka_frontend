@@ -130,8 +130,16 @@ export const theme = {
       fontSize: 16,
       borderRadius: 64,
       boxShadowTertiary: 'none',
-      // motionDurationMid: 0.001,
-      // motionDurationSlow: 0.001,
+    },
+    Collapse: {
+      contentBg: color.white,
+      headerBg: color.white,
+      colorBorder: color.border.secondary,
+      borderRadiusLG: 16,
+      headerPadding: 24,
+      headerPaddingXS: 16,
+      contentPadding: '0 24px 24px',
+      fontSizeIcon: 30,
     },
   },
 };
