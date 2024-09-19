@@ -36,7 +36,7 @@ export const CartList: FC = () => {
       <div className="flex items-center justify-between">
         <p>
           Итого:{' '}
-          <span className="text-500 text-lg leading-lg">
+          <span className="text-lg font-medium leading-lg">
             <span>{cartList.reduce<number>((acc, item) => acc + item.price, 0)}</span> {CurrencySymbol.RUB}
           </span>
         </p>
