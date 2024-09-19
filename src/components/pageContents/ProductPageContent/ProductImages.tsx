@@ -6,14 +6,16 @@ import Lightbox from 'yet-another-react-lightbox';
 import { Carousel } from '../../Carousel';
 import { GalleryImage } from '../../GalleryImage';
 
-type TProps = {
+type TProductImagesProps = {
   images: string[];
   title: string;
   tag?: string;
 };
 
-export const ProductImages: FC<TProps> = ({ images, title, tag }) => {
+export const ProductImages: FC<TProductImagesProps> = ({ images, title, tag }) => {
   const [open, setOpen] = useState(false);
+
+  const onImageClick = () => setOpen(true);
 
   return (
     <>
@@ -26,7 +28,7 @@ export const ProductImages: FC<TProps> = ({ images, title, tag }) => {
               width={144}
               height={144}
               alt={title}
-              onClick={() => setOpen(true)}
+              onClick={onImageClick}
               className="aspect-square h-18 w-18 cursor-pointer rounded-2xl border border-primary object-cover p-0.5 "
             />
           ))}
@@ -48,7 +50,7 @@ export const ProductImages: FC<TProps> = ({ images, title, tag }) => {
             width={580}
             height={387}
             alt={title}
-            onClick={() => setOpen(true)}
+            onClick={onImageClick}
             className="aspect-3/2 w-full cursor-pointer rounded-2xl object-cover "
           />
         </div>
