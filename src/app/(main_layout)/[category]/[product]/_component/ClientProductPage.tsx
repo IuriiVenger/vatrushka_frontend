@@ -4,6 +4,7 @@ import { FC } from 'react';
 
 import { ProductBySlugQuery } from '@/__generated__/graphql';
 import ProductPageContent from '@/components/pageContents/ProductPageContent';
+import { promotions } from '@/mocks';
 
 type ClientProductPageProps = {
   product: ProductBySlugQuery;
@@ -11,7 +12,7 @@ type ClientProductPageProps = {
 
 const ClientProductPage: FC<ClientProductPageProps> = (props) => {
   const { product } = props;
-  console.log(product);
+
   const id = product.productsCollection?.edges[0].node.id;
   const title = product.productsCollection?.edges[0].node.name;
   const description = product.productsCollection?.edges[0].node.description;
@@ -32,10 +33,6 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
 
   const additionalImages = Array(4).fill(image);
 
-  const promotions = [
-    { id: '1', text: 'Скидка именинникам 10%' },
-    { id: '2', text: 'Бесплатная доставка от 1000 р.' },
-  ];
   const productInfo = {
     id,
     title,

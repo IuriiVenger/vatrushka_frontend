@@ -150,3 +150,8 @@ const mockAccordions = [
 ];
 
 export const accordions = [...mockAccordions, ...mockAccordions, mockAccordions[0]];
+
+export const promotions = [
+  { id: '1', text: 'Скидка именинникам 10%' },
+  { id: '2', text: 'Бесплатная доставка от 1000 р.' },
+];

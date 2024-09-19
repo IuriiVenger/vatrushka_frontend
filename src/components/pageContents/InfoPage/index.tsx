@@ -6,13 +6,17 @@ import { Accordion } from './Accordion';
 
 import { accordions } from '@/mocks';
 
-export const InfoPage: FC = () => {
+type TInfoPageProps = {
+  pageName: string;
+};
+
+export const InfoPage: FC<TInfoPageProps> = ({ pageName }) => {
   const breadcrumbs = [
     {
       title: <Link href="/">Главная</Link>,
     },
     {
-      title: 'Бонусная программа',
+      title: pageName,
     },
   ];
 

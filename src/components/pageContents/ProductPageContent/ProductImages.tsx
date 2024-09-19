@@ -17,6 +17,8 @@ export const ProductImages: FC<TProductImagesProps> = ({ images, title, tag }) =
 
   const onImageClick = () => setOpen(true);
 
+  const slides = images.map((image) => ({ src: image || '', width: 804, height: 536 }));
+
   return (
     <>
       <div className="flex w-full gap-4 max-xl:flex-col-reverse max-xl:justify-end max-md:hidden">
@@ -51,14 +53,14 @@ export const ProductImages: FC<TProductImagesProps> = ({ images, title, tag }) =
             height={387}
             alt={title}
             onClick={onImageClick}
-            className="aspect-3/2 w-full cursor-pointer rounded-2xl object-cover "
+            className="aspect-3/2 w-full cursor-pointer rounded-2xl object-cover"
           />
         </div>
       </div>
       <Lightbox
-        slides={images.map((image) => ({ src: image || '', width: 804, height: 536 }))}
+        slides={slides}
         open={open}
-        close={() => setOpen(false)}
+        close={onImageClick}
         className="max-md:hidden"
         render={{ slide: GalleryImage }}
       />
