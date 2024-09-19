@@ -52,10 +52,11 @@ type TBusinessHours = Record<string, THours>;
 
 type TBranch = {
   id: string;
+  name: string;
   address: string;
-  coords: number[];
   phone: string;
   businessHours: TBusinessHours;
+  coords?: number[];
 };
 
 type TCompanyInfo = {
@@ -64,5 +65,7 @@ type TCompanyInfo = {
   mainPhone: string;
   wholesaleManagerPhone: string;
   wholesaleManagerEmail: string;
+  telegramBot: string;
   branches: TBranch[];
+  partners: TBranch[];
 };

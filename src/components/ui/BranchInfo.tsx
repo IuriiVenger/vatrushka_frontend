@@ -6,10 +6,9 @@ type TBranchInfoProps = {
   address: string;
   phone: string;
   businessHours: TBusinessHours;
-  colored?: boolean;
 };
 
-export const BranchInfo: FC<TBranchInfoProps> = ({ address, phone, businessHours, colored }) => {
+export const BranchInfo: FC<TBranchInfoProps> = ({ address, phone, businessHours }) => {
   const days = [
     { label: 'пн-пт', hours: businessHours.weekdays },
     { label: 'сб', hours: businessHours.saturday },
@@ -18,7 +17,7 @@ export const BranchInfo: FC<TBranchInfoProps> = ({ address, phone, businessHours
 
   return (
     <div className="flex flex-col gap-2 text-lg leading-lg max-sm:text-base max-sm:leading-base">
-      <h3 className={`font-medium ${colored ? 'text-accent' : ''}`}>{address}</h3>
+      <h3 className="font-medium">{address}</h3>
       <p>{phone}</p>
       <div className="flex flex-col gap-1 text-textTertiary">
         {days.map(({ label, hours }) => (
