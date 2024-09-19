@@ -48,7 +48,7 @@ export const contactLinks: Record<ContactLinks, TContact> = {
     icon: <IoLogoWhatsapp />,
   },
   [ContactLinks.MAIL]: {
-    link: '123@123.ru',
+    link: 'delivery@vatrushka74.ru',
     icon: <IoIosMail />,
   },
   [ContactLinks.CHIEF_MAIL]: {

@@ -15,6 +15,7 @@
 @import './antdStyles/dropdown.scss';
 @import './antdStyles/pagination.scss';
 @import './antdStyles/segmented.scss';
+@import './customClassnames.scss';
 @import './slider.css';
 
 @font-face {
@@ -63,53 +64,4 @@ body {
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
   color: rgb(var(--foreground-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .collapsed-description {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-  }
-
-  .ml-calc-center {
-    margin-left: calc((100vw - 344px) / 2);
-  }
-
-  .list-bullet {
-    list-style-image: url('../images/bullet.svg');
-  }
-}
-
-.yarl__container {
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.yarl__slide_error {
-  color: #f95f39;
-}
-
-.yarl__toolbar {
-  padding: 48px 0 0;
-}
-
-.yarl__button {
-  padding: 12px;
-  margin: 0 48px 0;
-  background-color: #fff;
-  border-radius: 50%;
-  filter: none;
-}
-
-.yarl__icon {
-  width: 18px;
-  height: 18px;
-  color: rgba(45, 45, 45, 0.65);
 }
