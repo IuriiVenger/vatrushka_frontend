@@ -45,3 +45,22 @@ export type TTag = {
 export type CategoryItemsConnectionType = NonNullable<
   ProductByCategorySlugQuery['categoriesCollection']
 >['edges'][0]['node']['categoryitemsCollection'];
+
+type THours = { open: string; close: string };
+
+type TBusinessHours = Record<string, THours>;
+
+type TBranch = {
+  id: string;
+  address: string;
+  coords: number[];
+  phone: string;
+  businessHours: TBusinessHours;
+};
+
+type TCompanyInfo = {
+  fullName: string;
+  legalName: string;
+  mainPhone: string;
+  branches: TBranch[];
+};

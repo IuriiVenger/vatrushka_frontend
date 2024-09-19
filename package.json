@@ -16,6 +16,7 @@
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.1",
     "@apollo/client": "^3.11.5",
+    "@pbe/react-yandex-maps": "^1.2.5",
     "@reduxjs/toolkit": "^2.2.7",
     "antd": "^5.20.3",
     "axios": "^1.7.5",
