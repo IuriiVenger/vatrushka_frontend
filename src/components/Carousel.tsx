@@ -19,7 +19,6 @@ export const Carousel: FC<TCarouselProps> = ({ slides, product }) => (
       arrows
       adaptiveHeight
       pauseOnHover
-      // slidesToShow={product ? 2 : 1}
       className={`max-md:no-arrows box-content h-full w-full max-w-300 max-xs:max-w-82 ${product ? 'aspect-6/2' : 'aspect-21/9 max-sm:aspect-square'}`}
     >
       {slides.map((slide, index) => (

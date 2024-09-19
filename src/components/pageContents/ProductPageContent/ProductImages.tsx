@@ -17,10 +17,12 @@ export const ProductImages: FC<TProductImagesProps> = ({ images, title, tag }) =
 
   const onImageClick = () => setOpen(true);
 
+  const slides = images.map((image) => ({ src: image || '', width: 804, height: 536 }));
+
   return (
     <>
       <div className="flex w-full gap-4 max-xl:flex-col-reverse max-xl:justify-end max-md:hidden">
-        <div className="flex w-18 flex-col flex-wrap gap-2 max-xl:w-auto max-xl:flex-row">
+        <div className="flex min-w-18 max-w-18 flex-col flex-wrap gap-2 max-xl:w-auto max-xl:min-w-full max-xl:max-w-full max-xl:flex-row">
           {images.map((pic, index) => (
             <Image
               key={index}
@@ -29,7 +31,7 @@ export const ProductImages: FC<TProductImagesProps> = ({ images, title, tag }) =
               height={144}
               alt={title}
               onClick={onImageClick}
-              className="aspect-square h-18 w-18 cursor-pointer rounded-2xl border border-primary object-cover p-0.5 "
+              className="aspect-square min-w-18 max-w-18 cursor-pointer rounded-2xl border border-primary object-cover p-0.5 "
             />
           ))}
         </div>
@@ -51,14 +53,14 @@ export const ProductImages: FC<TProductImagesProps> = ({ images, title, tag }) =
             height={387}
             alt={title}
             onClick={onImageClick}
-            className="aspect-3/2 w-full cursor-pointer rounded-2xl object-cover "
+            className="aspect-3/2 w-full cursor-pointer rounded-2xl object-cover"
           />
         </div>
       </div>
       <Lightbox
-        slides={images.map((image) => ({ src: image || '', width: 804, height: 536 }))}
+        slides={slides}
         open={open}
-        close={() => setOpen(false)}
+        close={onImageClick}
         className="max-md:hidden"
         render={{ slide: GalleryImage }}
       />

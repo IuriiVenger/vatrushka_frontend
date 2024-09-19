@@ -10,14 +10,11 @@ import { TCard } from '@/types';
 
 type TProductCardProps = {
   info: TCard;
-  small?: boolean;
   slider?: boolean;
 };
 
-export const ProductCard: FC<TProductCardProps> = ({ info, small = false, slider = false }) => {
+export const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
   const { pic, name, timing, weight, price, description, inStock, tag } = info;
-
-  const onCardClick = () => message.info('клик');
 
   const onButtonClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -27,7 +24,6 @@ export const ProductCard: FC<TProductCardProps> = ({ info, small = false, slider
   return (
     <Link
       className={`relative flex h-full cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-t-lg ${slider ? 'mx-3 max-md:mx-2' : 'w-full'} `}
-      onClick={onCardClick}
       href={info.href}
     >
       {tag && (
@@ -50,11 +46,10 @@ export const ProductCard: FC<TProductCardProps> = ({ info, small = false, slider
           <div className="flex flex-col">
             <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">{name}</p>
             <div className="flex items-center">
-              <p className="text-nowrap text-textSecondary max-md:text-base max-md:leading-base">{weight} кг</p>
+              <p className="text-nowrap text-textSecondary max-md:text-base max-md:leading-base">{weight} г</p>
               {timing && (
                 <>
                   <Divider type="vertical" />
-
                   <p className="text-textSecondary max-md:text-base max-md:leading-base">
                     Приготовление от {timing} часов
                   </p>
@@ -62,11 +57,7 @@ export const ProductCard: FC<TProductCardProps> = ({ info, small = false, slider
               )}
             </div>
           </div>
-          <p
-            className={`line-clamp-3 pt-4 max-md:text-base max-md:leading-base ${small ? 'max-md:collapsed-description' : ''}`}
-          >
-            {description}
-          </p>
+          <p className="line-clamp-3 pt-4 max-md:text-base max-md:leading-base">{description}</p>
         </div>
         <div className="flex items-center justify-between pt-4">
           <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">
