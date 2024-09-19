@@ -8,6 +8,8 @@ export const companyInfo: TCompanyInfo = {
   fullName: 'Пекарня-кондитерская «Ватрушка»',
   legalName: 'ИП Быков Елисей Эдуардович',
   mainPhone: '+ 7 (351) 700-79-81',
+  wholesaleManagerPhone: '+7 951-794-13-46',
+  wholesaleManagerEmail: 'wsd1@vatrushka74.ru',
   branches: [
     {
       id: '1',

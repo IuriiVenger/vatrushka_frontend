@@ -62,5 +62,7 @@ type TCompanyInfo = {
   fullName: string;
   legalName: string;
   mainPhone: string;
+  wholesaleManagerPhone: string;
+  wholesaleManagerEmail: string;
   branches: TBranch[];
 };

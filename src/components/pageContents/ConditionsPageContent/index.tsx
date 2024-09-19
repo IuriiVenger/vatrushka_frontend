@@ -1,6 +1,7 @@
-import { companyInfo, contactLinks } from '@/config/links';
 import { Breadcrumb } from 'antd';
 import Link from 'next/link';
+
+import { companyInfo, contactLinks } from '@/config/links';
 
 export const ConditionsPage = () => {
   const breadcrumbs = [
