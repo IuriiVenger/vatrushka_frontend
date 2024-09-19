@@ -24,11 +24,9 @@ export const GalleryImage: FC<RenderSlideProps<SlideImage>> = ({ slide, offset, 
 
   const cover = isImageSlide(slide) && isImageFitCover(slide, imageFit);
 
+  const onImageClick = offset === 0 ? () => click?.({ index: currentIndex }) : undefined;
+
   if (!isNextJsImage(slide)) return undefined;
-  // const width =
-  //   !cover && slide.height && slide.width
-  //     ? Math.round(Math.min(rect.width, (rect.height / slide.height) * slide.width))
-  //     : rect.width;
 
   const height =
     !cover && slide.height && slide.width
@@ -47,11 +45,8 @@ export const GalleryImage: FC<RenderSlideProps<SlideImage>> = ({ slide, offset, 
           objectFit: cover ? 'cover' : 'contain',
           cursor: click ? 'pointer' : undefined,
         }}
-        // sizes={`${Math.ceil((width / window.innerWidth) * 100)}vw`}
         sizes="80vw"
-        // width={width}
-        // height={height}
-        onClick={offset === 0 ? () => click?.({ index: currentIndex }) : undefined}
+        onClick={onImageClick}
       />
     </div>
   );
