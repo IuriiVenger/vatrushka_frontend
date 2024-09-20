@@ -111,5 +111,8 @@ export namespace API {
     export type Tag = NonNullable<
       NonNullable<ProductBySlugQuery['productsCollection']>['edges'][0]['node']['productTagsCollection']
     >['edges'][0]['node'];
+    export type Promotion = NonNullable<
+      NonNullable<ProductBySlugQuery['productsCollection']>['edges'][0]['node']['productpromotionsCollection']
+    >['edges'][0]['node']['promotions'];
   }
 }

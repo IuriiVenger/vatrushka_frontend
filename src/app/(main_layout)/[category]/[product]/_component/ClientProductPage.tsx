@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 
 import { ProductBySlugQuery } from '@/__generated__/graphql';
@@ -40,7 +42,10 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
   const filtredAllergens = allergens && (allergens.filter((allergen) => !!allergen) as string[]);
 
   const labels = product.productsCollection?.edges[0].node.productlabelsCollection?.edges.map((label) => label.node);
-  const tags = product.productsCollection?.edges[0].node.productTagsCollection?.edges;
+  // const tags = product.productsCollection?.edges[0].node.productTagsCollection?.edges;
+  const promotions = product.productsCollection?.edges[0].node.productpromotionsCollection?.edges
+    .map((item) => item.node.promotions)
+    .filter((promotion) => !!promotion.productButtonText);
 
   const productInfo: TProductProps['productInfo'] = {
     id,
@@ -52,6 +57,7 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
     allergens: filtredAllergens,
     weight,
     labels,
+    promotions,
   };
 
   return <ProductPageContent productInfo={productInfo} />;

@@ -1,0 +1,19 @@
+@layer utilities {
+  .ant-collapse {
+    .ant-collapse-header {
+      .ant-collapse-expand-icon {
+        height: 32px;
+      }
+    }
+
+    &.small-padding {
+      .ant-collapse-header {
+        padding: 16px;
+
+        .ant-collapse-expand-icon {
+          height: 20px;
+        }
+      }
+    }
+  }
+}

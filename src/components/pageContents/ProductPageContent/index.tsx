@@ -6,9 +6,9 @@ import { FC, useState } from 'react';
 
 import { FiInfo } from 'react-icons/fi';
 
-import { PiCakeLight, PiCarLight } from 'react-icons/pi';
-
 import { ProductTextBlock } from './ProductTextBlock';
+
+import { PromoTag } from './PromoTag';
 
 import { API } from '@/api/types';
 import ProductCarousel from '@/components/ProductCarousel';
@@ -31,13 +31,14 @@ export type TProductProps = {
       energy: string | number;
     };
     price: string | null | undefined;
+    promotions?: API.Products.Promotion[];
     weight: string | null | undefined;
     labels?: API.Products.Label[];
   };
 };
 
 const Product: FC<TProductProps> = ({ productInfo }) => {
-  const { id, title, description, allergens, images, nutritionFacts, price, weight, labels } = productInfo;
+  const { id, title, description, allergens, images, nutritionFacts, price, weight, labels, promotions } = productInfo;
 
   const [selectedFilling, setSelectedFilling] = useState<string>(mockProduct.fillingOptions[0]);
   const [selectedWeight, setSelectedWeight] = useState<number>(mockProduct.weightOptions[0]);
@@ -51,7 +52,7 @@ const Product: FC<TProductProps> = ({ productInfo }) => {
   };
 
   const onOrderButtonClick = () => {
-    message.success(`Товар "${id}" добавлен в корзину`);
+    message.success(`Добавлено в корзину: ${id}`);
   };
 
   const breadcrumbs = [
@@ -79,6 +80,10 @@ const Product: FC<TProductProps> = ({ productInfo }) => {
 
           <div className="flex max-w-144 flex-col text-lg leading-lg max-lg:max-w-full max-sm:text-base max-sm:leading-base">
             <div className="flex flex-col">
+              <div className="flex flex-wrap gap-x-4 gap-y-3 pb-6 max-sm:gap-x-3">
+                {promotions &&
+                  promotions.map((promo) => promo.productButtonText && <PromoTag text={promo.productButtonText} />)}
+              </div>
               <h1 className="text-3xl font-medium leading-3xl max-sm:text-xl max-sm:leading-xl">{title}</h1>
               <p className="pt-3 text-textTertiary ">{weight} г</p>
               <div className="flex items-start gap-1 pt-3 text-textTertiary max-lg:hidden">
@@ -137,22 +142,13 @@ const Product: FC<TProductProps> = ({ productInfo }) => {
             <p className="pt-8 text-3xl font-medium leading-3xl  max-sm:pt-6">
               {price} {CurrencySymbol.RUB}
             </p>
-            <div className="flex gap-6 pt-6">
+            <div className="flex gap-6 py-6">
               <StepperButton />
               <Button type="primary" className="w-max max-xs:w-full" onClick={onOrderButtonClick}>
                 Заказать
               </Button>
             </div>
-            <div className="flex gap-6 pt-6 max-sm:gap-4 max-sm:pb-2">
-              <div className="flex items-center gap-3 rounded-xl border border-borderSecondary p-4 max-xs:flex-col max-xs:items-start max-xs:pr-2">
-                <PiCakeLight className="h-8 w-8 text-primary" />
-                <p className="max-w-34">Скидка именниникам 10%</p>
-              </div>
-              <div className="flex items-center gap-3 rounded-xl border border-borderSecondary p-4 max-xs:flex-col max-xs:items-start max-xs:pr-2">
-                <PiCarLight className="h-8 w-8 text-primary" />
-                <p className="max-w-40">Бесплатная доставка от 1000 р.</p>
-              </div>
-            </div>
+
             <ProductTextBlock title="Описание" text={description || ''} />
             <ProductTextBlock
               title="Состав"
