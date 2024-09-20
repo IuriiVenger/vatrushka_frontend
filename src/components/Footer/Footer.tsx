@@ -10,8 +10,9 @@ import { Contacts } from '../Contacts';
 
 import { LinksList } from './LinksList';
 
-import { navigationLinks } from '@/config/links';
-import { TNavigationLink } from '@/types';
+import { contactLinks, navigationLinks } from '@/config/links';
+import { ContactLinks } from '@/constants';
+import { TContact, TNavigationLink } from '@/types';
 
 export const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
@@ -20,6 +21,11 @@ export const Footer: FC = () => {
   const pivot = Math.ceil(links.length / 2);
   const firstHalf = links.slice(0, pivot);
   const secondHalf = links.slice(pivot);
+
+  const contacts = Object.fromEntries(Object.entries(contactLinks).filter(([key]) => key !== 'chiefMail')) as Omit<
+    Record<ContactLinks, TContact>,
+    'chiefMail'
+  >;
 
   return (
     <footer className="w-full bg-bgLayout">
@@ -38,7 +44,7 @@ export const Footer: FC = () => {
           </div>
           <div className="order-3 flex flex-col items-end justify-between max-lg:order-2 max-lg:items-center max-lg:gap-6">
             <Button className="w-fit max-md:h-10 max-md:text-base">Связаться с нами</Button>
-            <Contacts />
+            <Contacts contacts={contacts} />
           </div>
         </div>
       </div>
