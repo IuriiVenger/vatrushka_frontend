@@ -9,11 +9,11 @@ import { SeoContent } from '@/components/SeoContent';
 
 import { slides, products } from '@/mocks';
 
-type THomeProps = {
+type THomePageContentProps = {
   categories: CategoriesConnection;
 };
 
-const Home: FC<THomeProps> = ({ categories }) => {
+const HomePageContent: FC<THomePageContentProps> = ({ categories }) => {
   const catalogCategories = categories.edges.map((edge) => edge.node);
 
   return (
@@ -26,4 +26,4 @@ const Home: FC<THomeProps> = ({ categories }) => {
   );
 };
 
-export default Home;
+export default HomePageContent;
