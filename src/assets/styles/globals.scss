@@ -14,6 +14,7 @@
 @import './antdStyles/dropdown.scss';
 @import './antdStyles/pagination.scss';
 @import './antdStyles/segmented.scss';
+@import './customClassnames.scss';
 @import './slider.scss';
 @import './yarl.scss';
 
@@ -63,18 +64,4 @@ body {
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
   color: rgb(var(--foreground-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .ml-calc-center {
-    margin-left: calc((100vw - 344px) / 2);
-  }
-
-  .list-bullet {
-    list-style-image: url('../images/bullet.svg');
-  }
 }

@@ -37,7 +37,7 @@ export const Accordion: FC<TAccordionProps> = ({ title, text }) => {
         {
           key: '3',
           label: <h3 className="text-2xl font-medium leading-2xl max-sm:text-lg max-sm:leading-lg">{title}</h3>,
-          children: <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">{text}</p>,
+          children: <div className="text-lg leading-lg max-sm:text-base max-sm:leading-base">{text}</div>,
           style: panelStyle,
         },
       ]}

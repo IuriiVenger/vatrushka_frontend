@@ -33,6 +33,7 @@ export enum ContactLinks {
   VK = 'vk',
   WHATS_APP = 'whatsapp',
   MAIL = 'mail',
+  CHIEF_MAIL = 'chiefMail',
 }
 
 export enum NavigationLinks {

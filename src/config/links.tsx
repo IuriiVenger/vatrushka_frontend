@@ -2,7 +2,57 @@ import { BiLogoTelegram, BiLogoVk } from 'react-icons/bi';
 import { IoIosMail, IoLogoWhatsapp } from 'react-icons/io';
 
 import { ContactLinks, NavigationLinks } from '@/constants';
-import { TContact, TNavigationLink } from '@/types';
+import { TCompanyInfo, TContact, TNavigationLink } from '@/types';
+
+export const companyName = 'Пекарня-кондитерская «Ватрушка»';
+
+export const companyInfo: TCompanyInfo = {
+  fullName: companyName,
+  legalName: 'ИП Быков Елисей Эдуардович',
+  mainPhone: '+ 7 (351) 700-79-81',
+  wholesaleManagerPhone: '+7 951-794-13-46',
+  wholesaleManagerEmail: 'wsd1@vatrushka74.ru',
+  telegramBot: 'https://t.me/PirogVatrushkaBot',
+  branches: [
+    {
+      id: '1',
+      name: companyName,
+      address: 'ул. Энтузиастов, 12',
+      coords: [55.15654, 61.3755],
+      phone: '+7 (351) 700-79-82',
+      businessHours: {
+        weekdays: { open: '08:00', close: '22:00' },
+        saturday: { open: '09:00', close: '22:00' },
+        sunday: { open: '10:00', close: '22:00' },
+      },
+    },
+    {
+      id: '2',
+      name: companyName,
+      address: 'ул. Ленина, 71',
+      coords: [55.15949, 61.38393],
+      phone: '+7 (992) 527-45-20',
+      businessHours: {
+        weekdays: { open: '07:30', close: '22:00' },
+        saturday: { open: '09:00', close: '22:00' },
+        sunday: { open: '10:00', close: '22:00' },
+      },
+    },
+  ],
+  partners: [
+    {
+      id: '1',
+      name: 'Пекарня-кондитерская «Galette»',
+      address: 'ул. Свободы, 80',
+      phone: '+7 (351) 700-79-83',
+      businessHours: {
+        weekdays: { open: '07:30', close: '22:00' },
+        saturday: { open: '09:00', close: '22:00' },
+        sunday: { open: '10:00', close: '22:00' },
+      },
+    },
+  ],
+};
 
 export const contactLinks: Record<ContactLinks, TContact> = {
   [ContactLinks.TELEGRAM]: {
@@ -18,7 +68,11 @@ export const contactLinks: Record<ContactLinks, TContact> = {
     icon: <IoLogoWhatsapp />,
   },
   [ContactLinks.MAIL]: {
-    link: '123@123.ru',
+    link: 'delivery@vatrushka74.ru',
+    icon: <IoIosMail />,
+  },
+  [ContactLinks.CHIEF_MAIL]: {
+    link: 'chief123@123.ru',
     icon: <IoIosMail />,
   },
 };
