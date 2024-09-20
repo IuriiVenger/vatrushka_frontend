@@ -4,18 +4,17 @@ import { FC } from 'react';
 
 import { FiInfo } from 'react-icons/fi';
 
-import { BranchInfo } from '../ContactsPageContent/BranchInfo';
-
 import deliveryMap from '@/assets/images/delivery_map.png';
 import jcb from '@/assets/images/payments/jcb.svg';
 import mc from '@/assets/images/payments/mc.svg';
 import mir from '@/assets/images/payments/mir.svg';
 import visa from '@/assets/images/payments/visa.svg';
 
+import { BranchInfo } from '@/components/BranchInfo';
 import { Accordion } from '@/components/ui/Accordion';
 import { companyInfo } from '@/config/links';
 
-export const DeliveryPage: FC = () => {
+const DeliveryPageContent: FC = () => {
   const breadcrumbs = [
     {
       title: <Link href="/">Главная</Link>,
@@ -270,3 +269,5 @@ export const DeliveryPage: FC = () => {
     </section>
   );
 };
+
+export default DeliveryPageContent;

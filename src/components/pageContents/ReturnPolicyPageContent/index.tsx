@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { companyInfo, contactLinks } from '@/config/links';
 
-export const ConditionsPage = () => {
+const ReturnPolicyPageContent = () => {
   const breadcrumbs = [
     {
       title: <Link href="/">Главная</Link>,
@@ -146,3 +146,5 @@ export const ConditionsPage = () => {
     </div>
   );
 };
+
+export default ReturnPolicyPageContent;

@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
-import { Carousel } from '../Carousel';
-import { Catalog } from '../Catalog/Catalog';
+import { Catalog } from '../../Catalog/Catalog';
 
 import { CategoriesConnection } from '@/__generated__/graphql';
+import { PromoCarousel } from '@/components/Carousels/PromoCarousel';
+import { Slider } from '@/components/Carousels/Slider';
 import { SeoContent } from '@/components/SeoContent';
 
-import { SliderComponent as Slider } from '@/components/Slider';
 import { slides, products } from '@/mocks';
 
 type THomeProps = {
@@ -18,7 +18,7 @@ const Home: FC<THomeProps> = ({ categories }) => {
 
   return (
     <>
-      <Carousel slides={slides} />
+      <PromoCarousel slides={slides} />
       <Catalog categories={catalogCategories} />
       <Slider title="Рекомендуем" slides={products} />
       <SeoContent />

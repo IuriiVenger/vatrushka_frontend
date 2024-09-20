@@ -10,7 +10,7 @@ type TCarouselProps = {
   product?: boolean;
 };
 
-export const Carousel: FC<TCarouselProps> = ({ slides, product }) => (
+export const PromoCarousel: FC<TCarouselProps> = ({ slides, product }) => (
   <section
     className={`custom mx-auto grid grid-cols-1 max-sm:m-0 max-xs:m-auto ${product ? '' : 'max-xl:px-10  max-xs:px-0 max-xs:pt-6'}`}
   >

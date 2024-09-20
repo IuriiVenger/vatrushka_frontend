@@ -1,15 +1,14 @@
 import { Breadcrumb, Divider } from 'antd';
 import Link from 'next/link';
 
-import { BranchInfo } from './BranchInfo';
-
+import { BranchInfo } from '@/components/BranchInfo';
 import { Contacts } from '@/components/Contacts';
 import { Map } from '@/components/ui/Map';
 import { companyInfo, contactLinks } from '@/config/links';
 import { ContactLinks } from '@/constants';
 import { TContact } from '@/types';
 
-export const ContactsPage = () => {
+const ContactsPageContent = () => {
   const breadcrumbs = [
     {
       title: <Link href="/">Главная</Link>,
@@ -71,3 +70,5 @@ export const ContactsPage = () => {
     </div>
   );
 };
+
+export default ContactsPageContent;
