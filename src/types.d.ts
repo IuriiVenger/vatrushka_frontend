@@ -57,6 +57,7 @@ type TBranch = {
   phone: string;
   businessHours: TBusinessHours;
   coords?: number[];
+
 };
 
 type TCompanyInfo = {
