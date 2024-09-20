@@ -6,7 +6,7 @@ import { FC } from 'react';
 import { color } from '@/config/variables';
 
 type TMapProps = {
-  placemarks: { id: string; coords: number[] }[];
+  placemarks: { id: string; coords: number[] | undefined }[];
   width?: string | number;
   mapZoom?: number;
 };
