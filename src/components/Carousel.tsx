@@ -24,14 +24,14 @@ export const Carousel: FC<TCarouselProps> = ({ slides, product }) => (
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`h-full max-w-320 rounded-2xl max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
+          className={`h-full max-w-320 rounded-3xl max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
         >
           <Image
             width={1200}
             height={514}
             alt={slide}
             src={slide}
-            className={`w-1200 w-full rounded-2xl object-cover object-center max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
+            className={`w-1200 w-full rounded-3xl object-cover object-center max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
           />
         </div>
       ))}

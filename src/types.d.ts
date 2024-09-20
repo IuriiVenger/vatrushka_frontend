@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { ProductByCategorySlugQuery } from './__generated__/graphql';
 import { TagType } from './mock';
 
@@ -23,7 +25,7 @@ export type TMenuLevelOneOption = {
 
 export type TContact = {
   link: string;
-  icon: ReactNode;
+  icon: ReactElement;
 };
 
 export type TNavigationLink = {
@@ -46,7 +48,6 @@ export type CategoryItemsConnectionType = NonNullable<
   ProductByCategorySlugQuery['categoriesCollection']
 >['edges'][0]['node']['categoryitemsCollection'];
 
-
 export type Sluggable<T> = T & { slug: string };
 
 type THours = { open: string; close: string };
@@ -60,7 +61,6 @@ type TBranch = {
   phone: string;
   businessHours: TBusinessHours;
   coords?: number[];
-
 };
 
 type TCompanyInfo = {
@@ -74,3 +74,12 @@ type TCompanyInfo = {
   partners: TBranch[];
 };
 
+type TPromotion = {
+  id: string;
+  name: string;
+  pic: string;
+  shortDescription: string;
+  text: ReactNode;
+  start?: string;
+  end?: string;
+};
