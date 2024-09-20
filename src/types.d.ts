@@ -6,10 +6,10 @@ type TValueOf<T> = T[keyof T];
 export type TCard = {
   pic: string;
   name: string;
-  weight: number;
+  weight: string | number;
   timing?: string;
   description: string;
-  price: number;
+  price: number | string;
   tag?: TagType;
   inStock: boolean;
   href: string;
@@ -34,7 +34,7 @@ export type TNavigationLink = {
 export type TCartListItem = {
   name: string;
   pic: string;
-  price: number;
+  price: number | string;
   count: number;
 };
 
@@ -45,6 +45,9 @@ export type TTag = {
 export type CategoryItemsConnectionType = NonNullable<
   ProductByCategorySlugQuery['categoriesCollection']
 >['edges'][0]['node']['categoryitemsCollection'];
+
+
+export type Sluggable<T> = T & { slug: string };
 
 type THours = { open: string; close: string };
 
@@ -70,3 +73,4 @@ type TCompanyInfo = {
   branches: TBranch[];
   partners: TBranch[];
 };
+

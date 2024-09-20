@@ -78,6 +78,10 @@ export const TagColorSchema: TTag = {
     textColor: '#722ED1',
     backgroundColor: '#F9F0FF',
   },
+  default: {
+    textColor: '#000000',
+    backgroundColor: '#FFFFFF',
+  },
 };
 
 export enum SortType {
