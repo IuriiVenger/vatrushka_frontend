@@ -75,10 +75,6 @@ export const contactLinks: Record<ContactLinks, TContact> = {
     link: 'chief123@123.ru',
     icon: <IoIosMail />,
   },
-  [ContactLinks.CHIEF_MAIL]: {
-    link: 'chief123@123.ru',
-    icon: <IoIosMail />,
-  },
 };
 
 export const navigationLinks: Record<NavigationLinks, TNavigationLink> = {
