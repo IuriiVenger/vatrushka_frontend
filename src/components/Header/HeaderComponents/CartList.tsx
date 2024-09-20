@@ -37,7 +37,7 @@ export const CartList: FC = () => {
         <p>
           Итого:{' '}
           <span className="text-lg font-medium leading-lg">
-            <span>{cartList.reduce<number>((acc, item) => acc + item.price, 0)}</span> {CurrencySymbol.RUB}
+            <span>{cartList.reduce<number>((acc, item) => acc + Number(item.price), 0)}</span> {CurrencySymbol.RUB}
           </span>
         </p>
         <Button type="primary" onClick={onButtonClick}>
