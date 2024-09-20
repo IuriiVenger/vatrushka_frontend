@@ -32,15 +32,13 @@ export const SeoContent: FC = () => {
         </p>
         <div>
           <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">В нашем меню вы сможете выбрать:</p>
-          <ol className="list-bullet space-y-2 pl-4 pt-2">
-            <li className="pl-1 text-lg leading-lg max-sm:text-base max-sm:leading-base">гарниры;</li>
-            <li className="pl-1 text-lg leading-lg max-sm:text-base max-sm:leading-base">мясные блюда;</li>
-            <li className="pl-1 text-lg leading-lg max-sm:text-base max-sm:leading-base">блюда из рыбы;</li>
-            <li className="pl-1 text-lg leading-lg max-sm:text-base max-sm:leading-base">пасту;</li>
-            <li className="pl-1 text-lg leading-lg max-sm:text-base max-sm:leading-base">
-              манты, пельмени и вареники;
-            </li>
-          </ol>
+          <ul className="list-bullet space-y-2 pl-4 pt-2 text-lg leading-lg max-sm:text-base max-sm:leading-base">
+            <li className="pl-1">гарниры;</li>
+            <li className="pl-1">мясные блюда;</li>
+            <li className="pl-1">блюда из рыбы;</li>
+            <li className="pl-1">пасту;</li>
+            <li className="pl-1">манты, пельмени и вареники;</li>
+          </ul>
         </div>
         <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">
           Заказать обед или бизнес-ланч вы можете на нашем сайте или позвонив оператору по телефону +7 (351) 700-79-81
