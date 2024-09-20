@@ -10,7 +10,6 @@ type TBranchInfoProps = {
 };
 
 export const BranchInfo: FC<TBranchInfoProps> = ({ address, phone, businessHours, colored }) => {
-
   const days = [
     { label: 'пн-пт', hours: businessHours.weekdays },
     { label: 'сб', hours: businessHours.saturday },
