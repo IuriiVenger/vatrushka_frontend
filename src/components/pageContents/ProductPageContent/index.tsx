@@ -8,56 +8,36 @@ import { FiInfo } from 'react-icons/fi';
 
 import { PiCakeLight, PiCarLight } from 'react-icons/pi';
 
-import { ProductImages } from './ProductImages';
 import { ProductTextBlock } from './ProductTextBlock';
 
+import { API } from '@/api/types';
+import ProductCarousel from '@/components/ProductCarousel';
 import { SliderComponent as Slider } from '@/components/Slider';
 import { StepperButton } from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
 import { mockProduct, products } from '@/mocks';
 
-type TProductProps = {
+export type TProductProps = {
   productInfo: {
-    id: any;
-    title: string | undefined;
-    description: string | null | undefined;
-    price: any;
-    image: string | null | undefined;
-    additionalImages: any[];
-    nutritionFacts: any;
-    weight: any;
-    labels: any;
-    allergens:
-      | {
-          __typename?: 'productallergensEdge';
-          node: {
-            __typename?: 'productallergens';
-            id: any;
-            allergen_group_id?: any | null;
-            allergengroups?: {
-              __typename?: 'allergengroups';
-              id: any;
-              name?: string | null;
-            } | null;
-          };
-        }[]
-      | undefined;
+    id?: string;
+    allergens?: string[];
+    title?: string;
+    description?: string | null;
+    images: string[];
+    nutritionFacts: {
+      fats: string | number;
+      proteins: string | number;
+      carbs: string | number;
+      energy: string | number;
+    };
+    price: string | null | undefined;
+    weight: string | null | undefined;
+    labels?: API.Products.Label[];
   };
 };
 
 const Product: FC<TProductProps> = ({ productInfo }) => {
-  const {
-    id,
-    title,
-    description,
-    allergens,
-    image = '',
-    additionalImages = [''],
-    nutritionFacts,
-    price,
-    weight,
-    labels,
-  } = productInfo;
+  const { id, title, description, allergens, images, nutritionFacts, price, weight, labels } = productInfo;
 
   const [selectedFilling, setSelectedFilling] = useState<string>(mockProduct.fillingOptions[0]);
   const [selectedWeight, setSelectedWeight] = useState<number>(mockProduct.weightOptions[0]);
@@ -71,7 +51,7 @@ const Product: FC<TProductProps> = ({ productInfo }) => {
   };
 
   const onOrderButtonClick = () => {
-    message.success('Добавлено в корзину', id);
+    message.success(`Товар "${id}" добавлен в корзину`);
   };
 
   const breadcrumbs = [
@@ -91,10 +71,12 @@ const Product: FC<TProductProps> = ({ productInfo }) => {
 
   return (
     <>
-      <div className="mx-auto flex w-full max-w-320 flex-col gap-12 pb-10 max-lg:gap-8 max-md:gap-4 max-xs:max-w-82">
+      <div className="mx-auto flex w-full max-w-320 flex-col gap-12 pb-10 max-lg:gap-4 max-xs:max-w-82">
         <Breadcrumb items={breadcrumbs} />
-        <div className="flex justify-between gap-10 max-xl:grid max-xl:grid-cols-2 max-md:flex max-md:flex-col">
-          <ProductImages images={[image, ...additionalImages]} title={title || ''} tag={labels[0]} />
+        <div className="flex justify-between gap-10 max-xl:grid max-xl:grid-cols-2 max-lg:flex max-lg:flex-col">
+          <ProductCarousel className="lg:hidden" isMobile images={images} title={title || ''} labels={labels} />
+          <ProductCarousel className="max-lg:hidden" images={images} title={title || ''} labels={labels} />
+
           <div className="flex max-w-144 flex-col text-lg leading-lg max-lg:max-w-full max-sm:text-base max-sm:leading-base">
             <div className="flex flex-col">
               <h1 className="text-3xl font-medium leading-3xl max-sm:text-xl max-sm:leading-xl">{title}</h1>

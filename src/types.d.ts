@@ -45,3 +45,5 @@ export type TTag = {
 export type CategoryItemsConnectionType = NonNullable<
   ProductByCategorySlugQuery['categoriesCollection']
 >['edges'][0]['node']['categoryitemsCollection'];
+
+export type Sluggable<T> = T & { slug: string };

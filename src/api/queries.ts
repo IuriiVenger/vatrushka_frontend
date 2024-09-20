@@ -186,11 +186,8 @@ export const GET_PROUCT_BY_SLUG = gql`
           short_description
           ingredients
           optional_text
-          tags
-          labels
           isPopular
           slug
-          tags2
           images
           image_cropped
           productsizesCollection {
@@ -277,6 +274,24 @@ export const GET_PROUCT_BY_SLUG = gql`
                   name
                   slug
                 }
+              }
+            }
+          }
+          productTagsCollection {
+            edges {
+              node {
+                name
+                slug
+                tag_id
+              }
+            }
+          }
+          productlabelsCollection {
+            edges {
+              node {
+                slug
+                name
+                id
               }
             }
           }

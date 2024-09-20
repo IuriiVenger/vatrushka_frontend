@@ -1,3 +1,5 @@
+import { ProductBySlugQuery } from '@/__generated__/graphql';
+
 export namespace API {
   export namespace QraphQL {
     export namespace Query {
@@ -100,5 +102,14 @@ export namespace API {
         first: number;
       };
     }
+  }
+
+  export namespace Products {
+    export type Label = NonNullable<
+      NonNullable<ProductBySlugQuery['productsCollection']>['edges'][0]['node']['productlabelsCollection']
+    >['edges'][0]['node'];
+    export type Tag = NonNullable<
+      NonNullable<ProductBySlugQuery['productsCollection']>['edges'][0]['node']['productTagsCollection']
+    >['edges'][0]['node'];
   }
 }
