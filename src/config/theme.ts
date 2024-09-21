@@ -141,5 +141,29 @@ export const theme = {
       contentPadding: '0 24px 24px',
       fontSizeIcon: 30,
     },
+    Modal: {
+      titleFontSize: 30,
+      fontWeightStrong: 500,
+      boxShadow: '0px 4px 20px 0px rgba(64, 54, 49, 0.09)',
+      fontFamily: 'Gilroy',
+      fontHeight: 32,
+    },
+    Checkbox: {
+      controlInteractiveSize: 24,
+    },
+    Input: {
+      paddingInline: 12,
+      paddingBlock: 7,
+    },
+    Form: {
+      itemMarginBottom: 16,
+    },
+    Tabs: {
+      inkBarColor: color.primary.default,
+      itemHoverColor: color.primary.hover,
+      itemSelectedColor: color.primary.default,
+      itemActiveColor: color.primary.active,
+      colorIcon: color.primary.default,
+    },
   },
 };

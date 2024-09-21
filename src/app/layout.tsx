@@ -1,3 +1,4 @@
+import { App } from 'antd';
 import { FC, PropsWithChildren } from 'react';
 
 import Providers from './providers';
@@ -17,7 +18,9 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => (
   <StoreProvider>
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <App>{children}</App>
+        </Providers>
       </body>
     </html>
   </StoreProvider>
