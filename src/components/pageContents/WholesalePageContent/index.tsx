@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 import { useState } from 'react';
 
+import LeaveRequestModal from '@/components/modals/LeaveRequestModal';
 import { companyInfo } from '@/config/links';
-import LeaveRequestModal from '@/modals/LeaveRequestModal';
 
 export const WholesalePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
