@@ -8,7 +8,7 @@ export const theme = {
     colorPrimary: color.accent.default,
     colorInfo: color.primary.default,
     colorTextBase: color.text.primary,
-
+    colorLink: color.text.primary,
     screenXSMin: 1,
     screenXS: 1,
     screenXSMax: breakpoint.xs,
@@ -47,6 +47,7 @@ export const theme = {
       defaultShadow: 'unset',
       primaryShadow: 'unset',
       borderColorDisabled: 'none',
+      // colorTextDisabled: color.text.quaternary,
       defaultBorderColor: color.accent.default,
       colorPrimaryBorder: color.accent.default,
       defaultBg: color.transparent,
@@ -143,6 +144,7 @@ export const theme = {
     },
     Modal: {
       titleFontSize: 30,
+      titleFontSizeSM: 10,
       fontWeightStrong: 500,
       boxShadow: '0px 4px 20px 0px rgba(64, 54, 49, 0.09)',
       fontFamily: 'Gilroy',
@@ -150,13 +152,17 @@ export const theme = {
     },
     Checkbox: {
       controlInteractiveSize: 24,
+      colorPrimary: color.primary.default,
+      colorPrimaryHover: color.primary.hover,
     },
     Input: {
       paddingInline: 12,
       paddingBlock: 7,
+      colorError: color.error.default,
     },
     Form: {
-      itemMarginBottom: 16,
+      itemMarginBottom: 0,
+      verticalLabelPadding: '0 0 4px',
     },
     Tabs: {
       inkBarColor: color.primary.default,
@@ -164,6 +170,17 @@ export const theme = {
       itemSelectedColor: color.primary.default,
       itemActiveColor: color.primary.active,
       colorIcon: color.primary.default,
+      margin: 24,
+    },
+    Radio: {
+      colorPrimary: color.primary.default,
+      fontSize: 16,
+      radioSize: 24,
+    },
+    Timeline: {
+      colorSuccess: color.success,
+      fontSize: 16,
+      fontSizeSM: 14,
     },
   },
 };

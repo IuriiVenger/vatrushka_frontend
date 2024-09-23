@@ -1,12 +1,62 @@
-.ant-modal {
-  width: auto;
+.ant-modal .ant-modal-content {
+  @apply w-106 rounded-2xl p-8 max-sm:w-82 max-sm:p-6;
 }
 
-.ant-modal .ant-modal-content {
-  padding: 32px;
-  border-radius: 16px;
+.ant-modal.xsmall .ant-modal-content {
+  @apply w-76 max-sm:w-65;
+}
+
+.ant-modal.small .ant-modal-content {
+  @apply w-100;
+}
+
+.ant-modal.large .ant-modal-content {
+  @apply w-152;
+}
+
+.ant-modal.small .ant-modal-content,
+.ant-modal.large .ant-modal-content {
+  @apply max-sm:w-82;
+}
+
+.ant-modal-header {
+  @apply mb-6 max-sm:mb-4;
 }
 
 .ant-modal .ant-modal-close {
-  border-radius: 50%;
+  @apply right-2 top-2 h-10 w-10 max-sm:h-8 max-sm:w-8;
+}
+.ant-modal-close-x {
+  @apply text-2xl max-sm:text-lg;
+}
+
+.ant-modal .ant-modal-close {
+  @apply rounded-full;
+}
+
+.ant-modal .ant-modal-footer {
+  @apply mt-6 text-start;
+}
+
+.ant-modal a {
+  @apply text-link transition-all hover:text-linkHover;
+}
+
+.ant-modal a {
+  &.ant-btn {
+    @apply text-white hover:text-white;
+  }
+}
+
+.ant-modal-title,
+.ant-modal-confirm-title {
+  @apply text-3xl leading-3xl max-sm:text-2xl max-sm:leading-2xl;
+}
+
+.ant-tabs .ant-tabs-tab + .ant-tabs-tab {
+  @apply max-sm:ml-6;
+}
+
+.ant-tabs-top > .ant-tabs-nav {
+  @apply max-sm:mb-4;
 }

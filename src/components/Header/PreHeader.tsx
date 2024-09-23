@@ -5,10 +5,9 @@ import { FC, useState } from 'react';
 
 import { Contacts } from '../Contacts';
 
-import { ContactUsModal } from '../Modals/ContactUs';
-
 import { contactLinks } from '@/config/links';
 import { ContactLinks } from '@/constants';
+import ContactUsModal from '@/modals/ContactUsModal';
 import { TContact } from '@/types';
 
 export const PreHeader: FC = () => {

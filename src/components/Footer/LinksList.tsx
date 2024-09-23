@@ -12,7 +12,10 @@ export const LinksList: FC<TLinksListProps> = ({ links }) => (
     <ul className="flex flex-col gap-6">
       {links.map(({ title, link }) => (
         <li key={title}>
-          <Link href={link} className="text-nowrap text-text">
+          <Link
+            href={link}
+            className="text-nowrap text-text transition-all hover:text-primary active:text-primaryActive"
+          >
             {title}
           </Link>
         </li>

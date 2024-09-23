@@ -1,0 +1,11 @@
+.ant-radio-wrapper {
+  @apply max-sm:text-base max-sm:leading-base;
+}
+
+.ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
+  @apply bg-white;
+}
+
+.ant-radio-wrapper .ant-radio-checked .ant-radio-inner::after {
+  @apply scale-70 bg-primary;
+}

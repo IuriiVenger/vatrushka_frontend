@@ -180,3 +180,38 @@ export const promotions: TPromotion[] = [
     text: 'Подарочный сертификат для вкусных покупок! Порадуйте своих близких. Подробности уточняйте операторов.',
   },
 ];
+
+export const userInfo = {
+  phone: '+7 (912) 744 55 88',
+  addresses: [
+    { id: '1', address: 'ул. Энтузиастов, дом 16, частный дом' },
+    { id: '2', address: 'ул. Чекистова, дом 16, подъезд 3, этаж 8, квартира 203' },
+  ],
+};
+
+export const order = {
+  id: '1',
+  number: 343434,
+  orderStatuses: [
+    {
+      time: '14:00',
+      status: 'Получили заказ',
+      completed: true,
+    },
+    {
+      time: '14:10',
+      status: 'Заказ подтвержден',
+      completed: true,
+    },
+    {
+      time: '14:15',
+      status: 'Готовим',
+      completed: false,
+    },
+    {
+      time: '16:20',
+      status: 'Готов к выдаче',
+      completed: false,
+    },
+  ],
+};

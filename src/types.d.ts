@@ -83,3 +83,15 @@ type TPromotion = {
   start?: string;
   end?: string;
 };
+
+export type TModalProps = {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export type TValidate = Validate<any, FieldValues> | Record<string, Validate<any, FieldValues>> | undefined;
+
+export type Pattern = {
+  value: RegExp;
+  message: string;
+};

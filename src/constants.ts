@@ -95,3 +95,8 @@ export const SortTypeTranslation = {
   [SortType.PRICE_DESCENDING]: 'По убыванию цены',
   [SortType.PRICE_ASCENDING]: 'По возрастанию цены',
 };
+
+export enum AuthModalProcessType {
+  SIGN_IN = 'signIn',
+  SIGN_UP = 'signUp',
+}

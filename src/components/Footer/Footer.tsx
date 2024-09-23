@@ -51,7 +51,10 @@ export const Footer: FC = () => {
       <Divider />
       <div className="mx-auto flex w-full max-w-320 justify-between gap-4 px-9 pb-9 max-lg:flex-col-reverse max-lg:items-center max-sm:items-start max-xs:max-w-82 max-xs:px-0">
         <p className="text-text">(с) 2010-{currentYear} Ватрушка - доставка еды на дом в Челябинске</p>
-        <Link href="https://www.google.com" className="text-text">
+        <Link
+          href="https://www.google.com"
+          className="text-text transition-all hover:text-primary active:text-primaryActive"
+        >
           Пользовательское соглашение
         </Link>
       </div>
