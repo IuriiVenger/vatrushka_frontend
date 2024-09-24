@@ -79,35 +79,35 @@ export const contactLinks: Record<ContactLinks, TContact> = {
 
 export const navigationLinks: Record<NavigationLinks, TNavigationLink> = {
   [NavigationLinks.ABOUT]: {
-    link: 'https://www.google.com',
+    link: '/about-us',
     title: 'О нас',
   },
   [NavigationLinks.CONTACTS]: {
-    link: 'https://www.google.com',
+    link: '/contacts',
     title: 'Контакты',
   },
   [NavigationLinks.OFFERS]: {
-    link: 'https://www.google.com',
+    link: '/promotions',
     title: 'Акции',
   },
   [NavigationLinks.WHOLESALE]: {
-    link: 'https://www.google.com',
+    link: '/wholesale',
     title: 'Оптовые продажи',
   },
   [NavigationLinks.DELIVERY]: {
-    link: 'https://www.google.com',
+    link: '/delivery',
     title: 'Условия доставки',
   },
   [NavigationLinks.BONUS]: {
-    link: 'https://www.google.com',
+    link: '/bonus',
     title: 'Бонусная программа',
   },
   [NavigationLinks.CONDITIONS]: {
-    link: 'https://www.google.com',
+    link: '/return-policy',
     title: 'Условия возврата и обмена',
   },
-  [NavigationLinks.FEEDBACK]: {
-    link: 'https://www.google.com',
-    title: 'Ваши отзывы и предложения',
-  },
+  // [NavigationLinks.FEEDBACK]: {
+  //   link: 'https://www.google.com',
+  //   title: 'Ваши отзывы и предложения',
+  // },
 };

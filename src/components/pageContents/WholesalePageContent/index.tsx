@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { companyInfo } from '@/config/links';
 
-export const WholesalePage = () => {
+const WholesalePageContent = () => {
   const breadcrumbs = [
     {
       title: <Link href="/">Главная</Link>,
@@ -67,3 +67,5 @@ export const WholesalePage = () => {
     </div>
   );
 };
+
+export default WholesalePageContent;

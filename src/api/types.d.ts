@@ -1,4 +1,4 @@
-import { ProductBySlugQuery } from '@/__generated__/graphql';
+import { GetAllPromotionsQuery, ProductBySlugQuery } from '@/__generated__/graphql';
 
 export namespace API {
   export namespace QraphQL {
@@ -114,5 +114,9 @@ export namespace API {
     export type Promotion = NonNullable<
       NonNullable<ProductBySlugQuery['productsCollection']>['edges'][0]['node']['productpromotionsCollection']
     >['edges'][0]['node']['promotions'];
+  }
+
+  export namespace Promotions {
+    export type Promotion = NonNullable<GetAllPromotionsQuery['promotionsCollection']>['edges'][0]['node'];
   }
 }

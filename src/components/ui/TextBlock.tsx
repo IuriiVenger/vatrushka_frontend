@@ -6,7 +6,7 @@ type TProps = {
   additionalText?: ReactNode;
 };
 
-export const ProductTextBlock: FC<TProps> = ({ title, text, additionalText }) => (
+export const TextBlock: FC<TProps> = ({ title, text, additionalText }) => (
   <div className="flex flex-col gap-1 pt-4">
     <p className="font-medium">{title}:</p>
     <p>{text}</p>

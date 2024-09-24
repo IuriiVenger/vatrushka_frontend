@@ -1,24 +1,24 @@
 import { FC } from 'react';
 
-import { Carousel } from '../Carousel';
-import { Catalog } from '../Catalog/Catalog';
+import { Catalog } from '../../Catalog/Catalog';
 
 import { CategoriesConnection } from '@/__generated__/graphql';
+import { PromoCarousel } from '@/components/Carousels/PromoCarousel';
+import { Slider } from '@/components/Carousels/Slider';
 import { SeoContent } from '@/components/SeoContent';
 
-import { SliderComponent as Slider } from '@/components/Slider';
 import { slides, products } from '@/mocks';
 
-type THomeProps = {
+type THomePageContentProps = {
   categories: CategoriesConnection;
 };
 
-const Home: FC<THomeProps> = ({ categories }) => {
+const HomePageContent: FC<THomePageContentProps> = ({ categories }) => {
   const catalogCategories = categories.edges.map((edge) => edge.node);
 
   return (
     <>
-      <Carousel slides={slides} />
+      <PromoCarousel slides={slides} />
       <Catalog categories={catalogCategories} />
       <Slider title="Рекомендуем" slides={products} />
       <SeoContent />
@@ -26,4 +26,4 @@ const Home: FC<THomeProps> = ({ categories }) => {
   );
 };
 
-export default Home;
+export default HomePageContent;

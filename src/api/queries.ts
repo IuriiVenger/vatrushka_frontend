@@ -300,3 +300,44 @@ export const GET_PROUCT_BY_SLUG = gql`
     }
   }
 `;
+
+export const GET_ALL_PROMOTIONS = gql`
+  query GetAllPromotions($first: Int, $offset: Int) {
+    promotionsCollection(first: $first, offset: $offset) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        node {
+          description
+          homepageBanner
+          homepageEnabled
+          id
+          name
+          productButtonText
+          productButtonType
+          productPagesEnabled
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PROMOTION_BY_ID = gql`
+  query GetPromotionById($filter: promotionsFilter) {
+    promotionsCollection(filter: $filter) {
+      edges {
+        node {
+          id
+          name
+          description
+          homepageBanner
+          productButtonText
+          productButtonType
+          homepageEnabled
+          productPagesEnabled
+        }
+      }
+    }
+  }
+`;

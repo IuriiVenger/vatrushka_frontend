@@ -3,9 +3,9 @@
 import { Button } from 'antd';
 import { FC, useMemo, useState } from 'react';
 
-import { ProductCard } from './ProductCard';
+import { Dropdown } from '../ui/Dropdown';
 
-import { Dropdown } from './ui/Dropdown';
+import { ProductCard } from './ProductCard';
 
 import { SortType } from '@/constants';
 import { TCard } from '@/types';
