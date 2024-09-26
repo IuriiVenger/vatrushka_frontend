@@ -82,10 +82,7 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose
   return (
     <div className="flex flex-col gap-6 text-lg leading-lg max-sm:gap-4 max-sm:text-base max-sm:leading-base">
       <p className="mb-2">На ваш телефон {phone} выслан СМС-код для подтверждения</p>
-      <Form
-        className="flex flex-col gap-6 text-lg leading-lg max-sm:gap-4 max-sm:text-base max-sm:leading-base "
-        onSubmit={handleSubmit(submitHandler)}
-      >
+      <Form className="gap-6 max-sm:gap-4" onSubmit={handleSubmit(submitHandler)}>
         <div>
           <Input
             name="confirmationCode"

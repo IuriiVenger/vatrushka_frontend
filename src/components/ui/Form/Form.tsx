@@ -4,7 +4,7 @@ export const Form: FC<DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTM
   children,
   ...props
 }) => (
-  <form {...props} noValidate className={`flex flex-col gap-4 ${props.className}`}>
+  <form {...props} noValidate className={`flex flex-col ${props.className}`}>
     {children}
   </form>
 );

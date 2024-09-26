@@ -60,7 +60,6 @@ export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label
           <AntInput
             {...field}
             {...props}
-            className=""
             status={field.value?.length && errors?.type === 'validate' ? 'error' : undefined}
           />
         </AntForm.Item>

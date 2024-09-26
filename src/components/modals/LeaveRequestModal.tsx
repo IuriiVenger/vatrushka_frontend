@@ -19,7 +19,7 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
   const { showSuccess } = useSuccessModal({
     setIsOpen,
     title: 'Заявка отправлена',
-    content: 'Наши менеджеры скоро свяжутся с вами.',
+    text: 'Наши менеджеры скоро свяжутся с вами.',
   });
 
   const {
@@ -37,8 +37,8 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
 
   return (
     <Modal title="Оставить заявку" isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="">
-        <Form onSubmit={handleSubmit(submitHandler)}>
+      <div>
+        <Form onSubmit={handleSubmit(submitHandler)} className="gap-4">
           <Input
             name="name"
             type="text"

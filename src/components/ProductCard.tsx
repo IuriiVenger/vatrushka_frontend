@@ -1,9 +1,10 @@
 'use client';
 
 import { Divider, Button, message } from 'antd';
-import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
+
+import CustomImage from './ui/CustomImage';
 
 import { CurrencySymbol, TagColorSchema } from '@/constants';
 import { TCard } from '@/types';
@@ -34,7 +35,7 @@ export const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => 
           {tag}
         </span>
       )}
-      <Image
+      <CustomImage
         width={560}
         height={373}
         alt={name}

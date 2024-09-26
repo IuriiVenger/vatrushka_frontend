@@ -4,11 +4,11 @@ import { Dispatch, ReactNode, SetStateAction } from 'react';
 type TUseSuccessModalProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   title: ReactNode;
-  content: ReactNode;
+  text: ReactNode;
 };
 
 export const useSuccessModal = (props: TUseSuccessModalProps) => {
-  const { setIsOpen, title, content } = props;
+  const { setIsOpen, title, text } = props;
 
   const { modal } = App.useApp();
 
@@ -16,7 +16,7 @@ export const useSuccessModal = (props: TUseSuccessModalProps) => {
     setIsOpen(false);
     modal.success({
       title,
-      content: <div className="w-90 max-sm:w-70">{content}</div>,
+      content: <p className="w-79 text-lg leading-lg max-sm:w-60 max-sm:text-base max-sm:leading-base">{text}</p>,
       footer: null,
       closable: true,
       centered: true,

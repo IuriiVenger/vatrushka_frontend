@@ -30,7 +30,6 @@ export const TextAreaInput: FC<TTextAreaProps> = ({ name, control, pattern, vali
         <TextArea
           {...field}
           {...props}
-          className=""
           status={field.value?.length && errors?.type === 'validate' ? 'error' : undefined}
         />
       </AntForm.Item>

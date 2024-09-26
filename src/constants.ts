@@ -96,6 +96,18 @@ export const SortTypeTranslation = {
   [SortType.PRICE_ASCENDING]: 'По возрастанию цены',
 };
 
+export enum AddressType {
+  FLAT = 'flat',
+  HOUSE = 'house',
+  OFFICE = 'office',
+}
+
+export const addressesTypes: Record<AddressType, { id: string; label: string }> = {
+  [AddressType.FLAT]: { id: AddressType.FLAT, label: 'Квартира' },
+  [AddressType.HOUSE]: { id: AddressType.HOUSE, label: 'Частный дом' },
+  [AddressType.OFFICE]: { id: AddressType.OFFICE, label: 'Офис' },
+} as const;
+
 export enum AuthModalProcessType {
   SIGN_IN = 'signIn',
   SIGN_UP = 'signUp',

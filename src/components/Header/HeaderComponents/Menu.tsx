@@ -42,7 +42,7 @@ export const Menu = () => {
   const displayRender = (labels: string[]) => labels[labels.length - 1];
 
   return (
-    <nav className="block max-lg:hidden">
+    <nav className="block text-lg leading-lg max-lg:hidden">
       <ul className="flex w-max items-center gap-8">
         <li>
           <Cascader
@@ -63,7 +63,7 @@ export const Menu = () => {
         <li>
           <Dropdown menu={{ items: clientItems }} trigger={['click']}>
             <div className="flex cursor-pointer items-center gap-2 transition-all hover:text-primaryHover">
-              <span className="">Клиентам</span>
+              <span>Клиентам</span>
               <IoIosArrowDown className="text-primary" />
             </div>
           </Dropdown>

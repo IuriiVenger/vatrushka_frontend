@@ -28,7 +28,7 @@ export const Footer: FC = () => {
   >;
 
   return (
-    <footer className="w-full bg-bgLayout">
+    <footer className="w-full bg-bgLayout text-lg leading-lg max-sm:text-base max-sm:leading-base">
       <div className="mx-auto max-w-320 gap-12 px-9 pt-9 max-xs:max-w-82 max-xs:gap-6 max-xs:px-0">
         <div className="flex justify-between text-text max-lg:flex-col max-lg:flex-wrap max-lg:justify-around max-lg:gap-6">
           <div className="order-1 flex flex-col justify-between max-lg:items-center max-lg:gap-6">
