@@ -60,17 +60,12 @@ export const GET_PRODUCTS_BY_CATEGORY_SLUG = gql`
             edges {
               node {
                 products {
-                  tags2
-                  tags
                   slug
                   sku
                   short_description
                   optional_text
                   name
-                  labels
                   ingredients
-                  images
-                  image_cropped
                   id
                   description
                   productsizesCollection(filter: $productsizesCollectionFilter2) {
@@ -108,68 +103,6 @@ export const GET_PRODUCTS_BY_CATEGORY_SLUG = gql`
   }
 `;
 
-export const GET_PRODUCTS = gql`
-  query GetProducts(
-    $offset: Int!
-    $first: Int
-    $last: Int
-    $before: String
-    $after: String
-    $filter: productsFilter
-    $orderBy: productsOrderBy
-  ) {
-    productsCollection(filter: $filter) {
-      edges {
-        node {
-          description
-          id
-          modifier_schema_id
-          name
-          productCategoryId
-          sku
-          categoryitemsCollection {
-            edges {
-              node {
-                categories {
-                  name
-                  id
-                  description
-                }
-              }
-            }
-          }
-          productallergensCollection {
-            edges {
-              node {
-                allergen_group_id
-                allergengroups {
-                  name
-                  id
-                }
-              }
-            }
-          }
-          productsizesCollection {
-            edges {
-              node {
-                nutrition_per_hundred_grams
-                nutritions
-                portion_weight_grams
-                price
-                size_name
-                size_id
-                size_code
-                is_default
-                id
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const GET_PROUCT_BY_SLUG = gql`
   query ProductBySlug($filter: productsFilter) {
     productsCollection(filter: $filter) {
@@ -188,8 +121,6 @@ export const GET_PROUCT_BY_SLUG = gql`
           optional_text
           isPopular
           slug
-          images
-          image_cropped
           productsizesCollection {
             edges {
               node {
@@ -241,16 +172,11 @@ export const GET_PROUCT_BY_SLUG = gql`
               node {
                 products {
                   description
-                  image_cropped
-                  images
                   id
                   ingredients
-                  labels
                   name
                   optional_text
                   slug
-                  tags
-                  tags2
                   short_description
                   productsizesCollection {
                     edges {
@@ -260,6 +186,25 @@ export const GET_PROUCT_BY_SLUG = gql`
                         button_image_cropped_url
                         id
                         price
+                      }
+                    }
+                  }
+                  productlabelsCollection {
+                    edges {
+                      node {
+                        id
+                        name
+                        slug
+                      }
+                    }
+                  }
+                  productTagsCollection {
+                    edges {
+                      node {
+                        tag_id
+                        slug
+                        name
+                        id
                       }
                     }
                   }
@@ -295,6 +240,47 @@ export const GET_PROUCT_BY_SLUG = gql`
               }
             }
           }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_ALL_PROMOTIONS = gql`
+  query GetAllPromotions($first: Int, $offset: Int) {
+    promotionsCollection(first: $first, offset: $offset) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        node {
+          description
+          homepageBanner
+          homepageEnabled
+          id
+          name
+          productButtonText
+          productButtonType
+          productPagesEnabled
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PROMOTION_BY_ID = gql`
+  query GetPromotionById($filter: promotionsFilter) {
+    promotionsCollection(filter: $filter) {
+      edges {
+        node {
+          id
+          name
+          description
+          homepageBanner
+          productButtonText
+          productButtonType
+          homepageEnabled
+          productPagesEnabled
         }
       }
     }

@@ -71,7 +71,7 @@ export const theme = {
       fontHeight: 24,
       fontHeightSM: 22,
     },
-    Carousel: {
+    PromoCarousel: {
       colorBgContainer: color.accent.default,
       arrowOffset: 24,
       dotOffset: -16,

@@ -5,11 +5,10 @@ import Image from 'next/image';
 import { FC, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
-import RoundCloseButton from '../ui/RoundCloseButton';
-
 import ProductCarouselMainItem from './MainItem';
 
 import { API } from '@/api/types';
+import RoundCloseButton from '@/components/ui/RoundCloseButton';
 
 type TProductImagesProps = {
   images: string[];

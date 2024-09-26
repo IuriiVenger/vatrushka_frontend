@@ -8,7 +8,7 @@ import { useState } from 'react';
 import LeaveRequestModal from '@/components/modals/LeaveRequestModal';
 import { companyInfo } from '@/config/links';
 
-export const WholesalePage = () => {
+const WholesalePageContent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const breadcrumbs = [
@@ -76,3 +76,5 @@ export const WholesalePage = () => {
     </>
   );
 };
+
+export default WholesalePageContent;

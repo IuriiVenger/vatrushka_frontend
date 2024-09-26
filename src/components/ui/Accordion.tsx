@@ -1,3 +1,5 @@
+'use client';
+
 import { Collapse } from 'antd';
 
 import React from 'react';
@@ -9,10 +11,10 @@ import type { FC, ReactNode } from 'react';
 
 import { color } from '@/config/variables';
 
-const expandIcon: CollapseProps['expandIcon'] = (panelProps) => (
+const ExpandIcon: CollapseProps['expandIcon'] = ({ isActive }) => (
   <IoIosArrowDown
     color={color.text.tertiary}
-    className={`flex h-6 w-6 self-center transition-all max-sm:h-5 max-sm:w-5 ${panelProps.isActive ? 'rotate-180' : 'rotate-0'}`}
+    className={`flex h-6 w-6 self-center transition-all max-sm:h-5 max-sm:w-5 ${isActive ? 'rotate-180' : 'rotate-0'}`}
   />
 );
 
@@ -31,7 +33,7 @@ export const Accordion: FC<TAccordionProps> = ({ title, text }) => {
     <Collapse
       className="max-sm:small-padding border border-r-error"
       bordered={false}
-      expandIcon={expandIcon}
+      expandIcon={ExpandIcon}
       expandIconPosition="end"
       items={[
         {

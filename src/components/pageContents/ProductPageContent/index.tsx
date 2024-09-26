@@ -6,13 +6,12 @@ import { FC, useState } from 'react';
 
 import { FiInfo } from 'react-icons/fi';
 
-import { ProductTextBlock } from './ProductTextBlock';
-
-import { PromoTag } from './PromoTag';
+import { TextBlock } from '../../ui/TextBlock';
 
 import { API } from '@/api/types';
-import ProductCarousel from '@/components/ProductCarousel';
-import { SliderComponent as Slider } from '@/components/Slider';
+import ProductCarousel from '@/components/Carousels/ProductCarousel';
+import { Slider } from '@/components/Carousels/Slider';
+import { PromoTag } from '@/components/ui/PromoTag';
 import { StepperButton } from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
 import { mockProduct, products } from '@/mocks';
@@ -37,7 +36,7 @@ export type TProductProps = {
   };
 };
 
-const Product: FC<TProductProps> = ({ productInfo }) => {
+const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   const { id, title, description, allergens, images, nutritionFacts, price, weight, labels, promotions } = productInfo;
 
   const [selectedFilling, setSelectedFilling] = useState<string>(mockProduct.fillingOptions[0]);
@@ -149,8 +148,8 @@ const Product: FC<TProductProps> = ({ productInfo }) => {
               </Button>
             </div>
 
-            <ProductTextBlock title="Описание" text={description || ''} />
-            <ProductTextBlock
+            <TextBlock title="Описание" text={description || ''} />
+            <TextBlock
               title="Состав"
               text={mockProduct.contents}
               additionalText={allergens?.length ? <p>Продукт содержит аллергены: {allergens.join(', ')}</p> : null}
@@ -176,10 +175,10 @@ const Product: FC<TProductProps> = ({ productInfo }) => {
                 </div>
               </div>
             </div>
-            <ProductTextBlock title="Количество порций" text={mockProduct.portions} />
-            <ProductTextBlock title="Размеры торта" text={mockProduct.size} />
-            <ProductTextBlock title="Срок годности" text={mockProduct.bestBefore} />
-            <ProductTextBlock title="Примечание" text={mockProduct.additionalInfo} />
+            <TextBlock title="Количество порций" text={mockProduct.portions} />
+            <TextBlock title="Размеры торта" text={mockProduct.size} />
+            <TextBlock title="Срок годности" text={mockProduct.bestBefore} />
+            <TextBlock title="Примечание" text={mockProduct.additionalInfo} />
           </div>
         </div>
       </div>
@@ -188,4 +187,4 @@ const Product: FC<TProductProps> = ({ productInfo }) => {
   );
 };
 
-export default Product;
+export default ProductPageContent;

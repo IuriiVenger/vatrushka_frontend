@@ -3,7 +3,7 @@
 import { FC, useEffect } from 'react';
 
 import { CategoriesConnection } from '@/__generated__/graphql';
-import Home from '@/components/Home';
+import Home from '@/components/pageContents/HomePageContent';
 import { useAppDispatch } from '@/store';
 import { setCategories } from '@/store/slices/entities';
 

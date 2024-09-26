@@ -3,9 +3,9 @@
 import { Button } from 'antd';
 import { FC, useRef, useState } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
-import Slider, { Settings } from 'react-slick';
+import SlickSlider, { Settings } from 'react-slick';
 
-import { ProductCard } from './ProductCard';
+import { ProductCard } from '../Product/ProductCard';
 
 import { TCard } from '@/types';
 
@@ -14,8 +14,8 @@ type TSliderComponentProps = {
   slides: TCard[];
 };
 
-export const SliderComponent: FC<TSliderComponentProps> = ({ title, slides }) => {
-  const sliderRef = useRef<Slider>(null);
+export const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
+  const sliderRef = useRef<SlickSlider>(null);
 
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
@@ -87,11 +87,11 @@ export const SliderComponent: FC<TSliderComponentProps> = ({ title, slides }) =>
         </div>
       </div>
       <div className="slider-container max-xs:ml-calc-center mx-auto grid max-w-320 grid-cols-1 overflow-hidden max-sm:pl-10 max-xs:mr-0 max-xs:pl-0">
-        <Slider {...settings} ref={sliderRef}>
+        <SlickSlider {...settings} ref={sliderRef}>
           {slides.map((slide, index) => (
             <ProductCard key={index} info={slide} slider />
           ))}
-        </Slider>
+        </SlickSlider>
       </div>
     </div>
   );

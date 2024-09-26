@@ -4,7 +4,7 @@ import { Divider, Button, message } from 'antd';
 import Link from 'next/link';
 import { FC } from 'react';
 
-import CustomImage from './ui/CustomImage';
+import CustomImage from '../ui/CustomImage';
 
 import { CurrencySymbol, TagColorSchema } from '@/constants';
 import { TCard } from '@/types';

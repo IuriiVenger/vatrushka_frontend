@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { Accordion } from '@/components/ui/Accordion';
 import { companyInfo } from '@/config/links';
 
-export const BonusPage: FC = () => {
+const BonusPageContent: FC = () => {
   const breadcrumbs = [
     {
       title: <Link href="/">Главная</Link>,
@@ -140,3 +140,5 @@ export const BonusPage: FC = () => {
     </section>
   );
 };
+
+export default BonusPageContent;

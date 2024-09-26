@@ -25,7 +25,7 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
   const mainImage = product.productsCollection?.edges[0].node.productsizesCollection?.edges.find(
     (size) => size.node.is_default,
   )?.node.button_image_url;
-  const productImages = product.productsCollection?.edges[0].node.images;
+  const productImages = [mainImage]; // TODO: add images from other sizes
   const additionalImages = productImages ? (productImages.filter(Boolean) as string[]) : [];
 
   const images = mainImage ? [mainImage, ...additionalImages] : additionalImages;

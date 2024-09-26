@@ -44,7 +44,7 @@ export enum NavigationLinks {
   DELIVERY = 'delivery',
   BONUS = 'bonus',
   CONDITIONS = 'conditions',
-  FEEDBACK = 'feedback',
+  // FEEDBACK = 'feedback',
 }
 
 export const defaultPaginationParams = {
