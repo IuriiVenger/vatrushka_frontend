@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import { RxCross2 } from 'react-icons/rx';
 
+import CustomImage from '@/components/ui/CustomImage';
 import { StepperButton } from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
 import { TCartListItem } from '@/types';
@@ -19,7 +20,13 @@ export const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = fals
 
   return (
     <div className="flex w-full gap-3">
-      <img alt={name} src={pic} className="aspect-square h-16 w-16 rounded-lg object-cover" />
+      <CustomImage
+        alt={name}
+        src={pic}
+        width={72}
+        height={72}
+        className="aspect-square h-16 w-16 rounded-lg object-cover"
+      />
       <div className={`flex w-full flex-col ${cart ? 'gap-4' : 'gap-3'}`}>
         <div className="flex items-start justify-between">
           <p className="max-w-54.5 text-wrap">{name}</p>
