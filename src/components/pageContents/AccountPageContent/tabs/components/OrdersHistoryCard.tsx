@@ -42,7 +42,7 @@ const OrdersHistoryCard: FC<TOrdersHistoryCardProps> = ({ order }) => {
             <p className="text-nowrap text-lg leading-lg max-sm:text-base max-sm:leading-base">№ {number}</p>
           </div>
           <div
-            className={`max-sm:text-xs max-sm:leading-xs text-nowrap rounded-2xl px-2 text-base leading-base ${status === 'Выполнен' ? 'bg-successBg border border-success text-success' : 'bg-errorBg border border-error text-error'}`}
+            className={`max-sm:text-xs max-sm:leading-xs text-nowrap rounded-2xl px-2 text-base leading-base ${status === 'Выполнен' ? 'border border-success bg-successBg text-success' : 'border border-error bg-errorBg text-error'}`}
           >
             {status}
           </div>

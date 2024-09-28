@@ -56,7 +56,7 @@ export const CurrentOrderCard: FC<TCurrentOrderCardProps> = ({ order }) => {
           </div>
         </div>
         <Divider className="hidden max-lg:block" />
-        <div className="max-w-112 flex h-max w-full flex-col gap-3 rounded-2xl border border-borderSecondary p-6 max-lg:border-none max-lg:p-0 max-sm:gap-2">
+        <div className="flex h-max w-full max-w-112 flex-col gap-3 rounded-2xl border border-borderSecondary p-6 max-lg:border-none max-lg:p-0 max-sm:gap-2">
           <h3 className="text-nowrap pb-2 text-xl font-medium leading-xl max-sm:text-lg max-sm:leading-lg">{type}</h3>
           <p>{address}</p>
           <p>{time}</p>
