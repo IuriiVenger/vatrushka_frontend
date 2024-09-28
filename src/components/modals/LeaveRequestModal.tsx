@@ -2,8 +2,9 @@ import { Button } from 'antd';
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { useSuccessModal } from '../../hooks/useSuccessModal';
+
 import { Modal } from './Modal';
-import { useSuccessModal } from './useSuccessModal';
 
 import { Form } from '@/components/ui/Form/Form';
 import { Input } from '@/components/ui/Form/Input';
@@ -38,7 +39,7 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
   return (
     <Modal title="Оставить заявку" isOpen={isOpen} setIsOpen={setIsOpen}>
       <div>
-        <Form onSubmit={handleSubmit(submitHandler)} className="gap-4">
+        <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-4">
           <Input
             name="name"
             type="text"

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -8,6 +8,7 @@ import { Form } from '@/components/ui/Form/Form';
 import { Input } from '@/components/ui/Form/Input';
 import { companyInfo } from '@/config/links';
 import { AuthModalProcessType } from '@/constants';
+import { useMessage } from '@/hooks/useMessage';
 import { getNounWithDeclension } from '@/utils/formatters';
 import { isConfirmationCodeValid } from '@/utils/validation';
 
@@ -24,6 +25,8 @@ type TConfirmPhoneModalProps = {
 export const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose, phone }) => {
   const [seconds, setSeconds] = useState(60);
   const [isSendingPossible, setIsSendingPossible] = useState(true);
+
+  const { showMessage } = useMessage();
 
   const {
     handleSubmit,
@@ -50,7 +53,7 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose
   const submitHandler: SubmitHandler<ConfirmPhoneForm> = (data) => {
     console.log('code sent', data.confirmationCode);
     onClose();
-    message.success(successMessage);
+    showMessage({ type: 'success', text: successMessage });
   };
 
   const onUpdateCode = () => {
@@ -82,7 +85,7 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose
   return (
     <div className="flex flex-col gap-6 text-lg leading-lg max-sm:gap-4 max-sm:text-base max-sm:leading-base">
       <p className="mb-2">На ваш телефон {phone} выслан СМС-код для подтверждения</p>
-      <Form className="gap-6 max-sm:gap-4" onSubmit={handleSubmit(submitHandler)}>
+      <Form className="flex flex-col gap-6 max-sm:gap-4" onSubmit={handleSubmit(submitHandler)}>
         <div>
           <Input
             name="confirmationCode"

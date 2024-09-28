@@ -1,5 +1,5 @@
-import { TagType } from './constants';
-import { TMenuLevelOneOption, TCard, TCartListItem, TPromotion } from './types';
+import { addressesTypes, AddressType, TagType } from './constants';
+import { TMenuLevelOneOption, TCard, TCartListItem, TPromotion, TUserInfo } from './types';
 
 export const mockCardOne: TCard = {
   pic: 'https://s3-alpha-sig.figma.com/img/1cbd/6d9d/20ad1ed2e9d57489108643c0407f39e2?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=E~YT2pTIQJaSN~1EZdbb2S01zXR3xDY2xaYA8pUHbRi7yWhKXP8XdFYHA-6VCVdKcfmau~6taP4CfOyzMRstOKBYjBLFyySWSjtSFPuEEV-LcUpqafa2Rg5p7cmksk1JrWm~1lGh2w5i94GlCDCuliVMgJfN-qjCjMtFPrW-5B7dm1INg~eYABtQLiCweIj~o1RmffF~fRt~rcWfKdd~7Q-rA6r5IUDcrpcLrMmaN5HcGr9GMMhoHYdfJyH9gRNwnPBuKzedr6g1loAneDldM02Wpsel9yqbam17Z8Uv~wjRG0UCIu~agMIsy~BMVHRzazLj7pmwa4gcPops451t5g__',
@@ -181,17 +181,34 @@ export const promotions: TPromotion[] = [
   },
 ];
 
-export const userInfo = {
+export const userInfo: TUserInfo = {
   phone: '+7 (912) 744 55 88',
   addresses: [
-    { id: '1', address: 'ул. Энтузиастов, дом 16, частный дом' },
-    { id: '2', address: 'ул. Чекистова, дом 16, подъезд 3, этаж 8, квартира 203' },
+    {
+      id: '1',
+      address: 'ул. Энтузиастов, дом 16',
+      entrance: '',
+      floor: '',
+      apartment: '',
+      type: addressesTypes[AddressType.HOUSE],
+    },
+    {
+      id: '2',
+      address: 'ул. Чекистова, дом 16',
+      entrance: '3',
+      floor: '8',
+      apartment: '203',
+      type: addressesTypes[AddressType.FLAT],
+    },
   ],
+  points: 121,
 };
 
 export const order = {
   id: '1',
   number: 343434,
+  status: 'inProgress',
+  createdAt: '11.03.2024',
   orderStatuses: [
     {
       time: '14:00',
@@ -214,4 +231,221 @@ export const order = {
       completed: false,
     },
   ],
+  items: [
+    {
+      id: '1',
+      name: 'Торт Прага',
+      quantity: 1,
+      unitPrice: 1160,
+    },
+    {
+      id: '2',
+      name: 'Пирог с капустой и яйцом, слоено-дрожжевое тесто, 1кг',
+      quantity: 1,
+      unitPrice: 550,
+    },
+    {
+      id: '3',
+      name: 'Пирожное Наполеон тот самый',
+      quantity: 4,
+      unitPrice: 480,
+    },
+  ],
+  discounts: [
+    {
+      id: '1',
+      reason: 'Скидка по промокоду',
+      discount: 200,
+    },
+  ],
+  totalPrice: 3430,
+  fulfillment: {
+    type: 'Самовывоз',
+    address: 'ул. Энтузиастов, д.12. Пекарня-кондитерская «Ватрушка»',
+    time: '16.03.2021, с 10:30 до 11:30',
+    paymentMethod: 'Оплата наличными',
+  },
 };
+
+export const orderTwo = {
+  id: '1',
+  number: 98698,
+  status: 'inProgress',
+  createdAt: '10.03.2024',
+  orderStatuses: [
+    {
+      time: '14:00',
+      status: 'Получили заказ',
+      completed: true,
+    },
+    {
+      time: '14:10',
+      status: 'Заказ подтвержден',
+      completed: true,
+    },
+    {
+      time: '14:15',
+      status: 'Готовим',
+      completed: false,
+    },
+    {
+      time: '16:20',
+      status: 'Готов к выдаче',
+      completed: false,
+    },
+  ],
+  items: [
+    {
+      id: '1',
+      name: 'Торт Прага',
+      quantity: 1,
+      unitPrice: 160,
+    },
+    {
+      id: '2',
+      name: 'Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем ',
+      quantity: 1,
+      unitPrice: 550,
+    },
+    {
+      id: '3',
+      name: 'Пицца Римская Маргарита',
+      quantity: 1,
+      unitPrice: 490,
+    },
+  ],
+  discounts: [],
+  totalPrice: 1190,
+  fulfillment: {
+    type: 'Доставка',
+    address: 'ул. Энтузиастов, д.12., подъезд 2, кв. 10, этаж 8',
+    time: '16.03.2021, с 15:00 до 16:30',
+    paymentMethod: 'Оплата онлайн',
+  },
+};
+
+export type TOrder = typeof order;
+
+export const currentOrders: TOrder[] = [order, orderTwo];
+
+export const historyOrder = {
+  id: '1',
+  number: 34343,
+  status: 'Выполнен',
+  createdAt: '11.03.2024',
+  orderStatuses: [
+    {
+      time: '14:00',
+      status: 'Получили заказ',
+      completed: true,
+    },
+    {
+      time: '14:10',
+      status: 'Заказ подтвержден',
+      completed: true,
+    },
+    {
+      time: '14:15',
+      status: 'Готовим',
+      completed: false,
+    },
+    {
+      time: '16:20',
+      status: 'Готов к выдаче',
+      completed: false,
+    },
+  ],
+  items: [
+    {
+      id: '1',
+      name: 'Торт Прага',
+      quantity: 1,
+      unitPrice: 1160,
+    },
+    {
+      id: '2',
+      name: 'Пирог с капустой и яйцом, слоено-дрожжевое тесто, 1кг',
+      quantity: 1,
+      unitPrice: 550,
+    },
+    {
+      id: '3',
+      name: 'Пирожное Наполеон тот самый',
+      quantity: 4,
+      unitPrice: 480,
+    },
+  ],
+  discounts: [
+    {
+      id: '1',
+      reason: 'Скидка по промокоду',
+      discount: 200,
+    },
+  ],
+  totalPrice: 3430,
+  fulfillment: {
+    type: 'Самовывоз',
+    address: 'ул. Энтузиастов, д.12. Пекарня-кондитерская «Ватрушка»',
+    time: '16.03.2021, с 10:30 до 11:30',
+    paymentMethod: 'Оплата наличными',
+  },
+};
+
+export const historyOrderTwo = {
+  id: '1',
+  number: 98698,
+  status: 'Отменен',
+  createdAt: '10.03.2024',
+  orderStatuses: [
+    {
+      time: '14:00',
+      status: 'Получили заказ',
+      completed: true,
+    },
+    {
+      time: '14:10',
+      status: 'Заказ подтвержден',
+      completed: true,
+    },
+    {
+      time: '14:15',
+      status: 'Готовим',
+      completed: false,
+    },
+    {
+      time: '16:20',
+      status: 'Готов к выдаче',
+      completed: false,
+    },
+  ],
+  items: [
+    {
+      id: '1',
+      name: 'Торт Прага',
+      quantity: 1,
+      unitPrice: 160,
+    },
+    {
+      id: '2',
+      name: 'Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем Тяхан со свининой, рисом и болгарским перцем ',
+      quantity: 1,
+      unitPrice: 550,
+    },
+    {
+      id: '3',
+      name: 'Пицца Римская Маргарита',
+      quantity: 1,
+      unitPrice: 490,
+    },
+  ],
+  discounts: [],
+  totalPrice: 1190,
+  fulfillment: {
+    type: 'Доставка',
+    address: 'ул. Энтузиастов, д.12., подъезд 2, кв. 10, этаж 8',
+    time: '16.03.2021, с 15:00 до 16:30',
+    paymentMethod: 'Оплата онлайн',
+  },
+};
+
+export const ordersHistory: TOrder[] = [historyOrder, historyOrderTwo];

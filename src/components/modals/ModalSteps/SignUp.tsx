@@ -43,7 +43,7 @@ const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone }) => 
   }, []);
 
   return (
-    <Form onSubmit={handleSubmit(submitHandler)} className="gap-6 max-sm:gap-4">
+    <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-6 max-sm:gap-4">
       <div className="flex flex-col gap-4">
         <Input
           name="name"

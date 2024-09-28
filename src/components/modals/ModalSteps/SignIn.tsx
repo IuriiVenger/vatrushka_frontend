@@ -53,7 +53,7 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone }) =>
           Зарегистрироваться
         </Button>
       </div>
-      <Form onSubmit={handleSubmit(submitHandler)} className="gap-6 max-sm:gap-4 ">
+      <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-6 max-sm:gap-4 ">
         <Input
           name="phone"
           type="tel"

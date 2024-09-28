@@ -2,13 +2,13 @@ import { Button } from 'antd';
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { useSuccessModal } from '../../hooks/useSuccessModal';
 import CustomImage from '../ui/CustomImage';
 import { Form } from '../ui/Form/Form';
 import { Input } from '../ui/Form/Input';
 import { TextAreaInput } from '../ui/Form/TextArea';
 
 import { Modal } from './Modal';
-import { useSuccessModal } from './useSuccessModal';
 
 import { CurrencySymbol } from '@/constants';
 import { TModalProps } from '@/types';
@@ -80,7 +80,7 @@ const RequestProductModal: FC<TRequestProductModalProps> = ({
           </div>
         </div>
       </div>
-      <Form onSubmit={handleSubmit(submitHandler)} className="gap-4 pt-6">
+      <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-4 pt-6">
         <p className="text-2xl font-medium leading-2xl max-sm:text-lg max-sm:leading-lg">Ваши данные</p>
         <Input
           name="name"

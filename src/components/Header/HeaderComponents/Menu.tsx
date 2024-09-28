@@ -69,22 +69,12 @@ export const Menu = () => {
           </Dropdown>
         </li>
         <li>
-          <Link
-            href="https://www.google.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-all hover:text-primaryHover"
-          >
+          <Link href="/contacts" className="transition-all hover:text-primaryHover">
             Контакты
           </Link>
         </li>
         <li>
-          <Link
-            href="https://www.google.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-all hover:text-primaryHover"
-          >
+          <Link href="/account" className="transition-all hover:text-primaryHover">
             Мои заказы
           </Link>
         </li>

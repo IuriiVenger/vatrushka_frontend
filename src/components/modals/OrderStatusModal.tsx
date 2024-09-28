@@ -3,11 +3,14 @@ import { FC } from 'react';
 
 import { Modal } from './Modal';
 
-import { order } from '@/mocks';
-import { TModalProps } from '@/types';
+import { TModalProps, TOrderStatus } from '@/types';
 
-const OrderStatusModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
-  const items = order.orderStatuses.map(({ time, status, completed }) => ({
+type TOrderStatusModalProps = TModalProps & {
+  orderStatuses: TOrderStatus[];
+};
+
+const OrderStatusModal: FC<TOrderStatusModalProps> = ({ isOpen, setIsOpen, orderStatuses }) => {
+  const items = orderStatuses.map(({ time, status, completed }) => ({
     label: time,
     children: status,
     color: completed ? 'green' : 'gray',

@@ -4,7 +4,7 @@ export const theme = {
   token: {
     colorWarning: color.warning,
     colorError: color.error.default,
-    colorSuccess: color.success,
+    colorSuccess: color.success.default,
     colorPrimary: color.accent.default,
     colorInfo: color.primary.default,
     colorTextBase: color.text.primary,
@@ -110,6 +110,10 @@ export const theme = {
     Menu: {
       activeBarBorderWidth: 0,
       fontSize: 16,
+      itemHoverBg: color.primary.bg,
+      itemSelectedBg: color.primary.bgHover,
+      itemActiveBg: color.primary.bgHover,
+      itemSelectedColor: color.text.primary,
     },
     Badge: {
       fontSize: 16,
@@ -120,17 +124,11 @@ export const theme = {
       indicatorHeightSM: 16,
     },
     Segmented: {
-      itemColor: color.text.primary,
-      itemHoverBg: color.fill.default,
-      itemHoverColor: color.text.primary,
+      itemColor: color.text.secondary,
       itemSelectedBg: color.primary.default,
       itemSelectedColor: color.white,
-      trackBg: color.transparent,
+      itemHoverBg: color.fill.secondary,
       controlHeight: 48,
-      controlPaddingHorizontal: 16,
-      fontSize: 16,
-      borderRadius: 64,
-      boxShadowTertiary: 'none',
     },
     Collapse: {
       contentBg: color.white,
@@ -178,9 +176,13 @@ export const theme = {
       radioSize: 24,
     },
     Timeline: {
-      colorSuccess: color.success,
+      colorSuccess: color.success.default,
       fontSize: 16,
       fontSizeSM: 14,
+    },
+    Switch: {
+      colorPrimary: color.primary.default,
+      colorPrimaryHover: color.primary.hover,
     },
   },
 };

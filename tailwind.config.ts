@@ -21,10 +21,12 @@ const spacing = {
   82: '20.5rem',
   84: '21rem',
   85: '21.25rem',
+  86: '21.5rem',
   90: '22.5rem',
   100: '25rem',
   106: '26.5rem',
   108: '27rem',
+  112: '28rem',
   120: '30rem',
   128: '32rem',
   144: '36rem',
@@ -108,11 +110,14 @@ const colors = {
   shadowMedium: color.shadow.medium,
   shadowLight: color.shadow.light,
 
-  success: color.success,
+  success: color.success.default,
+  successBg: color.success.bg,
+
   warning: color.warning,
   error: color.error.default,
   errorHover: color.error.hover,
   errorActive: color.error.active,
+  errorBg: color.error.bg,
 };
 
 const config: Config = {

@@ -60,3 +60,7 @@
 .ant-tabs-top > .ant-tabs-nav {
   @apply max-sm:mb-4;
 }
+
+.ant-message-success .anticon-check-circle {
+  @apply text-success;
+}

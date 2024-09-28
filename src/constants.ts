@@ -1,4 +1,6 @@
-import { TTag } from './types';
+import { MenuProps } from 'antd';
+
+import { TTab, TTag } from './types';
 
 export enum ResponseStatus {
   BAD_REQUEST = 400,
@@ -112,3 +114,61 @@ export enum AuthModalProcessType {
   SIGN_IN = 'signIn',
   SIGN_UP = 'signUp',
 }
+
+export enum AccountTabs {
+  PROFILE = 'profile',
+  BONUSES = 'bonuses',
+  CURRENT_ORDERS = 'currents-orders',
+  ORDER_HISTORY = 'order-history',
+  ADDRESSES = 'addresses',
+}
+
+export const tabs: Record<AccountTabs, TTab> = {
+  [AccountTabs.PROFILE]: { value: 'profile', label: 'Профиль' },
+  [AccountTabs.BONUSES]: { value: 'bonuses', label: 'Бонусы' },
+  [AccountTabs.CURRENT_ORDERS]: { value: 'currents-orders', label: 'Текущие заказы' },
+  [AccountTabs.ORDER_HISTORY]: { value: 'order-history', label: 'История заказов' },
+  [AccountTabs.ADDRESSES]: { value: 'addresses', label: 'Мои адреса' },
+};
+
+export const sortDropdownItems: MenuProps['items'] = [
+  {
+    key: SortType.MOST_POPULAR,
+    label: SortTypeTranslation[SortType.MOST_POPULAR],
+  },
+  {
+    key: SortType.PRICE_DESCENDING,
+    label: SortTypeTranslation[SortType.PRICE_DESCENDING],
+  },
+  {
+    key: SortType.PRICE_ASCENDING,
+    label: SortTypeTranslation[SortType.PRICE_ASCENDING],
+  },
+];
+
+export enum FilterOrdersType {
+  ALL = 'all',
+  YEAR_2024 = '2024',
+  YEAR_2023 = '2023',
+}
+
+export const filterOrdersTypeTranslation = {
+  [FilterOrdersType.ALL]: 'За все время',
+  [FilterOrdersType.YEAR_2024]: '2024 г',
+  [FilterOrdersType.YEAR_2023]: '2023 г',
+};
+
+export const filterDropdownItems: MenuProps['items'] = [
+  {
+    key: 'all',
+    label: 'За все время',
+  },
+  {
+    key: '2024',
+    label: '2024 г',
+  },
+  {
+    key: '2023',
+    label: '2023 г',
+  },
+];

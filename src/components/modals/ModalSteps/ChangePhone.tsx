@@ -30,7 +30,7 @@ export const ChangePhone: FC<TChangePhoneModalProps> = ({ onChangePhone }) => {
   };
 
   return (
-    <Form className="gap-6 max-sm:gap-4" onSubmit={handleSubmit(submitHandler)}>
+    <Form className="flex flex-col gap-6 max-sm:gap-4" onSubmit={handleSubmit(submitHandler)}>
       <Input
         name="phone"
         type="tel"

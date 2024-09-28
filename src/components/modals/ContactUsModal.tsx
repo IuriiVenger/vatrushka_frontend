@@ -2,8 +2,9 @@ import { Button, Checkbox, CheckboxProps, Tabs, TabsProps } from 'antd';
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { useSuccessModal } from '../../hooks/useSuccessModal';
+
 import { Modal } from './Modal';
-import { useSuccessModal } from './useSuccessModal';
 
 import { Form } from '@/components/ui/Form/Form';
 import { Input } from '@/components/ui/Form/Input';
@@ -47,7 +48,7 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
       key: 'message',
       label: 'Написать нам',
       children: (
-        <Form onSubmit={handleSubmit(submitHandler)} className="gap-6 max-sm:gap-4">
+        <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-6 max-sm:gap-4">
           <div className="flex flex-col gap-4">
             <Input
               name="name"
@@ -101,7 +102,7 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
       key: 'call',
       label: 'Заказать звонок',
       children: (
-        <Form onSubmit={handleSubmit(submitHandler)} className="gap-6 max-sm:gap-4">
+        <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-6 max-sm:gap-4">
           <div className="flex flex-col gap-4">
             <Input
               name="name"

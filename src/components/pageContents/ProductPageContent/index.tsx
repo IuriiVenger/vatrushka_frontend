@@ -1,6 +1,6 @@
 'use client';
 
-import { Breadcrumb, Button, message } from 'antd';
+import { Breadcrumb, Button } from 'antd';
 import Link from 'next/link';
 import { FC, useState } from 'react';
 
@@ -14,6 +14,7 @@ import { Slider } from '@/components/Carousels/Slider';
 import { PromoTag } from '@/components/ui/PromoTag';
 import { StepperButton } from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
+import { useMessage } from '@/hooks/useMessage';
 import { mockProduct, products } from '@/mocks';
 
 export type TProductProps = {
@@ -42,6 +43,8 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   const [selectedFilling, setSelectedFilling] = useState<string>(mockProduct.fillingOptions[0]);
   const [selectedWeight, setSelectedWeight] = useState<number>(mockProduct.weightOptions[0]);
 
+  const { showMessage } = useMessage();
+
   const onFillingButtonClick = (_: React.MouseEvent<HTMLElement>, filling: string) => {
     setSelectedFilling(filling);
   };
@@ -51,7 +54,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   };
 
   const onOrderButtonClick = () => {
-    message.success(`Добавлено в корзину: ${id}`);
+    showMessage({ type: 'success', text: `Добавлено в корзину: ${id}` });
   };
 
   const breadcrumbs = [

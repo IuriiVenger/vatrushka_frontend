@@ -32,7 +32,7 @@ const DeleteAccountModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
         <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">
           Вместе с ним удалятся: имя и фамилия, телефон, email, история заказов и сохранённые адреса.
         </p>
-        <Form onSubmit={handleSubmit(submitHandler)} className="gap-6 max-sm:gap-4">
+        <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-6 max-sm:gap-4">
           <TextAreaInput
             name="reason"
             rows={3}

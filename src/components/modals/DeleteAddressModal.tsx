@@ -1,8 +1,9 @@
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { FC } from 'react';
 
 import { Modal } from './Modal';
 
+import { useMessage } from '@/hooks/useMessage';
 import { TModalProps } from '@/types';
 
 type TDeleteAddressModalProps = TModalProps & {
@@ -10,6 +11,8 @@ type TDeleteAddressModalProps = TModalProps & {
 };
 
 const DeleteAddressModal: FC<TDeleteAddressModalProps> = ({ isOpen, setIsOpen, addressId }) => {
+  const { showMessage } = useMessage();
+
   const onClose = () => {
     setIsOpen(false);
   };
@@ -17,7 +20,7 @@ const DeleteAddressModal: FC<TDeleteAddressModalProps> = ({ isOpen, setIsOpen, a
   const onDelete = () => {
     console.log('address deleted', addressId);
     onClose();
-    message.success('Адрес успешно удалён');
+    showMessage({ type: 'success', text: 'Адрес успешно удалён' });
   };
 
   return (

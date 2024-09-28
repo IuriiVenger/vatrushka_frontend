@@ -1,4 +1,4 @@
-import { Button, Checkbox, CheckboxProps, message, Rate } from 'antd';
+import { Button, Checkbox, CheckboxProps, Rate } from 'antd';
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -10,6 +10,7 @@ import { TextAreaInput } from '../ui/Form/TextArea';
 
 import { Modal } from './Modal';
 
+import { useMessage } from '@/hooks/useMessage';
 import { TModalProps } from '@/types';
 
 type TFeedbackModalForm = {
@@ -23,6 +24,8 @@ const FeedbackModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
   const [productRate, setProductRate] = useState(0);
 
   const [isAgree, setIsAgree] = useState(false);
+
+  const { showMessage } = useMessage();
 
   const onAgree: CheckboxProps['onChange'] = () => {
     setIsAgree(!isAgree);
@@ -47,12 +50,12 @@ const FeedbackModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
   const submitHandler: SubmitHandler<TFeedbackModalForm> = (data) => {
     console.log('FeedbackModalForm data:', data, 'serviceRate:', serviceRate, 'productRate', productRate);
     setIsOpen(false);
-    message.success('Ваше сообщение успешно отправлено');
+    showMessage({ type: 'success', text: 'Ваше сообщение успешно отправлено' });
   };
 
   return (
     <Modal title="Ваши отзывы и предложения" isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Form onSubmit={handleSubmit(submitHandler)} className="gap-6 max-sm:gap-4">
+      <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-6 max-sm:gap-4">
         <div className="flex flex-col gap-4">
           <Input
             name="name"

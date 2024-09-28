@@ -95,3 +95,29 @@ export type Pattern = {
   value: RegExp;
   message: string;
 };
+
+export type TAddress = {
+  id: string;
+  address: string;
+  entrance: string;
+  floor: string;
+  apartment: string;
+  type: { id: string; label: string };
+};
+
+export type TUserInfo = {
+  phone: string;
+  addresses: TAddress[];
+  points: number;
+};
+
+export type TTab = {
+  value: string;
+  label: string;
+};
+
+export type TOrderStatus = {
+  time: string;
+  status: string;
+  completed: boolean;
+};
