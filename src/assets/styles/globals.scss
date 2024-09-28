@@ -7,11 +7,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './antdStyles/alert.scss';
 @import './antdStyles/badge.scss';
 @import './antdStyles/carousel.scss';
 @import './antdStyles/cascader.scss';
 @import './antdStyles/collapse.scss';
 @import './antdStyles/dropdown.scss';
+@import './antdStyles/input.scss';
 @import './antdStyles/modal.scss';
 @import './antdStyles/pagination.scss';
 @import './antdStyles/radio.scss';

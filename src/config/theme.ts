@@ -157,6 +157,7 @@ export const theme = {
       paddingInline: 12,
       paddingBlock: 7,
       colorError: color.error.default,
+      addonBg: color.white,
     },
     Form: {
       itemMarginBottom: 0,

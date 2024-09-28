@@ -6,6 +6,7 @@ import { TagType } from './mock';
 type TValueOf<T> = T[keyof T];
 
 export type TCard = {
+  id: string;
   pic: string;
   name: string;
   weight: string | number;

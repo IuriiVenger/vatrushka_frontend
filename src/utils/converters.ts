@@ -2,6 +2,7 @@ import { CategoryItemsConnectionType, TCard } from '@/types';
 
 export const convertCategoryItemsQueryProductsToCards = (categoryItems: CategoryItemsConnectionType): TCard[] =>
   categoryItems?.edges.map(({ node }) => ({
+    id: node.products.id,
     pic:
       node.products.productsizesCollection?.edges.find((product) => product.node.is_default)?.node.button_image_url ||
       '',

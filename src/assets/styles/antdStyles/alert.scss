@@ -1,0 +1,18 @@
+.anticon {
+  &.anticon-check-circle {
+    @apply text-success;
+  }
+
+  &.anticon-close-circle {
+    @apply text-error;
+  }
+
+  &.anticon-exclamation-circle {
+    @apply text-warning;
+  }
+
+  &.anticon-loading,
+  &.anticon-info-circle {
+    @apply text-primary;
+  }
+}
