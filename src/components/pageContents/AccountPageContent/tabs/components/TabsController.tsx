@@ -4,6 +4,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 
 import { AccountTabs, tabs } from '@/constants';
+import { useUrlParams } from '@/hooks/useUrlParams';
 import { TTab } from '@/types';
 
 type TTabsControllerProps = {
@@ -16,8 +17,11 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, segmentedItems 
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
+  const { setParam } = useUrlParams('tab');
+
   const onClick = (value: AccountTabs) => {
     setTab(value);
+    setParam(value);
   };
 
   if (!Object.keys(screens).length) return <Skeleton className="pt-10 max-sm:pt-0" />;
@@ -48,7 +52,7 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, segmentedItems 
       <Segmented
         options={segmentedItems}
         value={tab}
-        onChange={(value) => setTab(value as AccountTabs)}
+        onChange={(value) => onClick(value as AccountTabs)}
         className="w-max text-lg leading-lg max-lg:text-base max-lg:leading-base"
       />
       {tab === tabs[AccountTabs.PROFILE].value && (
