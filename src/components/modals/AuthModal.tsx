@@ -8,33 +8,51 @@ import ConfirmPhone from './ModalSteps/ConfirmPhone';
 import SignIn from './ModalSteps/SignIn';
 import SignUp from './ModalSteps/SignUp';
 
-import { AuthModalProcessType } from '@/constants';
+import { AuthModalProcessType, AuthModalSteps } from '@/constants';
 import { TModalProps } from '@/types';
 
 type TAuthModalProps = TModalProps & {
-  firstStep?: number;
+  firstStep?: AuthModalSteps;
 };
 
-const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = 0 }) => {
-  const [step, setStep] = useState(firstStep);
+const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = AuthModalSteps.AUTH_ACTION }) => {
+  const [step, setStep] = useState<AuthModalSteps>(firstStep);
   const [processType, setProcessType] = useState<AuthModalProcessType | null>(null);
   const [phone, setPhone] = useState('');
+
+  const title = useMemo(() => {
+    switch (step) {
+      case AuthModalSteps.AUTH_ACTION:
+        return 'Вход на сайт';
+
+      case AuthModalSteps.SIGN_IN:
+        return 'Вход в аккаунт';
+
+      case AuthModalSteps.SIGN_UP:
+        return 'Регистрация';
+
+      default:
+        return 'Введите смс-код';
+    }
+  }, [step, processType]);
+
+  const hasBackButton = [AuthModalSteps.SIGN_UP, AuthModalSteps.CONFIRM_PHONE].includes(step);
 
   const onClose = () => {
     setIsOpen(false);
   };
 
   const setPreviousStep = () => {
-    if (step === 3 && processType === AuthModalProcessType.SIGN_IN) {
-      setStep(1);
+    if (step === AuthModalSteps.CONFIRM_PHONE && processType === AuthModalProcessType.SIGN_IN) {
+      setStep(AuthModalSteps.SIGN_IN);
       return;
     }
 
-    setStep(step - 1);
+    setStep((prevStep) => prevStep - 1);
   };
 
   const setNextStep = () => {
-    setStep(step + 1);
+    setStep((prevStep) => prevStep + 1);
   };
 
   const onSignIn = () => {
@@ -47,27 +65,11 @@ const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = 0 }) =>
     setProcessType(null);
   }, [isOpen]);
 
-  const title = useMemo(() => {
-    switch (step) {
-      case 0:
-        return 'Вход на сайт';
-
-      case 1:
-        return 'Вход в аккаунт';
-
-      case 2:
-        return 'Регистрация';
-
-      default:
-        return 'Введите смс-код';
-    }
-  }, [step, processType]);
-
   return (
     <Modal
       title={
         <>
-          {[2, 3].includes(step) && (
+          {hasBackButton && (
             <Button
               type="link"
               className="h-6 text-accent transition-all hover:text-accentHover active:text-accentActive"
@@ -85,10 +87,16 @@ const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = 0 }) =>
       setIsOpen={setIsOpen}
       width="small"
     >
-      {step === 0 && <AuthActionModal onSignIn={onSignIn} onClose={onClose} />}
-      {step === 1 && <SignIn setProcessType={setProcessType} setStep={setStep} setPhone={setPhone} />}
-      {step === 2 && <SignUp setProcessType={setProcessType} setNextStep={setNextStep} setPhone={setPhone} />}
-      {step === 3 && <ConfirmPhone processType={processType} onClose={onClose} phone={phone} />}
+      {step === AuthModalSteps.AUTH_ACTION && <AuthActionModal onSignIn={onSignIn} onClose={onClose} />}
+      {step === AuthModalSteps.SIGN_IN && (
+        <SignIn setProcessType={setProcessType} setStep={setStep} setPhone={setPhone} />
+      )}
+      {step === AuthModalSteps.SIGN_UP && (
+        <SignUp setProcessType={setProcessType} setNextStep={setNextStep} setPhone={setPhone} />
+      )}
+      {step === AuthModalSteps.CONFIRM_PHONE && (
+        <ConfirmPhone processType={processType} onClose={onClose} phone={phone} />
+      )}
     </Modal>
   );
 };

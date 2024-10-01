@@ -4,6 +4,7 @@ import React from 'react';
 
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 
+import { AccountTabs } from '@/constants';
 import { menuLevelOneOptions } from '@/mocks';
 import { TMenuLevelOneOption } from '@/types';
 
@@ -74,7 +75,7 @@ export const Menu = () => {
           </Link>
         </li>
         <li>
-          <Link href="/account" className="transition-all hover:text-primaryHover">
+          <Link href={`/account/${AccountTabs.CURRENT_ORDERS}`} className="transition-all hover:text-primaryHover">
             Мои заказы
           </Link>
         </li>

@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { FC, useState } from 'react';
 
-import { AddressCard } from '../components/AddressCard';
+import AddressCard from './components/AddressCard';
 
 import AddressModal from '@/components/modals/AddressModal';
 import { userInfo } from '@/mocks';

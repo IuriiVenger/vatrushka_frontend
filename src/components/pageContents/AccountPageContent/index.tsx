@@ -5,9 +5,9 @@ import { FC, useEffect, useState } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 
-import TabContent from './TabContent';
-import TabsController from './tabs/components/TabsController';
-import UnauthorizedScreen from './UnauthorizedScreen';
+import TabsController from '../../AccountPageComponents/components/TabsController';
+import TabContent from '../../AccountPageComponents/TabContent';
+import UnauthorizedScreen from '../../AccountPageComponents/UnauthorizedScreen';
 
 import { Dropdown } from '@/components/ui/Dropdown';
 import { AccountTabs, filterDropdownItems, FilterOrdersType, filterOrdersTypeTranslation, tabs } from '@/constants';

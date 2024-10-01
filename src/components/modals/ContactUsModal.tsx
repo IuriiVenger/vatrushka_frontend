@@ -27,7 +27,7 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
   });
 
   const onChange: CheckboxProps['onChange'] = () => {
-    setIsAgree(!isAgree);
+    setIsAgree((prev) => !prev);
   };
 
   const {

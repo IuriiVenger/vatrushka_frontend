@@ -52,6 +52,8 @@ const AddressModal: FC<TAddressModalProps> = ({ isOpen, setIsOpen, isEdit = fals
 
   const title = isEditMode ? 'Изменить адрес' : 'Добавить адрес';
 
+  const addressTypeOptions = Object.values(addressesTypes);
+
   useEffect(() => {
     reset();
   }, [isOpen]);
@@ -106,7 +108,7 @@ const AddressModal: FC<TAddressModalProps> = ({ isOpen, setIsOpen, isEdit = fals
             />
           </div>
           <RadioGroup name="type" control={control} className="flex flex-col gap-3" required>
-            {Object.values(addressesTypes).map((type) => (
+            {addressTypeOptions.map((type) => (
               <Radio key={type.id} value={type.id}>
                 {type.label}
               </Radio>

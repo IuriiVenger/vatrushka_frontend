@@ -172,3 +172,10 @@ export const filterDropdownItems: MenuProps['items'] = [
     label: '2023 г',
   },
 ];
+
+export enum AuthModalSteps {
+  AUTH_ACTION = 0,
+  SIGN_IN = 1,
+  SIGN_UP = 2,
+  CONFIRM_PHONE = 3,
+}

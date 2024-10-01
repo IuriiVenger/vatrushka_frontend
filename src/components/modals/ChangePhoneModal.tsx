@@ -22,11 +22,11 @@ const ChangePhoneModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
   };
 
   const setPreviousStep = () => {
-    setStep(step - 1);
+    setStep((prevStep) => prevStep - 1);
   };
 
   const onChangePhone = (phoneNumber: string) => {
-    setStep(step + 1);
+    setStep((prevStep) => prevStep + 1);
     setPhone(phoneNumber);
   };
 

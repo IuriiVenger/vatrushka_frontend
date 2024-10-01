@@ -27,11 +27,11 @@ export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label
     }
 
     if (!props.required && !value) {
-      return true; // поле не обязательно и не заполнено - валидно
+      return true;
     }
 
     if (props.required && !value) {
-      return false; // поле обязательно, но не заполнено - невалидно
+      return false;
     }
 
     let isValid = true;
@@ -55,15 +55,15 @@ export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label
       name={name}
       control={control}
       rules={{ required: props.required, pattern, validate: validateRule }}
-      render={({ field }) => (
-        <AntForm.Item label={label} className={props.className} layout="vertical" required={props.required}>
-          <AntInput
-            {...field}
-            {...props}
-            status={field.value?.length && errors?.type === 'validate' ? 'error' : undefined}
-          />
-        </AntForm.Item>
-      )}
+      render={({ field }) => {
+        const status = field.value?.length && errors?.type === 'validate' ? 'error' : undefined;
+
+        return (
+          <AntForm.Item label={label} className={props.className} layout="vertical" required={props.required}>
+            <AntInput {...field} {...props} status={status} />
+          </AntForm.Item>
+        );
+      }}
     />
   );
 };

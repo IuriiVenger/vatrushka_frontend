@@ -27,15 +27,9 @@ type TRequestProductModalProps = TModalProps & {
   price: string;
 };
 
-const RequestProductModal: FC<TRequestProductModalProps> = ({
-  isOpen,
-  setIsOpen,
-  name,
-  pic,
-  filling,
-  weight,
-  price,
-}) => {
+const RequestProductModal: FC<TRequestProductModalProps> = (props) => {
+  const { isOpen, setIsOpen, name, pic, filling, weight, price } = props;
+
   const {
     handleSubmit,
     control,
@@ -62,7 +56,7 @@ const RequestProductModal: FC<TRequestProductModalProps> = ({
         <div className="flex gap-6 rounded-2xl border border-border p-4">
           <CustomImage
             src={pic}
-            alt="123"
+            alt={name}
             width={104}
             height={104}
             placeholder="blur"

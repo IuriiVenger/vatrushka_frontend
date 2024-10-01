@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Form } from '@/components/ui/Form/Form';
 import { Input } from '@/components/ui/Form/Input';
-import { AuthModalProcessType } from '@/constants';
+import { AuthModalProcessType, AuthModalSteps } from '@/constants';
 
 type TSignInForm = {
   phone: string;
@@ -28,12 +28,12 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone }) =>
 
   const submitHandler: SubmitHandler<TSignInForm> = (data) => {
     setPhone(data.phone);
-    setStep(3);
+    setStep(AuthModalSteps.CONFIRM_PHONE);
     console.log('code sent to', data.phone);
   };
 
   const onSignUp = () => {
-    setStep(2);
+    setStep(AuthModalSteps.SIGN_UP);
   };
 
   useEffect(() => {

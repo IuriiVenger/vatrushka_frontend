@@ -1,4 +1,4 @@
-import { Radio } from 'antd';
+import { Radio, RadioChangeEvent } from 'antd';
 import { RadioGroupProps } from 'antd/lib';
 import { FC } from 'react';
 import { Controller } from 'react-hook-form';
@@ -17,18 +17,13 @@ export const RadioGroup: FC<RadioProps> = ({ name, control, children, defaultVal
     defaultValue={defaultValue}
     rules={{ required }}
     render={({ field }) => {
-      console.log('field.value', field.value);
+      const onRadioChange = (e: RadioChangeEvent) => {
+        onChange && onChange(e.target.value);
+        field.onChange(e.target.value);
+      };
 
       return (
-        <Radio.Group
-          onChange={(e) => {
-            onChange && onChange(e.target.value);
-            field.onChange(e.target.value);
-          }}
-          value={field.value ?? null}
-          defaultValue={defaultValue}
-          {...props}
-        >
+        <Radio.Group onChange={onRadioChange} value={field.value ?? null} defaultValue={defaultValue} {...props}>
           {children}
         </Radio.Group>
       );

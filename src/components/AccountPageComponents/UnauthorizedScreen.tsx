@@ -3,7 +3,7 @@
 import { Button } from 'antd';
 import { FC, useState } from 'react';
 
-import image from '../../../assets/images/account_page.svg';
+import image from '../../assets/images/account_page.svg';
 
 import AuthModal from '@/components/modals/AuthModal';
 

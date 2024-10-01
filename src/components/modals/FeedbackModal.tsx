@@ -28,7 +28,7 @@ const FeedbackModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
   const { showMessage } = useMessage();
 
   const onAgree: CheckboxProps['onChange'] = () => {
-    setIsAgree(!isAgree);
+    setIsAgree((prev) => !prev);
   };
 
   const onChangeServiceRate = (value: number) => {

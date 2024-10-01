@@ -25,14 +25,14 @@ export const TextAreaInput: FC<TTextAreaProps> = ({ name, control, pattern, vali
     name={name}
     control={control}
     rules={{ required: props.required, pattern, validate }}
-    render={({ field }) => (
-      <AntForm.Item label={label} className={props.className} layout="vertical" required={props.required}>
-        <TextArea
-          {...field}
-          {...props}
-          status={field.value?.length && errors?.type === 'validate' ? 'error' : undefined}
-        />
-      </AntForm.Item>
-    )}
+    render={({ field }) => {
+      const status = field.value?.length && errors?.type === 'validate' ? 'error' : undefined;
+
+      return (
+        <AntForm.Item label={label} className={props.className} layout="vertical" required={props.required}>
+          <TextArea {...field} {...props} status={status} />
+        </AntForm.Item>
+      );
+    }}
   />
 );

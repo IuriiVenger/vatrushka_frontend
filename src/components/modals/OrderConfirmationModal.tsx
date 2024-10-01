@@ -7,7 +7,7 @@ import { order, userInfo } from '@/mocks';
 import { TModalProps } from '@/types';
 
 const OrderConfirmationModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
-  const onClick = () => {
+  const onClose = () => {
     setIsOpen(false);
   };
 
@@ -25,7 +25,7 @@ const OrderConfirmationModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
               : 'Информацию о заказе можно посмотреть в личном кабинете, для этого войдите или зарегистрируйтесь по номеру телефона указанному при оформлении заказа.'}
           </p>
         </div>
-        <Button type="primary" className="w-full max-sm:text-base max-sm:leading-base" onClick={onClick} href="/">
+        <Button type="primary" className="w-full max-sm:text-base max-sm:leading-base" onClick={onClose} href="/">
           {isLoggedIn ? 'Личный кабинет' : 'Войти/Зарегистрироваться'}
         </Button>
       </div>

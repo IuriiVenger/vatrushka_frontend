@@ -1,10 +1,10 @@
 import { FC, useMemo } from 'react';
 
-import AccountTab from './tabs/AccountTab';
-import AddressesTab from './tabs/AddressesTab';
-import BonusesTab from './tabs/BonusesTab';
-import CurrentOrdersTab from './tabs/CurrentOrdersTab';
-import OrdersHistoryTab from './tabs/OrdersHistoryTab';
+import AccountTab from './AccountTab';
+import AddressesTab from './AddressesTab';
+import BonusesTab from './BonusesTab';
+import CurrentOrdersTab from './CurrentOrdersTab';
+import OrdersHistoryTab from './OrdersHistoryTab';
 
 import { AccountTabs, tabs } from '@/constants';
 
