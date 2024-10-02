@@ -19,6 +19,7 @@ import ProductModificator from '@/components/Product/ProductModificator';
 import { PromoTag } from '@/components/ui/PromoTag';
 import { StepperButton } from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
+import { useMessage } from '@/hooks/useMessage';
 import { TCard } from '@/types';
 
 export type ActiveModifierGroupIds = {
@@ -104,6 +105,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   } = productInfo;
 
   const initialSize = sizes?.find((size) => size.is_default) || sizes?.[0];
+  const { showMessage } = useMessage();
 
   const [activeSize, setActiveSize] = useState<Partial<Productsizes> | undefined>(initialSize);
   const [amount, setAmount] = useState(1);
@@ -136,6 +138,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   const totalPrice = pricePerItem * amount;
   const weight = activeSize?.portion_weight_grams;
   const recomendatedProductsData: TCard[] = recommendedProducts.map((product) => ({
+    id: product.nodeId,
     pic: product.button_image_url,
     name: product.name,
     description: product.short_description || '',

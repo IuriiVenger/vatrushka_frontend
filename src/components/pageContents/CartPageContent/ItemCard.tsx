@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 
 import CustomImage from '@/components/ui/CustomImage';
@@ -14,6 +14,7 @@ type TItemCardProps = {
 
 const ItemCard: FC<TItemCardProps> = ({ card }) => {
   const { id, name, pic, price, weight, inStock } = card;
+  const [count, setCount] = useState<number>(1);
 
   const { showMessage } = useMessage();
 
@@ -58,7 +59,7 @@ const ItemCard: FC<TItemCardProps> = ({ card }) => {
         <div className="flex w-full items-center justify-end gap-6 max-sm:justify-normal">
           {inStock ? (
             <div className="flex w-max items-center gap-6 max-sm:w-full max-sm:justify-between">
-              <StepperButton />
+              <StepperButton count={count} setCount={setCount} />
               <p className="text-nowrap text-xl font-medium leading-xl max-sm:text-base max-sm:leading-base">
                 {price} {CurrencySymbol.RUB}
               </p>
