@@ -31,7 +31,7 @@ export const PromoCarousel: FC<TCarouselProps> = ({ slides, product }) => (
             height={514}
             alt={slide}
             src={slide}
-            className={`w-1200 w-full rounded-3xl object-cover object-center max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
+            className={`w-1200 rounded-3xl object-cover object-center max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
           />
         </div>
       ))}

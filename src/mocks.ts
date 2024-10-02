@@ -1,6 +1,8 @@
 import { TagType } from './constants';
 import { TMenuLevelOneOption, TCard, TCartListItem, TPromotion } from './types';
 
+import mainBanner from '@/assets/images/main_banner.png';
+
 export const mockCardOne: TCard = {
   pic: 'https://s3-alpha-sig.figma.com/img/1cbd/6d9d/20ad1ed2e9d57489108643c0407f39e2?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=E~YT2pTIQJaSN~1EZdbb2S01zXR3xDY2xaYA8pUHbRi7yWhKXP8XdFYHA-6VCVdKcfmau~6taP4CfOyzMRstOKBYjBLFyySWSjtSFPuEEV-LcUpqafa2Rg5p7cmksk1JrWm~1lGh2w5i94GlCDCuliVMgJfN-qjCjMtFPrW-5B7dm1INg~eYABtQLiCweIj~o1RmffF~fRt~rcWfKdd~7Q-rA6r5IUDcrpcLrMmaN5HcGr9GMMhoHYdfJyH9gRNwnPBuKzedr6g1loAneDldM02Wpsel9yqbam17Z8Uv~wjRG0UCIu~agMIsy~BMVHRzazLj7pmwa4gcPops451t5g__',
   name: 'Торт Милая девочка',
@@ -29,10 +31,9 @@ export const mockCardTwo: TCard = {
 
 export const products: TCard[] = [...Array(9)].map((_, index) => (index % 2 === 0 ? mockCardOne : mockCardTwo));
 
-const banner =
-  'https://s3-alpha-sig.figma.com/img/f44e/999c/cfa9084129f9d4a7311a00006a466550?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=lUbV9wwPU65KKM8R7zjJTMyg8zxnUX817Z7bWyZ1fqmGBwfBnMtTtx~nPCoihIas-T-xEsy1ow5x95banImhawzyuxuZeH0szbxjxUwuwrJ5ASP6HSGjnv-T2HnkMVJeQdSdIsQIqs1yYlsoUWiWhC4bT5VEIcJn4zRN3ns32riCYIZk3wtyG~XINMLWczmwAjQVnERSHXVy5WmRmTxtV8BXSa02f7Jq5baKTGHo-5Ji0JzHJ3pYv66eYhbABN-9lRcb3zLn-xg89x9irbY8Pg8smDUC5vX76BL9l6~EiFU~UKH7i9Xd55jW-p9x7i-DIdz46SoR3LU3j8vH0gslPg__';
+const banner = mainBanner.src;
 
-export const slides = [banner, mockCardTwo.pic, mockCardOne.pic, mockCardTwo.pic];
+export const slides = [banner, banner, banner, banner];
 
 const mockCategorieOne = { name: 'Пасха', pic: mockCardOne.pic, count: 3 };
 const mockCategorieTwo = { name: 'Еда на каждый день, бизнес ланчи', pic: mockCardTwo.pic, count: 654 };

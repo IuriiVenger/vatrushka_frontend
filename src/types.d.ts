@@ -8,7 +8,7 @@ type TValueOf<T> = T[keyof T];
 export type TCard = {
   pic: string;
   name: string;
-  weight: string | number;
+  weight?: string | number;
   timing?: string;
   description: string;
   price: number | string;

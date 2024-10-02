@@ -1,14 +1,14 @@
-import { FC, useState } from 'react';
+import { FC, SetStateAction, Dispatch } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 
 type TStepperButtonProps = {
-  initialCount?: number;
+  count: number;
+  setCount: Dispatch<SetStateAction<number>>;
+  minValue?: number;
 };
 
-export const StepperButton: FC<TStepperButtonProps> = ({ initialCount = 1 }) => {
-  const [count, setCount] = useState(initialCount);
-
-  const isMinusButtonDisabled = count === 1;
+export const StepperButton: FC<TStepperButtonProps> = ({ count, setCount, minValue = 0 }) => {
+  const isMinusButtonDisabled = minValue >= count;
 
   const onCountChange = (delta: number) => (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();

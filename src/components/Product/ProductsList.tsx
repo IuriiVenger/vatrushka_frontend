@@ -29,7 +29,7 @@ export const ProductsList: FC<TProductsListProps> = (props) => {
   );
 
   return (
-    <div className="mx-auto flex max-w-320 flex-col gap-12 px-10 max-lg:gap-8 max-md:gap-4 max-xs:max-w-82 max-xs:px-0">
+    <div className="flex flex-col gap-12 max-lg:gap-8 max-md:gap-4 max-xs:max-w-82 ">
       <div className="flex items-end justify-between max-md:w-full max-md:flex-col max-md:items-start max-md:gap-6">
         <div className="flex flex-col gap-2">
           <p className="text-3xl font-medium leading-3xl max-sm:text-2xl max-sm:leading-2xl">{title}</p>

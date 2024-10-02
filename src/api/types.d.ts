@@ -108,12 +108,34 @@ export namespace API {
     export type Label = NonNullable<
       NonNullable<ProductBySlugQuery['productsCollection']>['edges'][0]['node']['productlabelsCollection']
     >['edges'][0]['node'];
+
     export type Tag = NonNullable<
       NonNullable<ProductBySlugQuery['productsCollection']>['edges'][0]['node']['productTagsCollection']
     >['edges'][0]['node'];
+
     export type Promotion = NonNullable<
       NonNullable<ProductBySlugQuery['productsCollection']>['edges'][0]['node']['productpromotionsCollection']
     >['edges'][0]['node']['promotions'];
+
+    export type OptionalText = {
+      title: string;
+      text: string;
+    };
+
+    export type Recomedation = {
+      button_image_url: string;
+      nodeId: string;
+      price: number | null;
+
+      name: string;
+      nodeId: string;
+      short_description: string | null;
+      slug: string;
+      category: {
+        name: string;
+        slug: string;
+      };
+    };
   }
 
   export namespace Promotions {
