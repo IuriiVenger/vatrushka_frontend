@@ -1,6 +1,6 @@
 import { Input as AntInput, Form as AntForm } from 'antd';
 import { InputProps } from 'antd/lib/input';
-import { FC, ReactNode, useMemo } from 'react';
+import { FC, ReactNode, useCallback, useMemo } from 'react';
 import { Controller, ControllerRenderProps, FieldError, FieldValues } from 'react-hook-form';
 
 import { isEmailValid, isPhoneNumberValid } from '@/utils/validation';
@@ -49,9 +49,8 @@ export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label
 
     return isValid;
   };
-
-  const getStatus = useMemo(
-    () => (field: ControllerRenderProps<FieldValues, string>) =>
+  const getStatus = useCallback(
+    (field: ControllerRenderProps<FieldValues, string>) =>
       field.value?.length && errors?.type === 'validate' ? 'error' : undefined,
     [errors],
   );
