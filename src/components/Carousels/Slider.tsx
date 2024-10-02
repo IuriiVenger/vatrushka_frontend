@@ -64,7 +64,7 @@ export const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
   };
 
   return (
-    <div className="mx-auto w-full max-w-320 px-10 max-sm:px-0 max-xs:mx-0">
+    <div className="w-full">
       <div className="flex items-center justify-between pb-12 max-lg:pb-8 max-md:box-content max-sm:mx-auto max-sm:max-w-128 max-sm:px-10 max-sm:pb-6 max-xs:box-border max-xs:max-w-82 max-xs:px-0">
         <p className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">{title}</p>
         <div className="flex flex-nowrap gap-4 max-sm:hidden">

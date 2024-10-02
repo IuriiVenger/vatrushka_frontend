@@ -10,7 +10,7 @@ export const SeoContent: FC = () => {
   const onButtonClick = () => setIsCollapsed(false);
 
   return (
-    <div className="mx-auto flex max-w-320 flex-col gap-8 px-10 max-xs:max-w-82 max-xs:px-0">
+    <div className="flex flex-col gap-8">
       <div
         className={`flex flex-col items-start gap-4 max-sm:gap-3 ${isCollapsed ? 'relative max-h-64 overflow-hidden' : ''}`}
       >

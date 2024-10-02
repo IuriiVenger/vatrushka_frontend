@@ -11,9 +11,7 @@ type TCarouselProps = {
 };
 
 export const PromoCarousel: FC<TCarouselProps> = ({ slides, product }) => (
-  <section
-    className={`custom mx-auto grid grid-cols-1 max-sm:m-0 max-xs:m-auto ${product ? '' : 'max-xl:px-10  max-xs:px-0 max-xs:pt-6'}`}
-  >
+  <section className="custom grid grid-cols-1">
     <AntCarousel
       autoplay
       arrows

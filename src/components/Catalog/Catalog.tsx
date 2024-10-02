@@ -11,7 +11,7 @@ type TCatalogProps = {
 };
 
 export const Catalog: FC<TCatalogProps> = ({ categories, subCatalogName }) => (
-  <div className="mx-auto flex max-w-320 flex-col items-start gap-12 px-10 max-lg:gap-8 max-sm:gap-6 max-xs:max-w-82 max-xs:px-0">
+  <div className="mx-auto flex flex-col items-start gap-12 max-lg:gap-8 max-sm:gap-6">
     <h2 className="text-3xl font-medium leading-3xl max-sm:text-2xl max-sm:leading-2xl">
       {subCatalogName ?? 'Каталог продукции'}
     </h2>
