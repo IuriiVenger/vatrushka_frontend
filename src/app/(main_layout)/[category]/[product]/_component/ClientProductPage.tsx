@@ -67,9 +67,13 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
     ) || [];
 
   const promotions =
-    currentProduct?.productpromotionsCollection?.edges
-      .map((item) => item.node.promotions)
-      .filter((promotion) => !!promotion.productButtonText) || [];
+    currentProduct?.productpromotionsCollection?.edges?.reduce((acc: API.Products.Promotion[], item) => {
+      const promotion = item.node.promotions;
+      if (promotion.productButtonText) {
+        acc.push(promotion);
+      }
+      return acc;
+    }, []) || [];
 
   const shortDescription = currentProduct?.short_description;
   const ingredients = currentProduct?.ingredients;

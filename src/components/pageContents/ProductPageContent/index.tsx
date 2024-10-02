@@ -53,20 +53,22 @@ export type TProductProps = {
   };
 };
 
-const getModifierGroupData = (modifiers: ModifiersGroups[]) =>
-  modifiers.reduce((acc: Record<string, ActiveModifierGroupIds>, group) => {
+const getModifierGroupData = (modifiersGroups: ModifiersGroups[]) =>
+  modifiersGroups.reduce((acc: Record<string, ActiveModifierGroupIds>, group) => {
+    const { min_quantity, max_quantity, modifiers, id } = group;
+
     const groupInfo: ActiveModifierGroupIds = {
       activeModifierGroups: [],
-      min_quantity: group.min_quantity || 0, // correct logic
-      max_quantity: group.max_quantity || 0, // correct logic
+      min_quantity: min_quantity || 0, // correct logic
+      max_quantity: max_quantity || 0, // correct logic
       // min_quantity: 3, // for testing
       // max_quantity: 5, // for testing
     };
 
-    if (groupInfo.min_quantity && groupInfo.max_quantity) {
-      const groupModifiers = [...group.modifiers];
+    if (min_quantity && max_quantity) {
+      const groupModifiers = [...modifiers];
 
-      for (let i = 0; i < groupInfo.min_quantity; i += 1) {
+      for (let i = 0; i < min_quantity; i += 1) {
         const defaultModifierIndex = groupModifiers.findIndex((modifier) => modifier.by_default);
         const defaultModifier = groupModifiers[defaultModifierIndex];
 
@@ -80,7 +82,7 @@ const getModifierGroupData = (modifiers: ModifiersGroups[]) =>
       }
     }
 
-    return { ...acc, [group.id]: groupInfo };
+    return { ...acc, [id]: groupInfo };
   }, {});
 
 const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
@@ -114,13 +116,18 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     activeSizeModifiersGroupsInitialData,
   );
 
-  const activeModifiers = Object.values(modifiersGroupsData)
-    .map((group) => group.activeModifierGroups)
-    .flat();
+  const activeModifiers = Object.values(modifiersGroupsData).reduce(
+    (acc: Omit<ProductSizeModifiers, 'nodeId'>[], group) => [...acc, ...group.activeModifierGroups],
+    [],
+  );
 
-  const selectedSizeImagesUrls = sizesImages
-    .filter((image) => image.productsize_id === activeSize?.size_id)
-    .map((image) => image.url);
+  const selectedSizeImagesUrls = sizesImages.reduce((acc: string[], image) => {
+    if (image.productsize_id === activeSize?.size_id) {
+      acc.push(image.url);
+    }
+
+    return acc;
+  }, []);
 
   const activeModifiersPrice = activeModifiers.reduce((acc, modifier) => acc + (Number(modifier.price) || 0), 0);
   const activeSizePrice = activeSize?.price ? Number(activeSize.price) : 0;
@@ -133,6 +140,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     name: product.name,
     description: product.short_description || '',
     price: product.price || 0,
+    // fix inStock after adding it to the API
     inStock: true,
     href: `/${product.category.slug}/${product.slug}`,
   }));

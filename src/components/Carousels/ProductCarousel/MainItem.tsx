@@ -35,7 +35,7 @@ const ProductCarouselMainItem: FC<ProductCarouselMainItemProps> = (props) => {
           <Label key={label.id || index} label={label} className="z-2 absolute left-6 top-6 " />
         ))}
       <Image
-        className={cn('rounded-lg object-cover ', imageSizeClassname)}
+        className={cn('rounded-lg object-cover', imageSizeClassname)}
         src={image}
         alt={title}
         width={480}

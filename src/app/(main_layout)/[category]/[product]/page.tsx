@@ -3,7 +3,9 @@ import { FC } from 'react';
 
 import ClientProductPage from './_component/ClientProductPage';
 
+import { Productsizeimages } from '@/__generated__/graphql';
 import { products } from '@/api/products';
+import { ModifiersGroups } from '@/components/pageContents/ProductPageContent';
 
 type ProductPageProps = {
   params: {
@@ -43,17 +45,17 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
               .then((res) => res.data.productsizeimagesCollection?.edges),
           ),
         )),
-      ]
-        .map(
-          (item) =>
-            item?.map((edge) => ({
-              ...edge.node,
-            })) || [],
-        )
-        .flat()
+      ].reduce((acc: Productsizeimages[], item) => {
+        const edges =
+          item?.map((edge) => ({
+            ...edge.node,
+          })) || [];
+
+        return [...acc, ...edges];
+      }, [])
     : [];
 
-  const productSizesModifiers = productSizes
+  const productSizesModifiers: ModifiersGroups[] = productSizes
     ? [
         ...(await Promise.all(
           productSizes.map(({ node }) =>
@@ -62,14 +64,13 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
               .then((res) => res.data.productSizeModifierGroupsCollection?.edges || []),
           ),
         )),
-      ]
-        .map((item) =>
-          item.map((edge) => ({
-            ...edge.node,
-            modifiers: edge.node.productSizeModifiersCollection?.edges.map(({ node }) => node) || [],
-          })),
-        )
-        .flat()
+      ].reduce((acc: ModifiersGroups[], item) => {
+        const sizeModifiersFroup = item.map((edge) => ({
+          ...edge.node,
+          modifiers: edge.node.productSizeModifiersCollection?.edges.map(({ node }) => node) || [],
+        }));
+        return [...acc, ...sizeModifiersFroup];
+      }, [])
     : [];
 
   return <ClientProductPage product={data} sizesImages={productSizesImages} modifiersGrops={productSizesModifiers} />;
