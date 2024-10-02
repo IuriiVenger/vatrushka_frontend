@@ -1,4 +1,4 @@
-import { Button, Divider, message } from 'antd';
+import { Button, Divider } from 'antd';
 import { FC, useMemo } from 'react';
 
 import { DropdownListItem } from './DropdownListItem';
@@ -12,8 +12,6 @@ export const CartList: FC = () => {
     () => `${cartList.length} ${getNounWithDeclension(cartList.length, 'товар', 'товара', 'товаров')}`,
     [],
   );
-
-  const onButtonClick = () => message.info(`В корзину`);
 
   return (
     <div className="flex w-85 flex-col gap-6 text-base leading-base text-text">
@@ -40,7 +38,7 @@ export const CartList: FC = () => {
             <span>{cartList.reduce<number>((acc, item) => acc + Number(item.price), 0)}</span> {CurrencySymbol.RUB}
           </span>
         </p>
-        <Button type="primary" onClick={onButtonClick}>
+        <Button type="primary" href="/cart">
           В корзину
         </Button>
       </div>

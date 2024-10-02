@@ -19,7 +19,7 @@ const ExpandIcon: CollapseProps['expandIcon'] = ({ isActive }) => (
 );
 
 type TAccordionProps = {
-  title: string;
+  title: ReactNode;
   text: ReactNode;
 };
 
@@ -31,13 +31,12 @@ export const Accordion: FC<TAccordionProps> = ({ title, text }) => {
 
   return (
     <Collapse
-      className="max-sm:small-padding border border-r-error"
+      className="max-sm:small-padding border "
       bordered={false}
       expandIcon={ExpandIcon}
       expandIconPosition="end"
       items={[
         {
-          key: '3',
           label: <h3 className="text-2xl font-medium leading-2xl max-sm:text-lg max-sm:leading-lg">{title}</h3>,
           children: <div className="text-lg leading-lg max-sm:text-base max-sm:leading-base">{text}</div>,
           style: panelStyle,

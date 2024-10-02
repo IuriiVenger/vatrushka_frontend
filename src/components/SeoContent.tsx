@@ -4,6 +4,8 @@ import { Button } from 'antd';
 import { FC, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
+import { companyInfo } from '@/config/links';
+
 export const SeoContent: FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -41,7 +43,8 @@ export const SeoContent: FC = () => {
           </ul>
         </div>
         <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">
-          Заказать обед или бизнес-ланч вы можете на нашем сайте или позвонив оператору по телефону +7 (351) 700-79-81
+          Заказать обед или бизнес-ланч вы можете на нашем сайте или позвонив оператору по телефону{' '}
+          {companyInfo.mainPhone}
           ежедневно без праздников и выходных.
         </p>
       </div>

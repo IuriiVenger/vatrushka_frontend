@@ -7,7 +7,7 @@ import { Dropdown } from '../ui/Dropdown';
 
 import { ProductCard } from './ProductCard';
 
-import { SortType } from '@/constants';
+import { sortDropdownItems, SortType, SortTypeTranslation } from '@/constants';
 import { TCard } from '@/types';
 import { getNounWithDeclension } from '@/utils/formatters';
 
@@ -35,7 +35,7 @@ export const ProductsList: FC<TProductsListProps> = (props) => {
           <p className="text-3xl font-medium leading-3xl max-sm:text-2xl max-sm:leading-2xl">{title}</p>
           <p className="text-lg leading-lg">{productsCount}</p>
         </div>
-        <Dropdown sort={sort} setSort={setSort} />
+        <Dropdown sort={sort} setSort={setSort} items={sortDropdownItems} translations={SortTypeTranslation} />
       </div>
       <div className="flex max-w-320 flex-col items-center gap-6 max-xs:max-w-82">
         <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1">

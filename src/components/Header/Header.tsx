@@ -16,6 +16,7 @@ import { UserInfo } from './HeaderComponents/UserInfo';
 import { PreHeader } from './PreHeader';
 
 import { color } from '@/config/variables';
+import { AccountTabs } from '@/constants';
 import { cartList } from '@/mocks';
 
 export type TMenuItem = Required<MenuProps>['items'][number];
@@ -32,10 +33,10 @@ export const Header: FC = () => {
       type: 'group',
     },
     { type: 'divider' },
-    { label: 'Профиль', key: 'profile' },
-    { label: 'Текущие заказы', key: 'currentOrders' },
-    { label: 'История заказов', key: 'ordersHistory' },
-    { label: 'Мои адреса', key: 'addresses' },
+    { label: <Link href={`/account/${AccountTabs.PROFILE}`}>Профиль</Link>, key: 'profile' },
+    { label: <Link href={`/account/${AccountTabs.CURRENT_ORDERS}`}>Текущие заказы</Link>, key: 'currentOrders' },
+    { label: <Link href={`/account/${AccountTabs.ORDER_HISTORY}`}>История заказов</Link>, key: 'ordersHistory' },
+    { label: <Link href={`/account/${AccountTabs.ADDRESSES}`}>Мои адреса</Link>, key: 'addresses' },
     { type: 'divider' },
     { label: 'Выйти из аккаунта', key: 'logOut' },
   ];
