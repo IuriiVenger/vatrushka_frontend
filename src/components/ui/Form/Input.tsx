@@ -1,7 +1,7 @@
 import { Input as AntInput, Form as AntForm } from 'antd';
 import { InputProps } from 'antd/lib/input';
-import { FC, ReactNode } from 'react';
-import { Controller, FieldError } from 'react-hook-form';
+import { FC, ReactNode, useMemo } from 'react';
+import { Controller, ControllerRenderProps, FieldError, FieldValues } from 'react-hook-form';
 
 import { isEmailValid, isPhoneNumberValid } from '@/utils/validation';
 
@@ -50,20 +50,22 @@ export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label
     return isValid;
   };
 
+  const getStatus = useMemo(
+    () => (field: ControllerRenderProps<FieldValues, string>) =>
+      field.value?.length && errors?.type === 'validate' ? 'error' : undefined,
+    [errors],
+  );
+
   return (
     <Controller
       name={name}
       control={control}
       rules={{ required: props.required, pattern, validate: validateRule }}
-      render={({ field }) => {
-        const status = field.value?.length && errors?.type === 'validate' ? 'error' : undefined;
-
-        return (
-          <AntForm.Item label={label} className={props.className} layout="vertical" required={props.required}>
-            <AntInput {...field} {...props} status={status} />
-          </AntForm.Item>
-        );
-      }}
+      render={({ field }) => (
+        <AntForm.Item label={label} className={props.className} layout="vertical" required={props.required}>
+          <AntInput {...field} {...props} status={getStatus(field)} />
+        </AntForm.Item>
+      )}
     />
   );
 };
