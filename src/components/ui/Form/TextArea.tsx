@@ -1,7 +1,7 @@
 import { Form as AntForm } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { TextAreaProps } from 'antd/lib/input';
-import { FC, ReactNode, useMemo } from 'react';
+import { FC, ReactNode, useCallback } from 'react';
 import { Controller, ControllerRenderProps, FieldError, FieldValues, Validate } from 'react-hook-form';
 
 type TValidate = Validate<any, FieldValues> | Record<string, Validate<any, FieldValues>> | undefined;
@@ -21,8 +21,8 @@ type TTextAreaProps = {
 } & TextAreaProps;
 
 export const TextAreaInput: FC<TTextAreaProps> = ({ name, control, pattern, validate, label, errors, ...props }) => {
-  const getStatus = useMemo(
-    () => (field: ControllerRenderProps<FieldValues, string>) =>
+  const getStatus = useCallback(
+    (field: ControllerRenderProps<FieldValues, string>) =>
       field.value?.length && errors?.type === 'validate' ? 'error' : undefined,
     [errors],
   );
