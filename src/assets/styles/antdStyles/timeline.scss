@@ -1,0 +1,25 @@
+.ant-timeline-item-content {
+  @apply ms-6 max-sm:text-base max-sm:leading-base;
+}
+
+.ant-timeline-item-last > .ant-timeline-item-tail {
+  @apply block;
+}
+
+.ant-timeline-item-last > .ant-timeline-item-content {
+  @apply min-h-0;
+}
+
+.ant-timeline.ant-timeline-label .ant-timeline-item-label {
+  @apply w-auto;
+}
+
+.ant-timeline.ant-timeline-label .ant-timeline-item-tail,
+.ant-timeline.ant-timeline-label .ant-timeline-item-head,
+.ant-timeline.ant-timeline-label .ant-timeline-item-left .ant-timeline-item-content {
+  @apply start-1/4 max-sm:start-[29%];
+}
+
+.ant-timeline.ant-timeline-label .ant-timeline-item-left .ant-timeline-item-content {
+  @apply w-auto;
+}

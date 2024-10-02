@@ -4,6 +4,7 @@ import React from 'react';
 
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 
+import { AccountTabs } from '@/constants';
 import { menuLevelOneOptions } from '@/mocks';
 import { TMenuLevelOneOption } from '@/types';
 
@@ -42,7 +43,7 @@ export const Menu = () => {
   const displayRender = (labels: string[]) => labels[labels.length - 1];
 
   return (
-    <nav className="block max-lg:hidden">
+    <nav className="block text-lg leading-lg max-lg:hidden">
       <ul className="flex w-max items-center gap-8">
         <li>
           <Cascader
@@ -63,28 +64,18 @@ export const Menu = () => {
         <li>
           <Dropdown menu={{ items: clientItems }} trigger={['click']}>
             <div className="flex cursor-pointer items-center gap-2 transition-all hover:text-primaryHover">
-              <span className="">Клиентам</span>
+              <span>Клиентам</span>
               <IoIosArrowDown className="text-primary" />
             </div>
           </Dropdown>
         </li>
         <li>
-          <Link
-            href="https://www.google.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-all hover:text-primaryHover"
-          >
+          <Link href="/contacts" className="transition-all hover:text-primaryHover">
             Контакты
           </Link>
         </li>
         <li>
-          <Link
-            href="https://www.google.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-all hover:text-primaryHover"
-          >
+          <Link href={`/account/${AccountTabs.CURRENT_ORDERS}`} className="transition-all hover:text-primaryHover">
             Мои заказы
           </Link>
         </li>

@@ -72,12 +72,16 @@ export const color = {
     },
   },
 
-  success: '#27B552',
+  success: {
+    default: '#27B552',
+    bg: '#E6F5E8',
+  },
   warning: '#F9C827',
   error: {
     default: '#F95F39',
     hover: '#FF8863',
     active: '#D44326',
+    bg: '#FFCBB5',
   },
 };
 

@@ -1,11 +1,13 @@
 'use client';
 
-import { Divider, Button, message } from 'antd';
-import Image from 'next/image';
+import { Divider, Button } from 'antd';
 import Link from 'next/link';
 import { FC } from 'react';
 
+import CustomImage from '../ui/CustomImage';
+
 import { CurrencySymbol, TagColorSchema } from '@/constants';
+import { useMessage } from '@/hooks/useMessage';
 import { TCard } from '@/types';
 
 type TProductCardProps = {
@@ -16,9 +18,11 @@ type TProductCardProps = {
 export const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
   const { pic, name, timing, weight, price, description, inStock, tag } = info;
 
+  const { showMessage } = useMessage();
+
   const onButtonClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    inStock && message.success('Товар добавлен в корзину');
+    inStock && showMessage({ type: 'success', text: 'Товар добавлен в корзину' });
   };
 
   return (
@@ -34,7 +38,7 @@ export const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => 
           {tag}
         </span>
       )}
-      <Image
+      <CustomImage
         width={560}
         height={373}
         alt={name}

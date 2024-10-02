@@ -8,21 +8,30 @@ const spacing = {
   13.75: '3.45rem',
   17: '4.375rem',
   18: '4.5rem',
+  26: '6.5rem',
   30: '7.5rem',
   34: '8.5rem',
   39: '9.75rem',
   45: '11.25rem',
   47: '11.75rem',
   54.5: '13.625rem',
-  70.5: '17.625rem',
+  65: '16.25rem',
+  70: '17.5rem',
   76: '19rem',
+  79: '19.75rem',
   82: '20.5rem',
+  84: '21rem',
   85: '21.25rem',
+  86: '21.5rem',
+  90: '22.5rem',
   100: '25rem',
+  106: '26.5rem',
   108: '27rem',
+  112: '28rem',
   120: '30rem',
   128: '32rem',
   144: '36rem',
+  152: '38rem',
   300: '75rem',
   320: '80rem',
 };
@@ -102,11 +111,14 @@ const colors = {
   shadowMedium: color.shadow.medium,
   shadowLight: color.shadow.light,
 
-  success: color.success,
+  success: color.success.default,
+  successBg: color.success.bg,
+
   warning: color.warning,
   error: color.error.default,
   errorHover: color.error.hover,
   errorActive: color.error.active,
+  errorBg: color.error.bg,
 };
 
 const config: Config = {
@@ -143,6 +155,9 @@ const config: Config = {
         '21/9': '21 / 9',
         '3/2': '3 / 2',
         '6/2': '6 / 2',
+      },
+      scale: {
+        '70': '0.70',
       },
     },
 

@@ -16,7 +16,7 @@ export const StepperButton: FC<TStepperButtonProps> = ({ count, setCount, minVal
   };
 
   return (
-    <div className="flex w-max items-center rounded-3xl bg-textQuinary max-xs:w-full max-xs:justify-between">
+    <div className="flex h-max w-max items-center rounded-3xl bg-textQuinary max-xs:w-full max-xs:justify-between">
       <button
         type="button"
         disabled={isMinusButtonDisabled}

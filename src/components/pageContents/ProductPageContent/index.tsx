@@ -1,6 +1,6 @@
 'use client';
 
-import { Breadcrumb, Button, message } from 'antd';
+import { Breadcrumb, Button } from 'antd';
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 
@@ -166,7 +166,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   };
 
   const onOrderButtonClick = () => {
-    message.success(`Добавлено в корзину: ${id}`);
+    showMessage({ type: 'success', text: `Добавлено в корзину: ${id}` });
   };
 
   const onSizeClick = (size: Partial<Productsizes>) => () => {
