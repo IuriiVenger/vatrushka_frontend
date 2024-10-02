@@ -1,6 +1,6 @@
 import { Input as AntInput, Form as AntForm } from 'antd';
 import { InputProps } from 'antd/lib/input';
-import { FC, ReactNode, useCallback, useMemo } from 'react';
+import { FC, ReactNode, useCallback } from 'react';
 import { Controller, ControllerRenderProps, FieldError, FieldValues } from 'react-hook-form';
 
 import { isEmailValid, isPhoneNumberValid } from '@/utils/validation';
