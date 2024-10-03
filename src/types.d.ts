@@ -9,7 +9,7 @@ export type TCard = {
   id: string;
   pic: string;
   name: string;
-  weight: string | number;
+  weight?: string | number;
   timing?: string;
   description: string;
   price: number | string;

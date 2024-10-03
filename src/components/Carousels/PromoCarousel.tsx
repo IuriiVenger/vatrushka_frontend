@@ -10,9 +10,7 @@ type TCarouselProps = {
 };
 
 const PromoCarousel: FC<TCarouselProps> = ({ slides, product }) => (
-  <section
-    className={`custom mx-auto grid grid-cols-1 max-sm:m-0 max-xs:m-auto ${product ? '' : 'max-xl:px-10  max-xs:px-0 max-xs:pt-6'}`}
-  >
+  <section className="custom grid grid-cols-1">
     <AntCarousel
       autoplay
       arrows
@@ -30,7 +28,7 @@ const PromoCarousel: FC<TCarouselProps> = ({ slides, product }) => (
             height={514}
             alt={slide}
             src={slide}
-            className={`w-1200 w-full rounded-3xl object-cover object-center max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
+            className={`w-1200 rounded-3xl object-cover object-center max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
           />
         </div>
       ))}

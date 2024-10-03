@@ -315,7 +315,7 @@ const CheckoutPageContent: FC = () => {
                   <div className="flex items-center justify-between">
                     <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">Приборы</p>
                     <div className="w-min">
-                      <StepperButton count={cutleryCount} setCount={setCutleryCount} minCount={0} />
+                      <StepperButton count={cutleryCount} setCount={setCutleryCount} />
                     </div>
                   </div>
                 </div>

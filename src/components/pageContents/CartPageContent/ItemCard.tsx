@@ -60,7 +60,7 @@ const ItemCard: FC<TItemCardProps> = ({ card }) => {
         <div className="flex w-full items-center justify-end gap-6 max-sm:justify-normal">
           {inStock ? (
             <div className="flex w-max items-center gap-6 max-sm:w-full max-sm:justify-between">
-              <StepperButton count={count} setCount={setCount} minCount={1} />
+              <StepperButton count={count} setCount={setCount} minValue={1} />
               <p className="text-nowrap text-xl font-medium leading-xl max-sm:text-base max-sm:leading-base">
                 {price} {CurrencySymbol.RUB}
               </p>

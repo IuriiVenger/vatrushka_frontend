@@ -50,7 +50,9 @@ const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
           <div className="flex flex-col">
             <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">{name}</p>
             <div className="flex items-center">
-              <p className="text-nowrap text-textSecondary max-md:text-base max-md:leading-base">{weight} г</p>
+              {!!weight && (
+                <p className="text-nowrap text-textSecondary max-md:text-base max-md:leading-base">{weight} г</p>
+              )}
               {timing && (
                 <>
                   <Divider type="vertical" />

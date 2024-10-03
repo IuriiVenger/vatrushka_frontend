@@ -16,7 +16,7 @@ type TDropdownListItemProps = {
 const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = false }) => {
   const { name, pic, price, count } = item;
 
-  const [stepperCount, setStepperCount] = useState(count);
+  const [stepperCount, setStepperCount] = useState<number>(count); //  to fix, state have to be in parent component
 
   const onButtonClick = () => message.error(`deleted ${name}`);
 
@@ -42,7 +42,7 @@ const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = false }) =>
           <p>
             <span>{price}</span> {CurrencySymbol.RUB}
           </p>
-          {cart && <StepperButton count={stepperCount} setCount={setStepperCount} />}
+          {cart && <StepperButton setCount={setStepperCount} count={stepperCount} />}
         </div>
       </div>
     </div>
