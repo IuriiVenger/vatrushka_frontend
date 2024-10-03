@@ -1,81 +1,69 @@
-import { Cascader, message, CascaderProps, MenuProps, Dropdown } from 'antd';
+import { Cascader } from 'antd';
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 
-import { AccountTabs } from '@/constants';
-import { menuLevelOneOptions } from '@/mocks';
+import { navigationLinks } from '@/config/links';
+import { AccountTabs, NavigationLinks } from '@/constants';
+import { catalogOptions } from '@/mocks';
 import { TMenuLevelOneOption } from '@/types';
 
-const clientItems: MenuProps['items'] = [
-  {
-    key: '1',
-    label: (
-      <Link target="_blank" rel="noopener noreferrer" href="https://www.google.com">
-        1st menu item
-      </Link>
-    ),
-  },
-  {
-    key: '2',
-    label: (
-      <Link target="_blank" rel="noopener noreferrer" href="https://www.google.com">
-        2nd menu item
-      </Link>
-    ),
-  },
-  {
-    key: '3',
-    label: (
-      <Link target="_blank" rel="noopener noreferrer" href="https://www.google.com">
-        3rd menu item
-      </Link>
-    ),
-  },
-];
-
 export const Menu = () => {
-  const onChange: CascaderProps<TMenuLevelOneOption>['onChange'] = (value) => {
-    message.info(value[value.length - 1]);
-  };
+  const clientItems = useMemo(
+    () =>
+      Object.entries(navigationLinks).reduce<TMenuLevelOneOption[]>((acc, [key, value]) => {
+        if (key !== NavigationLinks.ABOUT && key !== NavigationLinks.CONTACTS) {
+          acc.push({
+            value: value.title,
+            label: <Link href={value.link}>{value.title}</Link>,
+          });
+        }
+        return acc;
+      }, []) || [],
+    [navigationLinks],
+  );
 
-  const displayRender = (labels: string[]) => labels[labels.length - 1];
+  const catalogItems = catalogOptions.map((item) => ({
+    value: item.id,
+    label: <Link href={`/${item.slug}`}>{item.name}</Link>,
+  }));
 
   return (
     <nav className="block text-lg leading-lg max-lg:hidden">
       <ul className="flex w-max items-center gap-8">
         <li>
-          <Cascader
-            options={menuLevelOneOptions}
-            onChange={onChange}
-            expandTrigger="hover"
-            displayRender={displayRender}
-            expandIcon={<IoIosArrowForward />}
-            placement="bottomLeft"
-            className="bg-red max-w-64 text-wrap"
-          >
-            <div className="flex cursor-pointer items-center gap-2 transition-all hover:text-primaryHover">
+          <Cascader options={catalogItems} expandTrigger="hover" placement="bottomLeft" className="max-w-64 text-wrap">
+            <div className="flex cursor-pointer select-none items-center gap-2 transition-all hover:text-primaryHover">
               <span className="font-400">Каталог</span>
               <IoIosArrowDown className="text-primary" />
             </div>
           </Cascader>
         </li>
         <li>
-          <Dropdown menu={{ items: clientItems }} trigger={['click']}>
-            <div className="flex cursor-pointer items-center gap-2 transition-all hover:text-primaryHover">
+          <Cascader
+            options={clientItems}
+            expandTrigger="hover"
+            expandIcon={<IoIosArrowForward />}
+            placement="bottomLeft"
+            className="text-nowrap"
+          >
+            <div className="flex cursor-pointer select-none items-center gap-2 transition-all hover:text-primaryHover">
               <span>Клиентам</span>
               <IoIosArrowDown className="text-primary" />
             </div>
-          </Dropdown>
+          </Cascader>
         </li>
         <li>
-          <Link href="/contacts" className="transition-all hover:text-primaryHover">
+          <Link href="/contacts" className="select-none transition-all hover:text-primaryHover">
             Контакты
           </Link>
         </li>
         <li>
-          <Link href={`/account/${AccountTabs.CURRENT_ORDERS}`} className="transition-all hover:text-primaryHover">
+          <Link
+            href={`/account?tab=${AccountTabs.CURRENT_ORDERS}`}
+            className="select-none transition-all hover:text-primaryHover"
+          >
             Мои заказы
           </Link>
         </li>

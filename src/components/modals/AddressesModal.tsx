@@ -1,46 +1,44 @@
-import { Button, Radio } from 'antd';
+import { Button, Radio, RadioChangeEvent } from 'antd';
 import { FC, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { UseFormSetValue } from 'react-hook-form';
+
+import { TCheckoutForm } from '../pageContents/CheckoutPageContent';
 
 import { Modal } from './Modal';
 
-import { RadioGroup } from '@/components/ui/Form/Radio';
+import { addressesTypes } from '@/constants';
 import { userInfo } from '@/mocks';
-import { TModalProps } from '@/types';
+import { TAddress, TModalProps } from '@/types';
 
-type TAddressesModalForm = {
-  address: string;
+type TAddressesModalProps = TModalProps & {
+  setSelectedAddress: UseFormSetValue<TCheckoutForm>;
 };
 
-const AddressesModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
-  const onClick = () => {
+const AddressesModal: FC<TAddressesModalProps> = ({ isOpen, setIsOpen, setSelectedAddress }) => {
+  const [value, setValue] = useState<Omit<TAddress, 'id'>>(userInfo.addresses[0]);
+
+  const onConfirm = () => {
+    setSelectedAddress('userAddress', value);
     setIsOpen(false);
   };
 
-  const [value, setValue] = useState<string>(userInfo.addresses[0].id);
-
-  const onChange = (address: string) => {
-    console.log('radio checked', address);
-    setValue(address);
+  const onChange = (e: RadioChangeEvent) => {
+    setValue(e.target.value);
   };
-
-  const { control } = useForm<TAddressesModalForm>({
-    mode: 'onChange',
-  });
 
   return (
     <Modal title="Мои адреса" isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className="flex flex-col gap-6 max-sm:gap-4">
-        <RadioGroup onChange={onChange} value={value} name="address" control={control}>
+        <Radio.Group onChange={onChange} value={value}>
           <div className="flex flex-col gap-4 max-sm:gap-2">
-            {userInfo.addresses.map(({ id, address }) => (
-              <Radio key={id} value={id}>
-                {address}
+            {userInfo.addresses.map((userAddress) => (
+              <Radio key={userAddress.id} value={userAddress}>
+                {`${userAddress.address}${userAddress.entrance ? `, подъезд ${userAddress.entrance}` : ''}${userAddress.floor ? `, этаж ${userAddress.floor}` : ''}${userAddress.apartment ? `, квартира ${userAddress.apartment}` : ''}${userAddress.type !== addressesTypes.flat ? `, ${userAddress.type.label}` : ''}`}
               </Radio>
             ))}
           </div>
-        </RadioGroup>
-        <Button type="primary" className="w-full max-sm:text-base max-sm:leading-base" onClick={onClick}>
+        </Radio.Group>
+        <Button type="primary" className="w-full max-sm:text-base max-sm:leading-base" onClick={onConfirm}>
           Выбрать
         </Button>
       </div>

@@ -61,8 +61,9 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone }) =>
           inputMode="tel"
           label="Номер телефона"
           control={control}
-          errors={errors.phone}
+          errors={!!errors.phone}
           required
+          autoComplete="tel"
         />
         <Button
           type="primary"

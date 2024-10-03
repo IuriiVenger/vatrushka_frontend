@@ -61,7 +61,11 @@ const ContactsPageContent = () => {
           </div>
           <Divider />
           <Map
-            placemarks={companyInfo.branches.map((address) => ({ id: address.id, coords: address.coords }))}
+            placemarks={companyInfo.branches.map((address) => ({
+              id: address.id,
+              coords: address.coords,
+              isSelected: false,
+            }))}
             width="100%"
             mapZoom={14}
           />

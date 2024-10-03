@@ -9,20 +9,16 @@ import TabsController from '../../AccountPageComponents/components/TabsControlle
 import TabContent from '../../AccountPageComponents/TabContent';
 import UnauthorizedScreen from '../../AccountPageComponents/UnauthorizedScreen';
 
-import { Dropdown } from '@/components/ui/Dropdown';
-import { AccountTabs, filterDropdownItems, FilterOrdersType, filterOrdersTypeTranslation, tabs } from '@/constants';
+import { AccountTabs, accountTabs } from '@/constants';
 import { useUrlParams } from '@/hooks/useUrlParams';
 
 const AccountPageContent: FC = () => {
   const [tab, setTab] = useState<AccountTabs | null>(null);
-  const [filter, setFilter] = useState<FilterOrdersType>(FilterOrdersType.ALL);
 
   const { paramValue, setParam, removeParam } = useUrlParams('tab');
 
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
-
-  const segmentedItems = Object.values(tabs).map((option) => option);
 
   const onGoBack = () => {
     setTab(null);
@@ -38,14 +34,15 @@ const AccountPageContent: FC = () => {
     Object.values(AccountTabs).includes(value as AccountTabs);
 
   useEffect(() => {
+    console.log(paramValue, paramValue && isValidTabParam(paramValue));
     if (paramValue && isValidTabParam(paramValue)) {
       setCurrentTab(paramValue);
     }
 
-    if (screens.md && (!tab || !paramValue)) {
+    if (!screens.lg && (!tab || !paramValue)) {
       setCurrentTab(AccountTabs.PROFILE);
     }
-  }, [screens.md]);
+  }, [screens.md, paramValue]);
 
   const isAuthorized = true;
 
@@ -64,28 +61,20 @@ const AccountPageContent: FC = () => {
           </Button>
         )}
         <div
-          className={`flex w-full items-center justify-between max-sm:pb-6 max-xs:pt-6 ${tab === tabs[AccountTabs.ORDER_HISTORY].value ? 'max-sm:flex-col max-sm:items-start max-sm:gap-6' : ''}`}
+          className={`flex w-full items-center justify-between max-sm:pb-6 max-xs:pt-6 ${tab === accountTabs[AccountTabs.ORDER_HISTORY].value ? 'max-sm:flex-col max-sm:items-start max-sm:gap-6' : ''}`}
         >
           <h1 className="text-4xl font-medium leading-4xl max-lg:text-3xl max-lg:leading-3xl max-sm:text-2xl max-sm:leading-2xl ">
-            {!screens.md && tab ? tabs[tab].label : 'Личный кабинет'}
+            {!screens.md && tab ? accountTabs[tab].label : 'Личный кабинет'}
           </h1>
-          {tab === tabs[AccountTabs.PROFILE].value && (
+          {tab === accountTabs[AccountTabs.PROFILE].value && (
             <Button className="hidden h-5 border-none p-0 text-base leading-base max-md:flex">
               <FiLogOut />
               Выйти
             </Button>
           )}
-          {tab === tabs[AccountTabs.ORDER_HISTORY].value && (
-            <Dropdown
-              sort={filter}
-              setSort={setFilter}
-              items={filterDropdownItems}
-              translations={filterOrdersTypeTranslation}
-            />
-          )}
         </div>
       </div>
-      {(screens.md || !tab) && <TabsController tab={tab} setTab={setTab} segmentedItems={segmentedItems} />}
+      {(screens.md || !tab) && <TabsController tab={tab} setTab={setTab} />}
       <TabContent tab={tab} />
     </section>
   );

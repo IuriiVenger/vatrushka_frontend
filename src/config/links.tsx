@@ -41,9 +41,10 @@ export const companyInfo: TCompanyInfo = {
   ],
   partners: [
     {
-      id: '1',
+      id: '3',
       name: 'Пекарня-кондитерская «Galette»',
       address: 'ул. Свободы, 80',
+      coords: [55.15715, 61.412507],
       phone: '+7 (351) 700-79-83',
       businessHours: {
         weekdays: { open: '07:30', close: '22:00' },
@@ -52,6 +53,12 @@ export const companyInfo: TCompanyInfo = {
       },
     },
   ],
+};
+
+export const legalLinks = {
+  termsOfService: 'https://example.com/terms-of-service',
+  privacyPolicy: 'https://example.com/privacy-policy',
+  dataProcessingPolicy: 'https://example.com/data-processing-policy',
 };
 
 export const contactLinks: Record<ContactLinks, TContact> = {

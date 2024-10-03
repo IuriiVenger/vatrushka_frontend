@@ -1,25 +1,22 @@
-import { Input as AntInput, Form as AntForm } from 'antd';
-import { InputProps } from 'antd/lib/input';
-import { FC, ReactNode, useMemo } from 'react';
+import { InputNumber, Form as AntForm, InputNumberProps } from 'antd';
+import { FC, ReactNode } from 'react';
 import { Controller } from 'react-hook-form';
-
-import { isEmailValid, isPhoneNumberValid } from '@/utils/validation';
 
 export type Pattern = {
   value: RegExp;
   message: string;
 };
 
-type TInputProps = {
+type TNumericInputProps = {
   name: string;
   control: any;
   pattern?: Pattern;
   validate?: (value: string | number) => boolean;
   label?: ReactNode;
   errors: boolean;
-} & InputProps;
+} & InputNumberProps;
 
-export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label, errors, ...props }) => {
+const NumericInput: FC<TNumericInputProps> = ({ name, control, pattern, validate, label, errors, ...props }) => {
   const validateRule = (value: string): boolean => {
     if (typeof validate === 'function') {
       return validate(value);
@@ -33,23 +30,8 @@ export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label
       return false;
     }
 
-    let isValid = true;
-
-    switch (props.type) {
-      case 'email':
-        isValid = isEmailValid(value);
-        break;
-      case 'tel':
-        isValid = isPhoneNumberValid(value);
-        break;
-      default:
-        break;
-    }
-
-    return isValid;
+    return true;
   };
-
-  const status = useMemo(() => (errors ? 'error' : undefined), [errors]);
 
   return (
     <Controller
@@ -58,9 +40,11 @@ export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label
       rules={{ required: props.required, pattern, validate: validateRule }}
       render={({ field }) => (
         <AntForm.Item label={label} className={props.className} layout="vertical" required={props.required}>
-          <AntInput {...field} {...props} status={status} />
+          <InputNumber {...field} {...props} status={errors ? 'error' : undefined} />
         </AntForm.Item>
       )}
     />
   );
 };
+
+export default NumericInput;

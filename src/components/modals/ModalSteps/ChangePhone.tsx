@@ -38,8 +38,9 @@ export const ChangePhone: FC<TChangePhoneModalProps> = ({ onChangePhone }) => {
         inputMode="tel"
         label="Введите новый номер телефона"
         control={control}
-        errors={errors.phone}
+        errors={!!errors.phone}
         required
+        autoComplete="tel"
       />
       <Button
         type="primary"

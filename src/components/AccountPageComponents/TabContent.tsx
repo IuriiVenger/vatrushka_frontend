@@ -6,7 +6,7 @@ import BonusesTab from './BonusesTab';
 import CurrentOrdersTab from './CurrentOrdersTab';
 import OrdersHistoryTab from './OrdersHistoryTab';
 
-import { AccountTabs, tabs } from '@/constants';
+import { AccountTabs, accountTabs } from '@/constants';
 
 type TTabContentProps = {
   tab: AccountTabs | null;
@@ -15,19 +15,19 @@ type TTabContentProps = {
 const TabContent: FC<TTabContentProps> = ({ tab }) => {
   const content = useMemo(() => {
     switch (tab) {
-      case tabs[AccountTabs.PROFILE].value:
+      case accountTabs[AccountTabs.PROFILE].value:
         return <AccountTab />;
 
-      case tabs[AccountTabs.BONUSES].value:
+      case accountTabs[AccountTabs.BONUSES].value:
         return <BonusesTab />;
 
-      case tabs[AccountTabs.CURRENT_ORDERS].value:
+      case accountTabs[AccountTabs.CURRENT_ORDERS].value:
         return <CurrentOrdersTab />;
 
-      case tabs[AccountTabs.ORDER_HISTORY].value:
+      case accountTabs[AccountTabs.ORDER_HISTORY].value:
         return <OrdersHistoryTab />;
 
-      case tabs[AccountTabs.ADDRESSES].value:
+      case accountTabs[AccountTabs.ADDRESSES].value:
         return <AddressesTab />;
 
       default:

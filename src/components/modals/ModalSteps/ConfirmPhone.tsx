@@ -94,7 +94,8 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose
             validate={validate}
             min={0}
             inputMode="numeric"
-            errors={errors.confirmationCode}
+            errors={!!errors.confirmationCode}
+            autoComplete="off"
           />
           {isSendingPossible ? (
             <Button

@@ -118,17 +118,47 @@ export enum AuthModalProcessType {
 export enum AccountTabs {
   PROFILE = 'profile',
   BONUSES = 'bonuses',
-  CURRENT_ORDERS = 'currents-orders',
+  CURRENT_ORDERS = 'current-orders',
   ORDER_HISTORY = 'order-history',
   ADDRESSES = 'addresses',
 }
 
-export const tabs: Record<AccountTabs, TTab> = {
-  [AccountTabs.PROFILE]: { value: 'profile', label: 'Профиль' },
-  [AccountTabs.BONUSES]: { value: 'bonuses', label: 'Бонусы' },
-  [AccountTabs.CURRENT_ORDERS]: { value: 'currents-orders', label: 'Текущие заказы' },
-  [AccountTabs.ORDER_HISTORY]: { value: 'order-history', label: 'История заказов' },
-  [AccountTabs.ADDRESSES]: { value: 'addresses', label: 'Мои адреса' },
+export const accountTabs: Record<AccountTabs, TTab> = {
+  [AccountTabs.PROFILE]: { value: AccountTabs.PROFILE, label: 'Профиль' },
+  [AccountTabs.BONUSES]: { value: AccountTabs.BONUSES, label: 'Бонусы' },
+  [AccountTabs.CURRENT_ORDERS]: { value: AccountTabs.CURRENT_ORDERS, label: 'Текущие заказы' },
+  [AccountTabs.ORDER_HISTORY]: { value: AccountTabs.ORDER_HISTORY, label: 'История заказов' },
+  [AccountTabs.ADDRESSES]: { value: AccountTabs.ADDRESSES, label: 'Мои адреса' },
+};
+
+export enum DeliveryTypeOptions {
+  COURIER = 'courier',
+  PICKUP = 'pickup',
+}
+
+export const deliveryTypeOptions: Record<DeliveryTypeOptions, TTab> = {
+  [DeliveryTypeOptions.COURIER]: { value: DeliveryTypeOptions.COURIER, label: 'Доставка курьером' },
+  [DeliveryTypeOptions.PICKUP]: { value: DeliveryTypeOptions.PICKUP, label: 'Самовывоз' },
+};
+
+export enum DeliveryTimeOptions {
+  ASAP = 'asap',
+  SCHEDULED = 'scheduled',
+}
+
+export const deliveryTimeOptions: Record<DeliveryTimeOptions, TTab> = {
+  [DeliveryTimeOptions.ASAP]: { value: DeliveryTimeOptions.ASAP, label: 'Как можно скорее' },
+  [DeliveryTimeOptions.SCHEDULED]: { value: DeliveryTimeOptions.SCHEDULED, label: 'На точное время' },
+};
+
+export enum PaymentOptions {
+  ONLINE = 'online',
+  CASH = 'cash',
+}
+
+export const paymentOptions: Record<PaymentOptions, TTab> = {
+  [PaymentOptions.ONLINE]: { value: PaymentOptions.ONLINE, label: 'Онлайн' },
+  [PaymentOptions.CASH]: { value: PaymentOptions.CASH, label: 'Наличными' },
 };
 
 export const sortDropdownItems: MenuProps['items'] = [

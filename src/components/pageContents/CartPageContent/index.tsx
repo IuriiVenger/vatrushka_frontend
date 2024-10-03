@@ -40,7 +40,7 @@ const CartPageContent: FC = () => {
     console.log('onCheckPromoCode:', data);
   };
 
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   const onContinue = () => {
     if (!isLoggedIn) {
@@ -72,7 +72,7 @@ const CartPageContent: FC = () => {
         </div>
         <Divider className="hidden max-sm:block" />
 
-        <div className="flex min-w-96 flex-col gap-6 rounded-2xl border border-borderSecondary p-6 max-xl:min-w-min max-xl:max-w-72 max-lg:grid max-lg:max-w-full max-lg:grid-cols-2 max-lg:flex-row max-lg:items-end max-sm:flex max-sm:w-full max-sm:flex-col max-sm:gap-4 max-sm:border-none max-sm:p-0">
+        <div className="flex h-max min-w-96 flex-col gap-6 rounded-2xl border border-borderSecondary p-6 max-xl:min-w-min max-xl:max-w-72 max-lg:grid max-lg:max-w-full max-lg:grid-cols-2 max-lg:flex-row max-lg:items-end max-sm:flex max-sm:w-full max-sm:flex-col max-sm:gap-4 max-sm:border-none max-sm:p-0">
           <div className="flex w-full flex-col gap-6 max-sm:gap-4">
             <h2 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Сумма заказа</h2>
             <div className="flex flex-col gap-2 max-sm:gap-1">
@@ -93,14 +93,15 @@ const CartPageContent: FC = () => {
               name="promoCode"
               placeholder="Введите промокод"
               control={control}
-              errors={errors.promoCode}
+              errors={!!errors.promoCode}
+              autoComplete="off"
               addonAfter={
                 <Button
                   type="link"
                   icon={<IoIosArrowForward className="h-4 w-4" />}
                   onClick={handleSubmit(onCheckPromoCode)}
                   disabled={!isDirty}
-                  className="h-9 w-max px-3 py-0 text-primary hover:text-primaryHover"
+                  className="h-11 w-max px-4 py-0 text-primary hover:text-primaryHover"
                 />
               }
             />
@@ -128,7 +129,7 @@ const CartPageContent: FC = () => {
               type="primary"
               className="text-lg leading-lg max-sm:text-base max-sm:leading-base"
               onClick={onContinue}
-              href={isLoggedIn ? '/order' : undefined}
+              href={isLoggedIn ? '/checkout' : undefined}
             >
               Перейти к оформлению
             </Button>

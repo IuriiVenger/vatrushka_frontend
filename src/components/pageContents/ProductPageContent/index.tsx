@@ -40,6 +40,8 @@ export type TProductProps = {
 const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   const { id, title, description, allergens, images, nutritionFacts, price, weight, labels, promotions } = productInfo;
 
+  const [count, setCount] = useState(1);
+
   const [selectedFilling, setSelectedFilling] = useState<string>(mockProduct.fillingOptions[0]);
   const [selectedWeight, setSelectedWeight] = useState<number>(mockProduct.weightOptions[0]);
 
@@ -145,7 +147,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
               {price} {CurrencySymbol.RUB}
             </p>
             <div className="flex gap-6 py-6">
-              <StepperButton />
+              <StepperButton count={count} setCount={setCount} minCount={1} />
               <Button type="primary" className="w-max max-xs:w-full" onClick={onOrderButtonClick}>
                 Заказать
               </Button>
@@ -163,15 +165,15 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
                 <div className="flex flex-col gap-1">
                   <p>Жиры (г)</p>
                   <p className="text-textTertiary">{nutritionFacts.fats}</p>
-                </div>{' '}
+                </div>
                 <div className="flex flex-col gap-1">
                   <p>Белки (г)</p>
                   <p className="text-textTertiary">{nutritionFacts.proteins}</p>
-                </div>{' '}
+                </div>
                 <div className="flex flex-col gap-1">
                   <p>Углеводы (г)</p>
                   <p className="text-textTertiary">{nutritionFacts.carbs}</p>
-                </div>{' '}
+                </div>
                 <div className="flex flex-col gap-1">
                   <p>кКал</p>
                   <p className="text-textTertiary">{nutritionFacts.energy}</p>

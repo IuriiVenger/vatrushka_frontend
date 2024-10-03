@@ -13,7 +13,11 @@ type TDeleteAccountModalForm = {
 };
 
 const DeleteAccountModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
-  const { handleSubmit, control } = useForm<TDeleteAccountModalForm>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<TDeleteAccountModalForm>({
     mode: 'onChange',
   });
 
@@ -43,6 +47,7 @@ const DeleteAccountModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             inputMode="text"
             label="Опишите, пожалуйста, причину удаления:"
             control={control}
+            errors={!!errors.reason}
           />
           <div className="flex flex-col gap-3 pt-2 max-sm:gap-2">
             <Button type="primary" className="w-full max-sm:text-base max-sm:leading-base" onClick={onClose}>

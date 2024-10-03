@@ -1,0 +1,17 @@
+@layer utilities {
+  .ant-segmented {
+    &.outlined {
+      .ant-segmented-item-selected {
+        @apply bg-white text-primary outline outline-1 outline-primary;
+      }
+
+      .ant-segmented-thumb {
+        @apply bg-white text-primary outline outline-1 outline-primary;
+      }
+    }
+  }
+}
+
+.ant-segmented-item {
+  @apply rounded-md;
+}

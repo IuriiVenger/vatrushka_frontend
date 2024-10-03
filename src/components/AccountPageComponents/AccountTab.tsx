@@ -58,9 +58,10 @@ const AccountTab: FC = () => {
               label="Имя и Фамилия"
               required
               control={control}
-              errors={errors.name}
+              errors={!!errors.name}
+              autoComplete="given-name"
             />
-            <AntForm.Item label="Номер телефона" layout="vertical">
+            <AntForm.Item label="Номер телефона" layout="vertical" className="h-12">
               <AntInput
                 type="tel"
                 placeholder="+7 (999) 999-99-99"
@@ -84,7 +85,8 @@ const AccountTab: FC = () => {
               inputMode="email"
               label="Email"
               control={control}
-              errors={errors.email}
+              errors={!!errors.email}
+              autoComplete="email"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -95,7 +97,7 @@ const AccountTab: FC = () => {
             />
             <Switch name="emailNewsletter" control={control} label="Получать e-mail рассылки" />
           </div>
-          <div className="flex gap-4 max-xs:flex-col max-xs:gap-2">
+          <div className="flex justify-between max-xs:flex-col max-xs:gap-2">
             <Button
               type="primary"
               className="w-max max-sm:text-base max-sm:leading-base max-xs:w-full"
@@ -105,7 +107,7 @@ const AccountTab: FC = () => {
               Сохранить изменения
             </Button>
             <Button
-              className="w-max border-border text-error hover:text-errorHover active:text-errorActive max-sm:text-base max-sm:leading-base max-xs:w-full"
+              className="w-max border-border text-textTertiary hover:text-errorHover active:text-errorActive max-sm:text-base max-sm:leading-base max-xs:w-full"
               onClick={onDelete}
             >
               Удалить аккаунт

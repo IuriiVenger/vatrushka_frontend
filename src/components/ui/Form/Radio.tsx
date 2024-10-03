@@ -3,14 +3,23 @@ import { RadioGroupProps } from 'antd/lib';
 import { FC, useMemo } from 'react';
 import { Controller, ControllerRenderProps, FieldValues } from 'react-hook-form';
 
-type RadioProps = {
+type TRadioProps = {
   name: string;
   control: any;
   defaultValue?: any;
   required?: boolean;
   onChange?: (value: string) => void;
 } & Omit<RadioGroupProps, 'onChange'>;
-export const RadioGroup: FC<RadioProps> = ({ name, control, children, defaultValue, required, onChange, ...props }) => {
+
+export const RadioGroup: FC<TRadioProps> = ({
+  name,
+  control,
+  children,
+  defaultValue,
+  required,
+  onChange,
+  ...props
+}) => {
   const onRadioChange = useMemo(
     () => (e: RadioChangeEvent, field: ControllerRenderProps<FieldValues, string>) => {
       onChange && onChange(e.target.value);

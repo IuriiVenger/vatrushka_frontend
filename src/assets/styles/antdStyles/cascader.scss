@@ -1,8 +1,11 @@
+.ant-cascader-dropdown .ant-cascader-menu {
+  @apply h-fit max-h-[75vh] min-h-12 max-w-76;
+}
+
 .ant-cascader-dropdown .ant-cascader-menu-item:hover {
-  background-color: #f6f0ed;
+  @apply bg-primaryBg;
 }
 
 .ant-cascader-menu-item-content {
-  max-width: 16rem;
-  text-wrap: wrap;
+  @apply text-wrap;
 }
