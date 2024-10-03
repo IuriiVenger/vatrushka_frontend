@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import { RxCross2 } from 'react-icons/rx';
 
@@ -15,6 +15,8 @@ type TDropdownListItemProps = {
 
 export const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = false }) => {
   const { name, pic, price, count } = item;
+
+  const [stepperCount, setStepperCount] = useState<number>(count); //  to fix, state have to be in parent component
 
   const onButtonClick = () => message.error(`deleted ${name}`);
 
@@ -40,7 +42,7 @@ export const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = fals
           <p>
             <span>{price}</span> {CurrencySymbol.RUB}
           </p>
-          {cart && <StepperButton initialCount={count} />}
+          {cart && <StepperButton setCount={setStepperCount} count={stepperCount} />}
         </div>
       </div>
     </div>

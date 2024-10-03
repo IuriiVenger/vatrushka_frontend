@@ -26,6 +26,7 @@ const PromotionPage: FC<PromotionPageProps> = async ({ params: { id } }) => {
 
     return <PromotionPageContent promotion={promotion} />;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error fetching promotion:', error);
     return notFound();
   }

@@ -71,7 +71,6 @@ export const GET_PRODUCTS_BY_CATEGORY_SLUG = gql`
                   productsizesCollection(filter: $productsizesCollectionFilter2) {
                     edges {
                       node {
-                        button_image_cropped_url
                         button_image_url
                         is_default
                         id
@@ -104,41 +103,122 @@ export const GET_PRODUCTS_BY_CATEGORY_SLUG = gql`
 `;
 
 export const GET_PROUCT_BY_SLUG = gql`
-  query ProductBySlug($filter: productsFilter) {
+  query ProductBySlug($filter: productsFilter, $productsizesCollectionFilter2: productsizesFilter) {
     productsCollection(filter: $filter) {
       edges {
         node {
-          nodeId
-          id
-          name
           description
-          tax_category_id
-          modifier_schema_id
-          productCategoryId
-          sku
-          short_description
           ingredients
-          optional_text
           isPopular
+          name
+          optional_text
           slug
+          short_description
+          id
+          nodeId
           productsizesCollection {
             edges {
               node {
-                nodeId
                 id
+                is_default
+                nutrition_per_hundred_grams
+                nutritions
+                portion_weight_grams
+                price
                 product_id
                 size_code
+                size_id
                 size_name
                 sku
-                is_default
-                portion_weight_grams
-                nutrition_per_hundred_grams
                 button_image_url
-                button_image_cropped_url
-                nutritions
-                size_id
-                price
-                modifiers
+                nodeId
+              }
+            }
+          }
+          productTagsCollection {
+            edges {
+              node {
+                slug
+                name
+                id
+                tag_id
+                nodeId
+              }
+            }
+          }
+          productlabelsCollection {
+            edges {
+              node {
+                name
+                id
+                slug
+                nodeId
+              }
+            }
+          }
+          productpromotionsCollection {
+            edges {
+              node {
+                promotions {
+                  id
+                  name
+                  description
+                  homepageBanner
+                  homepageEnabled
+                  productButtonText
+                  productButtonType
+                  productPagesEnabled
+                  slug
+                  nodeId
+                }
+                nodeId
+              }
+            }
+          }
+          sku
+          categoryitemsCollection {
+            edges {
+              node {
+                categories {
+                  name
+                  rec_categoryCollection {
+                    edges {
+                      node {
+                        products {
+                          productsizesCollection {
+                            edges {
+                              node {
+                                price
+                                button_image_url
+                                nodeId
+                                products {
+                                  short_description
+                                  slug
+                                  name
+                                  nodeId
+                                }
+                              }
+                            }
+                          }
+                          nodeId
+                          categoryitemsCollection {
+                            edges {
+                              node {
+                                categories {
+                                  name
+                                  slug
+                                }
+                              }
+                            }
+                          }
+                        }
+                        nodeId
+                      }
+                    }
+                  }
+                  slug
+                }
+                nodeId
               }
             }
           }
@@ -148,95 +228,79 @@ export const GET_PROUCT_BY_SLUG = gql`
                 id
                 allergen_group_id
                 allergengroups {
-                  id
-                  name
-                }
-              }
-            }
-          }
-          productpromotionsCollection {
-            edges {
-              node {
-                promotions {
-                  productButtonText
-                  productButtonType
-                  productPagesEnabled
+                  code
                   name
                   id
+                  nodeId
                 }
+                nodeId
               }
             }
           }
-          rec_categoryCollection {
+          nodeId
+        }
+      }
+    }
+  }
+`;
+
+// filter by product_id and productsize_id
+export const GET_PRODUCT_SIZE_IMAGES = gql`
+  query GetProductSizeImages($filter: productsizeimagesFilter) {
+    productsizeimagesCollection(filter: $filter) {
+      edges {
+        node {
+          url
+          id
+          productsize_id
+          nodeId
+          is_video
+        }
+      }
+    }
+  }
+`;
+
+// filter by product_id and productsize_id
+export const GET_PRODUCT_SIZE_MODIFIERS = gql`
+  query GetProductSizeModifiers($filter: productSizeModifierGroupsFilter) {
+    productSizeModifierGroupsCollection(filter: $filter) {
+      edges {
+        node {
+          by_default
+          can_be_divided
+          child_modifiers_have_min_max_restrictions
+          description
+          external_group_id
+          free_quantity
+          id
+          is_hidden
+          max_quantity
+          min_quantity
+          name
+          product_id
+          productsize_id
+          sku
+          productSizeModifiersCollection {
             edges {
               node {
-                products {
-                  description
-                  id
-                  ingredients
-                  name
-                  optional_text
-                  slug
-                  short_description
-                  productsizesCollection {
-                    edges {
-                      node {
-                        portion_weight_grams
-                        button_image_url
-                        button_image_cropped_url
-                        id
-                        price
-                      }
-                    }
-                  }
-                  productlabelsCollection {
-                    edges {
-                      node {
-                        id
-                        name
-                        slug
-                      }
-                    }
-                  }
-                  productTagsCollection {
-                    edges {
-                      node {
-                        tag_id
-                        slug
-                        name
-                        id
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          categoryitemsCollection {
-            edges {
-              node {
-                categories {
-                  name
-                  slug
-                }
-              }
-            }
-          }
-          productTagsCollection {
-            edges {
-              node {
-                name
-                slug
-                tag_id
-              }
-            }
-          }
-          productlabelsCollection {
-            edges {
-              node {
-                slug
-                name
+                button_image
+                by_default
+                description
+                external_modifier_group_id
+                external_modifier_id
+                free_quantity
+                group_id
                 id
+                is_hidden
+                max_quantity
+                min_quantity
+                name
+                nutrition_per_hundred_grams
+                portion_weight_grams
+                price
+                product_id
+                sku
               }
             }
           }
