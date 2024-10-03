@@ -11,15 +11,7 @@ type TRadioProps = {
   onChange?: (value: string) => void;
 } & Omit<RadioGroupProps, 'onChange'>;
 
-export const RadioGroup: FC<TRadioProps> = ({
-  name,
-  control,
-  children,
-  defaultValue,
-  required,
-  onChange,
-  ...props
-}) => {
+const RadioGroup: FC<TRadioProps> = ({ name, control, children, defaultValue, required, onChange, ...props }) => {
   const onRadioChange = useMemo(
     () => (e: RadioChangeEvent, field: ControllerRenderProps<FieldValues, string>) => {
       onChange && onChange(e.target.value);
@@ -47,3 +39,5 @@ export const RadioGroup: FC<TRadioProps> = ({
     />
   );
 };
+
+export default RadioGroup;

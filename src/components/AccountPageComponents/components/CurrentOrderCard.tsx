@@ -2,7 +2,6 @@ import { Button, Divider } from 'antd';
 import { FC, useState } from 'react';
 
 import Fulfillment from './cardComponents/Fulfillment';
-
 import OrderContent from './cardComponents/OrderContent';
 
 import OrderStatusModal from '@/components/modals/OrderStatusModal';

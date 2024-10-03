@@ -8,22 +8,21 @@ import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { LuShoppingCart } from 'react-icons/lu';
 
 import logo from '../../assets/images/logo_full.svg';
-
 import AuthModal from '../modals/AuthModal';
 
-import { CartList } from './HeaderComponents/CartList';
-import { Menu } from './HeaderComponents/Menu';
-import { Search } from './HeaderComponents/Search';
-import { UserInfo } from './HeaderComponents/UserInfo';
-import { PreHeader } from './PreHeader';
+import CartList from './HeaderComponents/CartList';
+import Menu from './HeaderComponents/Menu';
+import Search from './HeaderComponents/Search';
+import UserInfo from './HeaderComponents/UserInfo';
+import PreHeader from './PreHeader';
 
 import { color } from '@/config/variables';
 import { AccountTabs, AuthModalSteps } from '@/constants';
 import { cartList, userInfo } from '@/mocks';
 
-export type TMenuItem = Required<MenuProps>['items'][number];
+type TMenuItem = Required<MenuProps>['items'][number];
 
-export const Header: FC = () => {
+const Header: FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const onAuth = () => {
@@ -96,3 +95,5 @@ export const Header: FC = () => {
     </>
   );
 };
+
+export default Header;

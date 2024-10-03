@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { FC } from 'react';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
 import { order, userInfo } from '@/mocks';
 import { TModalProps } from '@/types';

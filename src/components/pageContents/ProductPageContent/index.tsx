@@ -3,16 +3,15 @@
 import { Breadcrumb, Button } from 'antd';
 import Link from 'next/link';
 import { FC, useState } from 'react';
-
 import { FiInfo } from 'react-icons/fi';
 
-import { TextBlock } from '../../ui/TextBlock';
+import TextBlock from '../../ui/TextBlock';
 
 import { API } from '@/api/types';
 import ProductCarousel from '@/components/Carousels/ProductCarousel';
-import { Slider } from '@/components/Carousels/Slider';
-import { PromoTag } from '@/components/ui/PromoTag';
-import { StepperButton } from '@/components/ui/StepperButton';
+import Slider from '@/components/Carousels/Slider';
+import PromoTag from '@/components/ui/PromoTag';
+import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
 import { mockProduct, products } from '@/mocks';

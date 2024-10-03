@@ -1,13 +1,13 @@
 import { Button, Divider } from 'antd';
 import { FC, useMemo } from 'react';
 
-import { DropdownListItem } from './DropdownListItem';
+import DropdownListItem from './DropdownListItem';
 
 import { CurrencySymbol } from '@/constants';
 import { cartList } from '@/mocks';
 import { getNounWithDeclension } from '@/utils/formatters';
 
-export const CartList: FC = () => {
+const CartList: FC = () => {
   const itemsCount = useMemo(
     () => `${cartList.length} ${getNounWithDeclension(cartList.length, 'товар', 'товара', 'товаров')}`,
     [],
@@ -45,3 +45,5 @@ export const CartList: FC = () => {
     </div>
   );
 };
+
+export default CartList;

@@ -3,8 +3,8 @@ import { Button } from 'antd';
 import { Dispatch, FC, SetStateAction, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
 import { AuthModalProcessType, AuthModalSteps } from '@/constants';
 
 type TSignInForm = {

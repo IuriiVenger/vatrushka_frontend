@@ -2,10 +2,10 @@ import { Button } from 'antd';
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
-import { Form } from '@/components/ui/Form/Form';
-import { TextAreaInput } from '@/components/ui/Form/TextArea';
+import Form from '@/components/ui/Form/Form';
+import TextAreaInput from '@/components/ui/Form/TextArea';
 import { TModalProps } from '@/types';
 
 type TDeleteAccountModalForm = {

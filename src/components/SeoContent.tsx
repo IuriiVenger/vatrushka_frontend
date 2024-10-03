@@ -6,7 +6,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 
 import { companyInfo } from '@/config/links';
 
-export const SeoContent: FC = () => {
+const SeoContent: FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const onButtonClick = () => setIsCollapsed(false);
@@ -61,3 +61,5 @@ export const SeoContent: FC = () => {
     </div>
   );
 };
+
+export default SeoContent;

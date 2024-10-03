@@ -5,13 +5,15 @@ import { useFormContext } from 'react-hook-form';
 import { TCheckoutForm } from '.';
 
 import AddressesModal from '@/components/modals/AddressesModal';
-import { Input } from '@/components/ui/Form/Input';
-import { RadioGroup } from '@/components/ui/Form/Radio';
-import { Map } from '@/components/ui/Map';
+import Input from '@/components/ui/Form/Input';
+import RadioGroup from '@/components/ui/Form/Radio';
+import Map from '@/components/ui/Map';
 import { addressesTypes, AddressType } from '@/constants';
 
 const CourierDelivery: FC = () => {
   const [isAddressesModalOpen, setIsAddressesModalOpen] = useState(false);
+
+  const addressTypeOptions = Object.values(addressesTypes);
 
   const {
     control,
@@ -83,7 +85,7 @@ const CourierDelivery: FC = () => {
             />
           </div>
           <RadioGroup name="userAddress.type.id" control={control} className="flex flex-col gap-3" required>
-            {Object.values(addressesTypes).map((type) => (
+            {addressTypeOptions.map((type) => (
               <Radio key={type.id} value={type.id}>
                 {type.label}
               </Radio>

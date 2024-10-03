@@ -1,9 +1,9 @@
 import { Breadcrumb, Divider } from 'antd';
 import Link from 'next/link';
 
-import { BranchInfo } from '@/components/BranchInfo';
-import { Contacts } from '@/components/Contacts';
-import { Map } from '@/components/ui/Map';
+import BranchInfo from '@/components/BranchInfo';
+import Contacts from '@/components/Contacts';
+import Map from '@/components/ui/Map';
 import { companyInfo, contactLinks } from '@/config/links';
 import { ContactLinks } from '@/constants';
 import { TContact } from '@/types';

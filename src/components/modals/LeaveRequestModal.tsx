@@ -4,10 +4,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useSuccessModal } from '../../hooks/useSuccessModal';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
 import { legalLinks } from '@/config/links';
 import { TModalProps } from '@/types';
 

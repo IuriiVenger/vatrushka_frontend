@@ -8,7 +8,7 @@ type TCustomCheckboxProps = {
   label: string | React.ReactNode;
 } & CheckboxProps;
 
-export const Checkbox: FC<TCustomCheckboxProps> = ({ name, control, label, ...props }) => (
+const Checkbox: FC<TCustomCheckboxProps> = ({ name, control, label, ...props }) => (
   <Controller
     name={name}
     control={control}
@@ -23,3 +23,5 @@ export const Checkbox: FC<TCustomCheckboxProps> = ({ name, control, label, ...pr
     )}
   />
 );
+
+export default Checkbox;

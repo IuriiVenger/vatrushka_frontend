@@ -19,7 +19,7 @@ type TInputProps = {
   errors: boolean;
 } & InputProps;
 
-export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label, errors, ...props }) => {
+const Input: FC<TInputProps> = ({ name, control, pattern, validate, label, errors, ...props }) => {
   const validateRule = (value: string): boolean => {
     if (typeof validate === 'function') {
       return validate(value);
@@ -64,3 +64,5 @@ export const Input: FC<TInputProps> = ({ name, control, pattern, validate, label
     />
   );
 };
+
+export default Input;

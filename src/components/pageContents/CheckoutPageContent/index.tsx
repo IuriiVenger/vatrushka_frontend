@@ -11,12 +11,12 @@ import CourierDelivery from './CourierDelivery';
 import PickupDelivery from './PickupDelivery';
 
 import OrderConfirmationModal from '@/components/modals/OrderConfirmationModal';
-import { DatePicker } from '@/components/ui/Form/DatePicker';
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
+import DatePicker from '@/components/ui/Form/DatePicker';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
 import NumericInput from '@/components/ui/Form/NumericInput';
-import { TextAreaInput } from '@/components/ui/Form/TextArea';
-import { StepperButton } from '@/components/ui/StepperButton';
+import TextAreaInput from '@/components/ui/Form/TextArea';
+import StepperButton from '@/components/ui/StepperButton';
 import { companyInfo, legalLinks } from '@/config/links';
 import {
   addressesTypes,
@@ -99,11 +99,8 @@ const CheckoutPageContent: FC = () => {
     unregister,
     register,
     resetField,
-    watch,
     formState: { errors, isDirty, isValid },
   } = methods;
-
-  console.log('watch', watch());
 
   const dateFields: (keyof TCheckoutForm)[] = ['date', 'time'];
 

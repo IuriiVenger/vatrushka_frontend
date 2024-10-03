@@ -5,16 +5,16 @@ import Link from 'next/link';
 import { FC, useState } from 'react';
 
 import logo from '../../assets/images/logo_full.svg';
-import { Contacts } from '../Contacts';
+import Contacts from '../Contacts';
 import ContactUsModal from '../modals/ContactUsModal';
 
-import { LinksList } from './LinksList';
+import LinksList from './LinksList';
 
-import { companyInfo, contactLinks, navigationLinks } from '@/config/links';
+import { companyInfo, contactLinks, legalLinks, navigationLinks } from '@/config/links';
 import { ContactLinks } from '@/constants';
 import { TContact, TNavigationLink } from '@/types';
 
-export const Footer: FC = () => {
+const Footer: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const currentYear = new Date().getFullYear();
@@ -61,7 +61,7 @@ export const Footer: FC = () => {
         <div className="mx-auto flex w-full max-w-320 justify-between gap-4 px-9 pb-9 max-lg:flex-col-reverse max-lg:items-center max-sm:items-start max-xs:max-w-82 max-xs:px-0">
           <p className="text-text">(с) 2010-{currentYear} Ватрушка - доставка еды на дом в Челябинске</p>
           <Link
-            href="https://www.google.com"
+            href={legalLinks.termsOfService}
             className="text-text transition-all hover:text-primary active:text-primaryActive"
           >
             Пользовательское соглашение
@@ -72,3 +72,5 @@ export const Footer: FC = () => {
     </>
   );
 };
+
+export default Footer;

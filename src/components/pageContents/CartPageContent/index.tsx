@@ -8,7 +8,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 import ItemCard from './ItemCard';
 
 import AuthModal from '@/components/modals/AuthModal';
-import { Input } from '@/components/ui/Form/Input';
+import Input from '@/components/ui/Form/Input';
 import { CurrencySymbol } from '@/constants';
 import { order, products } from '@/mocks';
 import { getNounWithDeclension } from '@/utils/formatters';

@@ -2,13 +2,11 @@ import { Button, Checkbox, CheckboxProps, Rate } from 'antd';
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '../ui/Form/Form';
+import Form from '../ui/Form/Form';
+import Input from '../ui/Form/Input';
+import TextAreaInput from '../ui/Form/TextArea';
 
-import { Input } from '../ui/Form/Input';
-
-import { TextAreaInput } from '../ui/Form/TextArea';
-
-import { Modal } from './Modal';
+import Modal from './Modal';
 
 import { legalLinks } from '@/config/links';
 import { useMessage } from '@/hooks/useMessage';

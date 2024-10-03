@@ -11,7 +11,7 @@ type TDropdownProps<T extends string> = {
   translations: Record<T, string>;
 };
 
-export const Dropdown = <T extends string>({ items, sort, setSort, className, translations }: TDropdownProps<T>) => {
+const Dropdown = <T extends string>({ items, sort, setSort, className, translations }: TDropdownProps<T>) => {
   const onSortClick: MenuProps['onClick'] = ({ key }) => {
     setSort(key as T);
   };
@@ -37,3 +37,5 @@ export const Dropdown = <T extends string>({ items, sort, setSort, className, tr
     </AntDropdown>
   );
 };
+
+export default Dropdown;

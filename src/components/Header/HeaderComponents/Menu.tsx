@@ -1,7 +1,6 @@
 import { Cascader } from 'antd';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
-
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 
 import { navigationLinks } from '@/config/links';
@@ -9,7 +8,7 @@ import { AccountTabs, NavigationLinks } from '@/constants';
 import { catalogOptions } from '@/mocks';
 import { TMenuLevelOneOption } from '@/types';
 
-export const Menu = () => {
+const Menu = () => {
   const clientItems = useMemo(
     () =>
       Object.entries(navigationLinks).reduce<TMenuLevelOneOption[]>((acc, [key, value]) => {
@@ -71,3 +70,5 @@ export const Menu = () => {
     </nav>
   );
 };
+
+export default Menu;

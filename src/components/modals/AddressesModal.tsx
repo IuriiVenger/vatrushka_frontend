@@ -4,7 +4,7 @@ import { UseFormSetValue } from 'react-hook-form';
 
 import { TCheckoutForm } from '../pageContents/CheckoutPageContent';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
 import { addressesTypes } from '@/constants';
 import { userInfo } from '@/mocks';

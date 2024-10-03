@@ -7,7 +7,7 @@ type TStepperButtonProps = {
   minCount?: number;
 };
 
-export const StepperButton: FC<TStepperButtonProps> = ({ count, setCount, minCount = 1 }) => {
+const StepperButton: FC<TStepperButtonProps> = ({ count, setCount, minCount = 1 }) => {
   const isMinusButtonDisabled = count === minCount;
 
   const onCountChange = (delta: number) => (e: React.MouseEvent<HTMLElement>) => {
@@ -36,3 +36,5 @@ export const StepperButton: FC<TStepperButtonProps> = ({ count, setCount, minCou
     </div>
   );
 };
+
+export default StepperButton;

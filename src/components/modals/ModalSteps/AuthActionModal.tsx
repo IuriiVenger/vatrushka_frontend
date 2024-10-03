@@ -6,7 +6,7 @@ type TAuthActionModalProps = {
   onClose: MouseEventHandler<HTMLElement>;
 };
 
-export const AuthActionModal: FC<TAuthActionModalProps> = ({ onSignIn, onClose }) => (
+const AuthActionModal: FC<TAuthActionModalProps> = ({ onSignIn, onClose }) => (
   <div className="flex flex-col gap-8 max-sm:gap-6">
     <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">
       Войдите или зарегистрируйтесь на сайте, чтобы просматривать историю заказов
@@ -21,3 +21,5 @@ export const AuthActionModal: FC<TAuthActionModalProps> = ({ onSignIn, onClose }
     </div>
   </div>
 );
+
+export default AuthActionModal;

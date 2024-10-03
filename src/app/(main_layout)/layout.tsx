@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 
-import { Footer } from '@/components/Footer/Footer';
-import { Header } from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
+import Header from '@/components/Header/Header';
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => (
   <div className="flex min-h-screen flex-col items-center justify-between">

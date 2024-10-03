@@ -3,7 +3,7 @@ import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import { Dropdown } from '@/components/ui/Dropdown';
+import Dropdown from '@/components/ui/Dropdown';
 import {
   AccountTabs,
   accountTabs,

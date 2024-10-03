@@ -1,13 +1,12 @@
 import { FC } from 'react';
-
 import { useFormContext } from 'react-hook-form';
 
 import RadioAddress from './RadioAddress';
 
 import { TCheckoutForm } from '.';
 
-import { RadioGroup } from '@/components/ui/Form/Radio';
-import { Map } from '@/components/ui/Map';
+import RadioGroup from '@/components/ui/Form/Radio';
+import Map from '@/components/ui/Map';
 import { companyInfo } from '@/config/links';
 import { TBranch } from '@/types';
 

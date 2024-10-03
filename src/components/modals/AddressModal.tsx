@@ -2,13 +2,12 @@ import { Button, Radio } from 'antd';
 import { FC, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '../ui/Form/Form';
+import Form from '../ui/Form/Form';
+import Input from '../ui/Form/Input';
 
-import { Input } from '../ui/Form/Input';
+import Modal from './Modal';
 
-import { Modal } from './Modal';
-
-import { RadioGroup } from '@/components/ui/Form/Radio';
+import RadioGroup from '@/components/ui/Form/Radio';
 import { addressesTypes, AddressType } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
 import { TAddress, TModalProps } from '@/types';

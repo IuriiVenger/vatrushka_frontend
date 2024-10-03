@@ -34,7 +34,6 @@ const AccountPageContent: FC = () => {
     Object.values(AccountTabs).includes(value as AccountTabs);
 
   useEffect(() => {
-    console.log(paramValue, paramValue && isValidTabParam(paramValue));
     if (paramValue && isValidTabParam(paramValue)) {
       setCurrentTab(paramValue);
     }

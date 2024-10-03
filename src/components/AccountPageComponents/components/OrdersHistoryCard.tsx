@@ -1,6 +1,5 @@
 import { Collapse, CollapseProps, Divider } from 'antd';
 import { FC } from 'react';
-
 import { IoIosArrowDown } from 'react-icons/io';
 
 import Fulfillment from './cardComponents/Fulfillment';

@@ -4,11 +4,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useSuccessModal } from '../../hooks/useSuccessModal';
 import CustomImage from '../ui/CustomImage';
-import { Form } from '../ui/Form/Form';
-import { Input } from '../ui/Form/Input';
-import { TextAreaInput } from '../ui/Form/TextArea';
+import Form from '../ui/Form/Form';
+import Input from '../ui/Form/Input';
+import TextAreaInput from '../ui/Form/TextArea';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
 import { legalLinks } from '@/config/links';
 import { CurrencySymbol } from '@/constants';

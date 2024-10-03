@@ -20,7 +20,7 @@ type TTextAreaProps = {
   errors: boolean;
 } & TextAreaProps;
 
-export const TextAreaInput: FC<TTextAreaProps> = ({ name, control, pattern, validate, label, errors, ...props }) => {
+const TextAreaInput: FC<TTextAreaProps> = ({ name, control, pattern, validate, label, errors, ...props }) => {
   const status = useMemo(() => (errors ? 'error' : undefined), [errors]);
 
   return (
@@ -36,3 +36,5 @@ export const TextAreaInput: FC<TTextAreaProps> = ({ name, control, pattern, vali
     />
   );
 };
+
+export default TextAreaInput;

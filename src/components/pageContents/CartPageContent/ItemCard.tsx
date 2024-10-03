@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 
 import CustomImage from '@/components/ui/CustomImage';
-import { StepperButton } from '@/components/ui/StepperButton';
+import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
 import { TCard } from '@/types';

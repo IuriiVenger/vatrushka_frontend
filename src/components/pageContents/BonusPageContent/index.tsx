@@ -2,7 +2,7 @@ import { Breadcrumb, Button } from 'antd';
 import Link from 'next/link';
 import { FC } from 'react';
 
-import { Accordion } from '@/components/ui/Accordion';
+import Accordion from '@/components/ui/Accordion';
 import { companyInfo } from '@/config/links';
 
 const BonusPageContent: FC = () => {

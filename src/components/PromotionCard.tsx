@@ -8,7 +8,7 @@ type TProductCardProps = {
   item: API.Promotions.Promotion;
 };
 
-export const PromotionCard: FC<TProductCardProps> = ({ item }) => {
+const PromotionCard: FC<TProductCardProps> = ({ item }) => {
   const { name, homepageBanner, description } = item;
 
   return (
@@ -34,3 +34,5 @@ export const PromotionCard: FC<TProductCardProps> = ({ item }) => {
     </Link>
   );
 };
+
+export default PromotionCard;

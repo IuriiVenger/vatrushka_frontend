@@ -4,9 +4,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import ChangePhoneModal from '@/components/modals/ChangePhoneModal';
 import DeleteAccountModal from '@/components/modals/DeleteAccountModal';
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
-import { Switch } from '@/components/ui/Form/Switch';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
+import Switch from '@/components/ui/Form/Switch';
 import { useMessage } from '@/hooks/useMessage';
 import { userInfo } from '@/mocks';
 
