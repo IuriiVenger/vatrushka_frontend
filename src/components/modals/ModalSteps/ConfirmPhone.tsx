@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -70,7 +70,7 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = (props) => {
     try {
       setIsLoading(true);
       await getPhoneOtp();
-      message.success('Код отправлен повторно');
+      showMessage({ type: 'success', text: 'Код отправлен повторно' });
     } finally {
       setIsLoading(false);
     }
