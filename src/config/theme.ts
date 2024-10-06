@@ -96,10 +96,8 @@ export const theme = {
     },
     Cascader: {
       optionSelectedBg: color.primary.bg,
-      dropdownHeight: 'clamp(100px, 600px, 75vh)',
       menuPadding: 4,
       optionPadding: 12,
-      controlItemWidth: 308,
       colorSplit: color.border.secondary,
       fontSize: 16,
       lineHeight: 1.5,
@@ -128,7 +126,8 @@ export const theme = {
       itemSelectedBg: color.primary.default,
       itemSelectedColor: color.white,
       itemHoverBg: color.fill.secondary,
-      controlHeight: 48,
+      controlHeight: 50,
+      trackBg: color.bg.layout,
     },
     Collapse: {
       contentBg: color.white,
@@ -158,6 +157,7 @@ export const theme = {
       paddingBlock: 7,
       colorError: color.error.default,
       addonBg: color.white,
+      controlHeight: 48,
     },
     Form: {
       itemMarginBottom: 0,
@@ -184,6 +184,11 @@ export const theme = {
     Switch: {
       colorPrimary: color.primary.default,
       colorPrimaryHover: color.primary.hover,
+    },
+    DatePicker: {
+      controlHeight: 48,
+      cellHeight: 32,
+      padding: 18,
     },
   },
 };

@@ -2,14 +2,13 @@
 
 import { AutoComplete, AutoCompleteProps, Input } from 'antd';
 import { FC, useState } from 'react';
-
 import { IoSearch } from 'react-icons/io5';
 
-import { DropdownListItem } from './DropdownListItem';
+import DropdownListItem from './DropdownListItem';
 
 import { cartList } from '@/mocks';
 
-export const Search: FC = () => {
+const Search: FC = () => {
   const mockOptions = cartList.map((item) => ({
     value: item.name,
     label: <DropdownListItem item={item} />,
@@ -43,3 +42,5 @@ export const Search: FC = () => {
     </>
   );
 };
+
+export default Search;

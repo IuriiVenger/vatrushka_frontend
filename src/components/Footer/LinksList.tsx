@@ -7,7 +7,7 @@ type TLinksListProps = {
   links: TNavigationLink[];
 };
 
-export const LinksList: FC<TLinksListProps> = ({ links }) => (
+const LinksList: FC<TLinksListProps> = ({ links }) => (
   <nav>
     <ul className="flex flex-col gap-6">
       {links.map(({ title, link }) => (
@@ -23,3 +23,5 @@ export const LinksList: FC<TLinksListProps> = ({ links }) => (
     </ul>
   </nav>
 );
+
+export default LinksList;

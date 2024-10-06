@@ -2,11 +2,12 @@ import { Button } from 'antd';
 
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 
-import { set, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Checkbox } from '@/components/ui/Form/Checkbox';
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
+import Checkbox from '@/components/ui/Form/Checkbox';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
+import { legalLinks } from '@/config/links';
 import { AuthModalProcessType } from '@/constants';
 
 type TSignUpModalForm = {
@@ -65,7 +66,8 @@ const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone, getPh
           label="Имя"
           required
           control={control}
-          errors={errors.name}
+          errors={!!errors.name}
+          autoComplete="given-name"
         />
         <Input
           name="phone"
@@ -75,7 +77,8 @@ const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone, getPh
           label="Номер телефона"
           required
           control={control}
-          errors={errors.phone}
+          errors={!!errors.phone}
+          autoComplete="tel"
         />
         <Input
           name="email"
@@ -85,7 +88,8 @@ const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone, getPh
           label="Email"
           required
           control={control}
-          errors={errors.email}
+          errors={!!errors.email}
+          autoComplete="email"
         />
       </div>
       <Checkbox
@@ -106,8 +110,9 @@ const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone, getPh
         </Button>
         <p className="max-sm:text-sm max-sm:leading-sm">
           Нажимая кнопку &laquo;Отправить&raquo;, я&nbsp;даю согласие на&nbsp;обработку персональных данных
-          и&nbsp;соглашаюсь&nbsp;с&nbsp;<a href="123">политикой обработки персональных данных</a> и&nbsp;
-          <a href="123">пользовательским соглашением</a>
+          и&nbsp;соглашаюсь&nbsp;с&nbsp;
+          <a href={legalLinks.dataProcessingPolicy}>политикой обработки персональных данных</a> и&nbsp;
+          <a href={legalLinks.termsOfService}>пользовательским соглашением</a>
         </p>
       </div>
     </Form>

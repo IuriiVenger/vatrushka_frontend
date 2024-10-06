@@ -4,7 +4,7 @@ import { Breadcrumb, Button } from 'antd';
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 
-import { TextBlock } from '../../ui/TextBlock';
+import TextBlock from '../../ui/TextBlock';
 
 import {
   Productsizeimages,
@@ -14,10 +14,10 @@ import {
 } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import ProductCarousel from '@/components/Carousels/ProductCarousel';
-import { Slider } from '@/components/Carousels/Slider';
+import Slider from '@/components/Carousels/Slider';
 import ProductModificator from '@/components/Product/ProductModificator';
-import { PromoTag } from '@/components/ui/PromoTag';
-import { StepperButton } from '@/components/ui/StepperButton';
+import PromoTag from '@/components/ui/PromoTag';
+import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
 import { TCard } from '@/types';
@@ -143,6 +143,8 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     name: product.name,
     description: product.short_description || '',
     price: product.price || 0,
+    // fix type TCard
+    quantity: 1,
     // fix inStock after adding it to the API
     inStock: true,
     href: `/${product.category.slug}/${product.slug}`,

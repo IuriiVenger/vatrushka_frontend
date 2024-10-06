@@ -1,9 +1,8 @@
 import { Button } from 'antd';
 import { FC, useState } from 'react';
-
 import { IoIosArrowBack } from 'react-icons/io';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 import ChangePhone from './ModalSteps/ChangePhone';
 import ConfirmPhone from './ModalSteps/ConfirmPhone';
 

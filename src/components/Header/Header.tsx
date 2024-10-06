@@ -9,12 +9,12 @@ import { LuShoppingCart } from 'react-icons/lu';
 
 import logo from '../../assets/images/logo_full.svg';
 
-import { CartList } from './HeaderComponents/CartList';
-import { Menu } from './HeaderComponents/Menu';
-import { Search } from './HeaderComponents/Search';
+import CartList from './HeaderComponents/CartList';
+import Menu from './HeaderComponents/Menu';
+import Search from './HeaderComponents/Search';
 
 import UserMenu from './HeaderComponents/UserMenu';
-import { PreHeader } from './PreHeader';
+import PreHeader from './PreHeader';
 
 import { color } from '@/config/variables';
 
@@ -22,18 +22,18 @@ import { cartList } from '@/mocks';
 
 export type TMenuItem = Required<MenuProps>['items'][number];
 
-export const Header: FC = () => {
+const cartItems: TMenuItem[] = [
+  {
+    key: 'cart',
+    label: <CartList />,
+    type: 'group',
+  },
+];
+
+const Header: FC = () => {
   const onClick: MenuProps['onClick'] = ({ key }) => {
     message.info(`Click on item ${key}`);
   };
-
-  const cartItems: TMenuItem[] = [
-    {
-      key: 'cart',
-      label: <CartList />,
-      type: 'group',
-    },
-  ];
 
   return (
     <header className="w-full">
@@ -64,3 +64,5 @@ export const Header: FC = () => {
     </header>
   );
 };
+
+export default Header;

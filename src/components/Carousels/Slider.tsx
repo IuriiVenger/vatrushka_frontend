@@ -5,7 +5,7 @@ import { FC, useRef, useState } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import SlickSlider, { Settings } from 'react-slick';
 
-import { ProductCard } from '../Product/ProductCard';
+import ProductCard from '../Product/ProductCard';
 
 import { TCard } from '@/types';
 
@@ -14,7 +14,7 @@ type TSliderComponentProps = {
   slides: TCard[];
 };
 
-export const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
+const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
   const sliderRef = useRef<SlickSlider>(null);
 
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
@@ -96,3 +96,5 @@ export const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
     </div>
   );
 };
+
+export default Slider;

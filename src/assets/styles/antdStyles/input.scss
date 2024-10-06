@@ -1,3 +1,28 @@
-.ant-input-group-addon {
-  @apply p-0;
+.ant-input-group-addon,
+.ant-input-number-group-addon {
+  @apply h-12 p-0;
+}
+
+.ant-input,
+.ant-input-number-input {
+  @apply h-12;
+}
+
+.ant-input-affix-wrapper-readonly {
+  & .ant-input,
+  .ant-input-number-input {
+    @apply h-8 pt-0.5;
+  }
+}
+
+.ant-input[rows] {
+  @apply h-auto;
+}
+
+.ant-input-sm {
+  @apply h-9.5;
+}
+
+.ant-input-textarea {
+  @apply h-auto;
 }

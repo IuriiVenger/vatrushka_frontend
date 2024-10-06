@@ -1,5 +1,4 @@
 import cn from 'classnames';
-
 import { FC } from 'react';
 
 import { API } from '@/api/types';

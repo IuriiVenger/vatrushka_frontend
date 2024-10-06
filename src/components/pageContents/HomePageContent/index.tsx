@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-import { Catalog } from '../../Catalog/Catalog';
+import Catalog from '../../Catalog/Catalog';
 
 import { CategoriesConnection } from '@/__generated__/graphql';
-import { PromoCarousel } from '@/components/Carousels/PromoCarousel';
-import { Slider } from '@/components/Carousels/Slider';
-import { SeoContent } from '@/components/SeoContent';
+import PromoCarousel from '@/components/Carousels/PromoCarousel';
+import Slider from '@/components/Carousels/Slider';
+import SeoContent from '@/components/SeoContent';
 
 import { slides, products } from '@/mocks';
 

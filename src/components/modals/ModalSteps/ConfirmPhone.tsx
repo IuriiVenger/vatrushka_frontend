@@ -4,8 +4,8 @@ import { Button, message } from 'antd';
 import { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
 import { companyInfo } from '@/config/links';
 import { AuthModalProcessType } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
@@ -116,7 +116,8 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = (props) => {
             validate={validate}
             min={0}
             inputMode="numeric"
-            errors={errors.confirmationCode}
+            errors={!!errors.confirmationCode}
+            autoComplete="off"
           />
           {isSendingPossible ? (
             <Button

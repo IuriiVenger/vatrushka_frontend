@@ -8,7 +8,7 @@ type TUserInfoProps = {
   };
 };
 
-export const UserInfo: FC<TUserInfoProps> = ({ user }) => {
+const UserInfo: FC<TUserInfoProps> = ({ user }) => {
   const { name, phone, email } = user;
 
   return (
@@ -19,3 +19,5 @@ export const UserInfo: FC<TUserInfoProps> = ({ user }) => {
     </div>
   );
 };
+
+export default UserInfo;

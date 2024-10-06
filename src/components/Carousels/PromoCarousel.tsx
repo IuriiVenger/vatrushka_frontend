@@ -2,7 +2,6 @@
 
 import { Carousel as AntCarousel } from 'antd';
 import Image from 'next/image';
-
 import React, { FC } from 'react';
 
 type TCarouselProps = {
@@ -10,7 +9,7 @@ type TCarouselProps = {
   product?: boolean;
 };
 
-export const PromoCarousel: FC<TCarouselProps> = ({ slides, product }) => (
+const PromoCarousel: FC<TCarouselProps> = ({ slides, product }) => (
   <section className="custom grid grid-cols-1">
     <AntCarousel
       autoplay
@@ -36,3 +35,5 @@ export const PromoCarousel: FC<TCarouselProps> = ({ slides, product }) => (
     </AntCarousel>
   </section>
 );
+
+export default PromoCarousel;

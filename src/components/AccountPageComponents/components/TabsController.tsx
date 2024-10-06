@@ -1,25 +1,39 @@
 import { Button, Divider, Grid, Segmented, Skeleton } from 'antd';
-import { Dispatch, FC, SetStateAction } from 'react';
+import cn from 'classnames';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import { AccountTabs, tabs } from '@/constants';
+import Dropdown from '@/components/ui/Dropdown';
+import {
+  AccountTabsOptions,
+  accountTabs,
+  filterDropdownItems,
+  FilterOrdersType,
+  filterOrdersTypeTranslation,
+} from '@/constants';
 import { useUrlParams } from '@/hooks/useUrlParams';
-import { TTab } from '@/types';
 
 type TTabsControllerProps = {
-  tab: AccountTabs | null;
-  setTab: Dispatch<SetStateAction<AccountTabs | null>>;
-  segmentedItems: TTab[];
+  tab: AccountTabsOptions | null;
+  setTab: Dispatch<SetStateAction<AccountTabsOptions | null>>;
+  isHistoryTab: boolean;
+  isProfileTab: boolean;
 };
 
-const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, segmentedItems }) => {
+const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isHistoryTab, isProfileTab }) => {
+  const [filter, setFilter] = useState<FilterOrdersType>(FilterOrdersType.ALL);
+
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
   const { setParam } = useUrlParams('tab');
 
-  const onClick = (value: AccountTabs) => {
+  const options = Object.values(accountTabs);
+
+  const segmentedItems = options.map((option) => option);
+
+  const onClick = (value: AccountTabsOptions) => {
     setTab(value);
     setParam(value);
   };
@@ -31,11 +45,11 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, segmentedItems 
   if (!screens.md)
     return (
       <div className="flex-flex-col w-full">
-        {Object.values(tabs).map((option) => (
+        {options.map((option) => (
           <div key={option.value}>
             <Button
               type="text"
-              onClick={() => onClick(option.value as AccountTabs)}
+              onClick={() => onClick(option.value as AccountTabsOptions)}
               className="h-10 w-full justify-between rounded-lg pl-0 text-base leading-base hover:bg-white hover:text-primaryHover"
             >
               {option.label}
@@ -48,18 +62,31 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, segmentedItems 
     );
 
   return (
-    <div className="flex justify-between pb-14 pt-10 max-lg:pb-10 max-lg:pt-6">
+    <div
+      className={cn(
+        'flex justify-between pb-14 pt-10 max-lg:pb-10 max-lg:pt-6',
+        isHistoryTab && 'max-lg:flex-col max-lg:gap-6',
+      )}
+    >
       <Segmented
         options={segmentedItems}
         value={tab}
-        onChange={(value) => onClick(value as AccountTabs)}
+        onChange={(value) => onClick(value as AccountTabsOptions)}
         className="w-max text-lg leading-lg max-lg:text-base max-lg:leading-base"
       />
-      {tab === tabs[AccountTabs.PROFILE].value && (
+      {isProfileTab && (
         <Button className="border-none max-lg:text-base max-lg:leading-base max-md:hidden">
           <FiLogOut className="h-6 w-6" />
           Выйти из аккаунта
         </Button>
+      )}
+      {isHistoryTab && (
+        <Dropdown
+          sort={filter}
+          setSort={setFilter}
+          items={filterDropdownItems}
+          translations={filterOrdersTypeTranslation}
+        />
       )}
     </div>
   );

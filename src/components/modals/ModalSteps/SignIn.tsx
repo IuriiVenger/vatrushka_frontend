@@ -3,8 +3,8 @@ import { Button } from 'antd';
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
 import { AuthModalProcessType, AuthModalSteps } from '@/constants';
 
 type TSignInForm = {
@@ -74,8 +74,9 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone, getP
           inputMode="tel"
           label="Номер телефона"
           control={control}
-          errors={errors.phone}
+          errors={!!errors.phone}
           required
+          autoComplete="tel"
         />
         <Button
           type="primary"

@@ -1,8 +1,8 @@
 import { Form as AntForm } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { TextAreaProps } from 'antd/lib/input';
-import { FC, ReactNode, useCallback } from 'react';
-import { Controller, ControllerRenderProps, FieldError, FieldValues, Validate } from 'react-hook-form';
+import { FC, ReactNode, useMemo } from 'react';
+import { Controller, FieldValues, Validate } from 'react-hook-form';
 
 type TValidate = Validate<any, FieldValues> | Record<string, Validate<any, FieldValues>> | undefined;
 
@@ -17,15 +17,11 @@ type TTextAreaProps = {
   pattern?: Pattern;
   validate?: TValidate;
   label?: ReactNode;
-  errors?: FieldError | undefined;
+  errors: boolean;
 } & TextAreaProps;
 
-export const TextAreaInput: FC<TTextAreaProps> = ({ name, control, pattern, validate, label, errors, ...props }) => {
-  const getStatus = useCallback(
-    (field: ControllerRenderProps<FieldValues, string>) =>
-      field.value?.length && errors?.type === 'validate' ? 'error' : undefined,
-    [errors],
-  );
+const TextAreaInput: FC<TTextAreaProps> = ({ name, control, pattern, validate, label, errors, ...props }) => {
+  const status = useMemo(() => (errors ? 'error' : undefined), [errors]);
 
   return (
     <Controller
@@ -34,9 +30,11 @@ export const TextAreaInput: FC<TTextAreaProps> = ({ name, control, pattern, vali
       rules={{ required: props.required, pattern, validate }}
       render={({ field }) => (
         <AntForm.Item label={label} className={props.className} layout="vertical" required={props.required}>
-          <TextArea {...field} {...props} status={getStatus(field)} />
+          <TextArea {...field} {...props} status={status} />
         </AntForm.Item>
       )}
     />
   );
 };
+
+export default TextAreaInput;

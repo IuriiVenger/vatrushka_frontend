@@ -19,7 +19,7 @@ const BonusesTab: FC = () => {
         <p>1 бонусный балл = 1 {CurrencySymbol.RUB}</p>
         <p>Оплачивайте баллами до 100% стоимости следующего заказа.</p>
       </div>
-      <Button className="mt-6 max-sm:mt-8 max-xs:w-full" href="/">
+      <Button className="mt-6 max-sm:mt-8 max-xs:w-full" href="/bonus">
         Подробнее
       </Button>
     </div>

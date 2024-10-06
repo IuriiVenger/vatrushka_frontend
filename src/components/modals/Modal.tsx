@@ -9,7 +9,7 @@ type TProps = PropsWithChildren &
     width?: 'xsmall' | 'small' | 'default' | 'large';
   };
 
-export const Modal: FC<TProps> = ({ isOpen, setIsOpen, title, children, width = 'default' }) => {
+const Modal: FC<TProps> = ({ isOpen, setIsOpen, title, children, width = 'default' }) => {
   const handleCancel = () => {
     setIsOpen(false);
   };
@@ -28,3 +28,5 @@ export const Modal: FC<TProps> = ({ isOpen, setIsOpen, title, children, width = 
     </AntModal>
   );
 };
+
+export default Modal;

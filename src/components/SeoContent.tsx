@@ -1,12 +1,13 @@
 'use client';
 
 import { Button } from 'antd';
+import cn from 'classnames';
 import { FC, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
 import { companyInfo } from '@/config/links';
 
-export const SeoContent: FC = () => {
+const SeoContent: FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const onButtonClick = () => setIsCollapsed(false);
@@ -14,7 +15,10 @@ export const SeoContent: FC = () => {
   return (
     <div className="flex flex-col gap-8">
       <div
-        className={`flex flex-col items-start gap-4 max-sm:gap-3 ${isCollapsed ? 'relative max-h-64 overflow-hidden' : ''}`}
+        className={cn(
+          'flex flex-col items-start gap-4 max-sm:gap-3',
+          isCollapsed && 'relative max-h-64 overflow-hidden',
+        )}
       >
         {isCollapsed && <div className="absolute bottom-0 left-0 z-10 h-1/4 w-full bg-white-fade" />}
         <h2 className="text-3xl font-medium leading-3xl max-sm:text-2xl max-sm:leading-2xl">Доставка еды в офис</h2>
@@ -61,3 +65,5 @@ export const SeoContent: FC = () => {
     </div>
   );
 };
+
+export default SeoContent;

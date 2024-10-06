@@ -12,7 +12,7 @@ type TCatalogItemProps = {
   subCatalog?: boolean;
 };
 
-export const CatalogItem: FC<TCatalogItemProps> = ({ item, subCatalog }) => {
+const CatalogItem: FC<TCatalogItemProps> = ({ item, subCatalog }) => {
   const { name, button_image_url, count, isHidden } = item;
 
   if (isHidden) return null;
@@ -61,3 +61,5 @@ export const CatalogItem: FC<TCatalogItemProps> = ({ item, subCatalog }) => {
     </div>
   );
 };
+
+export default CatalogItem;
