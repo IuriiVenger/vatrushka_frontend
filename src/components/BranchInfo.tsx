@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { FC } from 'react';
 
 import { TBusinessHours } from '@/types';
@@ -18,7 +19,7 @@ const BranchInfo: FC<TBranchInfoProps> = ({ address, phone, businessHours, color
 
   return (
     <div className="flex flex-col gap-2 text-lg leading-lg max-sm:text-base max-sm:leading-base">
-      <h3 className={`font-medium ${colored ? 'text-accent' : ''}`}>{address}</h3>
+      <h3 className={cn('font-medium', colored && 'text-accent')}>{address}</h3>
       <p>{phone}</p>
       <div className="flex flex-col gap-1 text-textTertiary">
         {days.map(({ label, hours }) => (

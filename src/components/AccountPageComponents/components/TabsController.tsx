@@ -1,11 +1,12 @@
 import { Button, Divider, Grid, Segmented, Skeleton } from 'antd';
+import cn from 'classnames';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 
 import Dropdown from '@/components/ui/Dropdown';
 import {
-  AccountTabs,
+  AccountTabsOptions,
   accountTabs,
   filterDropdownItems,
   FilterOrdersType,
@@ -14,11 +15,13 @@ import {
 import { useUrlParams } from '@/hooks/useUrlParams';
 
 type TTabsControllerProps = {
-  tab: AccountTabs | null;
-  setTab: Dispatch<SetStateAction<AccountTabs | null>>;
+  tab: AccountTabsOptions | null;
+  setTab: Dispatch<SetStateAction<AccountTabsOptions | null>>;
+  isHistoryTab: boolean;
+  isProfileTab: boolean;
 };
 
-const TabsController: FC<TTabsControllerProps> = ({ tab, setTab }) => {
+const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isHistoryTab, isProfileTab }) => {
   const [filter, setFilter] = useState<FilterOrdersType>(FilterOrdersType.ALL);
 
   const { useBreakpoint } = Grid;
@@ -30,7 +33,7 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab }) => {
 
   const segmentedItems = options.map((option) => option);
 
-  const onClick = (value: AccountTabs) => {
+  const onClick = (value: AccountTabsOptions) => {
     setTab(value);
     setParam(value);
   };
@@ -46,7 +49,7 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab }) => {
           <div key={option.value}>
             <Button
               type="text"
-              onClick={() => onClick(option.value as AccountTabs)}
+              onClick={() => onClick(option.value as AccountTabsOptions)}
               className="h-10 w-full justify-between rounded-lg pl-0 text-base leading-base hover:bg-white hover:text-primaryHover"
             >
               {option.label}
@@ -60,21 +63,24 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab }) => {
 
   return (
     <div
-      className={`flex justify-between pb-14 pt-10 max-lg:pb-10 max-lg:pt-6 ${tab === accountTabs[AccountTabs.ORDER_HISTORY].value ? 'max-lg:flex-col max-lg:gap-6' : ''}`}
+      className={cn(
+        'flex justify-between pb-14 pt-10 max-lg:pb-10 max-lg:pt-6',
+        isHistoryTab && 'max-lg:flex-col max-lg:gap-6',
+      )}
     >
       <Segmented
         options={segmentedItems}
         value={tab}
-        onChange={(value) => onClick(value as AccountTabs)}
+        onChange={(value) => onClick(value as AccountTabsOptions)}
         className="w-max text-lg leading-lg max-lg:text-base max-lg:leading-base"
       />
-      {tab === accountTabs[AccountTabs.PROFILE].value && (
+      {isProfileTab && (
         <Button className="border-none max-lg:text-base max-lg:leading-base max-md:hidden">
           <FiLogOut className="h-6 w-6" />
           Выйти из аккаунта
         </Button>
       )}
-      {tab === accountTabs[AccountTabs.ORDER_HISTORY].value && (
+      {isHistoryTab && (
         <Dropdown
           sort={filter}
           setSort={setFilter}

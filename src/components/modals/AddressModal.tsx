@@ -53,8 +53,6 @@ const AddressModal: FC<TAddressModalProps> = ({ isOpen, setIsOpen, isEdit = fals
 
   const addressType = watch('type').id;
 
-  console.log('addressType', addressType, 'addressType === AddressType.OFFICE', addressType === AddressType.OFFICE);
-
   const submitHandler: SubmitHandler<TAddressModalForm> = (data) => {
     console.log('adress', data, 'addressId:', address?.id);
     setIsOpen(false);

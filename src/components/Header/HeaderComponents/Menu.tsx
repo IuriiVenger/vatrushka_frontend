@@ -4,29 +4,32 @@ import React, { useMemo } from 'react';
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 
 import { navigationLinks } from '@/config/links';
-import { AccountTabs, NavigationLinks } from '@/constants';
+import { AccountTabsOptions, NavigationLinks } from '@/constants';
 import { catalogOptions } from '@/mocks';
 import { TMenuLevelOneOption } from '@/types';
 
+const getClientItems = () =>
+  Object.entries(navigationLinks).reduce<TMenuLevelOneOption[]>((acc, [key, value]) => {
+    if (key !== NavigationLinks.ABOUT && key !== NavigationLinks.CONTACTS) {
+      acc.push({
+        value: value.title,
+        label: <Link href={value.link}>{value.title}</Link>,
+      });
+    }
+    return acc;
+  }, []) || [];
+
 const Menu = () => {
-  const clientItems = useMemo(
+  const catalogItems = useMemo(
     () =>
-      Object.entries(navigationLinks).reduce<TMenuLevelOneOption[]>((acc, [key, value]) => {
-        if (key !== NavigationLinks.ABOUT && key !== NavigationLinks.CONTACTS) {
-          acc.push({
-            value: value.title,
-            label: <Link href={value.link}>{value.title}</Link>,
-          });
-        }
-        return acc;
-      }, []) || [],
-    [navigationLinks],
+      catalogOptions.map((item) => ({
+        value: item.id,
+        label: <Link href={`/${item.slug}`}>{item.name}</Link>,
+      })),
+    [catalogOptions],
   );
 
-  const catalogItems = catalogOptions.map((item) => ({
-    value: item.id,
-    label: <Link href={`/${item.slug}`}>{item.name}</Link>,
-  }));
+  const forClientItems = getClientItems();
 
   return (
     <nav className="block text-lg leading-lg max-lg:hidden">
@@ -41,7 +44,7 @@ const Menu = () => {
         </li>
         <li>
           <Cascader
-            options={clientItems}
+            options={forClientItems}
             expandTrigger="hover"
             expandIcon={<IoIosArrowForward />}
             placement="bottomLeft"
@@ -60,7 +63,7 @@ const Menu = () => {
         </li>
         <li>
           <Link
-            href={`/account?tab=${AccountTabs.CURRENT_ORDERS}`}
+            href={`/account?tab=${AccountTabsOptions.CURRENT_ORDERS}`}
             className="select-none transition-all hover:text-primaryHover"
           >
             Мои заказы

@@ -17,7 +17,7 @@ import UserInfo from './HeaderComponents/UserInfo';
 import PreHeader from './PreHeader';
 
 import { color } from '@/config/variables';
-import { AccountTabs, AuthModalSteps } from '@/constants';
+import { AccountTabsOptions, AuthModalSteps } from '@/constants';
 import { cartList, userInfo } from '@/mocks';
 
 type TMenuItem = Required<MenuProps>['items'][number];
@@ -36,10 +36,16 @@ const Header: FC = () => {
       type: 'group',
     },
     { type: 'divider' },
-    { label: <Link href={`/account?tab=${AccountTabs.PROFILE}`}>Профиль</Link>, key: 'profile' },
-    { label: <Link href={`/account?tab=${AccountTabs.CURRENT_ORDERS}`}>Текущие заказы</Link>, key: 'currentOrders' },
-    { label: <Link href={`/account?tab=${AccountTabs.ORDER_HISTORY}`}>История заказов</Link>, key: 'ordersHistory' },
-    { label: <Link href={`/account?tab=${AccountTabs.ADDRESSES}`}>Мои адреса</Link>, key: 'addresses' },
+    { label: <Link href={`/account?tab=${AccountTabsOptions.PROFILE}`}>Профиль</Link>, key: 'profile' },
+    {
+      label: <Link href={`/account?tab=${AccountTabsOptions.CURRENT_ORDERS}`}>Текущие заказы</Link>,
+      key: 'currentOrders',
+    },
+    {
+      label: <Link href={`/account?tab=${AccountTabsOptions.ORDER_HISTORY}`}>История заказов</Link>,
+      key: 'ordersHistory',
+    },
+    { label: <Link href={`/account?tab=${AccountTabsOptions.ADDRESSES}`}>Мои адреса</Link>, key: 'addresses' },
     { type: 'divider' },
     { label: 'Выйти из аккаунта', key: 'logOut' },
   ];

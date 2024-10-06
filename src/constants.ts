@@ -116,7 +116,7 @@ export enum AuthModalProcessType {
   SIGN_UP = 'signUp',
 }
 
-export enum AccountTabs {
+export enum AccountTabsOptions {
   PROFILE = 'profile',
   BONUSES = 'bonuses',
   CURRENT_ORDERS = 'current-orders',
@@ -124,12 +124,12 @@ export enum AccountTabs {
   ADDRESSES = 'addresses',
 }
 
-export const accountTabs: Record<AccountTabs, TTab> = {
-  [AccountTabs.PROFILE]: { value: AccountTabs.PROFILE, label: 'Профиль' },
-  [AccountTabs.BONUSES]: { value: AccountTabs.BONUSES, label: 'Бонусы' },
-  [AccountTabs.CURRENT_ORDERS]: { value: AccountTabs.CURRENT_ORDERS, label: 'Текущие заказы' },
-  [AccountTabs.ORDER_HISTORY]: { value: AccountTabs.ORDER_HISTORY, label: 'История заказов' },
-  [AccountTabs.ADDRESSES]: { value: AccountTabs.ADDRESSES, label: 'Мои адреса' },
+export const accountTabs: Record<AccountTabsOptions, TTab> = {
+  [AccountTabsOptions.PROFILE]: { value: AccountTabsOptions.PROFILE, label: 'Профиль' },
+  [AccountTabsOptions.BONUSES]: { value: AccountTabsOptions.BONUSES, label: 'Бонусы' },
+  [AccountTabsOptions.CURRENT_ORDERS]: { value: AccountTabsOptions.CURRENT_ORDERS, label: 'Текущие заказы' },
+  [AccountTabsOptions.ORDER_HISTORY]: { value: AccountTabsOptions.ORDER_HISTORY, label: 'История заказов' },
+  [AccountTabsOptions.ADDRESSES]: { value: AccountTabsOptions.ADDRESSES, label: 'Мои адреса' },
 };
 
 export enum DeliveryTypeOptions {

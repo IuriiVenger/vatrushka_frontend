@@ -15,7 +15,7 @@ import { ContactLinks } from '@/constants';
 import { TContact, TNavigationLink } from '@/types';
 
 const Footer: FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
 
   const currentYear = new Date().getFullYear();
 
@@ -29,8 +29,8 @@ const Footer: FC = () => {
     'chiefMail'
   >;
 
-  const onClick = () => {
-    setIsModalOpen(true);
+  const onOpenContactUsModal = () => {
+    setIsContactUsModalOpen(true);
   };
 
   return (
@@ -50,7 +50,7 @@ const Footer: FC = () => {
               <LinksList links={secondHalf} />
             </div>
             <div className="order-3 flex flex-col items-end justify-between max-lg:order-2 max-lg:items-center max-lg:gap-6">
-              <Button onClick={onClick} className="w-fit max-md:h-10 max-md:text-base">
+              <Button onClick={onOpenContactUsModal} className="w-fit max-md:h-10 max-md:text-base">
                 Связаться с нами
               </Button>
               <Contacts contacts={contacts} />
@@ -68,7 +68,7 @@ const Footer: FC = () => {
           </Link>
         </div>
       </footer>
-      <ContactUsModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+      <ContactUsModal isOpen={isContactUsModalOpen} setIsOpen={setIsContactUsModalOpen} />
     </>
   );
 };

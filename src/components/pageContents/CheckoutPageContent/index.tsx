@@ -67,7 +67,7 @@ const CheckoutPageContent: FC = () => {
   const [userBonusPoint, setUserBonusPoint] = useState(userInfo.points);
   const [totalSum, setTotalSum] = useState(order.totalPrice);
 
-  const getSegmentedItems = (options: Record<any, TTab>) => Object.values(options).map((option) => option);
+  const getSegmentedItems = (options: Record<string, TTab>) => Object.values(options).map((option) => option);
 
   const deliveryTypeSegmentedItems = getSegmentedItems(deliveryTypeOptions);
   const timeSegmentedItems = getSegmentedItems(deliveryTimeOptions);
@@ -175,7 +175,7 @@ const CheckoutPageContent: FC = () => {
 
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(submitHandler)} className="flex gap-24 max-xl:gap-10 max-lg:flex-col">
-            <div className="flex flex-col gap-10 max-sm:gap-8">
+            <div className="flex max-w-full flex-col gap-10 max-sm:gap-8">
               <div className="flex flex-col gap-4 max-sm:gap-2">
                 <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">
                   Оформление заказа
