@@ -5,6 +5,7 @@ import type { Config } from 'tailwindcss';
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 const spacing = {
+  9.5: '2.375rem',
   13.75: '3.45rem',
   17: '4.375rem',
   18: '4.5rem',

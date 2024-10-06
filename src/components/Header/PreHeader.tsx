@@ -3,14 +3,14 @@
 import { Button } from 'antd';
 import { FC, useState } from 'react';
 
-import { Contacts } from '../Contacts';
+import Contacts from '../Contacts';
 
 import ContactUsModal from '@/components/modals/ContactUsModal';
 import { companyInfo, contactLinks } from '@/config/links';
 import { ContactLinks } from '@/constants';
 import { TContact } from '@/types';
 
-export const PreHeader: FC = () => {
+const PreHeader: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const contacts = Object.fromEntries(
@@ -41,3 +41,5 @@ export const PreHeader: FC = () => {
     </>
   );
 };
+
+export default PreHeader;

@@ -2,8 +2,8 @@ import { Button } from 'antd';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 
-import { Modal } from './Modal';
-import { AuthActionModal } from './ModalSteps/AuthActionModal';
+import Modal from './Modal';
+import AuthActionModal from './ModalSteps/AuthActionModal';
 import ConfirmPhone from './ModalSteps/ConfirmPhone';
 import SignIn from './ModalSteps/SignIn';
 import SignUp from './ModalSteps/SignUp';

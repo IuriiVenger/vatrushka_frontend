@@ -4,11 +4,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useSuccessModal } from '../../hooks/useSuccessModal';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
-import { TextAreaInput } from '@/components/ui/Form/TextArea';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
+import TextAreaInput from '@/components/ui/Form/TextArea';
+import { legalLinks } from '@/config/links';
 import { TModalProps } from '@/types';
 
 type TContactUsModalForm = {
@@ -57,7 +58,8 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
               label="Имя"
               required
               control={control}
-              errors={errors.name}
+              errors={!!errors.name}
+              autoComplete="given-name"
             />
             <Input
               name="phone"
@@ -67,7 +69,8 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
               label="Номер телефона"
               required
               control={control}
-              errors={errors.phone}
+              errors={!!errors.phone}
+              autoComplete="tel"
             />
             <TextAreaInput
               name="message"
@@ -78,12 +81,12 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
               label="Сообщение"
               required
               control={control}
-              errors={errors.message}
+              errors={!!errors.message}
             />
           </div>
           <Checkbox onChange={onChange} checked={isAgree}>
             Я принимаю условия{' '}
-            <a href="123" className="text-link transition-all hover:text-linkHover">
+            <a href={legalLinks.privacyPolicy} className="text-link transition-all hover:text-linkHover">
               Политики конфиденциальности
             </a>
           </Checkbox>
@@ -111,7 +114,8 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
               label="Имя"
               required
               control={control}
-              errors={errors.name}
+              errors={!!errors.name}
+              autoComplete="given-name"
             />
 
             <Input
@@ -122,12 +126,13 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
               label="Номер телефона"
               required
               control={control}
-              errors={errors.phone}
+              errors={!!errors.phone}
+              autoComplete="tel"
             />
           </div>
           <Checkbox onChange={onChange} checked={isAgree}>
             Я принимаю условия{' '}
-            <a href="123" className="text-link transition-all hover:text-linkHover">
+            <a href={legalLinks.privacyPolicy} className="text-link transition-all hover:text-linkHover">
               Политики конфиденциальности
             </a>
           </Checkbox>

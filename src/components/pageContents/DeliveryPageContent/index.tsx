@@ -1,7 +1,6 @@
 import { Breadcrumb, Divider } from 'antd';
 import Link from 'next/link';
 import { FC } from 'react';
-
 import { FiInfo } from 'react-icons/fi';
 
 import deliveryMap from '@/assets/images/delivery_map.png';
@@ -10,8 +9,8 @@ import mc from '@/assets/images/payments/mc.svg';
 import mir from '@/assets/images/payments/mir.svg';
 import visa from '@/assets/images/payments/visa.svg';
 
-import { BranchInfo } from '@/components/BranchInfo';
-import { Accordion } from '@/components/ui/Accordion';
+import BranchInfo from '@/components/BranchInfo';
+import Accordion from '@/components/ui/Accordion';
 import { companyInfo } from '@/config/links';
 
 const DeliveryPageContent: FC = () => {

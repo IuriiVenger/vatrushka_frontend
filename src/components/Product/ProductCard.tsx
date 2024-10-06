@@ -15,7 +15,7 @@ type TProductCardProps = {
   slider?: boolean;
 };
 
-export const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
+const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
   const { pic, name, timing, weight, price, description, inStock, tag } = info;
 
   const { showMessage } = useMessage();
@@ -77,3 +77,5 @@ export const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => 
     </Link>
   );
 };
+
+export default ProductCard;

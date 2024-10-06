@@ -1,9 +1,7 @@
 'use client';
 
 import { Collapse } from 'antd';
-
 import React from 'react';
-
 import { IoIosArrowDown } from 'react-icons/io';
 
 import type { CollapseProps } from 'antd';
@@ -23,7 +21,7 @@ type TAccordionProps = {
   text: ReactNode;
 };
 
-export const Accordion: FC<TAccordionProps> = ({ title, text }) => {
+const Accordion: FC<TAccordionProps> = ({ title, text }) => {
   const panelStyle: React.CSSProperties = {
     border: `solid 1px ${color.border.secondary}`,
     borderRadius: 16,
@@ -45,3 +43,5 @@ export const Accordion: FC<TAccordionProps> = ({ title, text }) => {
     />
   );
 };
+
+export default Accordion;

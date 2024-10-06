@@ -4,12 +4,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useSuccessModal } from '../../hooks/useSuccessModal';
 import CustomImage from '../ui/CustomImage';
-import { Form } from '../ui/Form/Form';
-import { Input } from '../ui/Form/Input';
-import { TextAreaInput } from '../ui/Form/TextArea';
+import Form from '../ui/Form/Form';
+import Input from '../ui/Form/Input';
+import TextAreaInput from '../ui/Form/TextArea';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
+import { legalLinks } from '@/config/links';
 import { CurrencySymbol } from '@/constants';
 import { TModalProps } from '@/types';
 
@@ -84,7 +85,8 @@ const RequestProductModal: FC<TRequestProductModalProps> = (props) => {
           label="Имя"
           required
           control={control}
-          errors={errors.name}
+          errors={!!errors.name}
+          autoComplete="given-name"
         />
         <Input
           name="phone"
@@ -94,7 +96,8 @@ const RequestProductModal: FC<TRequestProductModalProps> = (props) => {
           label="Номер телефона"
           required
           control={control}
-          errors={errors.phone}
+          errors={!!errors.phone}
+          autoComplete="tel"
         />
         <p className="pt-2 text-2xl font-medium leading-2xl max-sm:text-lg max-sm:leading-lg">Дополнительно</p>
         <TextAreaInput
@@ -106,7 +109,7 @@ const RequestProductModal: FC<TRequestProductModalProps> = (props) => {
           inputMode="text"
           label="Сообщение"
           control={control}
-          errors={errors.message}
+          errors={!!errors.message}
         />
         <div className="flex flex-col gap-3 pt-2 max-sm:gap-2">
           <Button
@@ -119,7 +122,7 @@ const RequestProductModal: FC<TRequestProductModalProps> = (props) => {
           </Button>
           <p className="max-sm:text-sm max-sm:leading-sm">
             Нажимая на&nbsp;кнопку вы соглашаетесь с&nbsp;
-            <a href="123" className="underline">
+            <a href={legalLinks.privacyPolicy} className="underline">
               политикой конфиденциальности
             </a>
           </p>

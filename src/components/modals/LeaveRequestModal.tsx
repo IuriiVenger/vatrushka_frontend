@@ -4,10 +4,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useSuccessModal } from '../../hooks/useSuccessModal';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
+import { legalLinks } from '@/config/links';
 import { TModalProps } from '@/types';
 
 type TLeaveRequestModalForm = {
@@ -48,7 +49,8 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             label="Имя"
             required
             control={control}
-            errors={errors.name}
+            errors={!!errors.name}
+            autoComplete="given-name"
           />
           <Input
             name="phone"
@@ -58,7 +60,8 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             label="Номер телефона"
             required
             control={control}
-            errors={errors.phone}
+            errors={!!errors.phone}
+            autoComplete="tel"
           />
           <Input
             name="email"
@@ -68,7 +71,8 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             label="Email"
             required
             control={control}
-            errors={errors.email}
+            errors={!!errors.email}
+            autoComplete="email"
           />
           <div className="flex flex-col gap-4 pt-2 max-sm:pt-0">
             <Button
@@ -82,8 +86,9 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             </Button>
             <p className="max-sm:text-sm max-sm:leading-sm">
               Нажимая кнопку &laquo;Отправить&raquo;, я&nbsp;даю согласие на&nbsp;обработку персональных данных
-              и&nbsp;соглашаюсь&nbsp;с&nbsp;<a href="123">политикой обработки персональных данных</a> и&nbsp;
-              <a href="123">пользовательским соглашением</a>
+              и&nbsp;соглашаюсь&nbsp;с&nbsp;
+              <a href={legalLinks.dataProcessingPolicy}>политикой обработки персональных данных</a> и&nbsp;
+              <a href={legalLinks.termsOfService}>пользовательским соглашением</a>
             </p>
           </div>
         </Form>

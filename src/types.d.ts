@@ -16,11 +16,12 @@ export type TCard = {
   tag?: TagType;
   inStock: boolean;
   href: string;
+  quantity: number;
 };
 
 export type TMenuLevelOneOption = {
   value: string;
-  label: string;
+  label: ReactNode;
   children?: TMenuLevelOneOption[];
 };
 
@@ -107,6 +108,8 @@ export type TAddress = {
 };
 
 export type TUserInfo = {
+  name: string;
+  email: string;
   phone: string;
   addresses: TAddress[];
   points: number;

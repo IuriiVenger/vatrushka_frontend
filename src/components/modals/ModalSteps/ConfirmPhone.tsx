@@ -4,8 +4,8 @@ import { Button } from 'antd';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
 import { companyInfo } from '@/config/links';
 import { AuthModalProcessType } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
@@ -22,7 +22,7 @@ type TConfirmPhoneModalProps = {
   phone: string;
 };
 
-export const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose, phone }) => {
+const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose, phone }) => {
   const [seconds, setSeconds] = useState(60);
   const [isSendingPossible, setIsSendingPossible] = useState(true);
 
@@ -94,7 +94,8 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose
             validate={validate}
             min={0}
             inputMode="numeric"
-            errors={errors.confirmationCode}
+            errors={!!errors.confirmationCode}
+            autoComplete="off"
           />
           {isSendingPossible ? (
             <Button

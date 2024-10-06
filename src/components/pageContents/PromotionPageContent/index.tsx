@@ -3,7 +3,6 @@
 import { Breadcrumb } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { FC } from 'react';
 
 import { API } from '@/api/types';

@@ -2,13 +2,13 @@ import { Checkbox as AntCheckbox, CheckboxProps } from 'antd';
 import { FC } from 'react';
 import { Controller } from 'react-hook-form';
 
-type CustomCheckboxProps = {
+type TCustomCheckboxProps = {
   name: string;
   control: any;
   label: string | React.ReactNode;
 } & CheckboxProps;
 
-export const Checkbox: FC<CustomCheckboxProps> = ({ name, control, label, ...props }) => (
+const Checkbox: FC<TCustomCheckboxProps> = ({ name, control, label, ...props }) => (
   <Controller
     name={name}
     control={control}
@@ -23,3 +23,5 @@ export const Checkbox: FC<CustomCheckboxProps> = ({ name, control, label, ...pro
     )}
   />
 );
+
+export default Checkbox;

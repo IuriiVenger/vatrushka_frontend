@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { FC } from 'react';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
 import { useMessage } from '@/hooks/useMessage';
 import { TModalProps } from '@/types';

@@ -8,7 +8,7 @@ type TBranchInfoProps = {
   businessHours: TBusinessHours;
 };
 
-export const BranchInfo: FC<TBranchInfoProps> = ({ address, phone, businessHours }) => {
+const BranchInfo: FC<TBranchInfoProps> = ({ address, phone, businessHours }) => {
   const days = [
     { label: 'пн-пт', hours: businessHours.weekdays },
     { label: 'сб', hours: businessHours.saturday },
@@ -29,3 +29,5 @@ export const BranchInfo: FC<TBranchInfoProps> = ({ address, phone, businessHours
     </div>
   );
 };
+
+export default BranchInfo;

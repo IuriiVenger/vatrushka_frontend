@@ -4,7 +4,7 @@ import { Breadcrumb } from 'antd';
 import Link from 'next/link';
 import { FC } from 'react';
 
-import { ProductsList } from '../../Product/ProductsList';
+import ProductsList from '../../Product/ProductsList';
 
 import { TCard } from '@/types';
 

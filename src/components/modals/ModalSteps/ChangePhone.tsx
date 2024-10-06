@@ -4,8 +4,8 @@ import { Button } from 'antd';
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '@/components/ui/Form/Form';
-import { Input } from '@/components/ui/Form/Input';
+import Form from '@/components/ui/Form/Form';
+import Input from '@/components/ui/Form/Input';
 
 type TChangePhoneModalForm = {
   phone: string;
@@ -15,7 +15,7 @@ type TChangePhoneModalProps = {
   onChangePhone: (phoneNumber: string) => void;
 };
 
-export const ChangePhone: FC<TChangePhoneModalProps> = ({ onChangePhone }) => {
+const ChangePhone: FC<TChangePhoneModalProps> = ({ onChangePhone }) => {
   const {
     handleSubmit,
     control,
@@ -38,8 +38,9 @@ export const ChangePhone: FC<TChangePhoneModalProps> = ({ onChangePhone }) => {
         inputMode="tel"
         label="Введите новый номер телефона"
         control={control}
-        errors={errors.phone}
+        errors={!!errors.phone}
         required
+        autoComplete="tel"
       />
       <Button
         type="primary"

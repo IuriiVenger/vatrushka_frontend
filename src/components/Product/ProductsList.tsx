@@ -3,9 +3,9 @@
 import { Button } from 'antd';
 import { FC, useMemo, useState } from 'react';
 
-import { Dropdown } from '../ui/Dropdown';
+import Dropdown from '../ui/Dropdown';
 
-import { ProductCard } from './ProductCard';
+import ProductCard from './ProductCard';
 
 import { sortDropdownItems, SortType, SortTypeTranslation } from '@/constants';
 import { TCard } from '@/types';
@@ -19,7 +19,7 @@ type TProductsListProps = {
   loadMoreAvalible?: boolean;
 };
 
-export const ProductsList: FC<TProductsListProps> = (props) => {
+const ProductsList: FC<TProductsListProps> = (props) => {
   const { products, title, onLoadMore, isLoading, loadMoreAvalible } = props;
   const [sort, setSort] = useState<SortType>(SortType.PRICE_ASCENDING);
 
@@ -52,3 +52,5 @@ export const ProductsList: FC<TProductsListProps> = (props) => {
     </div>
   );
 };
+
+export default ProductsList;

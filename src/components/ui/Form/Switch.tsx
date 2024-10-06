@@ -10,7 +10,7 @@ type TSwitchProps = {
   label?: string;
 } & SwitchProps;
 
-export const Switch: FC<TSwitchProps> = ({ name, control, labelClassName, defaultChecked, label, ...props }) => (
+const Switch: FC<TSwitchProps> = ({ name, control, labelClassName, defaultChecked, label, ...props }) => (
   <Controller
     name={name}
     control={control}
@@ -25,3 +25,5 @@ export const Switch: FC<TSwitchProps> = ({ name, control, labelClassName, defaul
     )}
   />
 );
+
+export default Switch;

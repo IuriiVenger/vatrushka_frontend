@@ -1,9 +1,8 @@
 import { Breadcrumb } from 'antd';
 import Link from 'next/link';
-
 import { FC } from 'react';
 
-import { PromotionCard } from '../../PromotionCard';
+import PromotionCard from '../../PromotionCard';
 
 import { API } from '@/api/types';
 

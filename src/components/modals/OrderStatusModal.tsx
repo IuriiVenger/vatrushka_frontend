@@ -1,7 +1,7 @@
 import { Timeline } from 'antd';
 import { FC } from 'react';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 
 import { TModalProps, TOrderStatus } from '@/types';
 

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FC } from 'react';
 
-import { CatalogItem } from './CatalogItem';
+import CatalogItem from './CatalogItem';
 
 import { Categories } from '@/__generated__/graphql';
 
@@ -10,7 +10,7 @@ type TCatalogProps = {
   subCatalogName?: string;
 };
 
-export const Catalog: FC<TCatalogProps> = ({ categories, subCatalogName }) => (
+const Catalog: FC<TCatalogProps> = ({ categories, subCatalogName }) => (
   <div className="mx-auto flex flex-col items-start gap-12 max-lg:gap-8 max-sm:gap-6">
     <h2 className="text-3xl font-medium leading-3xl max-sm:text-2xl max-sm:leading-2xl">
       {subCatalogName ?? 'Каталог продукции'}
@@ -24,3 +24,5 @@ export const Catalog: FC<TCatalogProps> = ({ categories, subCatalogName }) => (
     </div>
   </div>
 );
+
+export default Catalog;

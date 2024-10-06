@@ -2,14 +2,13 @@ import { Button, Checkbox, CheckboxProps, Rate } from 'antd';
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '../ui/Form/Form';
+import Form from '../ui/Form/Form';
+import Input from '../ui/Form/Input';
+import TextAreaInput from '../ui/Form/TextArea';
 
-import { Input } from '../ui/Form/Input';
+import Modal from './Modal';
 
-import { TextAreaInput } from '../ui/Form/TextArea';
-
-import { Modal } from './Modal';
-
+import { legalLinks } from '@/config/links';
 import { useMessage } from '@/hooks/useMessage';
 import { TModalProps } from '@/types';
 
@@ -64,7 +63,8 @@ const FeedbackModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             label="Имя"
             required
             control={control}
-            errors={errors.name}
+            errors={!!errors.name}
+            autoComplete="given-name"
           />
           <Input
             name="phone"
@@ -74,7 +74,8 @@ const FeedbackModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             label="Номер телефона"
             required
             control={control}
-            errors={errors.phone}
+            errors={!!errors.phone}
+            autoComplete="tel"
           />
           <TextAreaInput
             name="message"
@@ -85,7 +86,7 @@ const FeedbackModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             label="Сообщение"
             required
             control={control}
-            errors={errors.message}
+            errors={!!errors.message}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -98,7 +99,7 @@ const FeedbackModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
         </div>
         <Checkbox onChange={onAgree} checked={isAgree} className="max-sm:pt-2">
           Я принимаю условия{' '}
-          <a href="123" className="text-link transition-all hover:text-linkHover">
+          <a href={legalLinks.privacyPolicy} className="text-link transition-all hover:text-linkHover">
             Политики конфиденциальности
           </a>
         </Checkbox>

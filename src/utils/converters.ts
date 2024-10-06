@@ -15,4 +15,5 @@ export const convertCategoryItemsQueryProductsToCards = (categoryItems: Category
     price: node.products.productsizesCollection?.edges.find((product) => product.node.is_default)?.node.price || 0,
     inStock: true,
     href: `/${node.products.categoryitemsCollection?.edges[0].node.categories.slug}/${node.products.slug}`,
+    quantity: 1,
   })) || [];

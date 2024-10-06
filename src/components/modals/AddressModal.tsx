@@ -2,24 +2,22 @@ import { Button, Radio } from 'antd';
 import { FC, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '../ui/Form/Form';
+import Form from '../ui/Form/Form';
+import Input from '../ui/Form/Input';
 
-import { Input } from '../ui/Form/Input';
+import Modal from './Modal';
 
-import { Modal } from './Modal';
-
-import { RadioGroup } from '@/components/ui/Form/Radio';
-import { addressesTypes } from '@/constants';
+import RadioGroup from '@/components/ui/Form/Radio';
+import { addressesTypes, AddressType } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
 import { TAddress, TModalProps } from '@/types';
 
 type TAddressModalForm = {
-  id: string;
   address: string;
   entrance: string;
   floor: string;
   apartment: string;
-  type: string;
+  type: { id: string; value: string };
 };
 
 type TAddressModalProps = TModalProps & {
@@ -32,20 +30,31 @@ const AddressModal: FC<TAddressModalProps> = ({ isOpen, setIsOpen, isEdit = fals
 
   const { showMessage } = useMessage();
 
+  const defaultValues = {
+    address: '',
+    entrance: '',
+    floor: '',
+    apartment: '',
+    type: addressesTypes.flat,
+  };
+
+  const defaultFormData = isEditMode ? { ...address, type: address?.type } : defaultValues;
+
   const {
     handleSubmit,
     control,
     reset,
+    watch,
     formState: { errors, isValid, isDirty },
   } = useForm<TAddressModalForm>({
     mode: 'onChange',
-    ...(isEditMode && {
-      defaultValues: { ...address, type: address?.type.id },
-    }),
+    defaultValues: defaultFormData,
   });
 
+  const addressType = watch('type').id;
+
   const submitHandler: SubmitHandler<TAddressModalForm> = (data) => {
-    console.log('adress', data);
+    console.log('adress', data, 'addressId:', address?.id);
     setIsOpen(false);
     showMessage({ type: 'success', text: `Адрес успешно ${isEditMode ? 'изменен' : 'добавлен'} ` });
   };
@@ -70,7 +79,7 @@ const AddressModal: FC<TAddressModalProps> = ({ isOpen, setIsOpen, isEdit = fals
             label="Адрес (город, улица, номер дома)"
             required
             control={control}
-            errors={errors.address}
+            errors={!!errors.address}
           />
           <div className="grid grid-cols-3 gap-4">
             <Input
@@ -80,7 +89,7 @@ const AddressModal: FC<TAddressModalProps> = ({ isOpen, setIsOpen, isEdit = fals
               inputMode="numeric"
               label="Подъезд"
               control={control}
-              errors={errors.entrance}
+              errors={!!errors.entrance}
               min={0}
               max={100}
             />
@@ -91,7 +100,7 @@ const AddressModal: FC<TAddressModalProps> = ({ isOpen, setIsOpen, isEdit = fals
               inputMode="numeric"
               label="Этаж"
               control={control}
-              errors={errors.floor}
+              errors={!!errors.floor}
               min={0}
               max={100}
             />
@@ -100,14 +109,14 @@ const AddressModal: FC<TAddressModalProps> = ({ isOpen, setIsOpen, isEdit = fals
               type="number"
               placeholder="000"
               inputMode="numeric"
-              label="Квартира"
+              label={addressType === AddressType.OFFICE ? 'Офис' : 'Квартира'}
               control={control}
-              errors={errors.apartment}
+              errors={!!errors.apartment}
               min={0}
               max={10000}
             />
           </div>
-          <RadioGroup name="type" control={control} className="flex flex-col gap-3" required>
+          <RadioGroup name="type.id" control={control} className="flex flex-col gap-3" required>
             {addressTypeOptions.map((type) => (
               <Radio key={type.id} value={type.id}>
                 {type.label}

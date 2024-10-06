@@ -40,8 +40,8 @@ const AddressCard: FC<TAddressCardProps> = ({ address }) => {
             Изменить
           </Button>
           <Button
-            type="text"
-            className="h-6 p-0 text-lg leading-lg text-accent hover:text-accentHover active:text-accentActive max-sm:text-base max-sm:leading-base"
+            type="link"
+            className="h-6 p-0 text-lg leading-lg text-textTertiary hover:text-errorHover active:text-errorActive max-sm:text-base max-sm:leading-base"
             onClick={onDelete}
           >
             Удалить

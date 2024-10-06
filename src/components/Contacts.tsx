@@ -9,7 +9,7 @@ type TContactsProps = {
   className?: string;
 };
 
-export const Contacts: FC<TContactsProps> = ({ contacts, className }) => {
+const Contacts: FC<TContactsProps> = ({ contacts, className }) => {
   const links = Object.values<TContact>(contacts);
 
   return (
@@ -26,3 +26,5 @@ export const Contacts: FC<TContactsProps> = ({ contacts, className }) => {
     </div>
   );
 };
+
+export default Contacts;
