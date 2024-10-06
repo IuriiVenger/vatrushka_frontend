@@ -47,6 +47,10 @@ const AccountPageContent: FC = () => {
     }
   }, [screens.md, paramValue]);
 
+  useEffect(() => {
+    if (paramValue && isValidTabParam(paramValue)) setCurrentTab(paramValue);
+  }, [paramValue]);
+
   const isAuthorized = true;
 
   if (!isAuthorized) return <UnauthorizedScreen />;

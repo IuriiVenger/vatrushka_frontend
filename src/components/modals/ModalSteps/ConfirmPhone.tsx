@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from 'antd';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Form from '@/components/ui/Form/Form';
@@ -16,15 +16,20 @@ type ConfirmPhoneForm = {
   confirmationCode: string;
 };
 
-type TConfirmPhoneModalProps = {
+export type TConfirmPhoneModalProps = {
   processType: AuthModalProcessType | null;
   onClose: () => void;
   phone: string;
+  verifyPhoneOtp: () => Promise<void>;
+  getPhoneOtp: () => Promise<void>;
+  setOtp: Dispatch<SetStateAction<string>>;
 };
 
-const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose, phone }) => {
+export const ConfirmPhone: FC<TConfirmPhoneModalProps> = (props) => {
+  const { processType, onClose, phone, verifyPhoneOtp, getPhoneOtp, setOtp } = props;
   const [seconds, setSeconds] = useState(60);
-  const [isSendingPossible, setIsSendingPossible] = useState(true);
+  const [isSendingPossible, setIsSendingPossible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { showMessage } = useMessage();
 
@@ -50,18 +55,31 @@ const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose, phone
     }
   }, [processType]);
 
-  const submitHandler: SubmitHandler<ConfirmPhoneForm> = (data) => {
-    console.log('code sent', data.confirmationCode);
-    onClose();
-    showMessage({ type: 'success', text: successMessage });
+  const submitHandler: SubmitHandler<ConfirmPhoneForm> = async () => {
+    try {
+      setIsLoading(true);
+      await verifyPhoneOtp();
+      onClose();
+      showMessage({ type: 'success', text: successMessage });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const onUpdateCode = () => {
-    console.log('code sent again to', phone);
+  const onUpdateCode = async () => {
+    try {
+      setIsLoading(true);
+      await getPhoneOtp();
+      showMessage({ type: 'success', text: 'Код отправлен повторно' });
+    } finally {
+      setIsLoading(false);
+    }
+
     setIsSendingPossible(false);
   };
 
   const validate = () => isConfirmationCodeValid(watch('confirmationCode'));
+  const otp = watch('confirmationCode');
 
   useEffect(() => {
     if (isSendingPossible) return;
@@ -81,6 +99,10 @@ const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose, phone
 
     return () => clearInterval(interval);
   }, [isSendingPossible]);
+
+  useEffect(() => {
+    setOtp(otp);
+  }, [otp]);
 
   return (
     <div className="flex flex-col gap-6 text-lg leading-lg max-sm:gap-4 max-sm:text-base max-sm:leading-base">
@@ -123,6 +145,7 @@ const ConfirmPhone: FC<TConfirmPhoneModalProps> = ({ processType, onClose, phone
           className="w-full max-sm:text-base max-sm:leading-base"
           disabled={!isValid || !isDirty}
           htmlType="submit"
+          loading={isLoading}
         >
           Подтвердить
         </Button>

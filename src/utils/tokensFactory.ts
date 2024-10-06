@@ -1,4 +1,5 @@
 // import { auth } from '@/api/auth';
+import { auth } from '@/api/auth';
 import { API } from '@/api/types';
 
 export function setTokens({ access_token, refresh_token }: API.Auth.Tokens) {
@@ -12,8 +13,8 @@ export function deleteTokens() {
   localStorage.removeItem('refresh_token');
 }
 
-// export async function refreshTokens(refreshToken: string) {
-//   const { data } = await auth.refresh.refresh_token(refreshToken);
+export async function refreshTokens(refreshToken: string) {
+  const { data } = await auth.refresh.refresh_token(refreshToken);
 
-//   return data;
-// }
+  return data;
+}

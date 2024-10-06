@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { FC, MouseEventHandler } from 'react';
 
-type TAuthActionModalProps = {
+export type TAuthActionModalProps = {
   onSignIn: MouseEventHandler<HTMLElement>;
   onClose: MouseEventHandler<HTMLElement>;
 };

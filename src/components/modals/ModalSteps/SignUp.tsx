@@ -1,5 +1,7 @@
 import { Button } from 'antd';
-import { Dispatch, FC, SetStateAction, useEffect } from 'react';
+
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Checkbox from '@/components/ui/Form/Checkbox';
@@ -15,31 +17,44 @@ type TSignUpModalForm = {
   getPromotions: boolean;
 };
 
-type TSignUpProps = {
+export type TSignUpProps = {
   setNextStep: () => void;
   setProcessType: Dispatch<SetStateAction<AuthModalProcessType | null>>;
   setPhone: Dispatch<SetStateAction<string>>;
+  getPhoneOtp: () => Promise<void>;
 };
 
-const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone }) => {
+const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone, getPhoneOtp }) => {
   const {
     handleSubmit,
     control,
     formState: { errors, isValid, isDirty },
+    watch,
   } = useForm<TSignUpModalForm>({
     mode: 'onChange',
     defaultValues: { name: '', phone: '', email: null, getPromotions: true },
   });
 
-  const submitHandler: SubmitHandler<TSignUpModalForm> = (data) => {
-    console.log('sign up', data);
-    setPhone(data.phone);
-    setNextStep();
+  const [isPending, setIsPending] = useState(false);
+  const formPhoneValue = watch('phone');
+
+  const submitHandler: SubmitHandler<TSignUpModalForm> = async () => {
+    try {
+      setIsPending(true);
+      await getPhoneOtp();
+      setNextStep();
+    } finally {
+      setIsPending(false);
+    }
   };
 
   useEffect(() => {
     setProcessType(AuthModalProcessType.SIGN_UP);
   }, []);
+
+  useEffect(() => {
+    setPhone(formPhoneValue);
+  }, [formPhoneValue]);
 
   return (
     <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-6 max-sm:gap-4">
@@ -89,6 +104,7 @@ const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone }) => 
           className="w-full max-sm:text-base max-sm:leading-base"
           htmlType="submit"
           disabled={!isValid || !isDirty}
+          loading={isPending}
         >
           Отправить
         </Button>

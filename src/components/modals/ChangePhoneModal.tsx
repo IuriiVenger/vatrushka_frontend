@@ -6,11 +6,15 @@ import Modal from './Modal';
 import ChangePhone from './ModalSteps/ChangePhone';
 import ConfirmPhone from './ModalSteps/ConfirmPhone';
 
+import useAuth from '@/hooks/useAuth';
+import { useAppDispatch } from '@/store';
 import { TModalProps } from '@/types';
 
 const ChangePhoneModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
   const [step, setStep] = useState(0);
-  const [phone, setPhone] = useState('');
+
+  const dispatch = useAppDispatch();
+  const { phone, setPhone, getPhoneOtp, verifyPhoneOtp, setOtp } = useAuth(dispatch);
 
   const firstStep = step === 0;
 
@@ -53,7 +57,14 @@ const ChangePhoneModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
       {firstStep ? (
         <ChangePhone onChangePhone={onChangePhone} />
       ) : (
-        <ConfirmPhone processType={null} onClose={onClose} phone={phone} />
+        <ConfirmPhone
+          processType={null}
+          onClose={onClose}
+          phone={phone}
+          setOtp={setOtp}
+          verifyPhoneOtp={verifyPhoneOtp}
+          getPhoneOtp={getPhoneOtp}
+        />
       )}
     </Modal>
   );

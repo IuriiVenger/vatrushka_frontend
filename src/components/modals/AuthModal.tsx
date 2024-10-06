@@ -3,22 +3,27 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 
 import Modal from './Modal';
-import AuthActionModal from './ModalSteps/AuthActionModal';
-import ConfirmPhone from './ModalSteps/ConfirmPhone';
-import SignIn from './ModalSteps/SignIn';
-import SignUp from './ModalSteps/SignUp';
+import AuthActionModal, { TAuthActionModalProps } from './ModalSteps/AuthActionModal';
+import ConfirmPhone, { TConfirmPhoneModalProps } from './ModalSteps/ConfirmPhone';
+import SignIn, { TSignInModalProps } from './ModalSteps/SignIn';
+import SignUp, { TSignUpProps } from './ModalSteps/SignUp';
 
 import { AuthModalProcessType, AuthModalSteps } from '@/constants';
+import useAuth from '@/hooks/useAuth';
+import { useAppDispatch } from '@/store';
 import { TModalProps } from '@/types';
 
 type TAuthModalProps = TModalProps & {
   firstStep?: AuthModalSteps;
 };
+type TAuthModalStepsProps = TAuthActionModalProps & TConfirmPhoneModalProps & TSignInModalProps & TSignUpProps;
 
 const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = AuthModalSteps.AUTH_ACTION }) => {
   const [step, setStep] = useState<AuthModalSteps>(firstStep);
   const [processType, setProcessType] = useState<AuthModalProcessType | null>(null);
-  const [phone, setPhone] = useState('');
+  const dispatch = useAppDispatch();
+
+  const { phone, setPhone, getPhoneOtp, verifyPhoneOtp, setOtp } = useAuth(dispatch);
 
   const title = useMemo(() => {
     switch (step) {
@@ -60,6 +65,30 @@ const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = AuthMod
     setNextStep();
   };
 
+  const stepsProps: TAuthModalStepsProps = {
+    processType,
+    setProcessType,
+    setStep,
+    setPhone,
+    onClose,
+    phone,
+    onSignIn,
+    setNextStep,
+    getPhoneOtp,
+    verifyPhoneOtp,
+    setOtp,
+  };
+
+  const stepsMap = useMemo(
+    () => ({
+      [AuthModalSteps.AUTH_ACTION]: <AuthActionModal {...stepsProps} />,
+      [AuthModalSteps.SIGN_IN]: <SignIn {...stepsProps} />,
+      [AuthModalSteps.SIGN_UP]: <SignUp {...stepsProps} />,
+      [AuthModalSteps.CONFIRM_PHONE]: <ConfirmPhone {...stepsProps} />,
+    }),
+    [stepsProps],
+  );
+
   useEffect(() => {
     setStep(firstStep);
     setProcessType(null);
@@ -87,16 +116,7 @@ const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = AuthMod
       setIsOpen={setIsOpen}
       width="small"
     >
-      {step === AuthModalSteps.AUTH_ACTION && <AuthActionModal onSignIn={onSignIn} onClose={onClose} />}
-      {step === AuthModalSteps.SIGN_IN && (
-        <SignIn setProcessType={setProcessType} setStep={setStep} setPhone={setPhone} />
-      )}
-      {step === AuthModalSteps.SIGN_UP && (
-        <SignUp setProcessType={setProcessType} setNextStep={setNextStep} setPhone={setPhone} />
-      )}
-      {step === AuthModalSteps.CONFIRM_PHONE && (
-        <ConfirmPhone processType={processType} onClose={onClose} phone={phone} />
-      )}
+      {stepsMap[step]}
     </Modal>
   );
 };
