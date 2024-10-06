@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    API_URL: process.env.API_URL,
+    GRAPHQL_API_URL: process.env.GRAPHQL_API_URL,
+    REST_API_URL: process.env.REST_API_URL,
     API_KEY: process.env.API_KEY,
     IMAGE_CDN: process.env.IMAGE_CDN,
   },

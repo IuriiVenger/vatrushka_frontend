@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 
-import { Dispatch, FC, SetStateAction, useEffect } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Form } from '@/components/ui/Form/Form';
@@ -11,25 +11,34 @@ type TSignInForm = {
   phone: string;
 };
 
-type TSignInModalProps = {
+export type TSignInModalProps = {
   setProcessType: Dispatch<SetStateAction<AuthModalProcessType | null>>;
   setStep: Dispatch<SetStateAction<number>>;
   setPhone: Dispatch<SetStateAction<string>>;
+  getPhoneOtp: () => Promise<void>;
 };
 
-const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone }) => {
+const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone, getPhoneOtp }) => {
   const {
     handleSubmit,
     control,
     formState: { errors, isValid, isDirty },
+    watch,
   } = useForm<TSignInForm>({
     mode: 'onChange',
   });
+  const [isPending, setIsPending] = useState(false);
 
-  const submitHandler: SubmitHandler<TSignInForm> = (data) => {
-    setPhone(data.phone);
-    setStep(AuthModalSteps.CONFIRM_PHONE);
-    console.log('code sent to', data.phone);
+  const formPhoneValue = watch('phone');
+
+  const submitHandler: SubmitHandler<TSignInForm> = async () => {
+    try {
+      setIsPending(true);
+      await getPhoneOtp();
+      setStep(AuthModalSteps.CONFIRM_PHONE);
+    } finally {
+      setIsPending(false);
+    }
   };
 
   const onSignUp = () => {
@@ -39,6 +48,10 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone }) =>
   useEffect(() => {
     setProcessType(AuthModalProcessType.SIGN_IN);
   }, []);
+
+  useEffect(() => {
+    setPhone(formPhoneValue);
+  }, [formPhoneValue]);
 
   return (
     <div className="flex flex-col gap-6 text-lg leading-lg max-sm:gap-4 max-sm:text-base max-sm:leading-base ">
@@ -69,6 +82,7 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone }) =>
           className="w-full max-sm:text-base max-sm:leading-base"
           htmlType="submit"
           disabled={!isValid || !isDirty}
+          loading={isPending}
         >
           Войти
         </Button>

@@ -38,60 +38,51 @@ export namespace API {
   }
 
   export namespace Auth {
-    export namespace SignUp {
-      export type Identity = {
-        identity_id: string;
-        id: string;
-        user_id: string;
-        identity_data: {
-          email: string;
-          email_verified: boolean;
-          phone_verified: boolean;
-          sub: string;
-        };
-        provider: string;
-        last_sign_in_at: string;
-        created_at: string;
-        updated_at: string;
-        email: string;
-      };
+    export type Me = User;
 
-      export type UserMetadata = {
-        email: string;
-        email_verified: boolean;
-        phone_verified: boolean;
-        sub: string;
-      };
-
-      export type AppMetadata = {
-        provider: string;
-        providers: string[];
-      };
-      export type Response = {
-        id: string;
-        aud: string;
-        role: string;
-        email: string;
+    export namespace Telegram {
+      export interface Signin {
+        tg_id: number;
+        hash: string;
+        init_data_raw: string;
+      }
+      export interface Signup {
         phone: string;
-        confirmation_sent_at: string;
-        app_metadata: AppMetadata;
-        user_metadata: UserMetadata;
-        identities: Identity[];
-        created_at: string;
-        updated_at: string;
-        is_anonymous: boolean;
-      };
+        tg_id: number;
+        first_name: string;
+        last_name?: string;
+        hash: string;
+        init_data_raw: string;
+      }
     }
 
-    export type Tokens = {
+    export interface Tokens {
       access_token: string;
       refresh_token: string;
-    };
+    }
+    export interface UserData {
+      id: number;
+      created_at: string;
+      user_id: string;
+      kyc_status: KYCStatuses;
+      kyc_date: string;
+      turnover_limit?: number;
+      default_fiat: string;
+      total_turnover: {
+        onramp: number;
+        offramp: number;
+        total: number;
+      };
+    }
+    export interface SupabaseGetSessionResponse {
+      session?: Tokens;
+      user?: User;
+      error?: string;
+    }
 
-    export type SupabaseGetSessionResponse = {
-      access_token: string;
-      refresh_token: string;
-    };
+    export namespace VerifyOtp {
+      export type Response = { access_token: string; refresh_token: string; user: User; error?: string };
+    }
   }
 
   export namespace Categories {

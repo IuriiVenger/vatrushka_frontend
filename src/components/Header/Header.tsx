@@ -3,7 +3,7 @@
 import { MenuProps, Dropdown, Badge, message } from 'antd';
 import Link from 'next/link';
 import { FC } from 'react';
-import { FaRegUser } from 'react-icons/fa';
+
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { LuShoppingCart } from 'react-icons/lu';
 
@@ -12,11 +12,12 @@ import logo from '../../assets/images/logo_full.svg';
 import { CartList } from './HeaderComponents/CartList';
 import { Menu } from './HeaderComponents/Menu';
 import { Search } from './HeaderComponents/Search';
-import { UserInfo } from './HeaderComponents/UserInfo';
+
+import UserMenu from './HeaderComponents/UserMenu';
 import { PreHeader } from './PreHeader';
 
 import { color } from '@/config/variables';
-import { AccountTabs } from '@/constants';
+
 import { cartList } from '@/mocks';
 
 export type TMenuItem = Required<MenuProps>['items'][number];
@@ -25,21 +26,6 @@ export const Header: FC = () => {
   const onClick: MenuProps['onClick'] = ({ key }) => {
     message.info(`Click on item ${key}`);
   };
-
-  const userItems: TMenuItem[] = [
-    {
-      label: <UserInfo user={{ name: 'Иван Иванов', phone: '+7 (912) 555-88-99', email: 'ivanov.ivan.22@mail.ru' }} />,
-      key: 'info',
-      type: 'group',
-    },
-    { type: 'divider' },
-    { label: <Link href={`/account/${AccountTabs.PROFILE}`}>Профиль</Link>, key: 'profile' },
-    { label: <Link href={`/account/${AccountTabs.CURRENT_ORDERS}`}>Текущие заказы</Link>, key: 'currentOrders' },
-    { label: <Link href={`/account/${AccountTabs.ORDER_HISTORY}`}>История заказов</Link>, key: 'ordersHistory' },
-    { label: <Link href={`/account/${AccountTabs.ADDRESSES}`}>Мои адреса</Link>, key: 'addresses' },
-    { type: 'divider' },
-    { label: 'Выйти из аккаунта', key: 'logOut' },
-  ];
 
   const cartItems: TMenuItem[] = [
     {
@@ -62,14 +48,7 @@ export const Header: FC = () => {
         <Menu />
         <div className="flex items-center gap-8 max-md:gap-4">
           <Search />
-          <Dropdown
-            menu={{ items: userItems, onClick }}
-            trigger={['click']}
-            placement="bottomRight"
-            overlayClassName="pt-2 w-60"
-          >
-            <FaRegUser className="h-6 w-4 cursor-pointer text-textTertiary transition-all hover:text-textQuaternary max-lg:h-5 max-lg:w-5" />
-          </Dropdown>
+          <UserMenu />
           <Dropdown
             menu={{ items: cartItems, onClick }}
             trigger={['click']}
