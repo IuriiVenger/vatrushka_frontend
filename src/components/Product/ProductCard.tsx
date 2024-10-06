@@ -27,7 +27,7 @@ const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
 
   return (
     <Link
-      className={`relative flex h-full cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-t-lg ${slider ? 'mx-3 max-md:mx-2' : 'w-full'} `}
+      className={`relative flex cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-t-lg ${slider ? 'mx-3 max-md:mx-2' : 'w-full'} `}
       href={info.href}
     >
       {tag && (
