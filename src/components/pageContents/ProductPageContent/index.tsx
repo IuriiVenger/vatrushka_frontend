@@ -266,7 +266,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
             <p className="pt-8 text-3xl font-medium leading-3xl  max-sm:pt-6">
               {totalPrice} {CurrencySymbol.RUB}
             </p>
-            <div className="flex gap-6 py-6">
+            <div className="flex gap-6 py-6 max-xs:grid max-xs:grid-cols-2">
               <StepperButton count={amount} setCount={setAmount} minValue={1} />
               <Button type="primary" className="w-max max-xs:w-full" onClick={onOrderButtonClick}>
                 Заказать

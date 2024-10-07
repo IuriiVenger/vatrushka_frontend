@@ -1,7 +1,7 @@
 'use client';
 
 import { Alert, Button, Divider } from 'antd';
-import { FC, useState } from 'react';
+import { FC, Fragment, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoIosArrowForward } from 'react-icons/io';
 
@@ -63,10 +63,10 @@ const CartPageContent: FC = () => {
           </div>
           <div className="flex flex-col">
             {products.slice(0, 2).map((product, index) => (
-              <>
+              <Fragment key={product.id}>
                 {index !== 0 && <Divider />}
                 <ItemCard key={product.id} card={product} />
-              </>
+              </Fragment>
             ))}
           </div>
         </div>

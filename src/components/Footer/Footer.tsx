@@ -39,7 +39,7 @@ const Footer: FC = () => {
         <div className="mx-auto max-w-320 gap-12 px-9 pt-9 max-xs:max-w-82 max-xs:gap-6 max-xs:px-0">
           <div className="flex justify-between text-text max-lg:flex-col max-lg:flex-wrap max-lg:justify-around max-lg:gap-6">
             <div className="order-1 flex flex-col justify-between max-lg:items-center max-lg:gap-6">
-              <img alt="1" src={logo.src} className="h-13.75 w-45" />
+              <img alt="1" src={logo.src} className="h-14 w-45" />
               <div className="flex flex-col justify-between gap-2 max-lg:items-center">
                 <p className="text-xl font-medium leading-xl">{companyInfo.mainPhone}</p>
                 <p className="text-nowrap">Доставка ежедневно с 8:00 до 20:00</p>
