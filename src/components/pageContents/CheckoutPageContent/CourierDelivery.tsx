@@ -9,6 +9,7 @@ import Input from '@/components/ui/Form/Input';
 import RadioGroup from '@/components/ui/Form/Radio';
 import Map from '@/components/ui/Map';
 import { addressesTypes, AddressType } from '@/constants';
+import { userInfo } from '@/mocks';
 
 const CourierDelivery: FC = () => {
   const [isAddressesModalOpen, setIsAddressesModalOpen] = useState(false);
@@ -28,14 +29,19 @@ const CourierDelivery: FC = () => {
     setIsAddressesModalOpen(true);
   };
 
+  // TODO: fix
+  const isLoggedIn = true;
+
   return (
     <>
       <div className="flex flex-col gap-8">
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Адрес доставки</h3>
-          <Button type="link" onClick={onClick} className="h-6 p-0">
-            Мои адреса
-          </Button>
+          {isLoggedIn && userInfo.addresses.length && (
+            <Button type="link" onClick={onClick} className="h-6 p-0">
+              Мои адреса
+            </Button>
+          )}
         </div>
         <Map placemarks={[]} width="100%" inputAddress={inputAddress.address} />
         <div className="flex flex-col gap-4">

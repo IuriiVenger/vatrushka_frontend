@@ -40,6 +40,7 @@ const CartPageContent: FC = () => {
     console.log('onCheckPromoCode:', data);
   };
 
+  // TODO: fix
   const isLoggedIn = true;
 
   const onContinue = () => {
@@ -72,7 +73,7 @@ const CartPageContent: FC = () => {
         </div>
         <Divider className="hidden max-sm:block" />
 
-        <div className="flex h-max min-w-96 flex-col gap-6 rounded-2xl border border-borderSecondary p-6 max-xl:min-w-min max-xl:max-w-72 max-lg:grid max-lg:max-w-full max-lg:grid-cols-2 max-lg:flex-row max-lg:items-end max-sm:flex max-sm:w-full max-sm:flex-col max-sm:gap-4 max-sm:border-none max-sm:p-0">
+        <div className="sticky right-0 top-6 flex h-max min-w-96 flex-col gap-6 rounded-2xl border border-borderSecondary p-6 max-xl:min-w-min max-xl:max-w-72 max-lg:static max-lg:grid max-lg:max-w-full max-lg:grid-cols-2 max-lg:flex-row max-lg:items-end max-sm:flex max-sm:w-full max-sm:flex-col max-sm:gap-4 max-sm:border-none max-sm:p-0">
           <div className="flex w-full flex-col gap-6 max-sm:gap-4">
             <h2 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Сумма заказа</h2>
             <div className="flex flex-col gap-2 max-sm:gap-1">

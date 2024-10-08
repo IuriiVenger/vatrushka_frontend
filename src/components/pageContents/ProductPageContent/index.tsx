@@ -143,9 +143,9 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     name: product.name,
     description: product.short_description || '',
     price: product.price || 0,
-    // fix type TCard
+    // TODO: fix type TCard
     quantity: 1,
-    // fix inStock after adding it to the API
+    // TODO: fix inStock after adding it to the API
     inStock: true,
     href: `/${product.category.slug}/${product.slug}`,
   }));

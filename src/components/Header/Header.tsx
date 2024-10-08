@@ -47,9 +47,18 @@ const initialState: TMenuState = {
   isMobileSearchOpen: false,
 };
 
+const updateRootPosition = (shouldSetRelative: boolean) => {
+  const root: HTMLElement | null = document.querySelector('.ant-app');
+
+  if (root) {
+    root.style.position = shouldSetRelative ? 'fixed' : '';
+  }
+};
+
 const menuReducer = (state: TMenuState, action: TMenuAction): TMenuState => {
   switch (action.type) {
     case 'TOGGLE_MENU':
+      updateRootPosition(action.payload);
       return {
         ...state,
         isMobileMenuOpen: action.payload,
@@ -59,6 +68,7 @@ const menuReducer = (state: TMenuState, action: TMenuAction): TMenuState => {
     case 'TOGGLE_SUB_MENU':
       return { ...state, isSubMenuOpen: action.payload };
     case 'TOGGLE_SEARCH':
+      updateRootPosition(action.payload);
       return {
         ...state,
         isMobileSearchOpen: action.payload,
@@ -66,6 +76,7 @@ const menuReducer = (state: TMenuState, action: TMenuAction): TMenuState => {
         isSubMenuOpen: action.payload ? false : state.isSubMenuOpen,
       };
     case 'CLOSE_ALL':
+      updateRootPosition(false);
       return {
         isMobileMenuOpen: false,
         isSubMenuOpen: false,
@@ -113,7 +124,7 @@ export const Header: FC = () => {
               className="hidden w-min pl-0 text-textTertiary transition-all hover:text-textQuaternary max-lg:block"
               icon={isMobileMenuOpen ? <RxCross2 className="h-6 w-6" /> : <HiOutlineMenuAlt2 className="h-6 w-6" />}
             />
-            <Link href="/">
+            <Link href="/" onClick={onCloseAll}>
               <img alt="logo" src={logo.src} className="h-14 w-45 max-md:h-10 max-md:w-32" />
             </Link>
           </div>
