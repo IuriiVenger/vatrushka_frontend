@@ -6,29 +6,25 @@ import React, { FC } from 'react';
 
 type TCarouselProps = {
   slides: string[];
-  product?: boolean;
 };
 
-const PromoCarousel: FC<TCarouselProps> = ({ slides, product }) => (
+const PromoCarousel: FC<TCarouselProps> = ({ slides }) => (
   <section className="custom grid grid-cols-1">
     <AntCarousel
       autoplay
       arrows
       adaptiveHeight
       pauseOnHover
-      className={`max-md:no-arrows box-content h-full w-full max-w-300 max-xs:max-w-82 ${product ? 'aspect-6/2' : 'aspect-21/9 max-sm:aspect-square'}`}
+      className="max-md:no-arrows box-content aspect-21/9 h-full w-full max-w-300 max-xs:max-w-82"
     >
       {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={`h-full max-w-320 rounded-3xl max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
-        >
+        <div key={index} className="aspect-21/9 h-full max-w-320 rounded-3xl max-xs:max-w-82">
           <Image
             width={1200}
             height={514}
             alt={slide}
             src={slide}
-            className={`w-1200 rounded-3xl object-cover object-center max-xs:max-w-82 ${product ? 'aspect-3/2' : 'aspect-21/9 max-sm:aspect-square'}`}
+            className="w-1200 aspect-21/9 rounded-3xl object-cover object-center max-xs:max-w-82"
           />
         </div>
       ))}
