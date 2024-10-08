@@ -47,11 +47,14 @@ const initialState: TMenuState = {
   isMobileSearchOpen: false,
 };
 
-const updateRootPosition = (shouldSetRelative: boolean) => {
+const updateRootPosition = (shouldSetFixed: boolean) => {
   const root: HTMLElement | null = document.querySelector('.ant-app');
 
   if (root) {
-    root.style.position = shouldSetRelative ? 'relative' : '';
+    root.style.position = shouldSetFixed ? 'fixed' : '';
+    root.style.top = shouldSetFixed ? '0' : '';
+    root.style.left = shouldSetFixed ? '0' : '';
+    root.style.right = shouldSetFixed ? '0' : '';
   }
 };
 
