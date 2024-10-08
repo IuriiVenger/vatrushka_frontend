@@ -1,10 +1,8 @@
 import { Drawer, Button, Divider } from 'antd';
 import Link from 'next/link';
-import { Dispatch, FC, useState } from 'react';
+import { useState } from 'react';
 import { FaPhone } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
-
-import { TMenuAction } from '../Header';
 
 import SubMenuDrawer from './SubMenuDrawer';
 
@@ -12,6 +10,9 @@ import Contacts from '@/components/Contacts';
 import ContactUsModal from '@/components/modals/ContactUsModal';
 import { companyInfo, contactLinks, navigationLinks } from '@/config/links';
 import { ContactLinks, NavigationLinks } from '@/constants';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { selectUI } from '@/store/selectors';
+import { resetAll, toggleMenu, toggleSubMenu } from '@/store/slices/ui';
 import { TContact, TNavigationLink } from '@/types';
 
 const menuItems = Object.entries(navigationLinks).reduce<TNavigationLink[]>((acc, [key, value]) => {
@@ -25,33 +26,30 @@ const contacts = Object.fromEntries(
   Object.entries(contactLinks).filter(([key]) => key !== 'mail' && key !== 'chiefMail'),
 ) as Omit<Record<ContactLinks, TContact>, 'mail' | 'chiefMail'>;
 
-type TMenuDrawerProps = {
-  isMobileMenuOpen: boolean;
-  isSubMenuOpen: boolean;
-  dispatchMenuState: Dispatch<TMenuAction>;
-};
-
-const MenuDrawer: FC<TMenuDrawerProps> = ({ isMobileMenuOpen, isSubMenuOpen, dispatchMenuState }) => {
+const MenuDrawer = () => {
   const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const { isMenuOpened, isSubMenuOpened } = useAppSelector(selectUI);
 
   const onOpenContactUsModal = () => {
     setIsContactUsModalOpen(true);
   };
 
   const onCloseMenu = () => {
-    dispatchMenuState({ type: 'TOGGLE_MENU', payload: false });
+    dispatch(toggleMenu(false));
   };
 
   const onOpenSubMenu = () => {
-    dispatchMenuState({ type: 'TOGGLE_SUB_MENU', payload: true });
+    dispatch(toggleSubMenu(true));
   };
 
   const onCloseSubMenu = () => {
-    dispatchMenuState({ type: 'TOGGLE_SUB_MENU', payload: false });
+    dispatch(toggleSubMenu(false));
   };
 
   const onCloseAll = () => {
-    dispatchMenuState({ type: 'CLOSE_ALL' });
+    dispatch(resetAll());
   };
 
   return (
@@ -61,7 +59,7 @@ const MenuDrawer: FC<TMenuDrawerProps> = ({ isMobileMenuOpen, isSubMenuOpen, dis
         width="100vw"
         onClose={onCloseMenu}
         closeIcon={null}
-        open={isMobileMenuOpen}
+        open={isMenuOpened}
         className="top-44 flex w-full pt-2 text-lg leading-lg max-md:top-36 max-sm:top-24 max-sm:text-base max-sm:leading-base"
         rootClassName="max-lg:block hidden max-sm:top-24 max-md:top-36 top-44 absolute"
       >
@@ -101,7 +99,7 @@ const MenuDrawer: FC<TMenuDrawerProps> = ({ isMobileMenuOpen, isSubMenuOpen, dis
             Связаться с нами
           </Button>
         </div>
-        <SubMenuDrawer isSubMenuOpen={isSubMenuOpen} onCloseSubMenu={onCloseSubMenu} onCloseAll={onCloseAll} />
+        <SubMenuDrawer isSubMenuOpened={isSubMenuOpened} onCloseSubMenu={onCloseSubMenu} onCloseAll={onCloseAll} />
       </Drawer>
       <ContactUsModal isOpen={isContactUsModalOpen} setIsOpen={setIsContactUsModalOpen} />
     </>

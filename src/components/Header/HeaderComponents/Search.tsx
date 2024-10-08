@@ -1,27 +1,26 @@
 'use client';
 
 import { AutoComplete, AutoCompleteProps, Button, Divider, Drawer } from 'antd';
-import { ChangeEvent, Dispatch, FC, Fragment, useEffect, useState } from 'react';
+import { ChangeEvent, FC, Fragment, useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { RxCross2 } from 'react-icons/rx';
-
-import { TMenuAction } from '../Header';
 
 import DropdownListItem from './DropdownListItem';
 
 import SearchInput from '@/components/ui/SearchInput';
 import useDebounce from '@/hooks/useDebounce';
 import { cartList } from '@/mocks';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { selectUI } from '@/store/selectors';
+import { toggleSearch } from '@/store/slices/ui';
 import { TCartListItem } from '@/types';
 
-type TSearchProps = {
-  isMobileSearchOpen: boolean;
-  dispatchMenuState: Dispatch<TMenuAction>;
-};
-
-const Search: FC<TSearchProps> = ({ isMobileSearchOpen, dispatchMenuState }) => {
+const Search: FC = () => {
   const [options, setOptions] = useState<TCartListItem[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
+
+  const dispatch = useAppDispatch();
+  const { isMobileSearchOpened } = useAppSelector(selectUI);
 
   const debouncedSearch = useDebounce<string>(searchValue);
 
@@ -43,11 +42,11 @@ const Search: FC<TSearchProps> = ({ isMobileSearchOpen, dispatchMenuState }) => 
   };
 
   const onSearchButtonClick = () => {
-    dispatchMenuState({ type: 'TOGGLE_SEARCH', payload: !isMobileSearchOpen });
+    dispatch(toggleSearch(!isMobileSearchOpened));
   };
 
   const onMobileSearchClose = () => {
-    dispatchMenuState({ type: 'TOGGLE_SEARCH', payload: false });
+    dispatch(toggleSearch(false));
   };
 
   useEffect(() => {
@@ -62,7 +61,7 @@ const Search: FC<TSearchProps> = ({ isMobileSearchOpen, dispatchMenuState }) => 
         type="link"
         onClick={onSearchButtonClick}
         className="hidden w-min pl-0 text-textTertiary transition-all hover:text-textQuaternary max-sm:block"
-        icon={isMobileSearchOpen ? <RxCross2 className="h-6 min-w-6" /> : <IoSearch className="h-6 min-w-6" />}
+        icon={isMobileSearchOpened ? <RxCross2 className="h-6 min-w-6" /> : <IoSearch className="h-6 min-w-6" />}
       />
       <AutoComplete
         options={dropdownOptions}
@@ -75,7 +74,7 @@ const Search: FC<TSearchProps> = ({ isMobileSearchOpen, dispatchMenuState }) => 
         width="100vw"
         closable={false}
         onClose={onMobileSearchClose}
-        open={isMobileSearchOpen}
+        open={isMobileSearchOpened}
         placement="left"
         className="top-44 h-auto max-h-[72vh] pb-6 max-md:top-36 max-sm:top-24"
         rootClassName="max-sm:top-24 max-md:top-36 top-44 absolute"

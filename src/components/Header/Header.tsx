@@ -2,7 +2,7 @@
 
 import { MenuProps, Dropdown, Badge, Button, Grid } from 'antd';
 import Link from 'next/link';
-import { FC, useEffect, useReducer } from 'react';
+import { FC, useEffect } from 'react';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { LuShoppingCart } from 'react-icons/lu';
 import { RxCross2 } from 'react-icons/rx';
@@ -18,6 +18,9 @@ import PreHeader from './PreHeader';
 
 import { color } from '@/config/variables';
 import { cartList } from '@/mocks';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { selectUI } from '@/store/selectors';
+import { toggleMenu, toggleSearch, resetAll } from '@/store/slices/ui';
 
 export type TMenuItem = Required<MenuProps>['items'][number];
 
@@ -29,89 +32,28 @@ const cartItems: TMenuItem[] = [
   },
 ];
 
-type TMenuState = {
-  isMobileMenuOpen: boolean;
-  isSubMenuOpen: boolean;
-  isMobileSearchOpen: boolean;
-};
-
-export type TMenuAction =
-  | { type: 'TOGGLE_MENU'; payload: boolean }
-  | { type: 'TOGGLE_SUB_MENU'; payload: boolean }
-  | { type: 'TOGGLE_SEARCH'; payload: boolean }
-  | { type: 'CLOSE_ALL' };
-
-const initialState: TMenuState = {
-  isMobileMenuOpen: false,
-  isSubMenuOpen: false,
-  isMobileSearchOpen: false,
-};
-
-const updateRootPosition = (shouldSetFixed: boolean) => {
-  const root: HTMLElement | null = document.querySelector('.ant-app');
-
-  if (root) {
-    root.style.position = shouldSetFixed ? 'fixed' : '';
-    root.style.top = shouldSetFixed ? '0' : '';
-    root.style.left = shouldSetFixed ? '0' : '';
-    root.style.right = shouldSetFixed ? '0' : '';
-  }
-};
-
-const menuReducer = (state: TMenuState, action: TMenuAction): TMenuState => {
-  switch (action.type) {
-    case 'TOGGLE_MENU':
-      updateRootPosition(action.payload);
-      return {
-        ...state,
-        isMobileMenuOpen: action.payload,
-        isSubMenuOpen: false,
-        isMobileSearchOpen: action.payload ? false : state.isMobileSearchOpen,
-      };
-    case 'TOGGLE_SUB_MENU':
-      return { ...state, isSubMenuOpen: action.payload };
-    case 'TOGGLE_SEARCH':
-      updateRootPosition(action.payload);
-      return {
-        ...state,
-        isMobileSearchOpen: action.payload,
-        isMobileMenuOpen: action.payload ? false : state.isMobileMenuOpen,
-        isSubMenuOpen: action.payload ? false : state.isSubMenuOpen,
-      };
-    case 'CLOSE_ALL':
-      updateRootPosition(false);
-      return {
-        isMobileMenuOpen: false,
-        isSubMenuOpen: false,
-        isMobileSearchOpen: false,
-      };
-    default:
-      return state;
-  }
-};
-
 const Header: FC = () => {
-  const [menuState, dispatchMenuState] = useReducer(menuReducer, initialState);
-  const { isMobileMenuOpen, isSubMenuOpen, isMobileSearchOpen } = menuState;
-
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
+  const dispatch = useAppDispatch();
+  const { isMenuOpened } = useAppSelector(selectUI);
+
   const onBurgerButtonClick = () => {
-    dispatchMenuState({ type: 'TOGGLE_MENU', payload: !isMobileMenuOpen });
+    dispatch(toggleMenu(!isMenuOpened));
   };
 
   const onCloseAll = () => {
-    dispatchMenuState({ type: 'CLOSE_ALL' });
+    dispatch(resetAll());
   };
 
   useEffect(() => {
     if (screens.xl) {
-      dispatchMenuState({ type: 'TOGGLE_MENU', payload: false });
+      dispatch(toggleMenu(false));
     }
 
     if (screens.md) {
-      dispatchMenuState({ type: 'TOGGLE_SEARCH', payload: false });
+      dispatch(toggleSearch(false));
     }
   }, [screens]);
 
@@ -125,7 +67,7 @@ const Header: FC = () => {
               type="link"
               onClick={onBurgerButtonClick}
               className="hidden w-min pl-0 text-textTertiary transition-all hover:text-textQuaternary max-lg:block"
-              icon={isMobileMenuOpen ? <RxCross2 className="h-6 w-6" /> : <HiOutlineMenuAlt2 className="h-6 w-6" />}
+              icon={isMenuOpened ? <RxCross2 className="h-6 w-6" /> : <HiOutlineMenuAlt2 className="h-6 w-6" />}
             />
             <Link href="/" onClick={onCloseAll}>
               <img alt="logo" src={logo.src} className="h-14 w-45 max-md:h-10 max-md:w-32" />
@@ -133,7 +75,7 @@ const Header: FC = () => {
           </div>
           <Menu />
           <div className="flex w-full items-center justify-end gap-8 max-md:gap-4">
-            <Search isMobileSearchOpen={isMobileSearchOpen} dispatchMenuState={dispatchMenuState} />
+            <Search />
             <UserMenu onCloseAll={onCloseAll} />
             <Dropdown
               menu={{ items: cartItems }}
@@ -149,11 +91,7 @@ const Header: FC = () => {
           </div>
         </div>
       </header>
-      <MenuDrawer
-        isSubMenuOpen={isSubMenuOpen}
-        isMobileMenuOpen={isMobileMenuOpen}
-        dispatchMenuState={dispatchMenuState}
-      />
+      <MenuDrawer />
     </>
   );
 };

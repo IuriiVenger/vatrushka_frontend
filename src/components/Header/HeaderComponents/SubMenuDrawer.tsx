@@ -6,16 +6,16 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { catalogOptions } from '@/mocks';
 
 type TSubMenuDrawerProps = {
-  isSubMenuOpen: boolean;
+  isSubMenuOpened: boolean;
   onCloseSubMenu: () => void;
   onCloseAll: () => void;
 };
 
-const SubMenuDrawer: FC<TSubMenuDrawerProps> = ({ isSubMenuOpen, onCloseSubMenu, onCloseAll }) => (
+const SubMenuDrawer: FC<TSubMenuDrawerProps> = ({ isSubMenuOpened, onCloseSubMenu, onCloseAll }) => (
   <Drawer
     width="100vw"
     closable={false}
-    open={isSubMenuOpen}
+    open={isSubMenuOpened}
     placement="left"
     className="top-44 max-md:top-36 max-sm:top-24"
     rootClassName="max-sm:top-24 max-md:top-36 top-44 absolute"
