@@ -50,7 +50,7 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
       products={products}
       isLoading={isProductsPending}
       loadMoreProducts={loadMoreProducts}
-      loadMoreAvalible={!categoryProducts.meta?.isLastPage}
+      loadMoreAvailable={!categoryProducts.meta?.isLastPage}
     />
   );
 };

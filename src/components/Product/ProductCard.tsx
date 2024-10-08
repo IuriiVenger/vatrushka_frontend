@@ -2,9 +2,11 @@
 
 import { Divider, Button } from 'antd';
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import CustomImage from '../ui/CustomImage';
+
+import ProductCardSkeleton from './ProductCardSkeleton';
 
 import { CurrencySymbol, TagColorSchema } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
@@ -18,6 +20,8 @@ type TProductCardProps = {
 const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
   const { pic, name, timing, weight, price, description, inStock, tag } = info;
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const { showMessage } = useMessage();
 
   const onButtonClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -25,9 +29,11 @@ const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
     inStock && showMessage({ type: 'success', text: 'Товар добавлен в корзину' });
   };
 
+  const onLoad = () => setIsLoading(false);
+
   return (
     <Link
-      className={`relative flex cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-t-lg ${slider ? 'mx-3 h-full max-md:mx-2' : 'w-full'} `}
+      className={`relative flex cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-lg ${slider ? 'mx-3 h-full max-md:mx-2' : 'w-full'} `}
       href={info.href}
     >
       {tag && (
@@ -43,6 +49,7 @@ const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
         height={373}
         alt={name}
         src={pic}
+        onLoad={onLoad}
         className="aspect-3/2 rounded-t-2xl object-cover object-center max-md:rounded-t-lg"
       />
       <div className="flex h-full flex-grow flex-col justify-between p-6 max-md:p-4">
@@ -74,6 +81,8 @@ const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
           </Button>
         </div>
       </div>
+
+      <ProductCardSkeleton isLoading={isLoading} />
     </Link>
   );
 };

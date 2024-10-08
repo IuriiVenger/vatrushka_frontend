@@ -90,7 +90,7 @@ const menuReducer = (state: TMenuState, action: TMenuAction): TMenuState => {
   }
 };
 
-export const Header: FC = () => {
+const Header: FC = () => {
   const [menuState, dispatchMenuState] = useReducer(menuReducer, initialState);
   const { isMobileMenuOpen, isSubMenuOpen, isMobileSearchOpen } = menuState;
 
@@ -157,3 +157,5 @@ export const Header: FC = () => {
     </>
   );
 };
+
+export default Header;

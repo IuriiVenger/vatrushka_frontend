@@ -16,11 +16,11 @@ type TProductsListProps = {
   title: string;
   onLoadMore?: () => void;
   isLoading?: boolean;
-  loadMoreAvalible?: boolean;
+  loadMoreAvailable?: boolean;
 };
 
 const ProductsList: FC<TProductsListProps> = (props) => {
-  const { products, title, onLoadMore, isLoading, loadMoreAvalible } = props;
+  const { products, title, onLoadMore, isLoading, loadMoreAvailable = false } = props;
   const [sort, setSort] = useState<SortType>(SortType.PRICE_ASCENDING);
 
   const productsCount = useMemo(
@@ -43,7 +43,7 @@ const ProductsList: FC<TProductsListProps> = (props) => {
             <ProductCard key={index} info={item} />
           ))}
         </div>
-        {loadMoreAvalible && (
+        {loadMoreAvailable && (
           <Button loading={isLoading} className="w-max max-md:h-10 max-md:text-base" onClick={onLoadMore}>
             Показать ещё
           </Button>

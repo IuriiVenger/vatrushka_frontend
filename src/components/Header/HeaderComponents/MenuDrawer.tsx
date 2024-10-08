@@ -14,13 +14,12 @@ import { companyInfo, contactLinks, navigationLinks } from '@/config/links';
 import { ContactLinks, NavigationLinks } from '@/constants';
 import { TContact, TNavigationLink } from '@/types';
 
-const menuItems =
-  Object.entries(navigationLinks).reduce<TNavigationLink[]>((acc, [key, value]) => {
-    if (key !== NavigationLinks.ABOUT && key !== NavigationLinks.CONTACTS) {
-      acc.push(value);
-    }
-    return acc;
-  }, []) || [];
+const menuItems = Object.entries(navigationLinks).reduce<TNavigationLink[]>((acc, [key, value]) => {
+  if (key !== NavigationLinks.ABOUT && key !== NavigationLinks.CONTACTS) {
+    acc.push(value);
+  }
+  return acc;
+}, []);
 
 const contacts = Object.fromEntries(
   Object.entries(contactLinks).filter(([key]) => key !== 'mail' && key !== 'chiefMail'),
@@ -64,7 +63,7 @@ const MenuDrawer: FC<TMenuDrawerProps> = ({ isMobileMenuOpen, isSubMenuOpen, dis
         closeIcon={null}
         open={isMobileMenuOpen}
         className="top-44 flex w-full pt-2 text-lg leading-lg max-md:top-36 max-sm:top-24 max-sm:text-base max-sm:leading-base"
-        rootClassName="max-sm:top-24 max-md:top-36 top-44 absolute"
+        rootClassName="max-lg:block hidden max-sm:top-24 max-md:top-36 top-44 absolute"
       >
         <Button
           type="text"
