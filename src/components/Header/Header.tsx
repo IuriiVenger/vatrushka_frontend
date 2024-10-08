@@ -51,7 +51,7 @@ const updateRootPosition = (shouldSetRelative: boolean) => {
   const root: HTMLElement | null = document.querySelector('.ant-app');
 
   if (root) {
-    root.style.position = shouldSetRelative ? 'fixed' : '';
+    root.style.position = shouldSetRelative ? 'relative' : '';
   }
 };
 
