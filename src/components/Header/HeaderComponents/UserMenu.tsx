@@ -1,4 +1,4 @@
-import { Dropdown, message } from 'antd';
+import { Button, Dropdown, message } from 'antd';
 import { MenuProps } from 'antd/lib';
 import Link from 'next/link';
 import { FC, useMemo, useState } from 'react';
@@ -35,7 +35,11 @@ const userItems: TMenuItem[] = [
   { label: 'Выйти из аккаунта', key: 'logOut' },
 ];
 
-const UserMenu: FC = () => {
+type TUserMenuProps = {
+  onCloseAll: () => void;
+};
+
+const UserMenu: FC<TUserMenuProps> = ({ onCloseAll }) => {
   const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
@@ -43,13 +47,15 @@ const UserMenu: FC = () => {
     message.info(`Click on item ${key}`);
   };
 
-  const onUserIconClick = () => {
+  const onUserButtonClick = () => {
+    onCloseAll();
     if (!isUserLoggedIn) {
       setIsAuthModalOpen(true);
     }
   };
 
   const dropDownTrigger = useMemo(() => {
+    onCloseAll();
     const trigger: Array<'click'> = [];
 
     if (isUserLoggedIn) {
@@ -65,11 +71,13 @@ const UserMenu: FC = () => {
         trigger={dropDownTrigger}
         menu={{ items: userItems, onClick }}
         placement="bottomRight"
-        overlayClassName="pt-2 w-60"
+        overlayClassName="pt-2 w-60 text-textTertiary transition-all hover:text-textQuaternary"
       >
-        <FaRegUser
-          onClick={onUserIconClick}
-          className="h-6 w-4 cursor-pointer text-textTertiary transition-all hover:text-textQuaternary max-lg:h-5 max-lg:w-5"
+        <Button
+          type="link"
+          onClick={onUserButtonClick}
+          className="h-6 w-4 p-0 text-textTertiary transition-all hover:text-textQuaternary max-lg:h-5 max-lg:w-5"
+          icon={<FaRegUser className="h-6 min-w-4 max-lg:h-5 max-lg:min-w-5" />}
         />
       </Dropdown>
       <AuthModal isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen} />

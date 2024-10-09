@@ -26,3 +26,11 @@
 .ant-input-textarea {
   @apply h-auto;
 }
+
+.anticon.anticon-close-circle {
+  @apply text-accent;
+}
+
+.ant-select .ant-select-clear {
+  @apply end-4;
+}

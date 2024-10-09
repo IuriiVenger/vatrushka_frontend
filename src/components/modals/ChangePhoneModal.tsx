@@ -41,7 +41,6 @@ const ChangePhoneModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             <Button
               type="link"
               className="h-6 text-accent transition-all hover:text-accentHover active:text-accentActive"
-              style={{ padding: 0 }}
               onClick={setPreviousStep}
             >
               <IoIosArrowBack />

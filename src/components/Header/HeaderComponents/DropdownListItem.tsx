@@ -39,7 +39,7 @@ const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = false }) =>
           )}
         </div>
         <div className="flex items-center justify-between">
-          <p>
+          <p className="text-nowrap">
             <span>{price}</span> {CurrencySymbol.RUB}
           </p>
           {cart && <StepperButton setCount={setStepperCount} count={stepperCount} />}

@@ -11,6 +11,7 @@ const OrderConfirmationModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
     setIsOpen(false);
   };
 
+  // TODO: fix
   const isLoggedIn = false;
 
   return (

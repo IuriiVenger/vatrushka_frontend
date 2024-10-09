@@ -63,23 +63,23 @@ export const legalLinks = {
 
 export const contactLinks: Record<ContactLinks, TContact> = {
   [ContactLinks.TELEGRAM]: {
-    link: 'https://t.me/123',
+    link: 'https://t.me/vatrushkachel',
     icon: <BiLogoTelegram />,
   },
   [ContactLinks.VK]: {
-    link: 'https://www.vk.ru/123',
+    link: 'https://vk.com/vatrushkachel',
     icon: <BiLogoVk />,
   },
   [ContactLinks.WHATS_APP]: {
-    link: 'https://wa.me/123',
+    link: 'https://wa.me/73517007981',
     icon: <IoLogoWhatsapp />,
   },
   [ContactLinks.MAIL]: {
-    link: 'delivery@vatrushka74.ru',
+    link: 'sales@pirogvatrushka.ru',
     icon: <IoIosMail />,
   },
   [ContactLinks.CHIEF_MAIL]: {
-    link: 'chief123@123.ru',
+    link: 'delivery@vatrushka74.ru',
     icon: <IoIosMail />,
   },
 };

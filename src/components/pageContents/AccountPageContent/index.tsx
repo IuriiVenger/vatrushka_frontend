@@ -42,7 +42,7 @@ const AccountPageContent: FC = () => {
       setCurrentTab(paramValue);
     }
 
-    if (!screens.lg && (!tab || !paramValue)) {
+    if (screens.md && (!tab || !paramValue)) {
       setCurrentTab(AccountTabsOptions.PROFILE);
     }
   }, [screens.md, paramValue]);
