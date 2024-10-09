@@ -13,7 +13,7 @@ type TCategoryPageContentProps = {
   products: TCard[];
   loadMoreProducts: () => void;
   isLoading: boolean;
-  loadMoreAvalible?: boolean;
+  loadMoreAvailable?: boolean;
 };
 
 const CategoryPageContent: FC<TCategoryPageContentProps> = (props) => {

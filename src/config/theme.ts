@@ -190,5 +190,14 @@ export const theme = {
       cellHeight: 32,
       padding: 18,
     },
+    Drawer: {
+      boxShadowDrawerDown: 'none',
+      boxShadowDrawerLeft: 'none',
+      boxShadowDrawerRight: 'none',
+      boxShadowDrawerUp: 'none',
+      padding: 0,
+      paddingLG: 0,
+      paddingXS: 0,
+    },
   },
 };

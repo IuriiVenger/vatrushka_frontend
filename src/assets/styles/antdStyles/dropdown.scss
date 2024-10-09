@@ -1,8 +1,11 @@
 .ant-dropdown .ant-dropdown-menu {
-  padding: 0.625rem 0.75rem;
+  @apply px-3 py-2.5;
 }
 
 .ant-dropdown-menu .ant-dropdown-menu-item:hover {
-  background-color: unset;
-  color: #a96648;
+  @apply bg-transparent text-primary;
+}
+
+.ant-select-dropdown {
+  @apply min-w-65;
 }
