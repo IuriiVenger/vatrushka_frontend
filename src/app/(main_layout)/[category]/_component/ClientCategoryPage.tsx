@@ -39,7 +39,7 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
     dispatch(
       setCategoryProducts({
         data: initialProducts,
-        meta: { offset: categoryItems?.edges.length || 0, isLastPage: !categoryItems?.pageInfo.hasNextPage },
+        meta: { offset: categoryItems?.edges.length || 0, isLastPage: categoryItems?.pageInfo.hasNextPage === false },
       }),
     );
   }, []);
@@ -50,7 +50,7 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
       products={products}
       isLoading={isProductsPending}
       loadMoreProducts={loadMoreProducts}
-      loadMoreAvailable={!categoryProducts.meta?.isLastPage}
+      loadMoreAvailable={categoryProducts.meta?.isLastPage === false}
     />
   );
 };
