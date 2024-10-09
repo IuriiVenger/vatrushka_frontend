@@ -20,7 +20,7 @@ type TProductsListProps = {
 };
 
 const ProductsList: FC<TProductsListProps> = (props) => {
-  const { products, title, onLoadMore, isLoading, loadMoreAvailable = false } = props;
+  const { products, title, onLoadMore, isLoading, loadMoreAvailable } = props;
   const [sort, setSort] = useState<SortType>(SortType.PRICE_ASCENDING);
 
   const productsCount = useMemo(
