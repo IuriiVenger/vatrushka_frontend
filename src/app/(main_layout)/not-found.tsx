@@ -1,11 +1,11 @@
 import { Button } from 'antd';
 import { FC } from 'react';
 
-import notFound from '../../../assets/images/not_found.svg';
+import notFound from '@/assets/images/not_found.svg';
 
 const NotFoundPage: FC = () => (
-  <section className="flex flex-col items-center justify-center gap-4 max-xs:py-8">
-    <img alt="Страница не найдена" src={notFound.src} className="w-85 max-sm:w-52" />
+  <section className="flex grow flex-col items-center justify-center gap-4 max-xs:py-8">
+    <img alt="Страница не найдена" src={notFound.src} className="h-47 w-85 max-sm:h-28  max-sm:w-52" />
     <div className="flex flex-col items-center gap-6">
       <div className="flex flex-col items-center gap-2">
         <h1 className="text-center text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">

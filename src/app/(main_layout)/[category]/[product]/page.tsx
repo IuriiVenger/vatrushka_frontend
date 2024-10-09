@@ -18,7 +18,7 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const { category, product } = params;
 
   const { data, error } = await products.getBySlug(product);
-  const productId = data.productsCollection?.edges[0].node.id;
+  const productId = data.productsCollection?.edges[0]?.node.id;
 
   if (!data || error || !productId) {
     return notFound();
