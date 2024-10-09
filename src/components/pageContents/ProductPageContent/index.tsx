@@ -20,7 +20,7 @@ import PromoTag from '@/components/ui/PromoTag';
 import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
-import { TCard } from '@/types';
+import { conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 
 export type ActiveModifierGroupIds = {
   min_quantity: number;
@@ -137,18 +137,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   const pricePerItem = activeSizePrice + activeModifiersPrice;
   const totalPrice = pricePerItem * amount;
   const weight = activeSize?.portion_weight_grams;
-  const recomendatedProductsData: TCard[] = recommendedProducts.map((product) => ({
-    id: product.nodeId,
-    pic: product.button_image_url,
-    name: product.name,
-    description: product.short_description || '',
-    price: product.price || 0,
-    // fix type TCard
-    quantity: 1,
-    // fix inStock after adding it to the API
-    inStock: true,
-    href: `/${product.category.slug}/${product.slug}`,
-  }));
+  const recomendatedProductsData = conertCategoryRecommendedProductsToCards(recommendedProducts);
 
   const isSizeSelectorEnabled = sizes && sizes?.length > 1;
 

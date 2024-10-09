@@ -2,12 +2,12 @@ import { FC } from 'react';
 
 import ClientHomePage from './_component/ClientHomePage';
 
-import { categories } from '@/api/categories';
+import { fetchAllCategories } from '@/utils/helpers';
 
 const HomePage: FC = async () => {
-  const { data } = await categories.getAll();
+  const { categoriesCollection } = await fetchAllCategories();
 
-  return <ClientHomePage categories={data.categoriesCollection} />;
+  return <ClientHomePage categories={categoriesCollection} />;
 };
 
 export default HomePage;

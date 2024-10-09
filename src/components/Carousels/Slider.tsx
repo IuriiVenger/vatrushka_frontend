@@ -89,7 +89,7 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
       <div className="slider-container max-xs:ml-calc-center mx-auto grid max-w-320 grid-cols-1 overflow-hidden max-sm:pl-10 max-xs:mr-0 max-xs:pl-0">
         <SlickSlider {...settings} ref={sliderRef}>
           {slides.map((slide, index) => (
-            <ProductCard key={index} info={slide} slider />
+            <ProductCard key={slide.id + index} info={slide} slider />
           ))}
         </SlickSlider>
       </div>
