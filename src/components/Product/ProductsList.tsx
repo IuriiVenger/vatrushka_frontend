@@ -20,7 +20,7 @@ type TProductsListProps = {
 };
 
 const ProductsList: FC<TProductsListProps> = (props) => {
-  const { products, title, onLoadMore, isLoading, loadMoreAvailable = false } = props;
+  const { products, title, onLoadMore, isLoading, loadMoreAvailable } = props;
   const [sort, setSort] = useState<SortType>(SortType.PRICE_ASCENDING);
 
   const productsCount = useMemo(
@@ -39,8 +39,8 @@ const ProductsList: FC<TProductsListProps> = (props) => {
       </div>
       <div className="flex max-w-320 flex-col items-center gap-6 max-xs:max-w-82">
         <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1">
-          {products.map((item, index) => (
-            <ProductCard key={index} info={item} />
+          {products.map((item) => (
+            <ProductCard key={item.id} info={item} />
           ))}
         </div>
         {loadMoreAvailable && (

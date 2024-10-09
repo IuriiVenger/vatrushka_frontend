@@ -1,7 +1,8 @@
 import { message } from 'antd';
 import { FC, useState } from 'react';
-
 import { RxCross2 } from 'react-icons/rx';
+
+import DropDownListItemSkeleton from './DropDownListItemSkeleton';
 
 import CustomImage from '@/components/ui/CustomImage';
 import StepperButton from '@/components/ui/StepperButton';
@@ -20,13 +21,17 @@ const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = false }) =>
 
   const onButtonClick = () => message.error(`deleted ${name}`);
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  const onLoad = () => setIsLoading(false);
   return (
-    <div className="flex w-full gap-3">
+    <div className="relative flex w-full gap-3">
       <CustomImage
         alt={name}
         src={pic}
         width={72}
         height={72}
+        onLoad={onLoad}
         className="aspect-square h-16 w-16 rounded-lg object-cover"
       />
       <div className={`flex w-full flex-col ${cart ? 'gap-4' : 'gap-3'}`}>
@@ -45,6 +50,7 @@ const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = false }) =>
           {cart && <StepperButton setCount={setStepperCount} count={stepperCount} />}
         </div>
       </div>
+      <DropDownListItemSkeleton isLoading={isLoading} cart={cart} />
     </div>
   );
 };

@@ -1,10 +1,12 @@
 'use client';
 
-import { Breadcrumb, Button } from 'antd';
+import { Breadcrumb, Button, Grid } from 'antd';
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 
 import TextBlock from '../../ui/TextBlock';
+
+import ProductPageSkeleton from './ProductPageSkeleton';
 
 import {
   Productsizeimages,
@@ -104,6 +106,9 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     title,
   } = productInfo;
 
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+
   const initialSize = sizes?.find((size) => size.is_default) || sizes?.[0];
   const { showMessage } = useMessage();
 
@@ -152,7 +157,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
 
   const isSizeSelectorEnabled = sizes && sizes?.length > 1;
 
-  const getIsModififierSelected = (groupId: string, modifier: Omit<ProductSizeModifiers, 'nodeId'>) =>
+  const getIsModifierSelected = (groupId: string, modifier: Omit<ProductSizeModifiers, 'nodeId'>) =>
     modifiersGroupsData[groupId]?.activeModifierGroups.some((activeModifier) => activeModifier.id === modifier.id);
 
   const onModifierClick = (groupId: string, modifier: Omit<ProductSizeModifiers, 'nodeId'>) => () => {
@@ -192,31 +197,56 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     }
   }, [activeSize]);
 
+  const [isImagesLoading, setIsImagesLoading] = useState(true);
+  const [isScreensLoading, setIsScreensLoading] = useState(true);
+
+  const onLoad = () => setIsImagesLoading(false);
+
+  useEffect(() => {
+    if (screens) {
+      setIsScreensLoading(false);
+    }
+  }, [screens]);
+
   return (
     <>
       <div className="mx-auto flex w-full max-w-320 flex-col gap-12 pb-10 max-lg:gap-4 max-xs:max-w-82">
         <Breadcrumb items={breadcrumbs} />
-        <div className="flex justify-between gap-10 max-xl:grid max-xl:grid-cols-2 max-lg:flex max-lg:flex-col">
-          <ProductCarousel
-            className="lg:hidden"
-            isMobile
-            images={selectedSizeImagesUrls}
-            title={title || ''}
-            labels={labels}
+        <div
+          className={`${selectedSizeImagesUrls.length ? 'grid grid-cols-2' : 'flex flex-col'} relative z-10 gap-10 max-md:flex max-md:flex-col`}
+        >
+          <ProductPageSkeleton
+            isLoading={isImagesLoading || isScreensLoading}
+            hasPics={!!selectedSizeImagesUrls.length}
           />
-          <ProductCarousel
-            className="max-lg:hidden"
-            images={selectedSizeImagesUrls}
-            title={title || ''}
-            labels={labels}
-          />
+
+          {!!selectedSizeImagesUrls.length && (
+            <>
+              <ProductCarousel
+                className="hidden max-md:block"
+                isMobile
+                images={selectedSizeImagesUrls}
+                title={title || ''}
+                labels={labels}
+                onLoad={onLoad}
+              />
+              <ProductCarousel
+                className="block max-md:hidden"
+                images={selectedSizeImagesUrls}
+                title={title || ''}
+                labels={labels}
+                onLoad={onLoad}
+              />
+            </>
+          )}
 
           <div className="flex max-w-144 flex-col text-lg leading-lg max-lg:max-w-full max-sm:text-base max-sm:leading-base">
             <div className="flex flex-col">
-              <div className="flex flex-wrap gap-x-4 gap-y-3 pb-6 max-sm:gap-x-3">
-                {promotions &&
-                  promotions.map((promo) => promo.productButtonText && <PromoTag text={promo.productButtonText} />)}
-              </div>
+              {!!promotions.length && (
+                <div className="flex flex-wrap gap-x-4 gap-y-3 pb-6 max-sm:gap-x-3">
+                  {promotions.map((promo) => promo.productButtonText && <PromoTag text={promo.productButtonText} />)}
+                </div>
+              )}
               <h1 className="text-3xl font-medium leading-3xl max-sm:text-xl max-sm:leading-xl">{title}</h1>
               <p className="pt-3 text-textTertiary ">{weight} г</p>
               {/* <div className="flex items-start gap-1 pt-3 text-textTertiary max-lg:hidden"> not use right now, no data for this
@@ -253,7 +283,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
                   {group.modifiers.map((modifier) => (
                     <ProductModificator
                       key={modifier.id}
-                      isSelected={getIsModififierSelected(group.id, modifier)}
+                      isSelected={getIsModifierSelected(group.id, modifier)}
                       onClick={onModifierClick(group.id, modifier)}
                       title={modifier.name}
                       price={modifier.price}

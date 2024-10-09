@@ -1,8 +1,7 @@
-import 'react-image-gallery/styles/scss/image-gallery.scss';
-
+import { Grid } from 'antd';
 import cn from 'classnames';
 import Image from 'next/image';
-import { FC, useRef, useState } from 'react';
+import { FC, ReactEventHandler, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
 import ProductCarouselMainItem from './MainItem';
@@ -13,6 +12,7 @@ import RoundCloseButton from '@/components/ui/RoundCloseButton';
 type TProductImagesProps = {
   images: string[];
   title: string;
+  onLoad: ReactEventHandler<HTMLImageElement>;
   labels?: API.Products.Label[];
   isMobile?: boolean;
   className?: string;
@@ -24,18 +24,21 @@ type ImageGalleryWithState = ImageGallery & {
   };
 };
 
-const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMobile, className }) => {
+const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMobile, className, onLoad }) => {
   const galleryRef = useRef<ImageGalleryWithState>(null);
   const [showNav, setShowNav] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [showBullets, setShowBullets] = useState<boolean>(!!isMobile);
   const [showThumbnails, setShowThumbnails] = useState<boolean>(!isMobile);
 
-  const toogleFullScreen = () => {
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+
+  const toggleFullScreen = () => {
     galleryRef.current?.state.isFullscreen ? galleryRef.current?.exitFullScreen() : galleryRef.current?.fullScreen();
   };
 
-  const thumbnailPosition = isFullscreen ? 'bottom' : 'left';
+  const thumbnailPosition = isFullscreen || !screens.xl ? 'bottom' : 'left';
 
   const onScreenChange = (isFullscreenView: boolean) => {
     setShowNav(isFullscreenView);
@@ -55,19 +58,26 @@ const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMob
           <ProductCarouselMainItem
             image={image}
             title={title}
+            onLoad={onLoad}
             isFullscreen={isFullscreen}
             isMobile={isMobile}
             labels={labels}
           />
         ),
         renderThumbInner: () => (
-          <Image className="h-full object-cover" src={image} alt={`${title}-thumbnail`} width={78} height={78} />
+          <Image
+            className="h-full rounded-[0.25rem] object-cover"
+            src={image}
+            alt={`${title}-thumbnail`}
+            width={78}
+            height={78}
+          />
         ),
         originalClass: 'rounded-lg overflow-hidden !w-full',
         thumbnailClass: 'h-10 !w-10 md:!w-20 md:h-20 rounded-lg object-cover',
       }))}
       useBrowserFullscreen={false}
-      onClick={toogleFullScreen}
+      onClick={toggleFullScreen}
       showThumbnails={showThumbnails}
       onScreenChange={onScreenChange}
       thumbnailPosition={thumbnailPosition}
