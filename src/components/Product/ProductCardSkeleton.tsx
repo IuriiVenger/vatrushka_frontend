@@ -9,7 +9,7 @@ type TProductCardSkeletonProps = {
 
 const ProductCardSkeleton: FC<TProductCardSkeletonProps> = ({ isLoading }) => (
   <div
-    className={`absolute bottom-0 left-0 right-0 top-0 rounded-2xl bg-white  transition-all max-md:rounded-lg ${isLoading ? 'z-50 opacity-100 ' : 'opacity-0'}`}
+    className={`absolute bottom-0 left-0 right-0 top-0 rounded-2xl bg-white transition-opacity duration-500 max-md:rounded-lg ${isLoading ? 'z-50 opacity-100 ' : 'opacity-0'}`}
   >
     <Skeleton.Node
       active
