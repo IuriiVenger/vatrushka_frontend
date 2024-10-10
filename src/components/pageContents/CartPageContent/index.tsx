@@ -5,12 +5,15 @@ import { FC, Fragment, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoIosArrowForward } from 'react-icons/io';
 
+import EmptyCartScreen from './EmptyCartScreen';
 import ItemCard from './ItemCard';
 
 import AuthModal from '@/components/modals/AuthModal';
 import Input from '@/components/ui/Form/Input';
 import { CurrencySymbol } from '@/constants';
 import { order, products } from '@/mocks';
+import { useAppSelector } from '@/store';
+import { selectIsUserLoggedIn } from '@/store/selectors';
 import { getNounWithDeclension } from '@/utils/formatters';
 
 const count = 3;
@@ -20,6 +23,7 @@ type TDiscountForm = {
 };
 
 const CartPageContent: FC = () => {
+  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const itemsCountText = `${count} ${getNounWithDeclension(count, 'товар', 'товара', 'товаров')}`;
@@ -40,14 +44,13 @@ const CartPageContent: FC = () => {
     console.log('onCheckPromoCode:', data);
   };
 
-  // TODO: fix
-  const isLoggedIn = true;
-
   const onContinue = () => {
-    if (!isLoggedIn) {
+    if (!isUserLoggedIn) {
       setIsAuthModalOpen(true);
     }
   };
+
+  if (!products.length) return <EmptyCartScreen />;
 
   return (
     <>
@@ -131,14 +134,14 @@ const CartPageContent: FC = () => {
               type="primary"
               className="text-lg leading-lg max-sm:text-base max-sm:leading-base"
               onClick={onContinue}
-              href={isLoggedIn ? '/checkout' : undefined}
+              href={isUserLoggedIn ? '/checkout' : undefined}
             >
               Перейти к оформлению
             </Button>
           </div>
         </div>
       </section>
-      <AuthModal isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen} />
+      <AuthModal isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen} href="/checkout" />
     </>
   );
 };

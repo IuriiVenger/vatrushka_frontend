@@ -1,36 +1,25 @@
 'use client';
 
-import { MenuProps, Dropdown, Badge, Button, Grid } from 'antd';
+import { MenuProps, Button, Grid } from 'antd';
 import Link from 'next/link';
 import { FC, useEffect } from 'react';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
-import { LuShoppingCart } from 'react-icons/lu';
 import { RxCross2 } from 'react-icons/rx';
 
 import logo from '../../assets/images/logo_full.svg';
 
-import CartList from './HeaderComponents/CartList';
+import Cart from './HeaderComponents/Cart';
 import Menu from './HeaderComponents/Menu';
 import MenuDrawer from './HeaderComponents/MenuDrawer';
 import Search from './HeaderComponents/Search';
 import UserMenu from './HeaderComponents/UserMenu';
 import PreHeader from './PreHeader';
 
-import { color } from '@/config/variables';
-import { cartList } from '@/mocks';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { selectUI } from '@/store/selectors';
 import { toggleMenu, toggleSearch, resetAll } from '@/store/slices/ui';
 
 export type TMenuItem = Required<MenuProps>['items'][number];
-
-const cartItems: TMenuItem[] = [
-  {
-    key: 'cart',
-    label: <CartList />,
-    type: 'group',
-  },
-];
 
 const Header: FC = () => {
   const { useBreakpoint } = Grid;
@@ -82,24 +71,7 @@ const Header: FC = () => {
           <div className="flex w-full items-center justify-end gap-8 max-md:gap-4">
             <Search />
             <UserMenu onCloseAll={onCloseAll} />
-            <Dropdown
-              menu={{ items: cartItems }}
-              trigger={['click']}
-              onOpenChange={onCloseAll}
-              placement="bottomRight"
-              overlayClassName="pt-2"
-            >
-              <Button
-                type="link"
-                aria-label={`Просмотр корзины. Сейчас товаров в корзине: ${cartList.length}`}
-                className="h-6 w-5 p-0"
-                icon={
-                  <Badge count={cartList.length} className="max-xs:small" color={color.accent.default}>
-                    <LuShoppingCart className="h-6 min-w-5 text-textTertiary transition-all hover:text-textQuaternary" />
-                  </Badge>
-                }
-              />
-            </Dropdown>
+            <Cart onCloseAll={onCloseAll} />
           </div>
         </div>
       </header>

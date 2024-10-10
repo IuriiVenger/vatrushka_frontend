@@ -12,8 +12,11 @@ import UnauthorizedScreen from '../../AccountPageComponents/UnauthorizedScreen';
 
 import { AccountTabsOptions, accountTabs } from '@/constants';
 import { useUrlParams } from '@/hooks/useUrlParams';
+import { useAppSelector } from '@/store';
+import { selectIsUserLoggedIn } from '@/store/selectors';
 
 const AccountPageContent: FC = () => {
+  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   const [tab, setTab] = useState<AccountTabsOptions | null>(null);
 
   const isHistoryTab = tab === accountTabs[AccountTabsOptions.ORDER_HISTORY].value;
@@ -51,9 +54,7 @@ const AccountPageContent: FC = () => {
     if (paramValue && isValidTabParam(paramValue)) setCurrentTab(paramValue);
   }, [paramValue]);
 
-  const isAuthorized = true;
-
-  if (!isAuthorized) return <UnauthorizedScreen />;
+  if (!isUserLoggedIn) return <UnauthorizedScreen />;
 
   return (
     <section className="flex flex-col">
