@@ -48,12 +48,12 @@ const entitiesSlice = createSlice({
   reducers: {
     setCategories: (state, { payload }: SetCategoriesAction) => {
       state.categories.data = payload;
-      state.categories.status = RequestStatus.FULLFILLED;
+      state.categories.status = RequestStatus.FULFILLED;
     },
     setCategoryProducts: (state, { payload }: SetCategoryProductsAction) => {
       state.categoryProducts.data = payload.data;
       state.categoryProducts.meta = { ...payload.meta };
-      state.categoryProducts.status = RequestStatus.FULLFILLED;
+      state.categoryProducts.status = RequestStatus.FULFILLED;
     },
   },
   extraReducers: (builder) => {
@@ -62,7 +62,7 @@ const entitiesSlice = createSlice({
     });
     builder.addCase(loadCategories.fulfilled, (state, action) => {
       state.categories = {
-        status: RequestStatus.FULLFILLED,
+        status: RequestStatus.FULFILLED,
         data: action.payload.data.categoriesCollection,
       };
     });
@@ -80,7 +80,7 @@ const entitiesSlice = createSlice({
         action.payload.data.categoriesCollection?.edges[0].node.categoryitemsCollection,
       );
       state.categoryProducts = {
-        status: RequestStatus.FULLFILLED,
+        status: RequestStatus.FULFILLED,
         data: products,
         meta: {
           offset: state.categoryProducts.meta.offset + products.length,
@@ -103,7 +103,7 @@ const entitiesSlice = createSlice({
         action.payload.data.categoriesCollection?.edges[0].node.categoryitemsCollection,
       );
       state.categoryProducts = {
-        status: RequestStatus.FULLFILLED,
+        status: RequestStatus.FULFILLED,
         data: state.categoryProducts.data ? [...state.categoryProducts.data, ...products] : products,
         meta: {
           offset: state.categoryProducts.meta.offset + products.length,

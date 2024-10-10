@@ -22,7 +22,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.userLoadingStatus = RequestStatus.FULLFILLED;
+      state.userLoadingStatus = RequestStatus.FULFILLED;
       state.user = action.payload;
     },
     setUserLoadingStatus: (state, action) => {

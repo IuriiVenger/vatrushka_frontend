@@ -55,7 +55,7 @@ const useAuth = (dispatch: AppDispatch) => {
       setLoadingStatus(RequestStatus.PENDING);
       await getUser();
       await loadUserContent();
-      setLoadingStatus(RequestStatus.FULLFILLED);
+      setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
       deleteTokens();
@@ -77,7 +77,7 @@ const useAuth = (dispatch: AppDispatch) => {
       await loadUserContent();
       dispatch(setUser(user));
 
-      setLoadingStatus(RequestStatus.FULLFILLED);
+      setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
 
@@ -102,7 +102,7 @@ const useAuth = (dispatch: AppDispatch) => {
       await loadUserContent();
       dispatch(setUser(user));
 
-      setLoadingStatus(RequestStatus.FULLFILLED);
+      setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
 
@@ -121,7 +121,7 @@ const useAuth = (dispatch: AppDispatch) => {
         throw data.error;
       }
       setIsOtpRequested(true);
-      setLoadingStatus(RequestStatus.FULLFILLED);
+      setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
 
@@ -140,7 +140,7 @@ const useAuth = (dispatch: AppDispatch) => {
         throw data.error;
       }
       setIsOtpRequested(true);
-      setLoadingStatus(RequestStatus.FULLFILLED);
+      setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
 
@@ -173,7 +173,7 @@ const useAuth = (dispatch: AppDispatch) => {
 
       message.success('You have successfully logged in');
 
-      setLoadingStatus(RequestStatus.FULLFILLED);
+      setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
 
@@ -204,7 +204,7 @@ const useAuth = (dispatch: AppDispatch) => {
       dispatch(setUser(data.user));
       // await loadUserContent();
       message.success('You have successfully logged in');
-      setLoadingStatus(RequestStatus.FULLFILLED);
+      setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
 

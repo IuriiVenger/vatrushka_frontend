@@ -24,7 +24,7 @@ const BonusPageContent: FC = () => {
         </h1>
         <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">
           Участие в бонусной программе позволяет накапливать и тратить бонусные баллы в заведениях участниках программы
-          и онлайн фудмаркете pirovatrushka.ru, а также получать специальные предложения для участников программы.
+          и онлайн фудмаркете pirogvatrushka.ru, а также получать специальные предложения для участников программы.
         </p>
       </div>
       <div className="flex flex-col gap-6 rounded-2xl bg-bgLayout p-6 max-sm:p-4">
