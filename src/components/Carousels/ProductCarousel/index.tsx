@@ -1,6 +1,6 @@
 import { Grid } from 'antd';
 import cn from 'classnames';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
 import ProductCarouselMainItem from './MainItem';
@@ -29,6 +29,7 @@ const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMob
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [showBullets, setShowBullets] = useState<boolean>(!!isMobile);
   const [showThumbnails, setShowThumbnails] = useState<boolean>(!isMobile);
+  const [isScreensLoading, setIsScreensLoading] = useState(true);
 
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
@@ -46,13 +47,17 @@ const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMob
     setShowThumbnails(isFullscreenView || !isMobile);
   };
 
+  useEffect(() => {
+    if (screens) setIsScreensLoading(false);
+  }, [screens]);
+
   return (
     <ImageGallery
       additionalClass={cn('product-images', showThumbnails && 'with-thumbnails', className, isFullscreen && ' p-2')}
       ref={galleryRef}
       items={images.map((image) => ({
         original: image,
-        thumbnail: image,
+        thumbnail: isScreensLoading ? undefined : image,
         renderItem: () => (
           <ProductCarouselMainItem
             image={image}

@@ -25,7 +25,7 @@ const ProductCarouselMainItem: FC<ProductCarouselMainItemProps> = (props) => {
       return 'w-full aspect-3/2';
     }
 
-    return 'h-80 w-120 object-cover';
+    return 'h-80 w-full object-cover';
   }, [isFullscreen, isMobile]);
 
   return (

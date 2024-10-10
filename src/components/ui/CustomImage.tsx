@@ -32,7 +32,7 @@ const CustomImage: FC<TProps> = ({ alt, ...props }) => {
       <Image {...props} src={src || placeholder_image.src} alt={alt} onError={handleError} onLoad={onFinishLoad} />
       <Skeleton.Node
         active
-        className={`absolute bottom-0 left-0 right-0 top-0 flex aspect-square h-full w-full items-center justify-center rounded-md max-md:hidden ${isLoading ? 'z-50 opacity-100' : 'opacity-0 '}`}
+        className={`absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center justify-center rounded-md bg-white ${isLoading ? 'z-50 opacity-100' : 'opacity-0 '}`}
       >
         <img src={foodTray.src} alt="Загрузка" className="h-2/3 w-2/3" />
       </Skeleton.Node>
