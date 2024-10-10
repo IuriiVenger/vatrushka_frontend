@@ -19,6 +19,8 @@ const Contacts: FC<TContactsProps> = ({ contacts, className }) => {
           key={link}
           ghost
           href={link}
+          referrerPolicy="no-referrer"
+          target="_blank"
           className={`border-none text-primary transition-all hover:text-primaryActive max-md:h-10 max-md:w-10 max-md:text-base ${className}`}
           icon={cloneElement(icon, { className: 'h-6 w-6' })}
         />

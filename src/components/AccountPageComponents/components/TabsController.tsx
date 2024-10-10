@@ -1,6 +1,6 @@
 import { Button, Divider, Grid, Segmented, Skeleton } from 'antd';
 import cn from 'classnames';
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Dispatch, FC, Fragment, SetStateAction, useState } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 
@@ -46,7 +46,7 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isHistoryTab, i
     return (
       <div className="flex-flex-col w-full">
         {options.map((option) => (
-          <div key={option.value}>
+          <Fragment key={option.value}>
             <Button
               type="text"
               onClick={() => onClick(option.value as AccountTabsOptions)}
@@ -56,7 +56,7 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isHistoryTab, i
               <IoIosArrowForward className="h-5 w-5 opacity-55" />
             </Button>
             <Divider className="m-2" />
-          </div>
+          </Fragment>
         ))}
       </div>
     );

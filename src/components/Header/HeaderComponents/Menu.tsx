@@ -8,7 +8,7 @@ import { AccountTabsOptions, NavigationLinks } from '@/constants';
 import { catalogOptions } from '@/mocks';
 import { TMenuLevelOneOption } from '@/types';
 
-const getClientItems = () =>
+const forClientItems =
   Object.entries(navigationLinks).reduce<TMenuLevelOneOption[]>((acc, [key, value]) => {
     if (key !== NavigationLinks.ABOUT && key !== NavigationLinks.CONTACTS) {
       acc.push({
@@ -28,8 +28,6 @@ const Menu = () => {
       })),
     [catalogOptions],
   );
-
-  const forClientItems = getClientItems();
 
   return (
     <nav className="block text-lg leading-lg max-lg:hidden">

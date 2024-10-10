@@ -7,6 +7,10 @@
     list-style-image: url('../images/bullet.svg');
   }
 
+  .menu-catalog-button {
+    padding-inline: calc((100% - 20.5rem) / 2);
+  }
+
   .numeric-list {
     ol {
       counter-reset: item;

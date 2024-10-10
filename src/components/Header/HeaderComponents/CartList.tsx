@@ -14,7 +14,7 @@ const CartList: FC = () => {
   );
 
   return (
-    <div className="flex w-85 flex-col gap-6 text-base leading-base text-text">
+    <div className="flex w-85 flex-col gap-6 text-base leading-base text-text max-xs:w-70">
       <div className="flex items-center justify-between">
         <p className="text-lg leading-lg">Корзина</p>
         <p className="text-textTertiary">{itemsCount}</p>
@@ -38,7 +38,11 @@ const CartList: FC = () => {
             <span>{cartList.reduce<number>((acc, item) => acc + Number(item.price), 0)}</span> {CurrencySymbol.RUB}
           </span>
         </p>
-        <Button type="primary" href="/cart">
+        <Button
+          type="primary"
+          href="/cart"
+          className="text-lg leading-lg max-sm:h-10 max-sm:text-base max-sm:leading-base"
+        >
           В корзину
         </Button>
       </div>

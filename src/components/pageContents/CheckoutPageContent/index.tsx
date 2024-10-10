@@ -291,7 +291,7 @@ const CheckoutPageContent: FC = () => {
               </div>
             </div>
 
-            <div className="flex h-max min-w-96 flex-col gap-6 rounded-2xl border border-borderSecondary p-6 max-xl:min-w-0 max-lg:grid max-lg:max-w-full max-lg:grid-cols-2 max-lg:flex-row max-sm:flex max-sm:w-full max-sm:flex-col max-sm:gap-4 max-sm:border-none max-sm:p-0">
+            <div className="sticky right-0 top-6 flex h-max min-w-96 flex-col gap-6 rounded-2xl border border-borderSecondary p-6 max-xl:min-w-0 max-lg:static max-lg:grid max-lg:max-w-full max-lg:grid-cols-2 max-lg:flex-row max-sm:flex max-sm:w-full max-sm:flex-col max-sm:gap-4 max-sm:border-none max-sm:p-0">
               <div className="flex w-full flex-col gap-6 max-sm:gap-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Ваш заказ</h2>

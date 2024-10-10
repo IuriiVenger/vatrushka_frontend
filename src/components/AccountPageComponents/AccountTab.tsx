@@ -61,7 +61,7 @@ const AccountTab: FC = () => {
               errors={!!errors.name}
               autoComplete="given-name"
             />
-            <AntForm.Item label="Номер телефона" layout="vertical" className="h-12">
+            <AntForm.Item label="Номер телефона" layout="vertical">
               <AntInput
                 type="tel"
                 placeholder="+7 (999) 999-99-99"
