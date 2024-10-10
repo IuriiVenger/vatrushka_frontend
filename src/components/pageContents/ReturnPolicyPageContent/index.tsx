@@ -16,7 +16,7 @@ const ReturnPolicyPageContent = () => {
   return (
     <div className="flex flex-col gap-8">
       <Breadcrumb items={breadcrumbs} />
-      <section className="flex flex-col gap-12 text-lg leading-lg max-sm:gap-8 max-sm:text-sm max-sm:leading-sm">
+      <section className="flex flex-col gap-12 text-lg leading-lg max-lg:gap-8 max-sm:text-sm max-sm:leading-sm">
         <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">
           Условия возврата и обмена продукции
         </h1>
