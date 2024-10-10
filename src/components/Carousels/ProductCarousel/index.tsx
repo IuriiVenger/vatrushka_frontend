@@ -1,18 +1,17 @@
 import { Grid } from 'antd';
 import cn from 'classnames';
-import Image from 'next/image';
-import { FC, ReactEventHandler, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
 import ProductCarouselMainItem from './MainItem';
 
 import { API } from '@/api/types';
+import CustomImage from '@/components/ui/CustomImage';
 import RoundCloseButton from '@/components/ui/RoundCloseButton';
 
 type TProductImagesProps = {
   images: string[];
   title: string;
-  onLoad: ReactEventHandler<HTMLImageElement>;
   labels?: API.Products.Label[];
   isMobile?: boolean;
   className?: string;
@@ -24,7 +23,7 @@ type ImageGalleryWithState = ImageGallery & {
   };
 };
 
-const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMobile, className, onLoad }) => {
+const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMobile, className }) => {
   const galleryRef = useRef<ImageGalleryWithState>(null);
   const [showNav, setShowNav] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
@@ -58,14 +57,13 @@ const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMob
           <ProductCarouselMainItem
             image={image}
             title={title}
-            onLoad={onLoad}
             isFullscreen={isFullscreen}
             isMobile={isMobile}
             labels={labels}
           />
         ),
         renderThumbInner: () => (
-          <Image
+          <CustomImage
             className="h-full rounded-[0.25rem] object-cover"
             src={image}
             alt={`${title}-thumbnail`}

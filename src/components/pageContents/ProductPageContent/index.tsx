@@ -1,12 +1,10 @@
 'use client';
 
-import { Breadcrumb, Button, Grid } from 'antd';
+import { Breadcrumb, Button } from 'antd';
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 
 import TextBlock from '../../ui/TextBlock';
-
-import ProductPageSkeleton from './ProductPageSkeleton';
 
 import {
   Productsizeimages,
@@ -106,9 +104,6 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     title,
   } = productInfo;
 
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
-
   const initialSize = sizes?.find((size) => size.is_default) || sizes?.[0];
   const { showMessage } = useMessage();
 
@@ -197,29 +192,13 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     }
   }, [activeSize]);
 
-  const [isImagesLoading, setIsImagesLoading] = useState(true);
-  const [isScreensLoading, setIsScreensLoading] = useState(true);
-
-  const onLoad = () => setIsImagesLoading(false);
-
-  useEffect(() => {
-    if (screens) {
-      setIsScreensLoading(false);
-    }
-  }, [screens]);
-
   return (
     <>
       <div className="mx-auto flex w-full max-w-320 flex-col gap-12 pb-10 max-lg:gap-4 max-xs:max-w-82">
         <Breadcrumb items={breadcrumbs} />
         <div
-          className={`${selectedSizeImagesUrls.length ? 'grid grid-cols-2' : 'flex flex-col'} relative z-10 gap-10 max-md:flex max-md:flex-col`}
+          className={`${selectedSizeImagesUrls.length ? 'grid grid-cols-2' : 'flex flex-col'} z-10 gap-10 max-md:flex max-md:flex-col`}
         >
-          <ProductPageSkeleton
-            isLoading={isImagesLoading || isScreensLoading}
-            hasPics={!!selectedSizeImagesUrls.length}
-          />
-
           {!!selectedSizeImagesUrls.length && (
             <>
               <ProductCarousel
@@ -228,14 +207,12 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
                 images={selectedSizeImagesUrls}
                 title={title || ''}
                 labels={labels}
-                onLoad={onLoad}
               />
               <ProductCarousel
                 className="block max-md:hidden"
                 images={selectedSizeImagesUrls}
                 title={title || ''}
                 labels={labels}
-                onLoad={onLoad}
               />
             </>
           )}

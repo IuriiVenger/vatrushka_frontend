@@ -1,21 +1,20 @@
 import cn from 'classnames';
-import Image from 'next/image';
-import { FC, ReactEventHandler, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 
 import { API } from '@/api/types';
+import CustomImage from '@/components/ui/CustomImage';
 import Label from '@/components/ui/Label';
 
 type ProductCarouselMainItemProps = {
   image: string;
   title: string;
-  onLoad: ReactEventHandler<HTMLImageElement>;
   isFullscreen?: boolean;
   isMobile?: boolean;
   labels?: API.Products.Label[];
 };
 
 const ProductCarouselMainItem: FC<ProductCarouselMainItemProps> = (props) => {
-  const { image, title, onLoad, isFullscreen, isMobile, labels } = props;
+  const { image, title, isFullscreen, isMobile, labels } = props;
 
   const imageSizeClassname = useMemo(() => {
     if (isFullscreen) {
@@ -35,13 +34,12 @@ const ProductCarouselMainItem: FC<ProductCarouselMainItemProps> = (props) => {
         labels.map((label, index) => (
           <Label key={label.id || index} label={label} className="z-2 absolute left-6 top-6 " />
         ))}
-      <Image
+      <CustomImage
         className={cn('rounded-lg object-cover', imageSizeClassname)}
         src={image}
         alt={title}
         width={1200}
         height={780}
-        onLoad={onLoad}
       />
     </div>
   );
