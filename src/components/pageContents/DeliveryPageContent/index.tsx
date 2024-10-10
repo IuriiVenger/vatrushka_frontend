@@ -232,10 +232,10 @@ const DeliveryPageContent: FC = () => {
                     использованием банковских карт следующих платёжных систем:
                   </p>
                   <div className="grid max-w-100 grid-cols-4 items-center gap-6">
-                    <img src={visa.src} alt="Visa" className="w-full" />
-                    <img src={mc.src} alt="MasterCard" className="w-full" />
-                    <img src={mir.src} alt="Мир" className="w-full" />
-                    <img src={jcb.src} alt="JCB" className="w-full" />
+                    <img src={visa.src} alt="Visa" />
+                    <img src={mc.src} alt="MasterCard" />
+                    <img src={mir.src} alt="Мир" />
+                    <img src={jcb.src} alt="JCB" />
                   </div>
                 </div>
                 <Divider />
