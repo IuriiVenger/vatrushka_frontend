@@ -55,8 +55,8 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
               short_description: item.node.products?.short_description || '',
               slug: item.node.products?.slug || '',
               category: {
-                name: rec.node.products?.categoryitemsCollection?.edges[0].node.categories.name || '',
-                slug: rec.node.products?.categoryitemsCollection?.edges[0].node.categories.slug || '',
+                name: rec.node.products?.categoryitemsCollection?.edges[0]?.node.categories.name || '',
+                slug: rec.node.products?.categoryitemsCollection?.edges[0]?.node.categories.slug || '',
               },
             });
           }

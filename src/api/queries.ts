@@ -39,7 +39,7 @@ export const GET_CATEGORIES = gql`
 `;
 
 export const GET_PRODUCTS_BY_CATEGORY_SLUG = gql`
-  query ProductByCategorySlug(
+  query GetProductsByCategorySlug(
     $filter: categoriesFilter
     $offset: Int
     $productsizesCollectionFilter2: productsizesFilter
@@ -93,6 +93,146 @@ export const GET_PRODUCTS_BY_CATEGORY_SLUG = gql`
                     }
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_RECOMMENDED_PRODUCTS_BY_CATEGORY_SLUG = gql`
+  query GetRecomendedProductsByCategorySlug($filter: categoriesFilter) {
+    categoriesCollection(filter: $filter) {
+      edges {
+        node {
+          rec_categoryCollection {
+            edges {
+              node {
+                products {
+                  productsizesCollection {
+                    edges {
+                      node {
+                        price
+                        button_image_url
+                        nodeId
+                        products {
+                          short_description
+                          slug
+                          name
+                          nodeId
+                        }
+                      }
+                    }
+                  }
+                  nodeId
+                  categoryitemsCollection {
+                    edges {
+                      node {
+                        categories {
+                          name
+                          slug
+                        }
+                      }
+                    }
+                  }
+                }
+                nodeId
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PRODUCTS_AND_RECOMMENDED_PRODUCTS_BY_CATEGORY_SLUG = gql`
+  query GetProductsAndRecommendedProductsByCategorySlug($filter: categoriesFilter, $offset: Int, $first: Int) {
+    categoriesCollection(filter: $filter) {
+      edges {
+        node {
+          name
+          slug
+          header_image_url
+          description
+          categoryitemsCollection(offset: $offset, first: $first) {
+            edges {
+              node {
+                products {
+                  slug
+                  sku
+                  short_description
+                  optional_text
+                  name
+                  ingredients
+                  id
+                  description
+                  productsizesCollection {
+                    edges {
+                      node {
+                        button_image_url
+                        is_default
+                        id
+                        portion_weight_grams
+                        price
+                        size_code
+                        size_id
+                        size_name
+                        sku
+                      }
+                    }
+                  }
+                  categoryitemsCollection {
+                    edges {
+                      node {
+                        categories {
+                          slug
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+            }
+          }
+          rec_categoryCollection {
+            edges {
+              node {
+                products {
+                  productsizesCollection {
+                    edges {
+                      node {
+                        price
+                        button_image_url
+                        nodeId
+                        products {
+                          short_description
+                          slug
+                          name
+                          nodeId
+                        }
+                      }
+                    }
+                  }
+                  nodeId
+                  categoryitemsCollection {
+                    edges {
+                      node {
+                        categories {
+                          name
+                          slug
+                        }
+                      }
+                    }
+                  }
+                }
+                nodeId
               }
             }
           }
