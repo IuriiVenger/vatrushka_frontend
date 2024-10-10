@@ -84,6 +84,7 @@ const DeliveryPageContent: FC = () => {
                   </h4>
                   {companyInfo.partners.map((partner) => (
                     <BranchInfo
+                      key={partner.id}
                       address={`${companyInfo.fullName}, ${partner.address}`}
                       phone={partner.phone}
                       businessHours={partner.businessHours}
