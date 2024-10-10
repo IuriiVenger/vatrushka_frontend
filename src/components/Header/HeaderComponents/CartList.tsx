@@ -14,9 +14,15 @@ const CartList: FC = () => {
   );
 
   return (
-    <div className="flex w-85 flex-col gap-6 text-base leading-base text-text max-xs:w-70">
+    <div
+      className="flex w-85 flex-col gap-6 text-base leading-base text-text max-xs:w-70"
+      role="region"
+      aria-label="Корзина"
+    >
       <div className="flex items-center justify-between">
-        <p className="text-lg leading-lg">Корзина</p>
+        <p className="text-lg leading-lg" role="heading" aria-level={1}>
+          Корзина
+        </p>
         <p className="text-textTertiary">{itemsCount}</p>
       </div>
       {cartList.length ? (

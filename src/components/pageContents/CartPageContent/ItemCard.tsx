@@ -71,6 +71,7 @@ const ItemCard: FC<TItemCardProps> = ({ card }) => {
             </p>
           )}
           <Button
+            aria-label="Удалить товар из корзины"
             icon={<RxCross2 className="h-6 w-6" />}
             type="text"
             className="ml-1 min-h-8 min-w-8 text-textTertiary active:text-text max-sm:hidden"

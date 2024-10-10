@@ -28,6 +28,7 @@ export type TMenuLevelOneOption = {
 export type TContact = {
   link: string;
   icon: ReactElement;
+  transliteration: string;
 };
 
 export type TNavigationLink = {

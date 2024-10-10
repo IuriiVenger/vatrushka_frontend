@@ -99,6 +99,7 @@ const CartPageContent: FC = () => {
               addonAfter={
                 <Button
                   type="link"
+                  aria-label="Отправить промокод"
                   icon={<IoIosArrowForward className="h-4 w-4" />}
                   onClick={handleSubmit(onCheckPromoCode)}
                   disabled={!isDirty}

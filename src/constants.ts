@@ -40,7 +40,7 @@ export enum ContactLinks {
 }
 
 export enum NavigationLinks {
-  ABOUT = 'about',
+  // ABOUT = 'about',
   CONTACTS = 'contacts',
   OFFERS = 'offers',
   WHOLESALE = 'wholesale',

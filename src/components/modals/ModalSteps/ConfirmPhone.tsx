@@ -117,7 +117,7 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = (props) => {
             min={0}
             inputMode="numeric"
             errors={!!errors.confirmationCode}
-            autoComplete="off"
+            autoComplete="one-time-code"
           />
           {isSendingPossible ? (
             <Button

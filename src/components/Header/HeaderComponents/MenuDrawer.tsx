@@ -16,7 +16,10 @@ import { resetAll, toggleMenu, toggleSubMenu } from '@/store/slices/ui';
 import { TContact, TNavigationLink } from '@/types';
 
 const menuItems = Object.entries(navigationLinks).reduce<TNavigationLink[]>((acc, [key, value]) => {
-  if (key !== NavigationLinks.ABOUT && key !== NavigationLinks.CONTACTS) {
+  if (
+    // key !== NavigationLinks.ABOUT &&
+    key !== NavigationLinks.CONTACTS
+  ) {
     acc.push(value);
   }
   return acc;
@@ -60,8 +63,9 @@ const MenuDrawer = () => {
         onClose={onCloseMenu}
         closeIcon={null}
         open={isMenuOpened}
-        className="top-44 flex w-full pt-2 text-lg leading-lg max-md:top-36 max-sm:top-24 max-sm:text-base max-sm:leading-base"
-        rootClassName="max-lg:block hidden max-sm:top-24 max-md:top-36 top-44 absolute"
+        className="top-44 flex w-full pt-2 text-lg leading-lg max-lg:top-40 max-md:top-32 max-sm:top-24 max-sm:text-base max-sm:leading-base"
+        rootClassName="max-lg:block hidden max-sm:top-24 max-lg:top-40 max-md:top-32 top-44 absolute"
+        aria-label="Меню"
       >
         <Button
           type="text"

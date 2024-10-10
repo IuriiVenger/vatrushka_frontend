@@ -47,12 +47,13 @@ const CourierDelivery: FC = () => {
         <div className="flex flex-col gap-4">
           <Input
             name="userAddress.address"
-            type="entrance"
+            type="text"
             placeholder="г. Челябинск"
             inputMode="text"
             label="Адрес (город, улица, номер дома)"
             required
             control={control}
+            autoComplete="street-address"
             errors={!!errors.userAddress?.address}
           />
           <div className="grid grid-cols-3 gap-4">

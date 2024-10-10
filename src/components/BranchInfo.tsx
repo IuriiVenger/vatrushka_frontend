@@ -20,7 +20,7 @@ const BranchInfo: FC<TBranchInfoProps> = ({ address, phone, businessHours, color
   return (
     <div className="flex flex-col gap-2 text-lg leading-lg max-sm:text-base max-sm:leading-base">
       <h3 className={cn('font-medium', colored && 'text-accent')}>{address}</h3>
-      <p>{phone}</p>
+      <a href={`tel:${phone}`}>{phone}</a>
       <div className="flex flex-col gap-1 text-textTertiary">
         {days.map(({ label, hours }) => (
           <p key={label}>

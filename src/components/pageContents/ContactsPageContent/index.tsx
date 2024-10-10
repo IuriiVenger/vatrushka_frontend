@@ -48,7 +48,7 @@ const ContactsPageContent = () => {
             ))}
           </div>
           <Divider />
-          <div className="flex flex-wrap gap-28">
+          <div className="flex flex-wrap gap-28 max-xs:flex-col max-xs:gap-5">
             <div className="flex flex-col gap-3">
               <h3 className=" text-lg font-medium leading-lg max-sm:text-base max-sm:leading-base">Отдел доставки</h3>
               <Contacts contacts={contacts} className="bg-bgLayout" />

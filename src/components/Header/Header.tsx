@@ -61,16 +61,21 @@ const Header: FC = () => {
     <>
       <header className="w-full">
         <PreHeader />
-        <div className="mx-auto flex w-full max-w-320 items-center gap-12 px-10 pt-10 max-lg:gap-6 max-md:pt-6 max-sm:gap-0 max-sm:py-2 max-xs:max-w-82 max-xs:gap-6 max-xs:px-0">
+        <div className="mx-auto flex w-full max-w-320 items-center gap-12 px-10 pt-10 max-lg:gap-6 max-lg:pt-6 max-sm:gap-0 max-sm:py-2 max-xs:max-w-82 max-xs:gap-6 max-xs:px-0">
           <div className="flex min-w-45 items-center gap-6">
             <Button
               type="link"
+              aria-label="Открыть/закрыть меню"
               onClick={onBurgerButtonClick}
               className="hidden w-min pl-0 text-textTertiary transition-all hover:text-textQuaternary max-lg:block"
               icon={isMenuOpened ? <RxCross2 className="h-6 w-6" /> : <HiOutlineMenuAlt2 className="h-6 w-6" />}
             />
             <Link href="/" onClick={onCloseAll}>
-              <img alt="logo" src={logo.src} className="h-14 w-45 max-md:h-10 max-md:w-32" />
+              <img
+                alt="Логотип онлайн-фудмаркета Ватрушка"
+                src={logo.src}
+                className="h-14 w-45 max-md:h-10 max-md:w-32"
+              />
             </Link>
           </div>
           <Menu />
@@ -84,9 +89,16 @@ const Header: FC = () => {
               placement="bottomRight"
               overlayClassName="pt-2"
             >
-              <Badge count={cartList.length} className="max-xs:small" color={color.accent.default}>
-                <LuShoppingCart className="h-5 w-5 cursor-pointer text-textTertiary transition-all hover:text-textQuaternary" />
-              </Badge>
+              <Button
+                type="link"
+                aria-label={`Просмотр корзины. Сейчас товаров в корзине: ${cartList.length}`}
+                className="h-6 w-5 p-0"
+                icon={
+                  <Badge count={cartList.length} className="max-xs:small" color={color.accent.default}>
+                    <LuShoppingCart className="h-6 min-w-5 text-textTertiary transition-all hover:text-textQuaternary" />
+                  </Badge>
+                }
+              />
             </Dropdown>
           </div>
         </div>

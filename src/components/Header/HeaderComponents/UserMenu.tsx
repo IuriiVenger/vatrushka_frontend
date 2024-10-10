@@ -1,5 +1,4 @@
-import { Button, Dropdown, message } from 'antd';
-import { MenuProps } from 'antd/lib';
+import { Button, Dropdown } from 'antd';
 import Link from 'next/link';
 import { FC, useMemo, useState } from 'react';
 
@@ -11,8 +10,6 @@ import UserInfo from './UserInfo';
 
 import AuthModal from '@/components/modals/AuthModal';
 import { AccountTabsOptions } from '@/constants';
-import { useAppSelector } from '@/store';
-import { selectIsUserLoggedIn } from '@/store/selectors';
 
 const userItems: TMenuItem[] = [
   {
@@ -40,12 +37,9 @@ type TUserMenuProps = {
 };
 
 const UserMenu: FC<TUserMenuProps> = ({ onCloseAll }) => {
-  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  // const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const isUserLoggedIn = true;
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-
-  const onClick: MenuProps['onClick'] = ({ key }) => {
-    message.info(`Click on item ${key}`);
-  };
 
   const onUserButtonClick = () => {
     onCloseAll();
@@ -55,7 +49,6 @@ const UserMenu: FC<TUserMenuProps> = ({ onCloseAll }) => {
   };
 
   const dropDownTrigger = useMemo(() => {
-    onCloseAll();
     const trigger: Array<'click'> = [];
 
     if (isUserLoggedIn) {
@@ -67,17 +60,13 @@ const UserMenu: FC<TUserMenuProps> = ({ onCloseAll }) => {
 
   return (
     <>
-      <Dropdown
-        trigger={dropDownTrigger}
-        menu={{ items: userItems, onClick }}
-        placement="bottomRight"
-        overlayClassName="pt-2 w-60 text-textTertiary transition-all hover:text-textQuaternary"
-      >
+      <Dropdown trigger={dropDownTrigger} menu={{ items: userItems }} placement="bottomRight" overlayClassName="pt-2">
         <Button
+          aria-label="Открыть личный кабинет или войти в аккаунт"
           type="link"
           onClick={onUserButtonClick}
-          className="h-6 w-4 p-0 text-textTertiary transition-all hover:text-textQuaternary max-lg:h-5 max-lg:w-5"
-          icon={<FaRegUser className="h-6 min-w-4 max-lg:h-5 max-lg:min-w-5" />}
+          className="h-6 w-4 p-0 text-textTertiary transition-all hover:text-textQuaternary"
+          icon={<FaRegUser className="h-6 min-w-4" />}
         />
       </Dropdown>
       <AuthModal isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen} />

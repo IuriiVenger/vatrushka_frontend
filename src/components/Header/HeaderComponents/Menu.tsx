@@ -10,7 +10,10 @@ import { TMenuLevelOneOption } from '@/types';
 
 const forClientItems =
   Object.entries(navigationLinks).reduce<TMenuLevelOneOption[]>((acc, [key, value]) => {
-    if (key !== NavigationLinks.ABOUT && key !== NavigationLinks.CONTACTS) {
+    if (
+      // key !== NavigationLinks.ABOUT &&
+      key !== NavigationLinks.CONTACTS
+    ) {
       acc.push({
         value: value.title,
         label: <Link href={value.link}>{value.title}</Link>,

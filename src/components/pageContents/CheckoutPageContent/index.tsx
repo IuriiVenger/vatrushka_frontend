@@ -383,6 +383,7 @@ const CheckoutPageContent: FC = () => {
                     addonAfter={
                       <Button
                         type="link"
+                        aria-label="Списать бонусы"
                         icon={<IoIosArrowForward className="h-4 w-4" />}
                         onClick={onRedeemBonusPoints}
                         disabled={!isDirty || !userBonusPoint}
