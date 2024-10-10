@@ -30,7 +30,7 @@ const CatalogItem: FC<TCatalogItemProps> = ({ item, subCatalog }) => {
       <div className="relative h-full w-full">
         <div className="z-10 flex flex-col gap-1 p-5 max-md:p-4 max-sm:p-2">
           <h2
-            className={`relative w-full ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'z-20 text-2xl leading-2xl max-md:text-lg max-md:leading-lg max-sm:text-base max-sm:leading-base'}`}
+            className={`relative w-full ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'z-20 text-2xl leading-2xl max-lg:text-xl max-lg:leading-xl max-md:text-lg max-md:leading-lg max-sm:text-base max-sm:leading-base'}`}
           >
             {name}
           </h2>

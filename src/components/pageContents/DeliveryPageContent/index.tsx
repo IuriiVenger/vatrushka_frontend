@@ -24,7 +24,7 @@ const DeliveryPageContent: FC = () => {
   ];
 
   return (
-    <section className="flex flex-col gap-8 max-sm:gap-6 max-xs:pt-6">
+    <section className="flex flex-col gap-8 max-sm:gap-6">
       <Breadcrumb items={breadcrumbs} />
       <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">Условия доставки</h1>
       <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1">
@@ -69,6 +69,7 @@ const DeliveryPageContent: FC = () => {
                   <h4 className="text-xl leading-xl max-sm:text-base max-sm:leading-base">Прийти к нам и заказать</h4>
                   {companyInfo.branches.map((branch) => (
                     <BranchInfo
+                      key={branch.id}
                       address={`${companyInfo.fullName}, ${branch.address}`}
                       phone={branch.phone}
                       businessHours={branch.businessHours}
@@ -230,11 +231,11 @@ const DeliveryPageContent: FC = () => {
                     необходимо выбрать пункт «Онлайн» в списке способов оплаты. Расчет происходит через ПАО СБЕРБАНК с
                     использованием банковских карт следующих платёжных систем:
                   </p>
-                  <div className="flex flex-wrap gap-6">
-                    <img src={visa.src} alt="Visa" />
-                    <img src={mc.src} alt="MasterCard" />
-                    <img src={mir.src} alt="Мир" />
-                    <img src={jcb.src} alt="JCB" />
+                  <div className="grid max-w-100 grid-cols-4 items-center gap-6">
+                    <img src={visa.src} alt="Visa" className="w-full" />
+                    <img src={mc.src} alt="MasterCard" className="w-full" />
+                    <img src={mir.src} alt="Мир" className="w-full" />
+                    <img src={jcb.src} alt="JCB" className="w-full" />
                   </div>
                 </div>
                 <Divider />

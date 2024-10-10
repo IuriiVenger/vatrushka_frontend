@@ -60,7 +60,7 @@ const AccountPageContent: FC = () => {
       <div className="flex flex-col items-start">
         {tab && (
           <Button
-            className="hidden h-8 border-none p-0 text-base leading-base max-sm:mb-6 max-sm:flex max-xs:mb-0 max-xs:mt-4"
+            className="hidden h-8 border-none p-0 text-base leading-base max-sm:mb-6 max-sm:flex max-xs:mb-6"
             onClick={onGoBack}
           >
             <IoIosArrowBack />
@@ -69,7 +69,7 @@ const AccountPageContent: FC = () => {
         )}
         <div
           className={cn(
-            'flex w-full items-center justify-between max-sm:pb-6 max-xs:pt-6',
+            'flex w-full items-center justify-between max-sm:pb-6',
             isHistoryTab && 'max-sm:flex-col max-sm:items-start max-sm:gap-6',
           )}
         >

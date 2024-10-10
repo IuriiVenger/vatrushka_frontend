@@ -50,7 +50,7 @@ const CartPageContent: FC = () => {
 
   return (
     <>
-      <section className="flex gap-24 max-xl:gap-10 max-lg:flex-col max-sm:gap-0 max-xs:pt-6">
+      <section className="flex gap-24 max-xl:gap-10 max-lg:flex-col max-sm:gap-0">
         <div className="flex w-full flex-col gap-12 max-lg:gap-8">
           <div className="flex items-end justify-between">
             <div className="flex flex-col gap-2 max-sm:gap-1">

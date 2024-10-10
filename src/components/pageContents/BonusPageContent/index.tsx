@@ -16,7 +16,7 @@ const BonusPageContent: FC = () => {
   ];
 
   return (
-    <section className="flex flex-col gap-8 max-sm:gap-6 max-xs:pt-6">
+    <section className="flex flex-col gap-8 max-sm:gap-6">
       <Breadcrumb items={breadcrumbs} />
       <div className="flex flex-col gap-4">
         <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">

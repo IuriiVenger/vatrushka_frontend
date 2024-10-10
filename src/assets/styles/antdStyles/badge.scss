@@ -5,9 +5,13 @@
         min-width: 16px;
         height: 16px;
         font-size: 10px;
-        line-height: 16px;
+        line-height: 18px;
         border-radius: 8px;
       }
     }
   }
+}
+
+.ant-badge .ant-badge-count {
+  line-height: 25px;
 }
