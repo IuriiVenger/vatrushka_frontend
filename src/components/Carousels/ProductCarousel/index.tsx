@@ -1,13 +1,12 @@
-import 'react-image-gallery/styles/scss/image-gallery.scss';
-
+import { Grid } from 'antd';
 import cn from 'classnames';
-import Image from 'next/image';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
 import ProductCarouselMainItem from './MainItem';
 
 import { API } from '@/api/types';
+import CustomImage from '@/components/ui/CustomImage';
 import RoundCloseButton from '@/components/ui/RoundCloseButton';
 
 type TProductImagesProps = {
@@ -30,12 +29,16 @@ const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMob
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [showBullets, setShowBullets] = useState<boolean>(!!isMobile);
   const [showThumbnails, setShowThumbnails] = useState<boolean>(!isMobile);
+  const [isScreensLoading, setIsScreensLoading] = useState(true);
 
-  const toogleFullScreen = () => {
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+
+  const toggleFullScreen = () => {
     galleryRef.current?.state.isFullscreen ? galleryRef.current?.exitFullScreen() : galleryRef.current?.fullScreen();
   };
 
-  const thumbnailPosition = isFullscreen ? 'bottom' : 'left';
+  const thumbnailPosition = isFullscreen || !screens.xl ? 'bottom' : 'left';
 
   const onScreenChange = (isFullscreenView: boolean) => {
     setShowNav(isFullscreenView);
@@ -44,13 +47,17 @@ const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMob
     setShowThumbnails(isFullscreenView || !isMobile);
   };
 
+  useEffect(() => {
+    if (screens) setIsScreensLoading(false);
+  }, [screens]);
+
   return (
     <ImageGallery
       additionalClass={cn('product-images', showThumbnails && 'with-thumbnails', className, isFullscreen && ' p-2')}
       ref={galleryRef}
       items={images.map((image) => ({
         original: image,
-        thumbnail: image,
+        thumbnail: isScreensLoading ? undefined : image,
         renderItem: () => (
           <ProductCarouselMainItem
             image={image}
@@ -61,13 +68,19 @@ const ProductCarousel: FC<TProductImagesProps> = ({ images, title, labels, isMob
           />
         ),
         renderThumbInner: () => (
-          <Image className="h-full object-cover" src={image} alt={`${title}-thumbnail`} width={78} height={78} />
+          <CustomImage
+            className="h-full rounded-[0.25rem] object-cover"
+            src={image}
+            alt={`${title}-thumbnail`}
+            width={78}
+            height={78}
+          />
         ),
         originalClass: 'rounded-lg overflow-hidden !w-full',
         thumbnailClass: 'h-10 !w-10 md:!w-20 md:h-20 rounded-lg object-cover',
       }))}
       useBrowserFullscreen={false}
-      onClick={toogleFullScreen}
+      onClick={toggleFullScreen}
       showThumbnails={showThumbnails}
       onScreenChange={onScreenChange}
       thumbnailPosition={thumbnailPosition}
