@@ -17,6 +17,14 @@ export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   headers: commonHeaders,
   connectToDevTools: true,
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+    },
+    query: {
+      fetchPolicy: 'no-cache',
+    },
+  },
 });
 
 export const { getRequest, postRequest, patchRequest, deleteRequest } = createCustomAxiosInstance(restApiUrl);

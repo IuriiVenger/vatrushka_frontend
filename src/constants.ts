@@ -64,7 +64,7 @@ export const emptyStoreDataWithStatusAndMeta = {
   ...emptyStoreDataWithStatus,
   meta: {
     ...defaultPaginationParams,
-    isLastPage: false,
+    isLastPage: undefined,
   },
 };
 

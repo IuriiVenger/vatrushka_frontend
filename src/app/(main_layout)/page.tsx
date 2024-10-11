@@ -5,9 +5,9 @@ import ClientHomePage from './_component/ClientHomePage';
 import { categories } from '@/api/categories';
 
 const HomePage: FC = async () => {
-  const { data } = await categories.getAll();
+  const { categoriesCollection } = await categories.getAllWithoutPagination();
 
-  return <ClientHomePage categories={data.categoriesCollection} />;
+  return <ClientHomePage categories={categoriesCollection} />;
 };
 
 export default HomePage;
