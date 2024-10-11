@@ -16,7 +16,7 @@ import UserMenu from './HeaderComponents/UserMenu';
 import PreHeader from './PreHeader';
 
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectUI } from '@/store/selectors';
+import { selectEntities, selectUI } from '@/store/selectors';
 import { toggleMenu, toggleSearch, resetAll } from '@/store/slices/ui';
 
 export type TMenuItem = Required<MenuProps>['items'][number];
@@ -27,6 +27,7 @@ const Header: FC = () => {
 
   const dispatch = useAppDispatch();
   const { isMenuOpened } = useAppSelector(selectUI);
+  const { categories } = useAppSelector(selectEntities);
 
   const onBurgerButtonClick = () => {
     dispatch(toggleMenu(!isMenuOpened));
@@ -67,7 +68,7 @@ const Header: FC = () => {
               />
             </Link>
           </div>
-          <Menu />
+          <Menu catalogOptions={categories.data} />
           <div className="flex w-full items-center justify-end gap-8 max-md:gap-4">
             <Search />
             <UserMenu onCloseAll={onCloseAll} />
