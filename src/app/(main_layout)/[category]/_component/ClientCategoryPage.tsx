@@ -2,22 +2,24 @@
 
 import { FC, useEffect, useMemo } from 'react';
 
+import { API } from '@/api/types';
 import CategoryPageContent from '@/components/pageContents/CategoryPageContent';
 import { defaultPaginationParams, RequestStatus } from '@/constants';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { selectEntities } from '@/store/selectors';
 import { loadMoreCategoryProducts, setCategoryProducts } from '@/store/slices/entities';
 import { CategoryItemsConnectionType, TCard } from '@/types';
-import { convertCategoryItemsQueryProductsToCards } from '@/utils/converters';
+import { convertCategoryItemsQueryProductsToCards, conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 
 type ClientCategoryPageProps = {
   categoryName: string;
   categorySlug: string;
   categoryItems: CategoryItemsConnectionType;
+  categoryRecommendedProducts?: API.Products.Recomedation[];
 };
 
 const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
-  const { categoryName, categoryItems, categorySlug } = props;
+  const { categoryName, categoryItems, categorySlug, categoryRecommendedProducts } = props;
   const dispatch = useAppDispatch();
   const { categoryProducts } = useAppSelector(selectEntities);
 
@@ -25,6 +27,10 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
   const initialProducts: TCard[] = useMemo(
     () => convertCategoryItemsQueryProductsToCards(categoryItems),
     [categoryItems],
+  );
+  const convertedCategoryRecommendedProducts = useMemo(
+    () => categoryRecommendedProducts && conertCategoryRecommendedProductsToCards(categoryRecommendedProducts),
+    [categoryRecommendedProducts],
   );
   const products = categoryProducts.data || initialProducts;
   const isProductsPending = categoryProducts.status === RequestStatus.PENDING;
@@ -50,7 +56,8 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
       products={products}
       isLoading={isProductsPending}
       loadMoreProducts={loadMoreProducts}
-      loadMoreAvailable={categoryProducts.meta?.isLastPage === false}
+      loadMoreAvalible={categoryProducts.meta?.isLastPage === false}
+      categoryRecommendedProducts={convertedCategoryRecommendedProducts}
     />
   );
 };

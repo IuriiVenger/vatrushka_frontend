@@ -1,3 +1,4 @@
+import { API } from '@/api/types';
 import { CategoryItemsConnectionType, TCard } from '@/types';
 
 export const convertCategoryItemsQueryProductsToCards = (categoryItems: CategoryItemsConnectionType): TCard[] =>
@@ -17,3 +18,19 @@ export const convertCategoryItemsQueryProductsToCards = (categoryItems: Category
     href: `/${node.products.categoryitemsCollection?.edges[0].node.categories.slug}/${node.products.slug}`,
     quantity: 1,
   })) || [];
+
+export const conertCategoryRecommendedProductsToCards = (
+  categoryRecommendedProducts: API.Products.Recomedation[],
+): TCard[] =>
+  categoryRecommendedProducts.map((product) => ({
+    id: product.nodeId,
+    pic: product.button_image_url,
+    name: product.name,
+    description: product.short_description || '',
+    price: product.price || 0,
+    // fix type TCard
+    quantity: 1,
+    // fix inStock after adding it to the API
+    inStock: true,
+    href: `/${product.category.slug}/${product.slug}`,
+  }));
