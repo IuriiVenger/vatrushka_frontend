@@ -15,10 +15,11 @@ import { TModalProps } from '@/types';
 
 type TAuthModalProps = TModalProps & {
   firstStep?: AuthModalSteps;
+  href?: string;
 };
 type TAuthModalStepsProps = TAuthActionModalProps & TConfirmPhoneModalProps & TSignInModalProps & TSignUpProps;
 
-const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = AuthModalSteps.AUTH_ACTION }) => {
+const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = AuthModalSteps.AUTH_ACTION, href }) => {
   const [step, setStep] = useState<AuthModalSteps>(firstStep);
   const [processType, setProcessType] = useState<AuthModalProcessType | null>(null);
   const dispatch = useAppDispatch();
@@ -81,7 +82,7 @@ const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = AuthMod
 
   const stepsMap = useMemo(
     () => ({
-      [AuthModalSteps.AUTH_ACTION]: <AuthActionModal {...stepsProps} />,
+      [AuthModalSteps.AUTH_ACTION]: <AuthActionModal href={href} {...stepsProps} />,
       [AuthModalSteps.SIGN_IN]: <SignIn {...stepsProps} />,
       [AuthModalSteps.SIGN_UP]: <SignUp {...stepsProps} />,
       [AuthModalSteps.CONFIRM_PHONE]: <ConfirmPhone {...stepsProps} />,

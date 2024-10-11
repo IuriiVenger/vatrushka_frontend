@@ -41,7 +41,7 @@ const DropdownListItem: FC<TDropdownListItemProps> = ({ item, cart = false }) =>
           <p className="text-nowrap">
             <span>{price}</span> {CurrencySymbol.RUB}
           </p>
-          {cart && <StepperButton setCount={setStepperCount} count={stepperCount} />}
+          {cart && <StepperButton setCount={setStepperCount} count={stepperCount} minValue={1} />}
         </div>
       </div>
     </div>

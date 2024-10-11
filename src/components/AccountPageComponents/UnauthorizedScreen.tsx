@@ -6,6 +6,7 @@ import { FC, useState } from 'react';
 import image from '../../assets/images/account_page.svg';
 
 import AuthModal from '@/components/modals/AuthModal';
+import { AuthModalSteps } from '@/constants';
 
 const UnauthorizedScreen: FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -32,7 +33,7 @@ const UnauthorizedScreen: FC = () => {
           </Button>
         </div>
       </section>
-      <AuthModal isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen} />
+      <AuthModal isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen} firstStep={AuthModalSteps.SIGN_IN} />
     </>
   );
 };

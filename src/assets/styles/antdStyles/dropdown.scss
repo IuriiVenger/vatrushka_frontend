@@ -1,11 +1,7 @@
 .ant-dropdown .ant-dropdown-menu {
-  @apply px-3 py-2.5;
+  @apply px-2.5 py-3;
 }
 
 .ant-dropdown-menu .ant-dropdown-menu-item:hover {
   @apply bg-transparent text-primary;
-}
-
-.ant-select-dropdown {
-  @apply min-w-65;
 }

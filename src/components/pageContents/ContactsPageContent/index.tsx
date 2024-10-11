@@ -27,7 +27,7 @@ const ContactsPageContent = () => {
   return (
     <div className="flex flex-col gap-8">
       <Breadcrumb items={breadcrumbs} />
-      <section className="flex flex-col gap-12">
+      <section className="flex flex-col gap-12 max-lg:gap-8">
         <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">Контакты</h1>
         <div>
           <div className="flex flex-col gap-3">
@@ -40,6 +40,7 @@ const ContactsPageContent = () => {
           <div className="grid grid-cols-2 gap-6 max-lg:grid-cols-1">
             {companyInfo.branches.map((branch) => (
               <BranchInfo
+                key={branch.id}
                 address={`${companyInfo.fullName}, ${branch.address}`}
                 phone={branch.phone}
                 businessHours={branch.businessHours}
@@ -47,7 +48,7 @@ const ContactsPageContent = () => {
             ))}
           </div>
           <Divider />
-          <div className="flex flex-wrap gap-28">
+          <div className="flex flex-wrap gap-28 max-xs:flex-col max-xs:gap-5">
             <div className="flex flex-col gap-3">
               <h3 className=" text-lg font-medium leading-lg max-sm:text-base max-sm:leading-base">Отдел доставки</h3>
               <Contacts contacts={contacts} className="bg-bgLayout" />

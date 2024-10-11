@@ -14,10 +14,11 @@ const Contacts: FC<TContactsProps> = ({ contacts, className }) => {
 
   return (
     <div className="flex gap-4">
-      {links.map(({ icon, link }) => (
+      {links.map(({ icon, link, transliteration }) => (
         <Button
           key={link}
           ghost
+          aria-label={`Связаться с нами через ${transliteration}`}
           href={link}
           referrerPolicy="no-referrer"
           target="_blank"

@@ -5,12 +5,15 @@ import { FC, Fragment, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoIosArrowForward } from 'react-icons/io';
 
+import EmptyCartScreen from './EmptyCartScreen';
 import ItemCard from './ItemCard';
 
 import AuthModal from '@/components/modals/AuthModal';
 import Input from '@/components/ui/Form/Input';
 import { CurrencySymbol } from '@/constants';
 import { order, products } from '@/mocks';
+import { useAppSelector } from '@/store';
+import { selectIsUserLoggedIn } from '@/store/selectors';
 import { getNounWithDeclension } from '@/utils/formatters';
 
 const count = 3;
@@ -20,6 +23,7 @@ type TDiscountForm = {
 };
 
 const CartPageContent: FC = () => {
+  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const itemsCountText = `${count} ${getNounWithDeclension(count, 'товар', 'товара', 'товаров')}`;
@@ -40,18 +44,17 @@ const CartPageContent: FC = () => {
     console.log('onCheckPromoCode:', data);
   };
 
-  // TODO: fix
-  const isLoggedIn = true;
-
   const onContinue = () => {
-    if (!isLoggedIn) {
+    if (!isUserLoggedIn) {
       setIsAuthModalOpen(true);
     }
   };
 
+  if (!products.length) return <EmptyCartScreen />;
+
   return (
     <>
-      <section className="flex gap-24 max-xl:gap-10 max-lg:flex-col max-sm:gap-0 max-xs:pt-6">
+      <section className="flex gap-24 max-xl:gap-10 max-lg:flex-col max-sm:gap-0">
         <div className="flex w-full flex-col gap-12 max-lg:gap-8">
           <div className="flex items-end justify-between">
             <div className="flex flex-col gap-2 max-sm:gap-1">
@@ -99,6 +102,7 @@ const CartPageContent: FC = () => {
               addonAfter={
                 <Button
                   type="link"
+                  aria-label="Отправить промокод"
                   icon={<IoIosArrowForward className="h-4 w-4" />}
                   onClick={handleSubmit(onCheckPromoCode)}
                   disabled={!isDirty}
@@ -130,14 +134,14 @@ const CartPageContent: FC = () => {
               type="primary"
               className="text-lg leading-lg max-sm:text-base max-sm:leading-base"
               onClick={onContinue}
-              href={isLoggedIn ? '/checkout' : undefined}
+              href={isUserLoggedIn ? '/checkout' : undefined}
             >
               Перейти к оформлению
             </Button>
           </div>
         </div>
       </section>
-      <AuthModal isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen} />
+      <AuthModal isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen} href="/checkout" />
     </>
   );
 };

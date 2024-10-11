@@ -24,7 +24,7 @@ const CategoryPageContent: FC<TCategoryPageContentProps> = (props) => {
   const breadcrumbs = [{ title: <Link href="/">Главная</Link> }, { title: categoryName }];
 
   return (
-    <section className="flex flex-col gap-8">
+    <section className="flex flex-col gap-8" aria-label={categoryName}>
       <Breadcrumb items={breadcrumbs} />
       <ProductsList title={categoryName} onLoadMore={loadMoreProducts} {...otherProps} />
       {!!categoryRecommendedProducts?.length && <Slider title="Рекомендуем" slides={categoryRecommendedProducts} />}

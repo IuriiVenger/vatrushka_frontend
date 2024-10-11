@@ -12,8 +12,11 @@ import UnauthorizedScreen from '../../AccountPageComponents/UnauthorizedScreen';
 
 import { AccountTabsOptions, accountTabs } from '@/constants';
 import { useUrlParams } from '@/hooks/useUrlParams';
+import { useAppSelector } from '@/store';
+import { selectIsUserLoggedIn } from '@/store/selectors';
 
 const AccountPageContent: FC = () => {
+  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   const [tab, setTab] = useState<AccountTabsOptions | null>(null);
 
   const isHistoryTab = tab === accountTabs[AccountTabsOptions.ORDER_HISTORY].value;
@@ -51,16 +54,14 @@ const AccountPageContent: FC = () => {
     if (paramValue && isValidTabParam(paramValue)) setCurrentTab(paramValue);
   }, [paramValue]);
 
-  const isAuthorized = true;
-
-  if (!isAuthorized) return <UnauthorizedScreen />;
+  if (!isUserLoggedIn) return <UnauthorizedScreen />;
 
   return (
     <section className="flex flex-col">
       <div className="flex flex-col items-start">
         {tab && (
           <Button
-            className="hidden h-8 border-none p-0 text-base leading-base max-sm:mb-6 max-sm:flex max-xs:mb-0 max-xs:mt-4"
+            className="hidden h-8 border-none p-0 text-base leading-base max-sm:mb-6 max-sm:flex max-xs:mb-6"
             onClick={onGoBack}
           >
             <IoIosArrowBack />
@@ -69,7 +70,7 @@ const AccountPageContent: FC = () => {
         )}
         <div
           className={cn(
-            'flex w-full items-center justify-between max-sm:pb-6 max-xs:pt-6',
+            'flex w-full items-center justify-between max-sm:pb-6',
             isHistoryTab && 'max-sm:flex-col max-sm:items-start max-sm:gap-6',
           )}
         >

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const RootLayout: FC<PropsWithChildren> = ({ children }) => (
   <StoreProvider>
-    <html lang="en">
+    <html lang="ru">
       <body>
         <Providers>{children}</Providers>
       </body>

@@ -10,8 +10,11 @@ import RadioGroup from '@/components/ui/Form/Radio';
 import Map from '@/components/ui/Map';
 import { addressesTypes, AddressType } from '@/constants';
 import { userInfo } from '@/mocks';
+import { useAppSelector } from '@/store';
+import { selectIsUserLoggedIn } from '@/store/selectors';
 
 const CourierDelivery: FC = () => {
+  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   const [isAddressesModalOpen, setIsAddressesModalOpen] = useState(false);
 
   const addressTypeOptions = Object.values(addressesTypes);
@@ -29,15 +32,12 @@ const CourierDelivery: FC = () => {
     setIsAddressesModalOpen(true);
   };
 
-  // TODO: fix
-  const isLoggedIn = true;
-
   return (
     <>
       <div className="flex flex-col gap-8">
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Адрес доставки</h3>
-          {isLoggedIn && userInfo.addresses.length && (
+          {isUserLoggedIn && userInfo.addresses.length && (
             <Button type="link" onClick={onClick} className="h-6 p-0">
               Мои адреса
             </Button>
@@ -47,12 +47,13 @@ const CourierDelivery: FC = () => {
         <div className="flex flex-col gap-4">
           <Input
             name="userAddress.address"
-            type="entrance"
+            type="text"
             placeholder="г. Челябинск"
             inputMode="text"
             label="Адрес (город, улица, номер дома)"
             required
             control={control}
+            autoComplete="street-address"
             errors={!!errors.userAddress?.address}
           />
           <div className="grid grid-cols-3 gap-4">

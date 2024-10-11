@@ -65,30 +65,35 @@ export const contactLinks: Record<ContactLinks, TContact> = {
   [ContactLinks.TELEGRAM]: {
     link: 'https://t.me/vatrushkachel',
     icon: <BiLogoTelegram />,
+    transliteration: 'Телеграм',
   },
   [ContactLinks.VK]: {
     link: 'https://vk.com/vatrushkachel',
     icon: <BiLogoVk />,
+    transliteration: 'Вконтакте',
   },
   [ContactLinks.WHATS_APP]: {
     link: 'https://wa.me/73517007981',
     icon: <IoLogoWhatsapp />,
+    transliteration: 'Ватсап',
   },
   [ContactLinks.MAIL]: {
     link: 'sales@pirogvatrushka.ru',
     icon: <IoIosMail />,
+    transliteration: 'Имейл',
   },
   [ContactLinks.CHIEF_MAIL]: {
     link: 'delivery@vatrushka74.ru',
     icon: <IoIosMail />,
+    transliteration: 'Имейл директора',
   },
 };
 
 export const navigationLinks: Record<NavigationLinks, TNavigationLink> = {
-  [NavigationLinks.ABOUT]: {
-    link: '/about-us',
-    title: 'О нас',
-  },
+  // [NavigationLinks.ABOUT]: {
+  //   link: '/about-us',
+  //   title: 'О нас',
+  // },
   [NavigationLinks.CONTACTS]: {
     link: '/contacts',
     title: 'Контакты',

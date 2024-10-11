@@ -165,9 +165,9 @@ const CheckoutPageContent: FC = () => {
 
   return (
     <>
-      <section className="flex flex-col items-start gap-6 max-sm:gap-4 max-xs:pt-6">
+      <section className="flex flex-col items-start gap-6 max-sm:gap-4">
         <Button
-          className="h-10 border-none p-0 text-lg leading-lg max-sm:mb-6 max-sm:h-8 max-sm:text-base max-sm:leading-base max-xs:mb-0 max-xs:mt-4"
+          className="h-10 border-none p-0 text-lg leading-lg max-sm:mb-6 max-sm:h-8 max-sm:text-base max-sm:leading-base max-xs:mb-0"
           href="/cart"
         >
           <IoIosArrowBack />В корзину
@@ -383,6 +383,7 @@ const CheckoutPageContent: FC = () => {
                     addonAfter={
                       <Button
                         type="link"
+                        aria-label="Списать бонусы"
                         icon={<IoIosArrowForward className="h-4 w-4" />}
                         onClick={onRedeemBonusPoints}
                         disabled={!isDirty || !userBonusPoint}

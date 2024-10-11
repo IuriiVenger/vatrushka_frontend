@@ -16,7 +16,7 @@ const Switch: FC<TSwitchProps> = ({ name, control, labelClassName, defaultChecke
     control={control}
     defaultValue={defaultChecked ?? false}
     render={({ field: { onChange, value } }) => (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2" aria-label={label}>
         <AntSwitch {...props} onChange={(checked) => onChange(checked)} checked={value ?? defaultChecked ?? false} />
         {label && (
           <p className={`text-lg leading-lg max-sm:text-base max-sm:leading-base ${labelClassName}`}>{label}</p>

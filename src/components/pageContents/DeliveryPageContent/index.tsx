@@ -24,7 +24,7 @@ const DeliveryPageContent: FC = () => {
   ];
 
   return (
-    <section className="flex flex-col gap-8 max-sm:gap-6 max-xs:pt-6">
+    <section className="flex flex-col gap-8 max-sm:gap-6">
       <Breadcrumb items={breadcrumbs} />
       <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">Условия доставки</h1>
       <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1">
@@ -69,6 +69,7 @@ const DeliveryPageContent: FC = () => {
                   <h4 className="text-xl leading-xl max-sm:text-base max-sm:leading-base">Прийти к нам и заказать</h4>
                   {companyInfo.branches.map((branch) => (
                     <BranchInfo
+                      key={branch.id}
                       address={`${companyInfo.fullName}, ${branch.address}`}
                       phone={branch.phone}
                       businessHours={branch.businessHours}
@@ -83,6 +84,7 @@ const DeliveryPageContent: FC = () => {
                   </h4>
                   {companyInfo.partners.map((partner) => (
                     <BranchInfo
+                      key={partner.id}
                       address={`${companyInfo.fullName}, ${partner.address}`}
                       phone={partner.phone}
                       businessHours={partner.businessHours}
@@ -120,8 +122,8 @@ const DeliveryPageContent: FC = () => {
                   <li className="pl-1">
                     Другие населенные пункты
                     <p className="pt-2">
-                      Услуги Яндекс Доставки доступны на территори Челябинской области. Стоимость доставки Вашего заказа
-                      уточнит оператор при подтверждении заказа.
+                      Услуги Яндекс Доставки доступны на территории Челябинской области. Стоимость доставки Вашего
+                      заказа уточнит оператор при подтверждении заказа.
                     </p>
                   </li>
                 </ul>
@@ -152,7 +154,7 @@ const DeliveryPageContent: FC = () => {
                   </li>
                   <li>
                     Для максимальной безопасности просим Вас{' '}
-                    <span className="font-medium">ипользовать безналичный способ оплаты</span>. Это позволит снизить
+                    <span className="font-medium">использовать безналичный способ оплаты</span>. Это позволит снизить
                     риски. Если все же, Вы оплачиваете наличными деньгами, то пересчитайте деньги на глазах и курьера и
                     положите их на подставку.
                   </li>
@@ -230,7 +232,7 @@ const DeliveryPageContent: FC = () => {
                     необходимо выбрать пункт «Онлайн» в списке способов оплаты. Расчет происходит через ПАО СБЕРБАНК с
                     использованием банковских карт следующих платёжных систем:
                   </p>
-                  <div className="flex flex-wrap gap-6">
+                  <div className="grid max-w-100 grid-cols-4 items-center gap-6">
                     <img src={visa.src} alt="Visa" />
                     <img src={mc.src} alt="MasterCard" />
                     <img src={mir.src} alt="Мир" />

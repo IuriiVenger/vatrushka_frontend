@@ -73,11 +73,12 @@ const AddressModal: FC<TAddressModalProps> = ({ isOpen, setIsOpen, isEdit = fals
         <Form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-4">
           <Input
             name="address"
-            type="entrance"
+            type="text"
             placeholder="г. Челябинск"
             inputMode="text"
             label="Адрес (город, улица, номер дома)"
             required
+            autoComplete="street-address"
             control={control}
             errors={!!errors.address}
           />

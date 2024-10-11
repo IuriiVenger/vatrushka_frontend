@@ -19,6 +19,7 @@ const StepperButton: FC<TStepperButtonProps> = ({ count, setCount, minValue = 0 
     <div className="flex items-center rounded-3xl bg-textQuinary max-xs:justify-between">
       <button
         type="button"
+        aria-label="Уменьшить количество на 1"
         disabled={isMinusButtonDisabled}
         className="flex h-10 w-10 items-center justify-center text-textTertiary transition-all hover:text-accent disabled:text-fill"
         onClick={onCountChange(-1)}
@@ -28,6 +29,7 @@ const StepperButton: FC<TStepperButtonProps> = ({ count, setCount, minValue = 0 
       <span className="w-6 text-center text-text">{count}</span>
       <button
         type="button"
+        aria-label="Увеличить количество на 1"
         className="flex h-10 w-10 items-center justify-center text-textTertiary transition-all hover:text-accent disabled:text-fill"
         onClick={onCountChange(1)}
       >

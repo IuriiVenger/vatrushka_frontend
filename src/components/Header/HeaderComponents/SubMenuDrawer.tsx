@@ -17,8 +17,9 @@ const SubMenuDrawer: FC<TSubMenuDrawerProps> = ({ isSubMenuOpened, onCloseSubMen
     closable={false}
     open={isSubMenuOpened}
     placement="left"
-    className="top-44 max-md:top-36 max-sm:top-24"
-    rootClassName="max-sm:top-24 max-md:top-36 top-44 absolute"
+    className="top-44 max-lg:top-40 max-md:top-32 max-sm:top-24"
+    rootClassName="max-sm:top-24 max-lg:top-40 max-md:top-32 top-44 absolute"
+    aria-label="Категории каталога"
   >
     <div className="flex w-full flex-col gap-6 px-10 pt-4 text-lg leading-lg max-sm:text-base max-sm:leading-base max-xs:m-auto max-xs:max-w-82 max-xs:px-0">
       <Button

@@ -25,14 +25,12 @@ const Dropdown = <T extends string>({ items, sort, setSort, className, translati
     >
       <button
         type="button"
-        className="h-fit w-fit rounded-lg border border-border px-8 py-3 transition-all hover:border-primaryHover hover:text-primaryHover focus:border-primaryHover focus:text-primaryHover active:border-primaryHover active:text-primaryHover max-lg:px-6 max-lg:py-2 max-xs:px-4"
+        className="flex h-fit w-fit flex-nowrap items-center gap-2 rounded-lg border border-border px-8 py-3 align-middle transition-all hover:border-primaryHover hover:text-primaryHover focus:border-primaryHover focus:text-primaryHover active:border-primaryHover active:text-primaryHover max-lg:px-6 max-lg:py-2 max-xs:px-4"
       >
-        <div className="flex flex-nowrap items-center gap-2 align-middle">
-          <span className="text-nowrap text-lg leading-lg max-xs:text-base max-xs:leading-base">
-            {translations[sort]}
-          </span>
-          <IoIosArrowDown />
-        </div>
+        <span className="text-nowrap text-lg leading-lg max-xs:text-base max-xs:leading-base">
+          {translations[sort]}
+        </span>
+        <IoIosArrowDown />
       </button>
     </AntDropdown>
   );
