@@ -1,13 +1,12 @@
 import { FC } from 'react';
 
-import ClientHomePage from './_component/ClientHomePage';
-
 import { categories } from '@/api/categories';
+import HomePageContent from '@/components/pageContents/HomePageContent';
 
 const HomePage: FC = async () => {
   const { categoriesCollection } = await categories.getAllWithoutPagination();
 
-  return <ClientHomePage categories={categoriesCollection} />;
+  return <HomePageContent categories={categoriesCollection} />;
 };
 
 export default HomePage;

@@ -3,20 +3,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { StoreDataWithStatus, StoreDataWithStatusAndMeta } from '../types';
 
-import { CategoriesConnection } from '@/__generated__/graphql';
+import { Categories } from '@/__generated__/graphql';
 import { categories } from '@/api/categories';
 import { emptyStoreDataWithStatus, emptyStoreDataWithStatusAndMeta, RequestStatus } from '@/constants';
 import { TCard } from '@/types';
 import { convertCategoryItemsQueryProductsToCards } from '@/utils/converters';
 
 type EntitiesSliceState = {
-  categories: StoreDataWithStatus<CategoriesConnection | null>;
+  categories: StoreDataWithStatus<Categories[] | null>;
   categoryProducts: StoreDataWithStatusAndMeta<TCard[] | null>;
-};
-
-type SetCategoriesAction = {
-  type: string;
-  payload: CategoriesConnection | null;
 };
 
 type SetCategoryProductsAction = {
@@ -35,7 +30,7 @@ const initialState: EntitiesSliceState = {
   categoryProducts: emptyStoreDataWithStatusAndMeta,
 };
 
-export const loadCategories = createAsyncThunk('categories/getAll', categories.getAll);
+export const loadCategories = createAsyncThunk('categories/getAll', categories.getAllWithoutPagination);
 export const loadCategoryProducts = createAsyncThunk('categories/getProducts', categories.getCategoryProductsBySlug);
 export const loadMoreCategoryProducts = createAsyncThunk(
   'categories/getMoreProducts',
@@ -46,10 +41,6 @@ const entitiesSlice = createSlice({
   name: 'entities',
   initialState,
   reducers: {
-    setCategories: (state, { payload }: SetCategoriesAction) => {
-      state.categories.data = payload;
-      state.categories.status = RequestStatus.FULFILLED;
-    },
     setCategoryProducts: (state, { payload }: SetCategoryProductsAction) => {
       state.categoryProducts.data = payload.data;
       state.categoryProducts.meta = { ...payload.meta };
@@ -63,7 +54,7 @@ const entitiesSlice = createSlice({
     builder.addCase(loadCategories.fulfilled, (state, action) => {
       state.categories = {
         status: RequestStatus.FULFILLED,
-        data: action.payload.data.categoriesCollection,
+        data: action.payload.categoriesCollection.edges.map((edge) => edge.node),
       };
     });
     builder.addCase(loadCategories.rejected, (state) => {
@@ -115,6 +106,6 @@ const entitiesSlice = createSlice({
   },
 });
 
-export const { setCategories, setCategoryProducts } = entitiesSlice.actions;
+export const { setCategoryProducts } = entitiesSlice.actions;
 
 export default entitiesSlice.reducer;

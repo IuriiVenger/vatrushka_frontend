@@ -5,15 +5,21 @@ import { App, ConfigProvider } from 'antd';
 import locale from 'antd/locale/ru_RU';
 import cn from 'classnames';
 import { AppProgressBar } from 'next-nprogress-bar';
-import { FC, PropsWithChildren, Suspense } from 'react';
+import { FC, PropsWithChildren, Suspense, useEffect } from 'react';
 
 import ScrollTopButton from '@/components/ui/ScrollTopButton';
 import { theme } from '@/config/theme';
+import useInitApp from '@/hooks/useInitApp';
 import { useAppSelector } from '@/store';
 import { selectUI } from '@/store/selectors';
 
 const Providers: FC<PropsWithChildren> = ({ children }) => {
   const { isPageScrollBlocked } = useAppSelector(selectUI);
+  const { initApp } = useInitApp();
+
+  useEffect(() => {
+    initApp();
+  }, []);
 
   return (
     <ConfigProvider theme={theme} locale={locale}>
