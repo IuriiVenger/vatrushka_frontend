@@ -20,7 +20,7 @@ import PromoTag from '@/components/ui/PromoTag';
 import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
-import { TCard } from '@/types';
+import { conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 
 export type ActiveModifierGroupIds = {
   min_quantity: number;
@@ -137,22 +137,11 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   const pricePerItem = activeSizePrice + activeModifiersPrice;
   const totalPrice = pricePerItem * amount;
   const weight = activeSize?.portion_weight_grams;
-  const recomendatedProductsData: TCard[] = recommendedProducts.map((product) => ({
-    id: product.nodeId,
-    pic: product.button_image_url,
-    name: product.name,
-    description: product.short_description || '',
-    price: product.price || 0,
-    // TODO: fix type TCard
-    quantity: 1,
-    // TODO: fix inStock after adding it to the API
-    inStock: true,
-    href: `/${product.category.slug}/${product.slug}`,
-  }));
+  const recomendatedProductsData = conertCategoryRecommendedProductsToCards(recommendedProducts);
 
   const isSizeSelectorEnabled = sizes && sizes?.length > 1;
 
-  const getIsModififierSelected = (groupId: string, modifier: Omit<ProductSizeModifiers, 'nodeId'>) =>
+  const getIsModifierSelected = (groupId: string, modifier: Omit<ProductSizeModifiers, 'nodeId'>) =>
     modifiersGroupsData[groupId]?.activeModifierGroups.some((activeModifier) => activeModifier.id === modifier.id);
 
   const onModifierClick = (groupId: string, modifier: Omit<ProductSizeModifiers, 'nodeId'>) => () => {
@@ -196,27 +185,34 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     <>
       <div className="mx-auto flex w-full max-w-320 flex-col gap-12 pb-10 max-lg:gap-4 max-xs:max-w-82">
         <Breadcrumb items={breadcrumbs} />
-        <div className="flex justify-between gap-10 max-xl:grid max-xl:grid-cols-2 max-lg:flex max-lg:flex-col">
-          <ProductCarousel
-            className="lg:hidden"
-            isMobile
-            images={selectedSizeImagesUrls}
-            title={title || ''}
-            labels={labels}
-          />
-          <ProductCarousel
-            className="max-lg:hidden"
-            images={selectedSizeImagesUrls}
-            title={title || ''}
-            labels={labels}
-          />
+        <div
+          className={`${selectedSizeImagesUrls.length ? 'grid grid-cols-2' : 'flex flex-col'} z-10 gap-10 max-md:flex max-md:flex-col`}
+        >
+          {!!selectedSizeImagesUrls.length && (
+            <>
+              <ProductCarousel
+                className="hidden max-md:block"
+                isMobile
+                images={selectedSizeImagesUrls}
+                title={title || ''}
+                labels={labels}
+              />
+              <ProductCarousel
+                className="block max-md:hidden"
+                images={selectedSizeImagesUrls}
+                title={title || ''}
+                labels={labels}
+              />
+            </>
+          )}
 
           <div className="flex max-w-144 flex-col text-lg leading-lg max-lg:max-w-full max-sm:text-base max-sm:leading-base">
             <div className="flex flex-col">
-              <div className="flex flex-wrap gap-x-4 gap-y-3 pb-6 max-sm:gap-x-3">
-                {promotions &&
-                  promotions.map((promo) => promo.productButtonText && <PromoTag text={promo.productButtonText} />)}
-              </div>
+              {!!promotions.length && (
+                <div className="flex flex-wrap gap-x-4 gap-y-3 pb-6 max-sm:gap-x-3">
+                  {promotions.map((promo) => promo.productButtonText && <PromoTag text={promo.productButtonText} />)}
+                </div>
+              )}
               <h1 className="text-3xl font-medium leading-3xl max-sm:text-xl max-sm:leading-xl">{title}</h1>
               <p className="pt-3 text-textTertiary ">{weight} г</p>
               {/* <div className="flex items-start gap-1 pt-3 text-textTertiary max-lg:hidden"> not use right now, no data for this
@@ -253,7 +249,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
                   {group.modifiers.map((modifier) => (
                     <ProductModificator
                       key={modifier.id}
-                      isSelected={getIsModififierSelected(group.id, modifier)}
+                      isSelected={getIsModifierSelected(group.id, modifier)}
                       onClick={onModifierClick(group.id, modifier)}
                       title={modifier.name}
                       price={modifier.price}

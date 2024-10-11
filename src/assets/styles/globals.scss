@@ -7,6 +7,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'react-image-gallery/styles/scss/image-gallery.scss';
+
 @import './antdStyles/alert.scss';
 @import './antdStyles/badge.scss';
 @import './antdStyles/carousel.scss';

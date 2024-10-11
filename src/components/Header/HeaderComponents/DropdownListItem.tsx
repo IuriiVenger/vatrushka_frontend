@@ -1,6 +1,5 @@
 import { message } from 'antd';
 import { FC, useState } from 'react';
-
 import { RxCross2 } from 'react-icons/rx';
 
 import CustomImage from '@/components/ui/CustomImage';

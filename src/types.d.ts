@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { ProductByCategorySlugQuery } from './__generated__/graphql';
+import { GetProductsByCategorySlugQuery } from './__generated__/graphql';
 import { TagType } from './mock';
 
 type TValueOf<T> = T[keyof T];
@@ -48,7 +48,7 @@ export type TTag = {
 };
 
 export type CategoryItemsConnectionType = NonNullable<
-  ProductByCategorySlugQuery['categoriesCollection']
+  GetProductsByCategorySlugQuery['categoriesCollection']
 >['edges'][0]['node']['categoryitemsCollection'];
 
 export type Sluggable<T> = T & { slug: string };

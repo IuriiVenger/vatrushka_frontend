@@ -1,8 +1,8 @@
 import cn from 'classnames';
-import Image from 'next/image';
 import { FC, useMemo } from 'react';
 
 import { API } from '@/api/types';
+import CustomImage from '@/components/ui/CustomImage';
 import Label from '@/components/ui/Label';
 
 type ProductCarouselMainItemProps = {
@@ -25,7 +25,7 @@ const ProductCarouselMainItem: FC<ProductCarouselMainItemProps> = (props) => {
       return 'w-full aspect-3/2';
     }
 
-    return 'h-80 w-120 object-cover';
+    return 'h-80 w-full object-cover';
   }, [isFullscreen, isMobile]);
 
   return (
@@ -34,12 +34,12 @@ const ProductCarouselMainItem: FC<ProductCarouselMainItemProps> = (props) => {
         labels.map((label, index) => (
           <Label key={label.id || index} label={label} className="z-2 absolute left-6 top-6 " />
         ))}
-      <Image
+      <CustomImage
         className={cn('rounded-lg object-cover', imageSizeClassname)}
         src={image}
         alt={title}
-        width={480}
-        height={320}
+        width={1200}
+        height={780}
       />
     </div>
   );

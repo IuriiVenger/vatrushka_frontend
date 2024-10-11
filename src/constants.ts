@@ -17,7 +17,7 @@ export enum ResponseStatus {
 export enum RequestStatus {
   NONE = 'none',
   PENDING = 'pending',
-  FULLFILLED = 'fulfilled',
+  FULFILLED = 'fulfilled',
   REJECTED = 'rejected',
 }
 
