@@ -183,7 +183,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
 
   return (
     <>
-      <div className="mx-auto flex w-full max-w-320 flex-col gap-12 pb-10 max-lg:gap-4 max-xs:max-w-82">
+      <div className="mx-auto flex w-full max-w-300 flex-col gap-12 pb-10 max-lg:gap-4 max-xs:max-w-82">
         <Breadcrumb items={breadcrumbs} />
         <div
           className={`${selectedSizeImagesUrls.length ? 'grid grid-cols-2' : 'flex flex-col'} z-10 gap-10 max-md:flex max-md:flex-col`}

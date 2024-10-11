@@ -18,7 +18,7 @@ const PromoCarousel: FC<TCarouselProps> = ({ slides }) => (
       className="max-md:no-arrows box-content aspect-21/9 h-full w-full max-w-300 max-xs:max-w-82"
     >
       {slides.map((slide, index) => (
-        <div key={index} className="aspect-21/9 h-full max-w-320 rounded-3xl max-xs:max-w-82">
+        <div key={index} className="aspect-21/9 h-full max-w-300 rounded-3xl max-xs:max-w-82">
           <Image
             width={1200}
             height={514}
