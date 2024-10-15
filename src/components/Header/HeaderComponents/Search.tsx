@@ -80,7 +80,7 @@ const Search: FC = () => {
         rootClassName="max-sm:top-24 max-lg:top-40 max-md:top-32 top-44 absolute"
         aria-label="Поиск по сайту"
       >
-        <div className="flex w-full flex-col gap-6 px-10 pt-4 text-lg leading-lg max-sm:text-base max-sm:leading-base max-xs:m-auto max-xs:max-w-82 max-xs:px-0">
+        <div className="flex w-full flex-col gap-6 px-10 pt-4 text-lg leading-lg max-sm:text-base max-sm:leading-base max-xs:m-auto max-xs:px-4">
           <div className="w-full p-1">
             <SearchInput onChange={onInputChange} onClear={onInputClear} value={searchValue} />
           </div>
