@@ -10,6 +10,8 @@ import UserInfo from './UserInfo';
 
 import AuthModal from '@/components/modals/AuthModal';
 import { AccountTabsOptions } from '@/constants';
+import { useAppSelector } from '@/store';
+import { selectIsUserLoggedIn } from '@/store/selectors';
 
 const userItems: TMenuItem[] = [
   {
@@ -37,8 +39,7 @@ type TUserMenuProps = {
 };
 
 const UserMenu: FC<TUserMenuProps> = ({ onCloseAll }) => {
-  // const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
-  const isUserLoggedIn = true;
+  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const onUserButtonClick = () => {

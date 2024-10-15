@@ -30,13 +30,13 @@ const CatalogItem: FC<TCatalogItemProps> = ({ item, subCatalog }) => {
       <div className="relative h-full w-full">
         <div className="z-10 flex flex-col gap-1 p-5 max-md:p-4 max-sm:p-2">
           <h2
-            className={`relative w-full ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'z-20 text-2xl leading-2xl max-lg:text-xl max-lg:leading-xl max-md:text-lg max-md:leading-lg max-sm:text-base max-sm:leading-base'}`}
+            className={`w-full ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'z-20 text-2xl leading-2xl max-lg:text-xl max-lg:leading-xl max-md:text-lg max-md:leading-lg max-sm:text-base max-sm:leading-base'}`}
           >
             {name}
           </h2>
           {subCatalog && count && (
             <p
-              className={`relative w-full text-primary ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'text-2xl leading-2xl max-md:text-lg max-md:leading-lg max-sm:text-base max-sm:leading-base'}`}
+              className={`w-full text-primary ${subCatalog ? 'text-lg leading-lg max-md:text-base max-md:leading-base' : 'text-2xl leading-2xl max-md:text-lg max-md:leading-lg max-sm:text-base max-sm:leading-base'}`}
             >
               {itemsCount}
             </p>
@@ -47,7 +47,9 @@ const CatalogItem: FC<TCatalogItemProps> = ({ item, subCatalog }) => {
           height={197}
           src={button_image_url}
           alt={name}
-          className={`z-1 ${subCatalog ? 'clip-path-custom' : 'clip-path-custom-square'} absolute bottom-0 right-0 aspect-square h-full w-full object-cover object-[25%_35px]`}
+          className={`z-1 ${subCatalog ? 'clip-path-custom' : 'clip-path-custom-square'} bottom-0 right-0 top-0 aspect-square h-full w-full object-cover object-[25%_35px]`}
+          skeletonClassName="top-10 left-0 w-[calc(100%_+_4rem)]"
+          absolute
         />
 
         <style>{`

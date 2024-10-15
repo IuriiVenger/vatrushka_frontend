@@ -13,7 +13,7 @@ const SeoContent: FC = () => {
   const onButtonClick = () => setIsCollapsed(false);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex w-full flex-col gap-8">
       <div
         className={cn(
           'flex flex-col items-start gap-4 max-sm:gap-3',

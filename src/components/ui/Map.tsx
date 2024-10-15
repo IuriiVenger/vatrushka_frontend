@@ -30,7 +30,7 @@ const Map: FC<TMapProps> = ({ placemarks, width = 720, mapZoom = 13, inputAddres
   }, []);
 
   return (
-    <div className="aspect-video overflow-hidden rounded-2xl max-sm:aspect-square max-xs:max-w-82">
+    <div className="aspect-video overflow-hidden rounded-2xl max-sm:aspect-square">
       <YMaps>
         <YMap
           key={mapKey}

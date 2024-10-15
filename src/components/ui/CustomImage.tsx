@@ -10,9 +10,11 @@ import placeholder_image from '../../assets/images/placeholder_image.svg';
 type TProps = {
   alt: string;
   src: Maybe<string> | StaticImport;
+  absolute?: boolean;
+  skeletonClassName?: string;
 } & Omit<ImageProps, 'src'>;
 
-const CustomImage: FC<TProps> = ({ alt, ...props }) => {
+const CustomImage: FC<TProps> = ({ alt, absolute, skeletonClassName, ...props }) => {
   const [src, setSrc] = useState<Maybe<string> | StaticImport>(props.src);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -28,11 +30,12 @@ const CustomImage: FC<TProps> = ({ alt, ...props }) => {
   };
 
   return (
-    <div className={`relative ${props.className}`}>
+    <div className={`${absolute ? 'absolute' : 'relative'} ${props.className}`}>
       <Image {...props} src={src || placeholder_image.src} alt={alt} onError={handleError} onLoad={onFinishLoad} />
       <Skeleton.Node
         active
-        className={`absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center justify-center rounded-md bg-white transition-opacity duration-500 ${isLoading ? 'z-50 opacity-100' : 'opacity-0 '}`}
+        rootClassName={`absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center justify-center rounded-md bg-white transition-opacity duration-500 ${isLoading ? 'z-50 opacity-100' : 'opacity-0 '} ${skeletonClassName}`}
+        className="h-full w-full"
       >
         <img src={foodTray.src} alt="Загрузка" className="h-2/3 w-2/3" />
       </Skeleton.Node>

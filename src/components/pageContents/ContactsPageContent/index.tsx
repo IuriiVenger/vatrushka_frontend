@@ -25,7 +25,7 @@ const ContactsPageContent = () => {
   const chiefMail = { [ContactLinks.CHIEF_MAIL]: contactLinks.chiefMail };
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex w-full flex-col gap-8">
       <Breadcrumb items={breadcrumbs} />
       <section className="flex flex-col gap-12 max-lg:gap-8">
         <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">Контакты</h1>

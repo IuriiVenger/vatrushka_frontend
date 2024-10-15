@@ -22,16 +22,15 @@ type TCartProps = {
 };
 
 const Cart: FC<TCartProps> = ({ onCloseAll }) => {
-  const products = [];
   const dropDownTrigger = useMemo(() => {
     const trigger: Array<'click'> = [];
 
-    if (products.length) {
+    if (cartList.length) {
       trigger.push('click');
     }
 
     return trigger;
-  }, [products.length]);
+  }, [cartList.length]);
 
   return (
     <Dropdown
@@ -45,7 +44,7 @@ const Cart: FC<TCartProps> = ({ onCloseAll }) => {
         type="link"
         aria-label={`Просмотр корзины. Сейчас товаров в корзине: ${cartList.length}`}
         className="h-6 w-5 p-0"
-        href={!products.length ? '/cart' : undefined}
+        href={!cartList.length ? '/cart' : undefined}
         icon={
           <Badge count={cartList.length} className="max-xs:small" color={color.accent.default}>
             <LuShoppingCart className="h-6 min-w-5 text-textTertiary transition-all hover:text-textQuaternary" />
