@@ -14,6 +14,7 @@ import {
   GetProductsByCategorySlugQuery,
   QueryCategoriesCollectionArgs,
   GetProductsAndRecommendedProductsByCategorySlugQuery,
+  GetProductsAndRecommendedProductsByCategorySlugQueryVariables,
 } from '@/__generated__/graphql';
 
 export const categories = {
@@ -60,13 +61,17 @@ export const categories = {
         },
       },
     }),
-  getCategoryRecommendedProductsAndProductsBySlug: (slug: string) =>
+  getCategoryRecommendedProductsAndProductsBySlug: ({
+    filter,
+    offset,
+    first,
+  }: GetProductsAndRecommendedProductsByCategorySlugQueryVariables) =>
     apolloClient.query<GetProductsAndRecommendedProductsByCategorySlugQuery>({
       query: GET_PRODUCTS_AND_RECOMMENDED_PRODUCTS_BY_CATEGORY_SLUG,
       variables: {
-        filter: {
-          slug: { eq: slug },
-        },
+        filter,
+        offset,
+        first,
       },
     }),
 };
