@@ -1,12 +1,16 @@
 import { Cascader } from 'antd';
 import Link from 'next/link';
-import React, { useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 
+import { Categories } from '@/__generated__/graphql';
 import { navigationLinks } from '@/config/links';
 import { AccountTabsOptions, NavigationLinks } from '@/constants';
-import { catalogOptions } from '@/mocks';
 import { TMenuLevelOneOption } from '@/types';
+
+type MenuProps = {
+  catalogOptions: Categories[] | null;
+};
 
 const forClientItems =
   Object.entries(navigationLinks).reduce<TMenuLevelOneOption[]>((acc, [key, value]) => {
@@ -22,16 +26,17 @@ const forClientItems =
     return acc;
   }, []) || [];
 
-const Menu = () => {
+const Menu: FC<MenuProps> = ({ catalogOptions }) => {
   const catalogItems = useMemo(
     () =>
-      catalogOptions.map((item) => ({
-        value: item.id,
-        label: <Link href={`/${item.slug}`}>{item.name}</Link>,
-      })),
+      catalogOptions
+        ? catalogOptions.map((item) => ({
+            value: item.id,
+            label: <Link href={`/${item.slug}`}>{item.name}</Link>,
+          }))
+        : undefined,
     [catalogOptions],
   );
-
   return (
     <nav className="block text-lg leading-lg max-lg:hidden">
       <ul className="flex w-max items-center gap-8">
