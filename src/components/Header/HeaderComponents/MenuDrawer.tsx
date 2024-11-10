@@ -65,18 +65,19 @@ const MenuDrawer = () => {
         open={isMenuOpened}
         className="top-44 flex w-full pt-2 text-lg leading-lg max-lg:top-40 max-md:top-32 max-sm:top-24 max-sm:text-base max-sm:leading-base"
         rootClassName="max-lg:block hidden max-sm:top-24 max-lg:top-40 max-md:top-32 top-44 absolute"
+        maskClassName="bg-shadowDefault"
         aria-label="Меню"
       >
         <Button
           type="text"
-          className="max-xs:menu-catalog-button group mb-4 w-full justify-between rounded-none px-10 hover:bg-primaryBg active:bg-primaryBgHover max-sm:text-base max-sm:leading-base"
+          className="group mb-4 w-full justify-between rounded-none px-10 hover:bg-primaryBg active:bg-primaryBgHover max-sm:text-base max-sm:leading-base max-xs:px-4"
           onClick={onOpenSubMenu}
           iconPosition="end"
           icon={<IoIosArrowForward className="text-textTertiary opacity-0 transition-all group-hover:opacity-100" />}
         >
           Каталог
         </Button>
-        <ul className="flex flex-col gap-4 px-10 max-xs:m-auto max-xs:max-w-82 max-xs:p-0">
+        <ul className="flex flex-col gap-4 px-10 max-xs:m-auto max-xs:px-4">
           {menuItems.map((item) => (
             <Link
               key={item.title}
@@ -89,12 +90,12 @@ const MenuDrawer = () => {
           ))}
         </ul>
         <Divider />
-        <div className="flex flex-col gap-4 px-10 max-xs:m-auto max-xs:max-w-82 max-xs:p-0">
+        <div className="max-xs flex flex-col gap-4 px-10 max-xs:m-auto max-xs:px-4">
           <p className="font-medium">Ватрушка в социальных сетях</p>
           <Contacts contacts={contacts} className="bg-bgLayout" />
         </div>
         <Divider />
-        <div className="flex flex-col gap-6 px-10 max-xs:m-auto max-xs:max-w-82 max-xs:px-0">
+        <div className="flex flex-col gap-6 px-10 max-xs:m-auto max-xs:px-4">
           <div className="flex items-center gap-1">
             <FaPhone className="h-4 min-w-4 rotate-90 transform text-primary" />
             <a href={`tel:${companyInfo.mainPhone}`}>{` ${companyInfo.mainPhone} `}</a>
@@ -103,8 +104,8 @@ const MenuDrawer = () => {
             Связаться с нами
           </Button>
         </div>
-        <SubMenuDrawer isSubMenuOpened={isSubMenuOpened} onCloseSubMenu={onCloseSubMenu} onCloseAll={onCloseAll} />
       </Drawer>
+      <SubMenuDrawer isSubMenuOpened={isSubMenuOpened} onCloseSubMenu={onCloseSubMenu} onCloseAll={onCloseAll} />
       <ContactUsModal isOpen={isContactUsModalOpen} setIsOpen={setIsContactUsModalOpen} />
     </>
   );

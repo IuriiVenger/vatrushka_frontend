@@ -29,7 +29,7 @@ const ProductsList: FC<TProductsListProps> = (props) => {
   );
 
   return (
-    <div className="flex flex-col gap-12 max-lg:gap-8 max-md:gap-4 max-xs:max-w-82 ">
+    <div className="flex flex-col gap-12 max-lg:gap-8 max-md:gap-4">
       <div className="flex items-end justify-between max-md:w-full max-md:flex-col max-md:items-start max-md:gap-6">
         <div className="flex flex-col gap-2">
           <p className="text-3xl font-medium leading-3xl max-sm:text-2xl max-sm:leading-2xl">{title}</p>
@@ -37,7 +37,7 @@ const ProductsList: FC<TProductsListProps> = (props) => {
         </div>
         <Dropdown sort={sort} setSort={setSort} items={sortDropdownItems} translations={SortTypeTranslation} />
       </div>
-      <div className="flex max-w-300 flex-col items-center gap-6 max-xs:max-w-82">
+      <div className="flex max-w-300 flex-col items-center gap-6">
         <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1">
           {products.map((item, index) => (
             <ProductCard key={item.id + index} info={item} />

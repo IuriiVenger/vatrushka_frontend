@@ -19,9 +19,10 @@ const SubMenuDrawer: FC<TSubMenuDrawerProps> = ({ isSubMenuOpened, onCloseSubMen
     placement="left"
     className="top-44 max-lg:top-40 max-md:top-32 max-sm:top-24"
     rootClassName="max-sm:top-24 max-lg:top-40 max-md:top-32 top-44 absolute"
+    maskClassName="bg-shadowDefault"
     aria-label="Категории каталога"
   >
-    <div className="flex w-full flex-col gap-6 px-10 pt-4 text-lg leading-lg max-sm:text-base max-sm:leading-base max-xs:m-auto max-xs:max-w-82 max-xs:px-0">
+    <div className="flex w-full flex-col gap-6 px-10 pt-4 text-lg leading-lg max-sm:text-base max-sm:leading-base max-xs:m-auto max-xs:px-4">
       <Button
         type="link"
         className="h-6 w-max p-0 text-lg leading-lg text-accent transition-all hover:text-accentHover active:text-accentActive max-sm:text-base max-sm:leading-base"
@@ -30,7 +31,7 @@ const SubMenuDrawer: FC<TSubMenuDrawerProps> = ({ isSubMenuOpened, onCloseSubMen
         <IoIosArrowBack />
         Назад
       </Button>
-      <div className="gap flex max-h-[calc(100%-5rem)] flex-col gap-6 overflow-scroll">
+      <div className="gap flex flex-col gap-6 overflow-scroll pb-10">
         {catalogOptions.map((option) => (
           <Link
             key={option.id}
