@@ -3,10 +3,6 @@ import { FC } from 'react';
 
 import ClientCategoryPage from './_component/ClientCategoryPage';
 
-import {
-  GetProductsAndRecommendedProductsByCategorySlugQuery,
-  GetProductsAndRecommendedProductsByCategorySlugQueryVariables,
-} from '@/__generated__/graphql';
 import { categories } from '@/api/categories';
 import { API } from '@/api/types';
 
@@ -27,30 +23,9 @@ const CategoryPage: FC<CategoryPageProps> = async ({ params }) => {
     },
   };
 
-  const targetData: Partial<GetProductsAndRecommendedProductsByCategorySlugQuery> = {};
-  let isErrorOccured = false;
+  const { data } = await categories.getCategoryRecommendedProductsAndProductsBySlugWithoutPagination(requestParams);
 
-  do {
-    // eslint-disable-next-line no-await-in-loop
-    const { data, error } = await categories.getCategoryRecommendedProductsAndProductsBySlug(requestParams);
-    isErrorOccured = !!error;
-
-    if (!targetData.categoriesCollection) {
-      targetData.categoriesCollection = data.categoriesCollection;
-    } else {
-      targetData.categoriesCollection.edges[0]?.node.categoryitemsCollection?.edges.push(
-        ...(data.categoriesCollection?.edges[0].node.categoryitemsCollection?.edges || []),
-      );
-    }
-
-    requestParams.hasNextPage =
-      data.categoriesCollection?.edges[0]?.node.categoryitemsCollection?.pageInfo.hasNextPage || false;
-    requestParams.offset = data.categoriesCollection?.edges[0]?.node.categoryitemsCollection?.edges.length
-      ? requestParams.offset + data.categoriesCollection.edges[0].node.categoryitemsCollection.edges.length
-      : requestParams.offset;
-  } while (requestParams.hasNextPage);
-
-  const categoryData = targetData.categoriesCollection?.edges[0];
+  const categoryData = data.categoriesCollection?.edges[0];
   const categoryRecommendedProducts = categoryData?.node.rec_categoryCollection?.edges.reduce(
     (acc: API.Products.Recomedation[], rec) => {
       const productSizes = rec.node.products?.productsizesCollection?.edges || [];
@@ -76,7 +51,7 @@ const CategoryPage: FC<CategoryPageProps> = async ({ params }) => {
     [],
   );
 
-  if (!categoryData || isErrorOccured) {
+  if (!categoryData) {
     return notFound();
   }
 

@@ -21,7 +21,21 @@ type TProductsListProps = {
 
 const ProductsList: FC<TProductsListProps> = (props) => {
   const { products, title, onLoadMore, isLoading, loadMoreAvailable } = props;
-  const [sort, setSort] = useState<SortType>(SortType.PRICE_ASCENDING);
+  const [sort, setSort] = useState<SortType>(SortType.MOST_POPULAR);
+
+  const sortedProducts = useMemo(() => {
+    const sortedProductsItems = [...products];
+
+    if (sort === SortType.PRICE_ASCENDING) {
+      sortedProductsItems.sort((a, b) => +a.price - +b.price);
+    }
+
+    if (sort === SortType.PRICE_DESCENDING) {
+      sortedProductsItems.sort((a, b) => +b.price - +a.price);
+    }
+
+    return sortedProductsItems;
+  }, [products, sort]);
 
   const productsCount = useMemo(
     () => `${products.length} ${getNounWithDeclension(products.length, 'товар', 'товара', 'товаров')}`,
@@ -39,7 +53,7 @@ const ProductsList: FC<TProductsListProps> = (props) => {
       </div>
       <div className="flex max-w-320 flex-col items-center gap-6 max-xs:max-w-82">
         <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1">
-          {products.map((item, index) => (
+          {sortedProducts.map((item, index) => (
             <ProductCard key={item.id + index} info={item} />
           ))}
         </div>
