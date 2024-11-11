@@ -38,6 +38,46 @@ export const GET_CATEGORIES = gql`
   }
 `;
 
+export const GET_COMMON_REC_PRODUCTS = gql`
+  query GetCommonRecProducts {
+    rec_categoryCollection {
+      edges {
+        node {
+          products {
+            productsizesCollection {
+              edges {
+                node {
+                  price
+                  button_image_url
+                  nodeId
+                  products {
+                    short_description
+                    slug
+                    name
+                    nodeId
+                  }
+                }
+              }
+            }
+            nodeId
+            categoryitemsCollection {
+              edges {
+                node {
+                  categories {
+                    name
+                    slug
+                  }
+                }
+              }
+            }
+          }
+          nodeId
+        }
+      }
+    }
+  }
+`;
+
 export const GET_PRODUCTS_BY_CATEGORY_SLUG = gql`
   query GetProductsByCategorySlug(
     $filter: categoriesFilter

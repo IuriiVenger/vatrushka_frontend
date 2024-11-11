@@ -129,3 +129,13 @@
   height: 40px !important;
   border-radius: 50% !important;
 }
+
+.additional-list-padding {
+  @media screen and (max-width: 639px) {
+    .slick-list {
+      .slick-track {
+        padding: 0 40px;
+      }
+    }
+  }
+}

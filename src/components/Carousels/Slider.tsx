@@ -20,14 +20,24 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
 
-  const handleButtons = (_: number, next: number): void => {
+  const handleButtons = (currentSlide: number): void => {
     if (sliderRef.current) {
-      const isFirstSlide = next === 0;
-      const isLastSlide = next === slides.length - 3;
+      const { slidesToShow } = sliderRef.current.props;
+
+      const isFirstSlide = currentSlide === 0;
+      const isLastSlide = !!slidesToShow && currentSlide === slides.length - slidesToShow;
 
       setIsPrevDisabled(isFirstSlide);
       setIsNextDisabled(isLastSlide);
     }
+  };
+
+  const handlePrev = (): void => {
+    sliderRef.current?.slickPrev();
+  };
+
+  const handleNext = (): void => {
+    sliderRef.current?.slickNext();
   };
 
   const settings: Settings = {
@@ -40,7 +50,7 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
     slidesToShow: 3,
     slidesToScroll: 1,
     swipeToSlide: true,
-    beforeChange: handleButtons,
+    afterChange: handleButtons,
     responsive: [
       {
         breakpoint: 1023,
@@ -64,12 +74,12 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-screen sm:w-full max-sm:-ml-10">
       <div className="flex items-center justify-between pb-12 max-lg:pb-8 max-md:box-content max-sm:mx-auto max-sm:max-w-128 max-sm:px-10 max-sm:pb-6 max-xs:box-border max-xs:max-w-82 max-xs:px-0">
         <p className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">{title}</p>
         <div className="flex flex-nowrap gap-4 max-sm:hidden">
           <Button
-            onClick={sliderRef.current?.slickPrev}
+            onClick={handlePrev}
             disabled={isPrevDisabled}
             shape="circle"
             type="primary"
@@ -77,7 +87,7 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
             icon={<IoIosArrowBack />}
           />
           <Button
-            onClick={sliderRef.current?.slickNext}
+            onClick={handleNext}
             disabled={isNextDisabled}
             shape="circle"
             type="primary"
@@ -86,8 +96,8 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
           />
         </div>
       </div>
-      <div className="slider-container max-xs:ml-calc-center mx-auto grid max-w-320 grid-cols-1 overflow-hidden max-sm:pl-10 max-xs:mr-0 max-xs:pl-0">
-        <SlickSlider {...settings} ref={sliderRef}>
+      <div className="slider-container mx-auto grid max-w-320 grid-cols-1 overflow-hidden">
+        <SlickSlider className="additional-list-padding" {...settings} ref={sliderRef}>
           {slides.map((slide, index) => (
             <ProductCard key={slide.id + index} info={slide} slider />
           ))}

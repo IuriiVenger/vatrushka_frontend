@@ -1,5 +1,5 @@
 import { API } from '@/api/types';
-import { CategoryItemsConnectionType, TCard } from '@/types';
+import { CategoryItemsConnectionType, TCard, TRecCategoryEdge } from '@/types';
 
 export const convertCategoryItemsQueryProductsToCards = (categoryItems: CategoryItemsConnectionType): TCard[] =>
   categoryItems?.edges.map(({ node }) => ({
@@ -34,3 +34,31 @@ export const conertCategoryRecommendedProductsToCards = (
     inStock: true,
     href: `/${product.category.slug}/${product.slug}`,
   }));
+
+export const convertCommonRecProductsToRecomendation = (
+  commonRecProductsCollectionEdges: TRecCategoryEdge[],
+): API.Products.Recomedation[] | undefined => {
+  const newData = commonRecProductsCollectionEdges.reduce((acc: API.Products.Recomedation[], rec) => {
+    const productSizes = rec.node.products?.productsizesCollection?.edges || [];
+
+    productSizes.forEach((item) => {
+      if (item.node) {
+        acc.push({
+          button_image_url: item.node.button_image_url || '',
+          nodeId: item.node.nodeId,
+          price: item.node.price ? Number(item.node.price) : 0,
+          name: item.node.products?.name || '',
+          short_description: item.node.products?.short_description || '',
+          slug: item.node.products?.slug || '',
+          category: {
+            name: rec.node.products?.categoryitemsCollection?.edges[0]?.node.categories.name || '',
+            slug: rec.node.products?.categoryitemsCollection?.edges[0]?.node.categories.slug || '',
+          },
+        });
+      }
+    });
+    return acc;
+  }, []);
+
+  return newData;
+};

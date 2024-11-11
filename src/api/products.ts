@@ -1,4 +1,5 @@
 import {
+  GetCommonRecProductsQuery,
   GetProductSizeImagesQueryVariables,
   GetProductSizeModifiersQuery,
   ProductByNameQuery,
@@ -7,6 +8,7 @@ import {
 } from '../__generated__/graphql';
 
 import {
+  GET_COMMON_REC_PRODUCTS,
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_SIZE_IMAGES,
   GET_PRODUCT_SIZE_MODIFIERS,
@@ -60,4 +62,8 @@ export const products = {
         }),
     },
   },
+  getCommonRecProducts: () =>
+    apolloClient.query<GetCommonRecProductsQuery>({
+      query: GET_COMMON_REC_PRODUCTS,
+    }),
 };

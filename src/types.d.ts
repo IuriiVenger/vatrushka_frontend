@@ -160,3 +160,31 @@ export type SupabaseUser = {
   identities?: UserIdentity[];
   factors?: Factor[];
 };
+
+type TRecCategoryEdge = {
+  node: {
+    products?: {
+      productsizesCollection?: {
+        edges: {
+          node: {
+            button_image_url?: string | null;
+            nodeId: string;
+            price?: string | null;
+            products?: {
+              short_description?: any;
+              slug?: string | null;
+              name?: string;
+            } | null;
+          };
+        }[];
+      } | null;
+      categoryitemsCollection?: {
+        edges: {
+          node: {
+            categories: { name?: string; slug?: string | null };
+          };
+        }[];
+      } | null;
+    } | null;
+  };
+};
