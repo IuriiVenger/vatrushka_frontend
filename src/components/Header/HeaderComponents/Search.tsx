@@ -100,12 +100,6 @@ const Search: FC = () => {
     loadProducts();
   }, [debouncedSearch]);
 
-  // useEffect(() => {
-  //   if (!searchValue.length) {
-  //     setOptions([]);
-  //   }
-  // }, [searchValue.length]);
-
   return (
     <>
       <Button
