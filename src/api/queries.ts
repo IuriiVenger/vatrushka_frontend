@@ -384,6 +384,148 @@ export const GET_PROUCT_BY_SLUG = gql`
   }
 `;
 
+export const GET_PRODUCT_BY_NAME = gql`
+  query ProductByName($filter: productsFilter, $productsizesCollectionFilter2: productsizesFilter) {
+    productsCollection(filter: $filter) {
+      edges {
+        node {
+          description
+          ingredients
+          isPopular
+          name
+          optional_text
+          slug
+          short_description
+          id
+          nodeId
+          productsizesCollection {
+            edges {
+              node {
+                id
+                is_default
+                nutrition_per_hundred_grams
+                nutritions
+                portion_weight_grams
+                price
+                product_id
+                size_code
+                size_id
+                size_name
+                sku
+                button_image_url
+                nodeId
+              }
+            }
+          }
+          productTagsCollection {
+            edges {
+              node {
+                slug
+                name
+                id
+                tag_id
+                nodeId
+              }
+            }
+          }
+          productlabelsCollection {
+            edges {
+              node {
+                name
+                id
+                slug
+                nodeId
+              }
+            }
+          }
+          productpromotionsCollection {
+            edges {
+              node {
+                promotions {
+                  id
+                  name
+                  description
+                  homepageBanner
+                  homepageEnabled
+                  productButtonText
+                  productButtonType
+                  productPagesEnabled
+                  slug
+                  nodeId
+                }
+                nodeId
+              }
+            }
+          }
+          sku
+          categoryitemsCollection {
+            edges {
+              node {
+                categories {
+                  name
+                  rec_categoryCollection {
+                    edges {
+                      node {
+                        products {
+                          productsizesCollection {
+                            edges {
+                              node {
+                                price
+                                button_image_url
+                                nodeId
+                                products {
+                                  short_description
+                                  slug
+                                  name
+                                  nodeId
+                                }
+                              }
+                            }
+                          }
+                          nodeId
+                          categoryitemsCollection {
+                            edges {
+                              node {
+                                categories {
+                                  name
+                                  slug
+                                }
+                              }
+                            }
+                          }
+                        }
+                        nodeId
+                      }
+                    }
+                  }
+                  slug
+                }
+                nodeId
+              }
+            }
+          }
+          productallergensCollection {
+            edges {
+              node {
+                id
+                allergen_group_id
+                allergengroups {
+                  code
+                  name
+                  id
+                  nodeId
+                }
+                nodeId
+              }
+            }
+          }
+          nodeId
+        }
+      }
+    }
+  }
+`;
+
 // filter by product_id and productsize_id
 export const GET_PRODUCT_SIZE_IMAGES = gql`
   query GetProductSizeImages($filter: productsizeimagesFilter) {

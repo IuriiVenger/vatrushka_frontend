@@ -29,7 +29,7 @@ const CartList: FC = () => {
         <ul className="flex max-h-108 flex-col overflow-auto pr-3">
           {cartList.map((item, index) => (
             <li key={index}>
-              <DropdownListItem item={item} cart />
+              <DropdownListItem item={item} />
               {index !== cartList.length - 1 && <Divider className="my-4" />}
             </li>
           ))}

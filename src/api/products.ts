@@ -1,10 +1,17 @@
 import {
   GetProductSizeImagesQueryVariables,
   GetProductSizeModifiersQuery,
+  ProductByNameQuery,
+  ProductByNameQueryVariables,
   ProductBySlugQueryVariables,
 } from '../__generated__/graphql';
 
-import { GET_PRODUCT_SIZE_IMAGES, GET_PRODUCT_SIZE_MODIFIERS, GET_PROUCT_BY_SLUG } from './queries';
+import {
+  GET_PRODUCT_BY_NAME,
+  GET_PRODUCT_SIZE_IMAGES,
+  GET_PRODUCT_SIZE_MODIFIERS,
+  GET_PROUCT_BY_SLUG,
+} from './queries';
 
 import { apolloClient } from '.';
 
@@ -18,6 +25,13 @@ export const products = {
         filter: {
           slug: { eq: slug },
         },
+      },
+    }),
+  getByName: (name: string) =>
+    apolloClient.query<ProductByNameQuery, ProductByNameQueryVariables>({
+      query: GET_PRODUCT_BY_NAME,
+      variables: {
+        filter: { name: { ilike: `%${name}%` } },
       },
     }),
   productSizes: {

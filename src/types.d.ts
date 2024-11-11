@@ -41,6 +41,15 @@ export type TCartListItem = {
   pic: string;
   price: number | string;
   count: number;
+  onClick?: () => void;
+};
+
+export type TSearchListItem = {
+  name: string;
+  pic: string;
+  price: number | string;
+  onClick?: () => void;
+  count?: never;
 };
 
 export type TTag = {

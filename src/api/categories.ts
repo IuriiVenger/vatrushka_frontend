@@ -74,4 +74,34 @@ export const categories = {
         first,
       },
     }),
+  getCategoryRecommendedProductsAndProductsBySlugWithoutPagination: async (
+    variables: GetProductsAndRecommendedProductsByCategorySlugQueryVariables,
+  ) => {
+    const targetData: Partial<GetProductsAndRecommendedProductsByCategorySlugQuery> = {};
+    const pageInfo = { hasNextPage: false, offset: 0 };
+
+    do {
+      // eslint-disable-next-line no-await-in-loop
+      const { data } = await categories.getCategoryRecommendedProductsAndProductsBySlug({
+        ...variables,
+        offset: pageInfo.offset,
+      });
+
+      if (!targetData.categoriesCollection) {
+        targetData.categoriesCollection = data.categoriesCollection;
+      } else {
+        targetData.categoriesCollection.edges[0]?.node.categoryitemsCollection?.edges.push(
+          ...(data.categoriesCollection?.edges[0].node.categoryitemsCollection?.edges || []),
+        );
+      }
+      pageInfo.hasNextPage =
+        data.categoriesCollection?.edges[0]?.node.categoryitemsCollection?.pageInfo.hasNextPage || false;
+
+      pageInfo.offset = data.categoriesCollection?.edges[0]?.node.categoryitemsCollection?.edges.length
+        ? pageInfo.offset + data.categoriesCollection.edges[0].node.categoryitemsCollection.edges.length
+        : pageInfo.offset;
+    } while (pageInfo.hasNextPage);
+
+    return { data: targetData };
+  },
 };
