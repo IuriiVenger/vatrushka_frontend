@@ -29,15 +29,6 @@ const useAuth = (dispatch: AppDispatch) => {
     dispatch(setUser(data));
   };
 
-  const loadUserData = async () => {
-    const { data } = await auth.user_data();
-    dispatch(setUserData(data));
-  };
-
-  const loadUserContent = async () => {
-    await Promise.all([loadUserData()]);
-  };
-
   const clearUserContent = async () => {
     dispatch(setUser(null));
     dispatch(setUserData(null));
@@ -54,11 +45,10 @@ const useAuth = (dispatch: AppDispatch) => {
     try {
       setLoadingStatus(RequestStatus.PENDING);
       await getUser();
-      await loadUserContent();
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
-      deleteTokens();
+      throw e;
     }
   };
 
@@ -74,7 +64,7 @@ const useAuth = (dispatch: AppDispatch) => {
         throw error;
       }
       session && setTokens(session);
-      await loadUserContent();
+
       dispatch(setUser(user));
 
       setLoadingStatus(RequestStatus.FULFILLED);
@@ -99,7 +89,6 @@ const useAuth = (dispatch: AppDispatch) => {
         throw error;
       }
       session && setTokens(session);
-      await loadUserContent();
       dispatch(setUser(user));
 
       setLoadingStatus(RequestStatus.FULFILLED);
@@ -169,7 +158,6 @@ const useAuth = (dispatch: AppDispatch) => {
       }
 
       dispatch(setUser(data.user));
-      await loadUserContent();
 
       message.success('You have successfully logged in');
 
@@ -202,7 +190,6 @@ const useAuth = (dispatch: AppDispatch) => {
       }
 
       dispatch(setUser(data.user));
-      // await loadUserContent();
       message.success('You have successfully logged in');
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {

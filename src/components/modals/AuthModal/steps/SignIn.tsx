@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
 import { AuthModalProcessType, AuthModalSteps } from '@/constants';
+import { prettifyPhone } from '@/utils/formatters';
 
 type TSignInForm = {
   phone: string;
@@ -73,6 +74,7 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone, getP
           placeholder="+7 (999) 999-99-99"
           inputMode="tel"
           label="Номер телефона"
+          value={prettifyPhone(watch('phone'))}
           control={control}
           errors={!!errors.phone}
           required

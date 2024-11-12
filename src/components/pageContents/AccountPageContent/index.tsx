@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Grid } from 'antd';
+import { Button, Grid, Spin } from 'antd';
 import cn from 'classnames';
 import { FC, useEffect, useState } from 'react';
 import { FiLogOut } from 'react-icons/fi';
@@ -11,12 +11,18 @@ import TabContent from '../../AccountPageComponents/TabContent';
 import UnauthorizedScreen from '../../AccountPageComponents/UnauthorizedScreen';
 
 import { AccountTabsOptions, accountTabs } from '@/constants';
+import useAuth from '@/hooks/useAuth';
 import { useUrlParams } from '@/hooks/useUrlParams';
-import { useAppSelector } from '@/store';
-import { selectIsUserLoggedIn } from '@/store/selectors';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { selectConfig, selectIsUserLoggedIn, selectUser } from '@/store/selectors';
 
 const AccountPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const { user } = useAppSelector(selectUser);
+  const { isWebAppInitialized } = useAppSelector(selectConfig);
+  const dispatch = useAppDispatch();
+  const { signOut } = useAuth(dispatch);
+
   const [tab, setTab] = useState<AccountTabsOptions | null>(null);
 
   const isHistoryTab = tab === accountTabs[AccountTabsOptions.ORDER_HISTORY].value;
@@ -54,6 +60,13 @@ const AccountPageContent: FC = () => {
     if (paramValue && isValidTabParam(paramValue)) setCurrentTab(paramValue);
   }, [paramValue]);
 
+  if (!isWebAppInitialized)
+    return (
+      <div className="flex min-h-100 items-center justify-center">
+        <Spin />
+      </div>
+    );
+
   if (!isUserLoggedIn) return <UnauthorizedScreen />;
 
   return (
@@ -78,7 +91,7 @@ const AccountPageContent: FC = () => {
             {!screens.md && tab ? accountTabs[tab].label : 'Личный кабинет'}
           </h1>
           {isProfileTab && (
-            <Button className="hidden h-5 border-none p-0 text-base leading-base max-md:flex">
+            <Button className="hidden h-5 border-none p-0 text-base leading-base max-md:flex" onClick={signOut}>
               <FiLogOut />
               Выйти
             </Button>
@@ -88,7 +101,7 @@ const AccountPageContent: FC = () => {
       {(screens.md || !tab) && (
         <TabsController tab={tab} setTab={setTab} isHistoryTab={isHistoryTab} isProfileTab={isProfileTab} />
       )}
-      <TabContent tab={tab} />
+      <TabContent tab={tab} user={user} />
     </section>
   );
 };

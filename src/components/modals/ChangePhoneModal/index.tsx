@@ -2,9 +2,10 @@ import { Button } from 'antd';
 import { FC, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 
-import Modal from './Modal';
-import ChangePhone from './ModalSteps/ChangePhone';
-import ConfirmPhone from './ModalSteps/ConfirmPhone';
+import ConfirmPhone from '../CommonModalSteps/ConfirmPhone';
+import Modal from '../Modal';
+
+import ChangePhone from './steps/ChangePhone';
 
 import useAuth from '@/hooks/useAuth';
 import { useAppDispatch } from '@/store';
@@ -57,7 +58,7 @@ const ChangePhoneModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
         <ChangePhone onChangePhone={onChangePhone} />
       ) : (
         <ConfirmPhone
-          processType={null}
+          successMessage="Номер успешно изменён"
           onClose={onClose}
           phone={phone}
           setOtp={setOtp}

@@ -10,35 +10,21 @@ import UserInfo from './UserInfo';
 
 import AuthModal from '@/components/modals/AuthModal';
 import { AccountTabsOptions } from '@/constants';
-
-const userItems: TMenuItem[] = [
-  {
-    label: <UserInfo user={{ name: 'Иван Иванов', phone: '+7 (912) 555-88-99', email: 'ivanov.ivan.22@mail.ru' }} />,
-    key: 'info',
-    type: 'group',
-  },
-  { type: 'divider' },
-  { label: <Link href={`/account?tab=${AccountTabsOptions.PROFILE}`}>Профиль</Link>, key: 'profile' },
-  {
-    label: <Link href={`/account?tab=${AccountTabsOptions.CURRENT_ORDERS}`}>Текущие заказы</Link>,
-    key: 'currentOrders',
-  },
-  {
-    label: <Link href={`/account?tab=${AccountTabsOptions.ORDER_HISTORY}`}>История заказов</Link>,
-    key: 'ordersHistory',
-  },
-  { label: <Link href={`/account?tab=${AccountTabsOptions.ADDRESSES}`}>Мои адреса</Link>, key: 'addresses' },
-  { type: 'divider' },
-  { label: 'Выйти из аккаунта', key: 'logOut' },
-];
+import useAuth from '@/hooks/useAuth';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { selectIsUserLoggedIn, selectUser } from '@/store/selectors';
+import { prettifyPhone } from '@/utils/formatters';
 
 type TUserMenuProps = {
   onCloseAll: () => void;
 };
 
 const UserMenu: FC<TUserMenuProps> = ({ onCloseAll }) => {
-  // const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
-  const isUserLoggedIn = true;
+  const dispatch = useAppDispatch();
+
+  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const { user } = useAppSelector(selectUser);
+  const { signOut } = useAuth(dispatch);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const onUserButtonClick = () => {
@@ -57,6 +43,38 @@ const UserMenu: FC<TUserMenuProps> = ({ onCloseAll }) => {
 
     return trigger;
   }, [isUserLoggedIn]);
+
+  const userItems: TMenuItem[] = useMemo(
+    () => [
+      {
+        label: (
+          <UserInfo
+            user={{
+              // name: user?.name,
+              phone: user?.phone && prettifyPhone(user?.phone),
+              email: user?.email,
+            }}
+          />
+        ),
+        key: 'info',
+        type: 'group',
+      },
+      { type: 'divider' },
+      { label: <Link href={`/account?tab=${AccountTabsOptions.PROFILE}`}>Профиль</Link>, key: 'profile' },
+      {
+        label: <Link href={`/account?tab=${AccountTabsOptions.CURRENT_ORDERS}`}>Текущие заказы</Link>,
+        key: 'currentOrders',
+      },
+      {
+        label: <Link href={`/account?tab=${AccountTabsOptions.ORDER_HISTORY}`}>История заказов</Link>,
+        key: 'ordersHistory',
+      },
+      { label: <Link href={`/account?tab=${AccountTabsOptions.ADDRESSES}`}>Мои адреса</Link>, key: 'addresses' },
+      { type: 'divider' },
+      { label: 'Выйти из аккаунта', key: 'logOut', onClick: signOut },
+    ],
+    [isUserLoggedIn],
+  );
 
   return (
     <>

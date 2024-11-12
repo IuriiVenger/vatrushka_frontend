@@ -20,12 +20,10 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
 
-  const handleButtons = (currentSlide: number): void => {
+  const handleButtons = (_: number, next: number): void => {
     if (sliderRef.current) {
-      const { slidesToShow } = sliderRef.current.props;
-
-      const isFirstSlide = currentSlide === 0;
-      const isLastSlide = !!slidesToShow && currentSlide === slides.length - slidesToShow;
+      const isFirstSlide = next === 0;
+      const isLastSlide = next === slides.length - 3;
 
       setIsPrevDisabled(isFirstSlide);
       setIsNextDisabled(isLastSlide);
@@ -50,7 +48,7 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
     slidesToShow: 3,
     slidesToScroll: 1,
     swipeToSlide: true,
-    afterChange: handleButtons,
+    beforeChange: handleButtons,
     responsive: [
       {
         breakpoint: 1023,

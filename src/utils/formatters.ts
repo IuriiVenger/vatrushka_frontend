@@ -19,3 +19,27 @@ export const getNounWithDeclension = (
       return zeroAndFiveAndMore;
   }
 };
+
+export const prettifyPhone = (phone: string) => {
+  if (!phone) return phone;
+  let cleaned = phone.replace(/\D/g, '');
+
+  if (cleaned.startsWith('9')) {
+    cleaned = `7${cleaned}`;
+  } else if (cleaned.startsWith('8')) {
+    cleaned = `7${cleaned.slice(1)}`;
+  }
+
+  const match = cleaned.match(/^7(\d{3})(\d{2})(\d{2})(\d{3})$/);
+
+  if (match) {
+    return `+7 (${match[1]}) ${match[2]}-${match[3]}-${match[4]}`;
+  }
+
+  return phone;
+};
+
+export const unprettifyPhone = (phone: string) => {
+  const digits = phone.replace(/\D/g, '');
+  return digits.slice(0, 11);
+};

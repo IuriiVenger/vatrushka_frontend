@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import { deleteTokens, refreshTokens, setTokens } from './tokensFactory';
+import { deleteTokens, getTokens, refreshTokens, setTokens } from './tokensFactory';
 
 import { commonHeaders } from '@/api';
 import { ResponseStatus } from '@/constants';
@@ -17,7 +17,7 @@ export const createCustomAxiosInstance = (baseUrl: string) => {
   let requestQueue: (() => void)[] = [];
 
   axiosInstance.interceptors.request.use((config) => {
-    const access_token = localStorage.getItem('access_token');
+    const { access_token } = getTokens();
 
     const modifiedHeaders = {
       ...config.headers,
@@ -34,14 +34,12 @@ export const createCustomAxiosInstance = (baseUrl: string) => {
     (response) => response,
     (error) => {
       if (error?.response?.status === ResponseStatus.UNAUTHORIZED) {
-        deleteTokens();
-        window.location.href = '/auth/login';
-
         const { response, config: failedRequest } = error;
-        const refreshToken = localStorage.getItem('refresh_token');
+        const { refresh_token } = getTokens();
+
         const defaultErrorMessageForUnauthorized = 'You are not authorized. Please log in.';
 
-        if (response.config?.url.includes('/auth/refresh/refresh_token') || !refreshToken) {
+        if (response.config?.url.includes('/auth/refresh/refresh_token') || !refresh_token) {
           if (typeof window !== 'undefined') {
             message.error(error?.response?.data?.message || defaultErrorMessageForUnauthorized);
             window.location.href = '/auth/login';
@@ -50,9 +48,9 @@ export const createCustomAxiosInstance = (baseUrl: string) => {
           requestQueue = [];
           return Promise.reject(response);
         }
-        if (!isTokenRefreshing && typeof refreshToken === 'string') {
+        if (!isTokenRefreshing && typeof refresh_token === 'string') {
           isTokenRefreshing = true;
-          refreshTokens(refreshToken)
+          refreshTokens(refresh_token)
             .then((newTokens) => {
               if (newTokens?.access_token) {
                 setTokens(newTokens);
