@@ -85,6 +85,53 @@ export namespace API {
     }
   }
 
+  export namespace Cart {
+    export interface Cart {
+      id: number;
+      user_id: number;
+      status: string;
+    }
+
+    export namespace CartItem {
+      export interface CartItem {
+        id: string;
+        cart_id: string;
+        product_id: string;
+        size_id: string;
+        item_total: number;
+        modifiers: Array<{
+          id: string;
+          quantity: number;
+          price: number;
+          modifier_total_price: number;
+        }>;
+      }
+      export namespace Create {
+        export interface RequestItem {
+          product_id: number;
+          size_id: number;
+          modifiiers: {
+            id: number;
+            quantity: number;
+          }[];
+        }
+        export type Request = API.Cart.CartItem.Create.RequestItem[];
+        export type Response = {
+          id: string;
+          user_id: string;
+          status: string;
+          items: API.Cart.CartItem.CartItem[];
+          total_sum: number;
+        };
+      }
+
+      export namespace Delete {
+        export type Request = {
+          cart_item_id: string;
+        }[];
+      }
+    }
+  }
   export namespace Categories {
     export namespace GetProductsByCategorySlug {
       export type Request = {
