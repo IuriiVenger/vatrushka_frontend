@@ -90,6 +90,14 @@ export namespace API {
       id: number;
       user_id: number;
       status: string;
+      created_at: string;
+      updated_at: string;
+      items: API.Cart.CartItem.CartItem[];
+      total_sum: number;
+    }
+
+    export namespace Init {
+      export type Response = Omit<Cart, 'items' | 'total_sum'>;
     }
 
     export namespace CartItem {
@@ -115,20 +123,17 @@ export namespace API {
             quantity: number;
           }[];
         }
-        export type Request = API.Cart.CartItem.Create.RequestItem[];
-        export type Response = {
-          id: string;
-          user_id: string;
-          status: string;
-          items: API.Cart.CartItem.CartItem[];
-          total_sum: number;
+        export type Request = {
+          cart_id: number;
+          data: API.Cart.CartItem.Create.RequestItem[];
         };
       }
 
       export namespace Delete {
         export type Request = {
-          cart_item_id: string;
-        }[];
+          cart_id: number;
+          data: Record<'cart_item_id', string>[];
+        };
       }
     }
   }

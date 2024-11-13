@@ -1,11 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-type ConfigState = {
-  isWebAppInitialized: boolean;
-};
+import { ConfigSliceState } from '../types';
 
-const initialState: ConfigState = {
+const initialState: ConfigSliceState = {
   isWebAppInitialized: false,
 };
 

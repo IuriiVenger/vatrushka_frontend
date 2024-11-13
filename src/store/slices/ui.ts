@@ -1,14 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type InitialState = {
-  isPageScrollBlocked: boolean;
-  isMenuOpened: boolean;
-  isSubMenuOpened: boolean;
-  isMobileSearchOpened: boolean;
-};
+import { UISliceState } from '../types';
 
-const initialState: InitialState = {
+const initialState: UISliceState = {
   isPageScrollBlocked: false,
   isMenuOpened: false,
   isSubMenuOpened: false,
