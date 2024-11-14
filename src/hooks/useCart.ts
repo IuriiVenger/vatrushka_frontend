@@ -1,14 +1,22 @@
 import { useMessage } from './useMessage';
 
+import { API } from '@/api/types';
+
 import { useAppDispatch, useAppSelector } from '@/store';
-import { addCartItem, deleteCartItem, selectCart, selectGroupedCartItems } from '@/store/slices/cart';
+import { addCartItem, deleteCartItem, selectCart } from '@/store/slices/cart';
 import { TCard } from '@/types';
+import { getGroupedCartItems } from '@/utils/converters';
 
 const useCart = () => {
-  const groupedCartItems = useAppSelector(selectGroupedCartItems);
   const { activeCart } = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
   const { showMessage } = useMessage();
+  const groupedCartItems = getGroupedCartItems(activeCart.data?.items ?? []);
+
+  const addToCart = async (data: API.Cart.CartItem.Create.RequestItem[]) => {
+    await dispatch(addCartItem({ data }));
+    showMessage({ text: 'Товар добавлен в корзину', type: 'success' });
+  };
 
   const removeGroupedCartItem = async (groupId: string) => {
     const deletingItems = groupedCartItems.find((item) => item.group_id === groupId)?.rawCartItems;
@@ -44,7 +52,7 @@ const useCart = () => {
         size_id: findingItems[index].size_id,
         modifiers: findingItems[index].modifiers,
       }));
-      await dispatch(addCartItem({ data: addingItems }));
+      await addToCart(addingItems);
     }
   };
 
@@ -56,12 +64,16 @@ const useCart = () => {
       price: item.total_price,
       quantity: item.quantity,
       inStock: true,
+      buttonType: 'button',
       href: '',
       description: item.modifiers.map((modifier) => modifier.name).join(', '),
       weight: item.size.portion_weight_grams,
+      sizeId: item.size.id,
+      productId: item.product.id,
     })) ?? [];
 
   return {
+    addToCart,
     groupedCartItems,
     removeGroupedCartItem,
     activeCart,

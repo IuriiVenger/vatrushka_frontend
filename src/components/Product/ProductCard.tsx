@@ -19,21 +19,16 @@ type TProductCardProps = {
 };
 
 const ProductCard: FC<TProductCardProps> = ({ info, slider = false, handleBuyButtonClick }) => {
-  const { pic, name, timing, weight, price, description, inStock, tag } = info;
+  const { pic, name, timing, weight, price, description, inStock, tag, buttonType } = info;
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const { showMessage } = useMessage();
-
-  const onCardClick = () => {
-    // Разрешаем обычный переход по ссылке для всей карточки
-  };
+  const priceText = `${buttonType === 'link' ? 'от ' : ''}${price} ${CurrencySymbol.RUB}`;
 
   const onButtonClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     handleBuyButtonClick();
-    showMessage({ type: 'success', text: 'Товар добавлен в корзину' });
   };
 
   const onLoad = () => setIsLoading(false);
@@ -80,9 +75,7 @@ const ProductCard: FC<TProductCardProps> = ({ info, slider = false, handleBuyBut
           <p className="line-clamp-3 pt-4 max-md:text-base max-md:leading-base">{description}</p>
         </div>
         <div className="z-10 flex items-center justify-between pt-4">
-          <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">
-            {price} {CurrencySymbol.RUB}
-          </p>
+          <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">{priceText}</p>
           <Button
             data-prevent-nprogress
             type="primary"

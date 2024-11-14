@@ -6,8 +6,8 @@ import { FC } from 'react';
 
 import ProductsList from '../../Product/ProductsList';
 
-import Slider from '@/components/Carousels/Slider';
-import { TCard } from '@/types';
+import ProductSlider from '@/components/Carousels/ProductSlider';
+import { TCard, TProductSliderSlide } from '@/types';
 
 type TCategoryPageContentProps = {
   categoryName: string;
@@ -15,19 +15,25 @@ type TCategoryPageContentProps = {
   loadMoreProducts: () => void;
   isLoading: boolean;
   loadMoreAvalible?: boolean;
-  categoryRecommendedProducts?: TCard[];
+  categoryRecommendedSlides?: TProductSliderSlide[];
+  onBuyButtonClick: (card: TCard) => void;
 };
 
 const CategoryPageContent: FC<TCategoryPageContentProps> = (props) => {
-  const { categoryName, loadMoreProducts, categoryRecommendedProducts, ...otherProps } = props;
+  const { categoryName, loadMoreProducts, categoryRecommendedSlides, onBuyButtonClick, ...otherProps } = props;
 
   const breadcrumbs = [{ title: <Link href="/">Главная</Link> }, { title: categoryName }];
 
   return (
     <section className="flex flex-col gap-8" aria-label={categoryName}>
       <Breadcrumb items={breadcrumbs} />
-      <ProductsList title={categoryName} onLoadMore={loadMoreProducts} {...otherProps} />
-      {!!categoryRecommendedProducts?.length && <Slider title="Рекомендуем" slides={categoryRecommendedProducts} />}
+      <ProductsList
+        title={categoryName}
+        onLoadMore={loadMoreProducts}
+        onBuyButtonClick={onBuyButtonClick}
+        {...otherProps}
+      />
+      {!!categoryRecommendedSlides?.length && <ProductSlider title="Рекомендуем" slides={categoryRecommendedSlides} />}
     </section>
   );
 };

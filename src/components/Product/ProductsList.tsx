@@ -17,10 +17,11 @@ type TProductsListProps = {
   onLoadMore?: () => void;
   isLoading?: boolean;
   loadMoreAvailable?: boolean;
+  onBuyButtonClick: (card: TCard) => void;
 };
 
 const ProductsList: FC<TProductsListProps> = (props) => {
-  const { products, title, onLoadMore, isLoading, loadMoreAvailable } = props;
+  const { products, title, onLoadMore, isLoading, loadMoreAvailable, onBuyButtonClick } = props;
   const [sort, setSort] = useState<SortType>(SortType.MOST_POPULAR);
 
   const sortedProducts = useMemo(() => {
@@ -43,7 +44,7 @@ const ProductsList: FC<TProductsListProps> = (props) => {
   );
 
   const handleBuyButtonClick = (card: TCard) => () => {
-    console.log(card);
+    onBuyButtonClick(card);
   };
 
   return (

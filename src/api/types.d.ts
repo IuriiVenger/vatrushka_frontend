@@ -251,9 +251,10 @@ export namespace API {
 
     export type Recomedation = {
       button_image_url: string;
-      nodeId: string;
       price: number | null;
-
+      size_id: string;
+      product_id: string;
+      multiple_sizes: boolean;
       name: string;
       nodeId: string;
       short_description: string | null;

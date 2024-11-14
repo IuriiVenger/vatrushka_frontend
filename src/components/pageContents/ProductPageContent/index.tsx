@@ -2,6 +2,7 @@
 
 import { Breadcrumb, Button } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
 import { FC, useEffect, useState } from 'react';
 
 import TextBlock from '../../ui/TextBlock';
@@ -14,12 +15,13 @@ import {
 } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import ProductCarousel from '@/components/Carousels/ProductCarousel';
-import Slider from '@/components/Carousels/Slider';
+import ProductSlider from '@/components/Carousels/ProductSlider';
 import ProductModificator from '@/components/Product/ProductModificator';
 import PromoTag from '@/components/ui/PromoTag';
 import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
+import { TProductSliderSlide } from '@/types';
 import { conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 
 export type ActiveModifierGroupIds = {
@@ -109,6 +111,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
 
   const [activeSize, setActiveSize] = useState<Partial<Productsizes> | undefined>(initialSize);
   const [amount, setAmount] = useState(1);
+  const router = useRouter();
 
   const selectedSizeModifiers = modifiers.filter((group) => group.productsize_id === activeSize?.size_id);
 
@@ -138,6 +141,16 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
   const totalPrice = pricePerItem * amount;
   const weight = activeSize?.portion_weight_grams;
   const recomendatedProductsData = conertCategoryRecommendedProductsToCards(recommendedProducts);
+  const recomendatedProductsSlides: TProductSliderSlide[] = recomendatedProductsData.map((item) => ({
+    ...item,
+    onBuyButtonClick:
+      item.buttonType === 'button'
+        ? () => onOrder([{ product_id: item.productId || '', size_id: item.sizeId || '', modifiers: [] }])
+        : () => {
+            router.push(item.href);
+          },
+    buyButtonText: 'Заказать',
+  }));
 
   const isSizeSelectorEnabled = sizes && sizes?.length > 1;
 
@@ -319,7 +332,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
           </div>
         </div>
       </div>
-      {!!recomendatedProductsData.length && <Slider title="Рекомендуем" slides={recomendatedProductsData} />}
+      {!!recomendatedProductsSlides.length && <ProductSlider title="Рекомендуем" slides={recomendatedProductsSlides} />}
     </>
   );
 };

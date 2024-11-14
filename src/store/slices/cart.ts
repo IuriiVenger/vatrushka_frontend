@@ -67,7 +67,6 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   selectors: {
-    selectGroupedCartItems: (state) => getGroupedCartItems(state.activeCart.data?.items ?? []),
     selectCart: (state) => state,
   },
   reducers: {
@@ -112,6 +111,6 @@ const cartSlice = createSlice({
 });
 
 export const { clearCart } = cartSlice.actions;
-export const { selectGroupedCartItems, selectCart } = cartSlice.selectors;
+export const { selectCart } = cartSlice.selectors;
 
 export default cartSlice.reducer;

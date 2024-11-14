@@ -19,7 +19,9 @@ export type TCard = {
   href: string;
   quantity: number;
   onClick?: () => void;
-  onBuyButtonClick?: () => void;
+  buttonType: 'button' | 'link';
+  sizeId: string | null;
+  productId: string | null;
 };
 
 export type TMenuLevelOneOption = {
@@ -173,7 +175,11 @@ type TRecCategoryEdge = {
             button_image_url?: string | null;
             nodeId: string;
             price?: string | null;
+            is_default?: boolean | null | undefined;
+            id?: string;
+            size_id?: string;
             products?: {
+              id?: string;
               short_description?: any;
               slug?: string | null;
               name?: string;
@@ -197,4 +203,9 @@ export type GroupedCartItem = API.Cart.CartItem.CartItem & {
   quantity: number;
   total_price: number;
   rawCartItems: API.Cart.CartItem.CartItem[];
+};
+
+export type TProductSliderSlide = TCard & {
+  onBuyButtonClick: () => void;
+  buyButtonText: string;
 };

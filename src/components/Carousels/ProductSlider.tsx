@@ -7,14 +7,14 @@ import SlickSlider, { Settings } from 'react-slick';
 
 import ProductCard from '../Product/ProductCard';
 
-import { TCard } from '@/types';
+import { TProductSliderSlide } from '@/types';
 
-type TSliderComponentProps = {
+export type TSliderComponentProps = {
   title: string;
-  slides: TCard[];
+  slides: TProductSliderSlide[];
 };
 
-const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
+const ProductSlider: FC<TSliderComponentProps> = ({ title, slides }) => {
   const sliderRef = useRef<SlickSlider>(null);
 
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
@@ -97,7 +97,7 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
       <div className="slider-container mx-auto grid max-w-320 grid-cols-1 overflow-hidden">
         <SlickSlider className="additional-list-padding" {...settings} ref={sliderRef}>
           {slides.map((slide, index) => (
-            <ProductCard key={slide.id + index} info={slide} slider handleBuyButtonClick={() => {}} />
+            <ProductCard key={slide.id + index} info={slide} slider handleBuyButtonClick={slide.onBuyButtonClick} />
           ))}
         </SlickSlider>
       </div>
@@ -105,4 +105,4 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
   );
 };
 
-export default Slider;
+export default ProductSlider;
