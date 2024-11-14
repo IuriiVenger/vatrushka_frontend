@@ -11,7 +11,8 @@ import ScrollTopButton from '@/components/ui/ScrollTopButton';
 import { theme } from '@/config/theme';
 import useInitApp from '@/hooks/useInitApp';
 import { useAppSelector } from '@/store';
-import { selectUI } from '@/store/selectors';
+import StoreWatchers from '@/store/components/StoreWatchers';
+import { selectUI } from '@/store/slices/ui';
 
 const Providers: FC<PropsWithChildren> = ({ children }) => {
   const { isPageScrollBlocked } = useAppSelector(selectUI);
@@ -23,6 +24,7 @@ const Providers: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <ConfigProvider theme={theme} locale={locale}>
+      <StoreWatchers />
       <AntdRegistry layer>
         <App className={cn(isPageScrollBlocked && 'fixed left-0 right-0 top-0')}>
           <>

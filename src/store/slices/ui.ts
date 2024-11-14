@@ -1,14 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type InitialState = {
-  isPageScrollBlocked: boolean;
-  isMenuOpened: boolean;
-  isSubMenuOpened: boolean;
-  isMobileSearchOpened: boolean;
-};
+import { UISliceState } from '../types';
 
-const initialState: InitialState = {
+const initialState: UISliceState = {
   isPageScrollBlocked: false,
   isMenuOpened: false,
   isSubMenuOpened: false,
@@ -18,6 +13,9 @@ const initialState: InitialState = {
 const uiSlice = createSlice({
   name: 'ui',
   initialState,
+  selectors: {
+    selectUI: (state) => state,
+  },
   reducers: {
     toggleMenu: (state, action: PayloadAction<boolean>) => {
       state.isPageScrollBlocked = action.payload;
@@ -47,6 +45,8 @@ const uiSlice = createSlice({
   },
 });
 
-export const { toggleMenu, toggleSubMenu, toggleSearch, resetAll } = uiSlice.actions;
-
-export default uiSlice.reducer;
+export const {
+  selectors: { selectUI },
+  actions: { toggleMenu, toggleSubMenu, toggleSearch, resetAll },
+  reducer: ui,
+} = uiSlice;

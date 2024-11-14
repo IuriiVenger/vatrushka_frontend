@@ -17,10 +17,11 @@ type TProductsListProps = {
   onLoadMore?: () => void;
   isLoading?: boolean;
   loadMoreAvailable?: boolean;
+  onBuyButtonClick: (card: TCard) => Promise<void>;
 };
 
 const ProductsList: FC<TProductsListProps> = (props) => {
-  const { products, title, onLoadMore, isLoading, loadMoreAvailable } = props;
+  const { products, title, onLoadMore, isLoading, loadMoreAvailable, onBuyButtonClick } = props;
   const [sort, setSort] = useState<SortType>(SortType.MOST_POPULAR);
 
   const sortedProducts = useMemo(() => {
@@ -42,6 +43,10 @@ const ProductsList: FC<TProductsListProps> = (props) => {
     [products.length],
   );
 
+  const handleBuyButtonClick = (card: TCard) => async () => {
+    await onBuyButtonClick(card);
+  };
+
   return (
     <div className="flex flex-col gap-12 max-lg:gap-8 max-md:gap-4 max-xs:max-w-82 ">
       <div className="flex items-end justify-between max-md:w-full max-md:flex-col max-md:items-start max-md:gap-6">
@@ -54,7 +59,7 @@ const ProductsList: FC<TProductsListProps> = (props) => {
       <div className="flex max-w-320 flex-col items-center gap-6 max-xs:max-w-82">
         <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1">
           {sortedProducts.map((item, index) => (
-            <ProductCard key={item.id + index} info={item} />
+            <ProductCard key={item.id + index} info={item} handleBuyButtonClick={handleBuyButtonClick(item)} />
           ))}
         </div>
         {loadMoreAvailable && (

@@ -85,6 +85,142 @@ export namespace API {
     }
   }
 
+  export namespace Cart {
+    export interface CartList {
+      id: string;
+      user_id: number;
+      status: string;
+      created_at: string;
+      updated_at: string;
+    }
+    export interface Cart extends CartListItem {
+      id: string;
+      user_id: number;
+      status: string;
+      created_at: string;
+      updated_at: string;
+      items: API.Cart.CartItem.CartItem[];
+      total_sum: number;
+    }
+
+    export namespace CartItem {
+      export interface CartListItem {
+        id: string;
+        cart_id: string;
+        product_id: string;
+        size_id: string;
+        item_total: number;
+        modifiers: Array<{
+          id: string;
+          quantity: number;
+          price: number;
+          modifier_total_price: number;
+        }>;
+      }
+
+      export interface CartItem extends CartListItem {
+        size: {
+          id: string;
+          sku: string;
+          price: number;
+          size_id: string;
+          size_code: string;
+          size_name: string;
+          is_default: boolean;
+          nutritions: Array<{
+            fats: number;
+            salt: number | null;
+            carbs: number;
+            sugar: number | null;
+            energy: number;
+            proteins: number;
+            organizations: string[];
+            saturatedFattyAcid: number | null;
+          }>;
+          product_id: string;
+          button_image_url: string;
+          portion_weight_grams: number;
+          nutrition_per_hundred_grams: {
+            fats: number;
+            salt: number | null;
+            carbs: number;
+            sugar: number | null;
+            energy: number;
+            proteins: number;
+            organizations: string[];
+            saturatedFattyAcid: number | null;
+          };
+        };
+        product: {
+          id: string;
+          sku: string | null;
+          name: string;
+          slug: string;
+          isPopular: boolean | null;
+          description: string;
+          ingredients: string | null;
+          optional_text: string | null;
+          tax_category_id: string | null;
+          productCategoryId: string;
+          short_description: string | null;
+          modifier_schema_id: string | null;
+        };
+        item_total: number;
+        modifiers: Array<{
+          id: string;
+          quantity: number;
+          external_modifier_group_id: string;
+          name: string;
+          description: string;
+          sku: string;
+          portion_weight_grams: number;
+          nutrition_per_hundred_grams: {
+            fats: number;
+            salt: number | null;
+            carbs: number;
+            sugar: number | null;
+            energy: number;
+            proteins: number;
+            organizations: string[];
+            saturatedFattyAcid: number | null;
+          };
+          button_image: string | null;
+          price: number;
+          product_id: string | null;
+          external_modifier_id: string;
+          group_id: string;
+          min_quantity: number;
+          max_quantity: number;
+          free_quantity: number;
+          by_default: number;
+          is_hidden: boolean;
+          modifier_total_price: number;
+        }>;
+      }
+
+      export namespace Create {
+        export interface RequestItem {
+          product_id: number | string;
+          size_id: number | string;
+          modifiers: {
+            id: number | string;
+            quantity: number;
+          }[];
+        }
+        export type Request = {
+          cart_id: string;
+          data: API.Cart.CartItem.Create.RequestItem[];
+        };
+      }
+
+      export namespace Delete {
+        export type Request = {
+          cart_id: string;
+          data: Record<'cart_item_id', string>[];
+        };
+      }
+    }
+  }
   export namespace Categories {
     export namespace GetProductsByCategorySlug {
       export type Request = {
@@ -115,9 +251,10 @@ export namespace API {
 
     export type Recomedation = {
       button_image_url: string;
-      nodeId: string;
       price: number | null;
-
+      size_id: string;
+      product_id: string;
+      multiple_sizes: boolean;
       name: string;
       nodeId: string;
       short_description: string | null;

@@ -4,7 +4,10 @@ import { TMenuLevelOneOption, TCard, TCartListItem, TPromotion, TUserInfo } from
 import mainBanner from '@/assets/images/main_banner.png';
 
 export const mockCardOne: TCard = {
+  sizeId: '1',
+  productId: '1',
   id: '1',
+  buttonType: 'button',
   pic: 'https://s3-alpha-sig.figma.com/img/1cbd/6d9d/20ad1ed2e9d57489108643c0407f39e2?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=E~YT2pTIQJaSN~1EZdbb2S01zXR3xDY2xaYA8pUHbRi7yWhKXP8XdFYHA-6VCVdKcfmau~6taP4CfOyzMRstOKBYjBLFyySWSjtSFPuEEV-LcUpqafa2Rg5p7cmksk1JrWm~1lGh2w5i94GlCDCuliVMgJfN-qjCjMtFPrW-5B7dm1INg~eYABtQLiCweIj~o1RmffF~fRt~rcWfKdd~7Q-rA6r5IUDcrpcLrMmaN5HcGr9GMMhoHYdfJyH9gRNwnPBuKzedr6g1loAneDldM02Wpsel9yqbam17Z8Uv~wjRG0UCIu~agMIsy~BMVHRzazLj7pmwa4gcPops451t5g__',
   name: 'Торт Милая девочка',
   weight: 1000,
@@ -20,6 +23,7 @@ export const mockCardOne: TCard = {
 
 export const mockCardTwo: TCard = {
   id: '2',
+  buttonType: 'button',
   pic: 'https://s3-alpha-sig.figma.com/img/d173/5c58/689dd362b27692fc65ca832a85773478?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=kFI4-ZgE7ngZJu8KMpGfIki55cL1QPPdaDKv5ED27EfjJwdlVqrF0-WTd9rIHE4UtruplLt~OcL2BnIKqt1Qb-uIwSXuaBGBVn9qZ1DwJeNlaFTmvbHAgyUwGIecQbBciEU7fZtG2i5INWgUusf4VhL~F0sUuBbpBvESeN-ga7sXkYLz2a1acguvjYKQiH60h3My3Nu90~doBNGJuZCGMzRnKXeHmk3kEBfMmuq9riMbcUXm3PojGPYHgzuqBgYP3jIsLoSKXppn8GMnP6mTOlQgxT2oOwuSleyNbcOlMirJTov9EPoP2oWIZT2OfiuXBnDkAL7FJKNfZfMf1yqbcg__',
   name: 'Торт с очень длинным названием, которое не влезает в одну строку',
   weight: 2500,
@@ -31,6 +35,8 @@ export const mockCardTwo: TCard = {
   inStock: false,
   href: 'https://www.google.com',
   quantity: 1,
+  sizeId: '1',
+  productId: '1',
 };
 
 export const products: TCard[] = [...Array(9)].map((_, index) => (index % 2 === 0 ? mockCardOne : mockCardTwo));

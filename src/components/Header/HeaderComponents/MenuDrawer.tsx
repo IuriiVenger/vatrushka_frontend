@@ -11,8 +11,8 @@ import ContactUsModal from '@/components/modals/ContactUsModal';
 import { companyInfo, contactLinks, navigationLinks } from '@/config/links';
 import { ContactLinks, NavigationLinks } from '@/constants';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectUI } from '@/store/selectors';
-import { resetAll, toggleMenu, toggleSubMenu } from '@/store/slices/ui';
+
+import { resetAll, toggleMenu, toggleSubMenu, selectUI } from '@/store/slices/ui';
 import { TContact, TNavigationLink } from '@/types';
 
 const menuItems = Object.entries(navigationLinks).reduce<TNavigationLink[]>((acc, [key, value]) => {

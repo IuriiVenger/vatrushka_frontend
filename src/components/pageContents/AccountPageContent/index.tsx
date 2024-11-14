@@ -14,10 +14,11 @@ import { AccountTabsOptions, accountTabs } from '@/constants';
 import useAuth from '@/hooks/useAuth';
 import { useUrlParams } from '@/hooks/useUrlParams';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectConfig, selectIsUserLoggedIn, selectUser } from '@/store/selectors';
+import { selectConfig } from '@/store/slices/config';
+import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
 
 const AccountPageContent: FC = () => {
-  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const { user } = useAppSelector(selectUser);
   const { isWebAppInitialized } = useAppSelector(selectConfig);
   const dispatch = useAppDispatch();

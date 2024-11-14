@@ -50,11 +50,15 @@ export const GET_COMMON_REC_PRODUCTS = gql`
                   price
                   button_image_url
                   nodeId
+                  is_default
+                  id
+                  size_id
                   products {
                     short_description
                     slug
                     name
                     nodeId
+                    id
                   }
                 }
               }
@@ -157,11 +161,15 @@ export const GET_RECOMMENDED_PRODUCTS_BY_CATEGORY_SLUG = gql`
                         price
                         button_image_url
                         nodeId
+                        is_default
+                        id
+                        size_id
                         products {
                           short_description
                           slug
                           name
                           nodeId
+                          id
                         }
                       }
                     }
@@ -251,11 +259,15 @@ export const GET_PRODUCTS_AND_RECOMMENDED_PRODUCTS_BY_CATEGORY_SLUG = gql`
                         price
                         button_image_url
                         nodeId
+                        is_default
+                        id
+                        size_id
                         products {
                           short_description
                           slug
                           name
                           nodeId
+                          id
                         }
                       }
                     }
@@ -371,11 +383,15 @@ export const GET_PROUCT_BY_SLUG = gql`
                                 price
                                 button_image_url
                                 nodeId
+                                is_default
+                                id
+                                size_id
                                 products {
                                   short_description
                                   slug
                                   name
                                   nodeId
+                                  id
                                 }
                               }
                             }
@@ -513,11 +529,15 @@ export const GET_PRODUCT_BY_NAME = gql`
                                 price
                                 button_image_url
                                 nodeId
+                                is_default
+                                id
+                                size_id
                                 products {
                                   short_description
                                   slug
                                   name
                                   nodeId
+                                  id
                                 }
                               }
                             }

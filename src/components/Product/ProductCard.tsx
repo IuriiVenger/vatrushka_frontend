@@ -9,32 +9,41 @@ import CustomImage from '../ui/CustomImage';
 import ProductCardSkeleton from './ProductCardSkeleton';
 
 import { CurrencySymbol, TagColorSchema } from '@/constants';
-import { useMessage } from '@/hooks/useMessage';
 import { TCard } from '@/types';
 
 type TProductCardProps = {
   info: TCard;
   slider?: boolean;
+  handleBuyButtonClick: () => Promise<void>;
 };
 
-const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
-  const { pic, name, timing, weight, price, description, inStock, tag } = info;
+const ProductCard: FC<TProductCardProps> = ({ info, slider = false, handleBuyButtonClick }) => {
+  const { pic, name, timing, weight, price, description, inStock, tag, buttonType } = info;
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
-  const { showMessage } = useMessage();
+  const priceText = `${buttonType === 'link' ? 'от ' : ''}${price} ${CurrencySymbol.RUB}`;
 
-  const onButtonClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
-    inStock && showMessage({ type: 'success', text: 'Товар добавлен в корзину' });
+  const onButtonClick = async (e: React.MouseEvent<HTMLElement>) => {
+    setIsButtonLoading(true);
+    console.log('setIsButtonLoading(true)');
+    try {
+      e.preventDefault();
+      e.stopPropagation();
+      await handleBuyButtonClick();
+    } finally {
+      setIsButtonLoading(false);
+      console.log('setIsButtonLoading(false)');
+    }
   };
 
   const onLoad = () => setIsLoading(false);
 
   return (
     <Link
-      className={`relative flex cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-lg ${slider ? 'mx-3 h-full max-md:mx-2' : 'w-full'} `}
       href={info.href}
+      className={`relative flex cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-lg ${slider ? 'mx-3 h-full max-md:mx-2' : 'w-full'} `}
     >
       {tag && (
         <span
@@ -72,11 +81,16 @@ const ProductCard: FC<TProductCardProps> = ({ info, slider = false }) => {
           </div>
           <p className="line-clamp-3 pt-4 max-md:text-base max-md:leading-base">{description}</p>
         </div>
-        <div className="flex items-center justify-between pt-4">
-          <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">
-            {price} {CurrencySymbol.RUB}
-          </p>
-          <Button type="primary" disabled={!inStock} className="max-md:h-10 max-md:text-base" onClick={onButtonClick}>
+        <div className="z-10 flex items-center justify-between pt-4">
+          <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">{priceText}</p>
+          <Button
+            data-prevent-nprogress
+            type="primary"
+            disabled={!inStock}
+            className="max-md:h-10 max-md:text-base"
+            onClick={onButtonClick}
+            loading={isButtonLoading}
+          >
             {inStock ? 'Купить' : 'Нет в наличии'}
           </Button>
         </div>

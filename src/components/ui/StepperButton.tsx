@@ -3,7 +3,7 @@ import { FiMinus, FiPlus } from 'react-icons/fi';
 
 type TStepperButtonProps = {
   count: number;
-  setCount: Dispatch<SetStateAction<number>>;
+  setCount: Dispatch<SetStateAction<number>> | ((count: number) => void);
   minValue?: number;
 };
 
@@ -12,7 +12,7 @@ const StepperButton: FC<TStepperButtonProps> = ({ count, setCount, minValue = 0 
 
   const onCountChange = (delta: number) => (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    setCount((prevCount) => prevCount + delta);
+    setCount(count + delta);
   };
 
   return (

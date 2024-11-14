@@ -1,14 +1,16 @@
 'use client';
 
+import { useRouter } from 'next-nprogress-bar';
 import { FC, useEffect, useMemo } from 'react';
 
 import { API } from '@/api/types';
 import CategoryPageContent from '@/components/pageContents/CategoryPageContent';
 import { defaultPaginationParams, RequestStatus } from '@/constants';
+import useCart from '@/hooks/useCart';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectEntities } from '@/store/selectors';
-import { loadMoreCategoryProducts, setCategoryProducts } from '@/store/slices/entities';
-import { CategoryItemsConnectionType, TCard } from '@/types';
+
+import { loadMoreCategoryProducts, setCategoryProducts, selectEntities } from '@/store/slices/entities';
+import { CategoryItemsConnectionType, TCard, TProductSliderSlide } from '@/types';
 import { convertCategoryItemsQueryProductsToCards, conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 
 type ClientCategoryPageProps = {
@@ -22,12 +24,16 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
   const { categoryName, categoryItems, categorySlug, categoryRecommendedProducts } = props;
   const dispatch = useAppDispatch();
   const { categoryProducts } = useAppSelector(selectEntities);
+  const { addToCart } = useCart();
+  const router = useRouter();
 
   const productsOffset = categoryProducts.meta?.offset || 0;
+
   const initialProducts: TCard[] = useMemo(
     () => convertCategoryItemsQueryProductsToCards(categoryItems),
     [categoryItems],
   );
+
   const convertedCategoryRecommendedProducts = useMemo(
     () => categoryRecommendedProducts && conertCategoryRecommendedProductsToCards(categoryRecommendedProducts),
     [categoryRecommendedProducts],
@@ -40,6 +46,22 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
       loadMoreCategoryProducts({ slug: categorySlug, offset: productsOffset, first: defaultPaginationParams.first }),
     );
   };
+
+  const onBuyButtonClick = async (card: TCard) => {
+    if (card.buttonType === 'button') {
+      await addToCart([{ product_id: card.productId || '', size_id: card.sizeId || '', modifiers: [] }]);
+    } else {
+      router.push(card.href);
+    }
+  };
+
+  const categoryRecommendedSlides: TProductSliderSlide[] | undefined = convertedCategoryRecommendedProducts?.map(
+    (product) => ({
+      ...product,
+      onBuyButtonClick: () => onBuyButtonClick(product),
+      buyButtonText: product.buttonType === 'button' ? 'В корзину' : 'Перейти',
+    }),
+  );
 
   useEffect(() => {
     dispatch(
@@ -57,7 +79,8 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
       isLoading={isProductsPending}
       loadMoreProducts={loadMoreProducts}
       loadMoreAvalible={categoryProducts.meta?.isLastPage === false}
-      categoryRecommendedProducts={convertedCategoryRecommendedProducts}
+      categoryRecommendedSlides={categoryRecommendedSlides}
+      onBuyButtonClick={onBuyButtonClick}
     />
   );
 };

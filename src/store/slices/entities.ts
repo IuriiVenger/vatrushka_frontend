@@ -1,33 +1,21 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { StoreDataWithStatus, StoreDataWithStatusAndMeta } from '../types';
+import { EntitiesSliceState, StorePaginationParams } from '../types';
 
-import { Categories } from '@/__generated__/graphql';
 import { categories } from '@/api/categories';
 import { emptyStoreDataWithStatus, emptyStoreDataWithStatusAndMeta, RequestStatus } from '@/constants';
 import { TCard } from '@/types';
 import { convertCategoryItemsQueryProductsToCards } from '@/utils/converters';
 
-type EntitiesSliceState = {
-  categories: StoreDataWithStatus<Categories[] | null>;
-  categoryProducts: StoreDataWithStatusAndMeta<TCard[] | null>;
-};
-
-type SetCategoryProductsAction = {
-  type: string;
-  payload: {
-    data: TCard[];
-    meta: {
-      offset: number;
-      isLastPage: boolean;
-    };
-  };
-};
-
 const initialState: EntitiesSliceState = {
   categories: emptyStoreDataWithStatus,
   categoryProducts: emptyStoreDataWithStatusAndMeta,
+};
+
+type SetCategoryProductsPayload = {
+  data: TCard[];
+  meta: StorePaginationParams['meta'];
 };
 
 export const loadCategories = createAsyncThunk('categories/getAll', categories.getAllWithoutPagination);
@@ -40,8 +28,11 @@ export const loadMoreCategoryProducts = createAsyncThunk(
 const entitiesSlice = createSlice({
   name: 'entities',
   initialState,
+  selectors: {
+    selectEntities: (state) => state,
+  },
   reducers: {
-    setCategoryProducts: (state, { payload }: SetCategoryProductsAction) => {
+    setCategoryProducts: (state, { payload }: PayloadAction<SetCategoryProductsPayload>) => {
       state.categoryProducts.data = payload.data;
       state.categoryProducts.meta = { ...payload.meta };
       state.categoryProducts.status = RequestStatus.FULFILLED;
@@ -106,6 +97,8 @@ const entitiesSlice = createSlice({
   },
 });
 
-export const { setCategoryProducts } = entitiesSlice.actions;
-
-export default entitiesSlice.reducer;
+export const {
+  selectors: { selectEntities },
+  actions: { setCategoryProducts },
+  reducer: entities,
+} = entitiesSlice;

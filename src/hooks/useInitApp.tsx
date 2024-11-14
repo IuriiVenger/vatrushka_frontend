@@ -1,19 +1,37 @@
+import { useRef } from 'react';
+
 import useAuth from './useAuth';
 
+import useCart from './useCart';
+
+import { RequestStatus } from '@/constants';
+
 import { useAppDispatch } from '@/store';
+
 import { setWebAppInitialized } from '@/store/slices/config';
 import { loadCategories } from '@/store/slices/entities';
-import { getTokens } from '@/utils/tokensFactory';
 
 const useInitApp = () => {
   const dispatch = useAppDispatch();
+  const initializeStatusRef = useRef(RequestStatus.NONE);
+
   const { initUser } = useAuth(dispatch);
-  const { access_token } = getTokens();
+  const { initCart } = useCart();
 
   const initApp = async () => {
+    if (initializeStatusRef.current !== RequestStatus.NONE) {
+      return;
+    }
+
     try {
+      initializeStatusRef.current = RequestStatus.PENDING;
       await dispatch(loadCategories());
-      !!access_token && (await initUser());
+      await initUser();
+      await initCart();
+      initializeStatusRef.current = RequestStatus.FULFILLED;
+    } catch (error) {
+      initializeStatusRef.current = RequestStatus.REJECTED;
+      throw error;
     } finally {
       dispatch(setWebAppInitialized(true));
     }

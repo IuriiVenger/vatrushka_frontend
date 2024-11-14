@@ -12,7 +12,7 @@ import AuthModal from '@/components/modals/AuthModal';
 import { AccountTabsOptions } from '@/constants';
 import useAuth from '@/hooks/useAuth';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectIsUserLoggedIn, selectUser } from '@/store/selectors';
+import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
 import { prettifyPhone } from '@/utils/formatters';
 
 type TUserMenuProps = {
@@ -22,7 +22,7 @@ type TUserMenuProps = {
 const UserMenu: FC<TUserMenuProps> = ({ onCloseAll }) => {
   const dispatch = useAppDispatch();
 
-  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const { user } = useAppSelector(selectUser);
   const { signOut } = useAuth(dispatch);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
