@@ -1,4 +1,3 @@
-import { products } from './products';
 import {
   GET_CATEGORIES,
   GET_RECOMMENDED_PRODUCTS_BY_CATEGORY_SLUG,

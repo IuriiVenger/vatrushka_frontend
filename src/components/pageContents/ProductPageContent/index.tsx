@@ -20,7 +20,6 @@ import ProductModificator from '@/components/Product/ProductModificator';
 import PromoTag from '@/components/ui/PromoTag';
 import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
-import { useMessage } from '@/hooks/useMessage';
 import { TProductSliderSlide } from '@/types';
 import { conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 

@@ -9,7 +9,6 @@ import CustomImage from '../ui/CustomImage';
 import ProductCardSkeleton from './ProductCardSkeleton';
 
 import { CurrencySymbol, TagColorSchema } from '@/constants';
-import { useMessage } from '@/hooks/useMessage';
 import { TCard } from '@/types';
 
 type TProductCardProps = {

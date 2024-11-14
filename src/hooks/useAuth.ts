@@ -1,7 +1,5 @@
 /* eslint-disable no-restricted-globals */
 
-import { message } from 'antd';
-
 import { useState } from 'react';
 
 import useCart from './useCart';

@@ -1,14 +1,12 @@
 import { Dropdown, Button, Badge } from 'antd';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { LuShoppingCart } from 'react-icons/lu';
 
 import { TMenuItem } from '../Header';
 
 import CartList from './CartList';
 
-import { API } from '@/api/types';
 import { color } from '@/config/variables';
-import { StoreDataWithStatus } from '@/store/types';
 import { TCard } from '@/types';
 
 // const cartItems: TMenuItem[] = [

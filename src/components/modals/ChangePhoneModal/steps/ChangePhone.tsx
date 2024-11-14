@@ -6,7 +6,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
-import { prettifyPhone } from '@/utils/formatters';
 
 type TChangePhoneModalForm = {
   phone: string;
@@ -21,7 +20,6 @@ const ChangePhone: FC<TChangePhoneModalProps> = ({ onChangePhone }) => {
     handleSubmit,
     control,
     formState: { errors, isValid, isDirty },
-    watch,
   } = useForm<TChangePhoneModalForm>({
     mode: 'onChange',
   });
