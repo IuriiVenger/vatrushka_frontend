@@ -15,20 +15,28 @@ import { TCard } from '@/types';
 type TProductCardProps = {
   info: TCard;
   slider?: boolean;
-  handleBuyButtonClick: () => void;
+  handleBuyButtonClick: () => Promise<void>;
 };
 
 const ProductCard: FC<TProductCardProps> = ({ info, slider = false, handleBuyButtonClick }) => {
   const { pic, name, timing, weight, price, description, inStock, tag, buttonType } = info;
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   const priceText = `${buttonType === 'link' ? 'от ' : ''}${price} ${CurrencySymbol.RUB}`;
 
-  const onButtonClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    handleBuyButtonClick();
+  const onButtonClick = async (e: React.MouseEvent<HTMLElement>) => {
+    setIsButtonLoading(true);
+    console.log('setIsButtonLoading(true)');
+    try {
+      e.preventDefault();
+      e.stopPropagation();
+      await handleBuyButtonClick();
+    } finally {
+      setIsButtonLoading(false);
+      console.log('setIsButtonLoading(false)');
+    }
   };
 
   const onLoad = () => setIsLoading(false);
@@ -82,6 +90,7 @@ const ProductCard: FC<TProductCardProps> = ({ info, slider = false, handleBuyBut
             disabled={!inStock}
             className="max-md:h-10 max-md:text-base"
             onClick={onButtonClick}
+            loading={isButtonLoading}
           >
             {inStock ? 'Купить' : 'Нет в наличии'}
           </Button>

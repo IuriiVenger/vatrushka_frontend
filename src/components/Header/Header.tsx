@@ -18,8 +18,8 @@ import PreHeader from './PreHeader';
 
 import useCart from '@/hooks/useCart';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectCart, selectEntities, selectUI } from '@/store/selectors';
-import { toggleMenu, toggleSearch, resetAll } from '@/store/slices/ui';
+import { selectEntities } from '@/store/slices/entities';
+import { toggleMenu, toggleSearch, resetAll, selectUI } from '@/store/slices/ui';
 
 export type TMenuItem = Required<MenuProps>['items'][number];
 

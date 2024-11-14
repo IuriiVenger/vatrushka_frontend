@@ -11,7 +11,7 @@ import ScrollTopButton from '@/components/ui/ScrollTopButton';
 import { theme } from '@/config/theme';
 import useInitApp from '@/hooks/useInitApp';
 import { useAppSelector } from '@/store';
-import { selectUI } from '@/store/selectors';
+import { selectUI } from '@/store/slices/ui';
 
 const Providers: FC<PropsWithChildren> = ({ children }) => {
   const { isPageScrollBlocked } = useAppSelector(selectUI);

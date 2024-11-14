@@ -7,13 +7,13 @@ import Modal from './Modal';
 import { AccountTabsOptions, AuthModalSteps } from '@/constants';
 import { order, userInfo } from '@/mocks';
 import { useAppSelector } from '@/store';
-import { selectIsUserLoggedIn } from '@/store/selectors';
+import { selectIsNonAnonymousUser } from '@/store/slices/user';
 import { TModalProps } from '@/types';
 
 const OrderConfirmationModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
 
   const onContinue = () => {
     setIsOpen(false);

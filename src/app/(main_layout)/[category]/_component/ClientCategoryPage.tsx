@@ -8,8 +8,8 @@ import CategoryPageContent from '@/components/pageContents/CategoryPageContent';
 import { defaultPaginationParams, RequestStatus } from '@/constants';
 import useCart from '@/hooks/useCart';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectEntities } from '@/store/selectors';
-import { loadMoreCategoryProducts, setCategoryProducts } from '@/store/slices/entities';
+
+import { loadMoreCategoryProducts, setCategoryProducts, selectEntities } from '@/store/slices/entities';
 import { CategoryItemsConnectionType, TCard, TProductSliderSlide } from '@/types';
 import { convertCategoryItemsQueryProductsToCards, conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 
@@ -47,9 +47,9 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
     );
   };
 
-  const onBuyButtonClick = (card: TCard) => {
+  const onBuyButtonClick = async (card: TCard) => {
     if (card.buttonType === 'button') {
-      addToCart([{ product_id: card.productId || '', size_id: card.sizeId || '', modifiers: [] }]);
+      await addToCart([{ product_id: card.productId || '', size_id: card.sizeId || '', modifiers: [] }]);
     } else {
       router.push(card.href);
     }

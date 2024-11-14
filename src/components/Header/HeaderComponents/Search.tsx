@@ -14,8 +14,8 @@ import SearchInput from '@/components/ui/SearchInput';
 import useDebounce from '@/hooks/useDebounce';
 
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectUI } from '@/store/selectors';
-import { toggleSearch } from '@/store/slices/ui';
+
+import { toggleSearch, selectUI } from '@/store/slices/ui';
 import { TSearchListItem } from '@/types';
 
 const Search: FC = () => {

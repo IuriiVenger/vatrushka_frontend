@@ -54,7 +54,7 @@ export type TProductProps = {
     sizesImages: Productsizeimages[];
     title?: string;
   };
-  onOrder: (data: API.Cart.CartItem.Create.RequestItem[]) => void;
+  onOrder: (data: API.Cart.CartItem.Create.RequestItem[]) => Promise<void>;
 };
 
 const getModifierGroupData = (modifiersGroups: ModifiersGroups[]) =>
@@ -111,6 +111,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
 
   const [activeSize, setActiveSize] = useState<Partial<Productsizes> | undefined>(initialSize);
   const [amount, setAmount] = useState(1);
+  const [isOrderButtonLoading, setIsOrderButtonLoading] = useState(false);
   const router = useRouter();
 
   const selectedSizeModifiers = modifiers.filter((group) => group.productsize_id === activeSize?.size_id);
@@ -141,16 +142,20 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
   const totalPrice = pricePerItem * amount;
   const weight = activeSize?.portion_weight_grams;
   const recomendatedProductsData = conertCategoryRecommendedProductsToCards(recommendedProducts);
-  const recomendatedProductsSlides: TProductSliderSlide[] = recomendatedProductsData.map((item) => ({
-    ...item,
-    onBuyButtonClick:
-      item.buttonType === 'button'
-        ? () => onOrder([{ product_id: item.productId || '', size_id: item.sizeId || '', modifiers: [] }])
-        : () => {
-            router.push(item.href);
-          },
-    buyButtonText: 'Заказать',
-  }));
+  const recomendatedProductsSlides: TProductSliderSlide[] = recomendatedProductsData.map((item) => {
+    const onBuyButtonClick = async () => {
+      if (item.buttonType === 'button') {
+        await onOrder([{ product_id: item.productId || '', size_id: item.sizeId || '', modifiers: [] }]);
+      } else {
+        router.push(item.href);
+      }
+    };
+    return {
+      ...item,
+      onBuyButtonClick,
+      buyButtonText: 'Заказать',
+    };
+  });
 
   const isSizeSelectorEnabled = sizes && sizes?.length > 1;
 
@@ -172,7 +177,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
     setModifiersGroupsData({ ...modifiersGroupsData, [groupId]: selectedGroup });
   };
 
-  const onOrderButtonClick = () => {
+  const onOrderButtonClick = async () => {
     if (!id || !activeSize?.id) {
       return;
     }
@@ -185,7 +190,12 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
 
     const orderDataItems = new Array(amount).fill(orderDataItem);
 
-    onOrder(orderDataItems);
+    try {
+      setIsOrderButtonLoading(true);
+      await onOrder(orderDataItems);
+    } finally {
+      setIsOrderButtonLoading(false);
+    }
   };
 
   const onSizeClick = (size: Partial<Productsizes>) => () => {
@@ -289,7 +299,12 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
             </p>
             <div className="flex gap-6 py-6 max-xs:grid max-xs:grid-cols-2">
               <StepperButton count={amount} setCount={setAmount} minValue={1} />
-              <Button type="primary" className="w-max max-xs:w-full" onClick={onOrderButtonClick}>
+              <Button
+                type="primary"
+                className="w-max max-xs:w-full"
+                onClick={onOrderButtonClick}
+                loading={isOrderButtonLoading}
+              >
                 Заказать
               </Button>
             </div>

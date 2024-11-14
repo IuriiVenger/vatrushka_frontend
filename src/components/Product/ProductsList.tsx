@@ -17,7 +17,7 @@ type TProductsListProps = {
   onLoadMore?: () => void;
   isLoading?: boolean;
   loadMoreAvailable?: boolean;
-  onBuyButtonClick: (card: TCard) => void;
+  onBuyButtonClick: (card: TCard) => Promise<void>;
 };
 
 const ProductsList: FC<TProductsListProps> = (props) => {
@@ -43,8 +43,8 @@ const ProductsList: FC<TProductsListProps> = (props) => {
     [products.length],
   );
 
-  const handleBuyButtonClick = (card: TCard) => () => {
-    onBuyButtonClick(card);
+  const handleBuyButtonClick = (card: TCard) => async () => {
+    await onBuyButtonClick(card);
   };
 
   return (

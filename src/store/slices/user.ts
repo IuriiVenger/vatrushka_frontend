@@ -4,7 +4,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { UserSliceState } from '../types';
 
 import { RequestStatus } from '@/constants';
-import { deleteTokens } from '@/utils/tokensFactory';
 
 const initialState: UserSliceState = {
   user: null,
@@ -15,6 +14,10 @@ const initialState: UserSliceState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
+  selectors: {
+    selectUser: (state) => state,
+    selectIsNonAnonymousUser: (state) => state.user?.is_anonymous === false,
+  },
   reducers: {
     setUser: (state, action) => {
       state.userLoadingStatus = RequestStatus.FULFILLED;
@@ -34,6 +37,8 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setUserLoadingStatus, setUserData, logout } = userSlice.actions;
-
-export default userSlice.reducer;
+export const {
+  selectors: { selectUser, selectIsNonAnonymousUser },
+  actions: { setUser, setUserLoadingStatus, setUserData, logout },
+  reducer: user,
+} = userSlice;

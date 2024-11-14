@@ -10,6 +10,9 @@ const initialState: ConfigSliceState = {
 const confgiSlice = createSlice({
   name: 'config',
   initialState,
+  selectors: {
+    selectConfig: (state) => state,
+  },
   reducers: {
     setWebAppInitialized: (state, action) => {
       state.isWebAppInitialized = action.payload;
@@ -17,6 +20,10 @@ const confgiSlice = createSlice({
   },
 });
 
-export const { setWebAppInitialized } = confgiSlice.actions;
+export const {
+  selectors: { selectConfig },
+  actions: { setWebAppInitialized },
+  reducer: config,
+} = confgiSlice;
 
 export default confgiSlice.reducer;

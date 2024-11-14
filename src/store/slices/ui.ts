@@ -13,6 +13,9 @@ const initialState: UISliceState = {
 const uiSlice = createSlice({
   name: 'ui',
   initialState,
+  selectors: {
+    selectUI: (state) => state,
+  },
   reducers: {
     toggleMenu: (state, action: PayloadAction<boolean>) => {
       state.isPageScrollBlocked = action.payload;
@@ -42,6 +45,8 @@ const uiSlice = createSlice({
   },
 });
 
-export const { toggleMenu, toggleSubMenu, toggleSearch, resetAll } = uiSlice.actions;
-
-export default uiSlice.reducer;
+export const {
+  selectors: { selectUI },
+  actions: { toggleMenu, toggleSubMenu, toggleSearch, resetAll },
+  reducer: ui,
+} = uiSlice;

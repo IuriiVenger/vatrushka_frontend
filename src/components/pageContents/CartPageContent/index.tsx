@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, Button, Divider } from 'antd';
+import { Alert, Button, Divider, Spin } from 'antd';
 import { FC, Fragment, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoIosArrowForward } from 'react-icons/io';
@@ -11,10 +11,10 @@ import ItemCard from './ItemCard';
 import AuthModal from '@/components/modals/AuthModal';
 import Input from '@/components/ui/Form/Input';
 import { CurrencySymbol } from '@/constants';
-// import { order, products } from '@/mocks';
+
 import useCart from '@/hooks/useCart';
 import { useAppSelector } from '@/store';
-import { selectIsUserLoggedIn } from '@/store/selectors';
+import { selectIsNonAnonymousUser } from '@/store/slices/user';
 import { getNounWithDeclension } from '@/utils/formatters';
 
 type TDiscountForm = {
@@ -22,10 +22,16 @@ type TDiscountForm = {
 };
 
 const CartPageContent: FC = () => {
-  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const { activeCart, cartCardsData, removeGroupedCartItem, deleteCartItems, onGroupedCartItemQuantityChange } =
-    useCart();
+  const {
+    activeCart,
+    cartCardsData,
+    removeGroupedCartItem,
+    deleteCartItems,
+    onGroupedCartItemQuantityChange,
+    isCartInitialized,
+  } = useCart();
 
   const itemsCountText = `${activeCart.data?.items?.length ?? 0} ${getNounWithDeclension(
     activeCart.data?.items?.length ?? 0,
@@ -51,6 +57,13 @@ const CartPageContent: FC = () => {
       setIsAuthModalOpen(true);
     }
   };
+
+  if (!isCartInitialized)
+    return (
+      <div className="flex min-h-100 items-center justify-center">
+        <Spin />
+      </div>
+    );
 
   if (!cartCardsData.length) return <EmptyCartScreen />;
 

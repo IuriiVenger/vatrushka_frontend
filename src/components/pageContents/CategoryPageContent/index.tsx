@@ -16,7 +16,7 @@ type TCategoryPageContentProps = {
   isLoading: boolean;
   loadMoreAvalible?: boolean;
   categoryRecommendedSlides?: TProductSliderSlide[];
-  onBuyButtonClick: (card: TCard) => void;
+  onBuyButtonClick: (card: TCard) => Promise<void>;
 };
 
 const CategoryPageContent: FC<TCategoryPageContentProps> = (props) => {

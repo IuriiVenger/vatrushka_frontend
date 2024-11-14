@@ -164,6 +164,7 @@ export type SupabaseUser = {
   updated_at?: string;
   identities?: UserIdentity[];
   factors?: Factor[];
+  is_anonymous?: boolean;
 };
 
 type TRecCategoryEdge = {
@@ -206,6 +207,6 @@ export type GroupedCartItem = API.Cart.CartItem.CartItem & {
 };
 
 export type TProductSliderSlide = TCard & {
-  onBuyButtonClick: () => void;
+  onBuyButtonClick: () => Promise<void>;
   buyButtonText: string;
 };

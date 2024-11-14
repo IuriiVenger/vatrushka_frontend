@@ -7,8 +7,7 @@ import { FC } from 'react';
 import { ProductBySlugQuery, Productsizeimages, Productsizes } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import ProductPageContent, { ModifiersGroups, TProductProps } from '@/components/pageContents/ProductPageContent';
-import { useAppDispatch } from '@/store';
-import { addCartItem } from '@/store/slices/cart';
+import useCart from '@/hooks/useCart';
 
 type ClientProductPageProps = {
   product: ProductBySlugQuery;
@@ -18,7 +17,7 @@ type ClientProductPageProps = {
 
 const ClientProductPage: FC<ClientProductPageProps> = (props) => {
   const { product, sizesImages, modifiersGrops } = props;
-  const dispatch = useAppDispatch();
+  const { addToCart } = useCart();
 
   const currentProduct = product.productsCollection?.edges[0].node;
 
@@ -110,8 +109,8 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
     recommendedProducts,
   };
 
-  const onOrder = (data: API.Cart.CartItem.Create.RequestItem[]) => {
-    dispatch(addCartItem({ data }));
+  const onOrder = async (data: API.Cart.CartItem.Create.RequestItem[]) => {
+    await addToCart(data);
   };
 
   return <ProductPageContent productInfo={productInfo} onOrder={onOrder} />;

@@ -28,6 +28,9 @@ export const loadMoreCategoryProducts = createAsyncThunk(
 const entitiesSlice = createSlice({
   name: 'entities',
   initialState,
+  selectors: {
+    selectEntities: (state) => state,
+  },
   reducers: {
     setCategoryProducts: (state, { payload }: PayloadAction<SetCategoryProductsPayload>) => {
       state.categoryProducts.data = payload.data;
@@ -94,6 +97,8 @@ const entitiesSlice = createSlice({
   },
 });
 
-export const { setCategoryProducts } = entitiesSlice.actions;
-
-export default entitiesSlice.reducer;
+export const {
+  selectors: { selectEntities },
+  actions: { setCategoryProducts },
+  reducer: entities,
+} = entitiesSlice;

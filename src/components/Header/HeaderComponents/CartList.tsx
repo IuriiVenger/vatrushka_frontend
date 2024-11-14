@@ -29,7 +29,7 @@ const CartList: FC<CartListProps> = ({ cartItems, totalPrice, onDeleteButtonClic
 
   const itemsCount = useMemo(
     () => `${itemsCountNum} ${getNounWithDeclension(itemsCountNum, 'товар', 'товара', 'товаров')}`,
-    [],
+    [itemsCountNum],
   );
 
   return (

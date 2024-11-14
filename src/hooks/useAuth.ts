@@ -4,14 +4,16 @@ import { message } from 'antd';
 
 import { useState } from 'react';
 
+import useCart from './useCart';
+
 import { auth } from '@/api/auth';
 
 import { RequestStatus } from '@/constants';
 
-import { clearCart, initCart } from '@/store/slices/cart';
+import { clearCart } from '@/store/slices/cart';
 import { logout, setUser, setUserLoadingStatus } from '@/store/slices/user';
 import { AppDispatch } from '@/store/types';
-import { deleteTokens, setTokens } from '@/utils/tokensFactory';
+import { deleteTokens, getTokens, setTokens } from '@/utils/tokensFactory';
 
 const useAuth = (dispatch: AppDispatch) => {
   const [email, setEmail] = useState('');
@@ -20,6 +22,8 @@ const useAuth = (dispatch: AppDispatch) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [isOtpRequested, setIsOtpRequested] = useState(false);
+
+  const { initCart } = useCart();
 
   const setLoadingStatus = (status: RequestStatus) => {
     dispatch(setUserLoadingStatus(status));
@@ -31,7 +35,7 @@ const useAuth = (dispatch: AppDispatch) => {
   };
 
   const loadUserContent = async () => {
-    await dispatch(initCart());
+    await initCart();
   };
 
   const clearUserContent = async () => {
@@ -46,7 +50,7 @@ const useAuth = (dispatch: AppDispatch) => {
     setIsOtpRequested(false);
   };
 
-  const initUser = async () => {
+  const initExistingUser = async () => {
     try {
       setLoadingStatus(RequestStatus.PENDING);
       await getUser();
@@ -55,6 +59,42 @@ const useAuth = (dispatch: AppDispatch) => {
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
       throw e;
+    }
+  };
+
+  const initAnonymousUser = async () => {
+    try {
+      const { data } = await auth.signin.anonymous();
+
+      const { error, user, session } = data;
+
+      if (error) {
+        setLoadingStatus(RequestStatus.REJECTED);
+
+        throw error;
+      }
+      session && setTokens(session);
+      dispatch(setUser(user));
+      await loadUserContent();
+      setLoadingStatus(RequestStatus.FULFILLED);
+    } catch (e) {
+      setLoadingStatus(RequestStatus.REJECTED);
+
+      throw e;
+    }
+  };
+
+  const initUser = async () => {
+    const { access_token } = getTokens();
+    if (!access_token) {
+      await initAnonymousUser();
+    } else {
+      try {
+        await initExistingUser();
+      } catch (e) {
+        await initAnonymousUser();
+        throw e;
+      }
     }
   };
 
@@ -219,12 +259,13 @@ const useAuth = (dispatch: AppDispatch) => {
   };
 
   return {
+    initUser,
     signIn,
     verifyEmailOtp,
     verifyPhoneOtp,
     signUp,
     signOut,
-    initUser,
+    initExistingUser,
     setEmail,
     setPhone,
     setPassword,
@@ -237,6 +278,7 @@ const useAuth = (dispatch: AppDispatch) => {
     getEmailOtp,
     getPhoneOtp,
     isOtpRequested,
+    initAnonymousUser,
     name,
     setName,
   };

@@ -11,8 +11,8 @@
     @apply text-warning;
   }
 
-  &.anticon-loading,
-  &.anticon-info-circle {
-    @apply text-primary;
-  }
+  // &.anticon-loading, // todo check necessary
+  // &.anticon-info-circle {
+  //   // @apply text-primary;
+  // }
 }

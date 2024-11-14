@@ -3,12 +3,12 @@ import { useMessage } from './useMessage';
 import { API } from '@/api/types';
 
 import { useAppDispatch, useAppSelector } from '@/store';
-import { addCartItem, deleteCartItem, selectCart } from '@/store/slices/cart';
+import { addCartItem, deleteCartItem, initCartThunk, selectCart } from '@/store/slices/cart';
 import { TCard } from '@/types';
 import { getGroupedCartItems } from '@/utils/converters';
 
 const useCart = () => {
-  const { activeCart } = useAppSelector(selectCart);
+  const { activeCart, isCartInitialized } = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
   const { showMessage } = useMessage();
   const groupedCartItems = getGroupedCartItems(activeCart.data?.items ?? []);
@@ -56,6 +56,8 @@ const useCart = () => {
     }
   };
 
+  const initCart = async () => dispatch(initCartThunk());
+
   const cartCardsData: TCard[] =
     groupedCartItems.map((item) => ({
       id: item.group_id,
@@ -80,6 +82,8 @@ const useCart = () => {
     cartCardsData,
     deleteCartItems,
     onGroupedCartItemQuantityChange,
+    isCartInitialized,
+    initCart,
   };
 };
 

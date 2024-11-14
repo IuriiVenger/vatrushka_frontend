@@ -1,31 +1,29 @@
 /* eslint-disable no-param-reassign */
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { CartSliceState, RootState } from '../types';
 
-import { cart } from '@/api/cart';
+import { cart as cartApi } from '@/api/cart';
 import { API } from '@/api/types';
 import { RequestStatus, emptyStoreDataWithStatus } from '@/constants';
-import { GroupedCartItem } from '@/types';
-import { getGroupedCartItems } from '@/utils/converters';
 
 const initialState: CartSliceState = {
   activeCart: emptyStoreDataWithStatus,
   isCartInitialized: false,
 };
 
-export const initCart = createAsyncThunk<API.Cart.Cart | null>('cart/init', async () => {
+export const initCartThunk = createAsyncThunk<API.Cart.Cart | null>('cart/init', async () => {
   let activeCartId: string | null = null;
-  const { data: carts } = await cart.getAll();
+  const { data: carts } = await cartApi.getAll();
 
   if (carts.length === 0) {
-    const { data: initializedCart } = await cart.init();
+    const { data: initializedCart } = await cartApi.init();
     activeCartId = initializedCart.id;
   } else {
     activeCartId = carts[0].id;
   }
 
-  const { data: newCart } = await cart.getById(activeCartId);
+  const { data: newCart } = await cartApi.getById(activeCartId);
 
   return newCart;
 });
@@ -42,7 +40,7 @@ export const addCartItem = createAsyncThunk<
     throw new Error('Cart not found');
   }
 
-  const { data: newCart } = await cart.items.add({ cart_id: activeCart.id, data });
+  const { data: newCart } = await cartApi.items.add({ cart_id: activeCart.id, data });
   return newCart;
 });
 
@@ -58,8 +56,8 @@ export const deleteCartItem = createAsyncThunk<
     throw new Error('Cart not found');
   }
 
-  await cart.items.delete({ cart_id: activeCart.id, data });
-  const { data: newCart } = await cart.getById(activeCart.id);
+  await cartApi.items.delete({ cart_id: activeCart.id, data });
+  const { data: newCart } = await cartApi.getById(activeCart.id);
   return newCart;
 });
 
@@ -72,20 +70,20 @@ const cartSlice = createSlice({
   reducers: {
     clearCart: (state) => {
       state.activeCart = emptyStoreDataWithStatus;
-      state.isCartInitialized = false;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(initCart.pending, (state) => {
+    builder.addCase(initCartThunk.pending, (state) => {
       state.activeCart.status = RequestStatus.PENDING;
     });
-    builder.addCase(initCart.fulfilled, (state, action) => {
+    builder.addCase(initCartThunk.fulfilled, (state, action) => {
       state.activeCart.data = action.payload;
       state.activeCart.status = RequestStatus.FULFILLED;
       state.isCartInitialized = true;
     });
-    builder.addCase(initCart.rejected, (state) => {
+    builder.addCase(initCartThunk.rejected, (state) => {
       state.activeCart.status = RequestStatus.REJECTED;
+      state.isCartInitialized = true;
     });
     builder.addCase(addCartItem.pending, (state) => {
       state.activeCart.status = RequestStatus.PENDING;
@@ -110,7 +108,8 @@ const cartSlice = createSlice({
   },
 });
 
-export const { clearCart } = cartSlice.actions;
-export const { selectCart } = cartSlice.selectors;
-
-export default cartSlice.reducer;
+export const {
+  selectors: { selectCart },
+  actions: { clearCart },
+  reducer: cart,
+} = cartSlice;
