@@ -23,7 +23,7 @@ const useAuth = (dispatch: AppDispatch) => {
   const [password, setPassword] = useState('');
   const [isOtpRequested, setIsOtpRequested] = useState(false);
 
-  const { initCart } = useCart();
+  const { initCart, activeCart, mergeCartItems } = useCart();
 
   const setLoadingStatus = (status: RequestStatus) => {
     dispatch(setUserLoadingStatus(status));
@@ -35,7 +35,11 @@ const useAuth = (dispatch: AppDispatch) => {
   };
 
   const loadUserContent = async () => {
+    const oldCart = activeCart.data;
     await initCart();
+    if (oldCart) {
+      await mergeCartItems(oldCart);
+    }
   };
 
   const clearUserContent = async () => {
@@ -206,8 +210,6 @@ const useAuth = (dispatch: AppDispatch) => {
 
       dispatch(setUser(data.user));
 
-      message.success('You have successfully logged in');
-
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
@@ -238,7 +240,6 @@ const useAuth = (dispatch: AppDispatch) => {
 
       dispatch(setUser(data.user));
       await loadUserContent();
-      message.success('You have successfully logged in');
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);

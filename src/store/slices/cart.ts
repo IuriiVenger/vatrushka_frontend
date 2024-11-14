@@ -61,6 +61,10 @@ export const deleteCartItem = createAsyncThunk<
   return newCart;
 });
 
+export const deleteCart = createAsyncThunk('cart/delete', async (cartId: string) => {
+  await cartApi.delete(cartId);
+});
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -103,6 +107,15 @@ const cartSlice = createSlice({
       state.activeCart.status = RequestStatus.FULFILLED;
     });
     builder.addCase(deleteCartItem.rejected, (state) => {
+      state.activeCart.status = RequestStatus.REJECTED;
+    });
+    builder.addCase(deleteCart.pending, (state) => {
+      state.activeCart.status = RequestStatus.PENDING;
+    });
+    builder.addCase(deleteCart.fulfilled, (state) => {
+      state.activeCart.status = RequestStatus.FULFILLED;
+    });
+    builder.addCase(deleteCart.rejected, (state) => {
       state.activeCart.status = RequestStatus.REJECTED;
     });
   },

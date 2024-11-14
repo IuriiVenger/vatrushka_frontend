@@ -3,7 +3,7 @@ import { useMessage } from './useMessage';
 import { API } from '@/api/types';
 
 import { useAppDispatch, useAppSelector } from '@/store';
-import { addCartItem, deleteCartItem, initCartThunk, selectCart } from '@/store/slices/cart';
+import { addCartItem, deleteCart, deleteCartItem, initCartThunk, selectCart } from '@/store/slices/cart';
 import { TCard } from '@/types';
 import { getGroupedCartItems } from '@/utils/converters';
 
@@ -58,6 +58,20 @@ const useCart = () => {
 
   const initCart = async () => dispatch(initCartThunk());
 
+  const mergeCartItems = async (oldCart: API.Cart.Cart) => {
+    const oldCartItems = oldCart.items;
+    await dispatch(deleteCart(oldCart.id));
+    if (oldCartItems.length === 0) return;
+    const addingItems = oldCartItems.map((item) => ({
+      cart_id: activeCart.data?.id,
+      product_id: item.product_id,
+      size_id: item.size_id,
+      modifiers: item.modifiers,
+    }));
+    await dispatch(addCartItem({ data: addingItems }));
+    showMessage({ text: 'Корзина обновлена, данные со старой корзины перенесены в новую', type: 'success' });
+  };
+
   const cartCardsData: TCard[] =
     groupedCartItems.map((item) => ({
       id: item.group_id,
@@ -84,6 +98,7 @@ const useCart = () => {
     onGroupedCartItemQuantityChange,
     isCartInitialized,
     initCart,
+    mergeCartItems,
   };
 };
 
