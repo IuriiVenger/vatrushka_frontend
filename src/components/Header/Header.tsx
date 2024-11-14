@@ -2,6 +2,7 @@
 
 import { MenuProps, Button, Grid } from 'antd';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useRouter } from 'next-nprogress-bar';
 import { FC, useEffect } from 'react';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
@@ -34,8 +35,11 @@ const Header: FC = () => {
   const { cartCardsData, activeCart, removeGroupedCartItem, onGroupedCartItemQuantityChange } = useCart();
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const totalPrice = activeCart.data?.total_sum ?? 0;
+
+  const isCartDropdownHidden = cartCardsData.length === 0 || pathname === '/cart';
 
   const onBurgerButtonClick = () => {
     dispatch(toggleMenu(!isMenuOpened));
@@ -87,10 +91,11 @@ const Header: FC = () => {
             <Cart
               onCloseAll={onCloseAll}
               cartItems={cartCardsData}
-              onClick={onCartClick}
               totalPrice={totalPrice}
               onDeleteButtonClick={removeGroupedCartItem}
               onStepperCountChange={onGroupedCartItemQuantityChange}
+              isCartDropdownHidden={isCartDropdownHidden}
+              onCartClick={onCartClick}
             />
           </div>
         </div>
