@@ -5,6 +5,7 @@ import { deleteTokens, getTokens, refreshTokens, setTokens } from './tokensFacto
 
 import { commonHeaders } from '@/api';
 import { ResponseStatus } from '@/constants';
+import { logout } from '@/store/slices/user';
 
 export const createCustomAxiosInstance = (baseUrl: string) => {
   const axiosInstance = axios.create({
@@ -32,7 +33,7 @@ export const createCustomAxiosInstance = (baseUrl: string) => {
 
   axiosInstance.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error) => {
       if (error?.response?.status === ResponseStatus.UNAUTHORIZED) {
         const { response, config: failedRequest } = error;
         const { refresh_token } = getTokens();
@@ -42,7 +43,8 @@ export const createCustomAxiosInstance = (baseUrl: string) => {
         if (response.config?.url.includes('/auth/refresh/refresh_token') || !refresh_token) {
           if (typeof window !== 'undefined') {
             message.error(error?.response?.data?.message || defaultErrorMessageForUnauthorized);
-            window.location.href = '/auth/login';
+            const { store } = await import('@/store');
+            store.dispatch(logout());
           }
           deleteTokens();
           requestQueue = [];

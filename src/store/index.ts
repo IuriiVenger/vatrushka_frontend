@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { MiddlewareAPI, Tuple, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 
 import cart from './slices/cart';

@@ -41,7 +41,6 @@ const ChangePhone: FC<TChangePhoneModalProps> = ({ onChangePhone }) => {
         label="Введите новый номер телефона"
         control={control}
         errors={!!errors.phone}
-        value={prettifyPhone(watch('phone'))}
         required
         autoComplete="tel"
       />

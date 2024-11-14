@@ -1,23 +1,25 @@
 import { API } from '@/api/types';
-import { CategoryItemsConnectionType, TCard, TRecCategoryEdge } from '@/types';
+import { CategoryItemsConnectionType, GroupedCartItem, TCard, TRecCategoryEdge } from '@/types';
 
 export const convertCategoryItemsQueryProductsToCards = (categoryItems: CategoryItemsConnectionType): TCard[] =>
-  categoryItems?.edges.map(({ node }) => ({
-    id: node.products.id,
-    pic:
-      node.products.productsizesCollection?.edges.find((product) => product.node.is_default)?.node.button_image_url ||
-      '',
-    name: node.products.name,
-    weight:
-      node.products.productsizesCollection?.edges.find((product) => product.node.is_default)?.node
-        .portion_weight_grams || 0,
-    timing: undefined,
-    description: node.products.short_description || node.products.description || '',
-    price: node.products.productsizesCollection?.edges.find((product) => product.node.is_default)?.node.price || 0,
-    inStock: true,
-    href: `/${node.products.categoryitemsCollection?.edges[0].node.categories.slug}/${node.products.slug}`,
-    quantity: 1,
-  })) || [];
+  categoryItems?.edges.map(({ node }) => {
+    const defaultSize =
+      node.products.productsizesCollection?.edges.find((product) => product.node.is_default) ||
+      node.products.productsizesCollection?.edges[0];
+
+    return {
+      id: node.products.id,
+      pic: defaultSize?.node.button_image_url || '',
+      name: node.products.name,
+      weight: defaultSize?.node.portion_weight_grams || 0,
+      timing: undefined,
+      description: node.products.short_description || node.products.description || '',
+      price: defaultSize?.node.price || 0,
+      inStock: true,
+      href: `/${node.products.categoryitemsCollection?.edges[0].node.categories.slug}/${node.products.slug}`,
+      quantity: 1,
+    };
+  }) || [];
 
 export const conertCategoryRecommendedProductsToCards = (
   categoryRecommendedProducts: API.Products.Recomedation[],
@@ -62,3 +64,46 @@ export const convertCommonRecProductsToRecomendation = (
 
   return newData;
 };
+
+export const getGroupedCartItems = (cartItems: API.Cart.CartItem.CartItem[]): GroupedCartItem[] => {
+  const groupedItems = cartItems.reduce((acc: GroupedCartItem[], item) => {
+    const existingProduct = acc.find(
+      (product) =>
+        product.product_id === item.product_id &&
+        product.size_id === item.size_id &&
+        product.modifiers.length === item.modifiers.length &&
+        product.modifiers.every((mod, index) => mod.id === item.modifiers[index].id),
+    );
+
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+      existingProduct.total_price += item.item_total;
+      existingProduct.rawCartItems.push(item);
+    } else {
+      acc.push({
+        ...item,
+        quantity: 1,
+        total_price: item.item_total,
+        rawCartItems: [item],
+        group_id: item.id + item.cart_id + item.product_id,
+      });
+    }
+
+    return acc;
+  }, []);
+
+  return groupedItems;
+};
+
+export const convertGroupedCartItemsToCards = (groupedCartItems: GroupedCartItem[]): TCard[] =>
+  groupedCartItems.map((item) => ({
+    id: item.group_id,
+    pic: item.size.button_image_url,
+    name: item.product.name,
+    price: item.total_price,
+    quantity: item.quantity,
+    inStock: true,
+    href: '',
+    description: item.modifiers.map((modifier) => modifier.name).join(', '),
+    weight: item.size.portion_weight_grams,
+  }));

@@ -53,8 +53,6 @@ const AccountTab: FC<TAccountTabProps> = ({ user }) => {
     setIsDeleteAccountModalOpen(true);
   };
 
-  user?.phone && console.log(prettifyPhone(user?.phone));
-
   return (
     <>
       <div className="rounded-2xl border border-borderSecondary p-6">

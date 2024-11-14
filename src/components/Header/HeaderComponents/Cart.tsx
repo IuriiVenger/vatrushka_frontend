@@ -6,48 +6,61 @@ import { TMenuItem } from '../Header';
 
 import CartList from './CartList';
 
+import { API } from '@/api/types';
 import { color } from '@/config/variables';
-import { cartList } from '@/mocks';
+import { StoreDataWithStatus } from '@/store/types';
+import { TCard } from '@/types';
 
-const cartItems: TMenuItem[] = [
-  {
-    key: 'cart',
-    label: <CartList />,
-    type: 'group',
-  },
-];
+// const cartItems: TMenuItem[] = [
+//   {
+//     key: 'cart',
+//     label: <CartList />,
+//     type: 'group',
+//   },
+// ];
 
 type TCartProps = {
   onCloseAll: () => void;
+  cartItems: TCard[];
+  totalPrice: number;
+  onClick: () => void;
+  onDeleteButtonClick: (id: string) => void;
+  onStepperCountChange: (count: number, id: string) => void | Promise<void>;
 };
 
-const Cart: FC<TCartProps> = ({ onCloseAll }) => {
-  const products = [];
-  const dropDownTrigger = useMemo(() => {
-    const trigger: Array<'click'> = [];
+const Cart: FC<TCartProps> = ({
+  onCloseAll,
+  cartItems,
+  onClick,
+  totalPrice,
+  onDeleteButtonClick,
+  onStepperCountChange,
+}) => {
+  const dropdownItems: TMenuItem[] = [
+    {
+      key: 'cart',
+      label: (
+        <CartList
+          cartItems={cartItems}
+          totalPrice={totalPrice}
+          onDeleteButtonClick={onDeleteButtonClick}
+          onStepperCountChange={onStepperCountChange}
+        />
+      ),
+      type: 'group',
+    },
+  ];
 
-    if (products.length) {
-      trigger.push('click');
-    }
-
-    return trigger;
-  }, [products.length]);
+  const itemsCount = cartItems.reduce<number>((acc, item) => acc + item.quantity, 0);
 
   return (
-    <Dropdown
-      menu={{ items: cartItems }}
-      trigger={dropDownTrigger}
-      onOpenChange={onCloseAll}
-      placement="bottomRight"
-      overlayClassName="pt-2"
-    >
+    <Dropdown menu={{ items: dropdownItems }} onOpenChange={onCloseAll} placement="bottomRight" overlayClassName="pt-2">
       <Button
-        type="link"
-        aria-label={`Просмотр корзины. Сейчас товаров в корзине: ${cartList.length}`}
-        className="h-6 w-5 p-0"
-        href={!products.length ? '/cart' : undefined}
+        onClick={onClick}
+        aria-label={`Просмотр корзины. Сейчас товаров в корзине: ${itemsCount}`}
+        className="h-6 w-5 border-none p-0"
         icon={
-          <Badge count={cartList.length} className="max-xs:small" color={color.accent.default}>
+          <Badge count={itemsCount} className="max-xs:small" color={color.accent.default}>
             <LuShoppingCart className="h-6 min-w-5 text-textTertiary transition-all hover:text-textQuaternary" />
           </Badge>
         }

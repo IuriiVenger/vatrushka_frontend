@@ -2,6 +2,7 @@
 
 import { Alert, Button, Divider, Segmented } from 'antd';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 import { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, DefaultValues } from 'react-hook-form';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
@@ -166,12 +167,11 @@ const CheckoutPageContent: FC = () => {
   return (
     <>
       <section className="flex flex-col items-start gap-6 max-sm:gap-4">
-        <Button
-          className="h-10 border-none p-0 text-lg leading-lg max-sm:mb-6 max-sm:h-8 max-sm:text-base max-sm:leading-base max-xs:mb-0"
-          href="/cart"
-        >
-          <IoIosArrowBack />В корзину
-        </Button>
+        <Link href="/cart">
+          <Button className="h-10 border-none p-0 text-lg leading-lg max-sm:mb-6 max-sm:h-8 max-sm:text-base max-sm:leading-base max-xs:mb-0">
+            <IoIosArrowBack />В корзину
+          </Button>
+        </Link>
 
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(submitHandler)} className="flex gap-24 max-xl:gap-10 max-lg:flex-col">

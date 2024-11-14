@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import { GetProductsByCategorySlugQuery } from './__generated__/graphql';
+import { API } from './api/types';
 import { TagType } from './mock';
 
 type TValueOf<T> = T[keyof T];
@@ -17,6 +18,8 @@ export type TCard = {
   inStock: boolean;
   href: string;
   quantity: number;
+  onClick?: () => void;
+  onBuyButtonClick?: () => void;
 };
 
 export type TMenuLevelOneOption = {
@@ -49,7 +52,7 @@ export type TSearchListItem = {
   pic: string;
   price: number | string;
   onClick?: () => void;
-  count?: never;
+  quantity?: never;
 };
 
 export type TTag = {
@@ -187,4 +190,11 @@ type TRecCategoryEdge = {
       } | null;
     } | null;
   };
+};
+
+export type GroupedCartItem = API.Cart.CartItem.CartItem & {
+  group_id: string;
+  quantity: number;
+  total_price: number;
+  rawCartItems: API.Cart.CartItem.CartItem[];
 };

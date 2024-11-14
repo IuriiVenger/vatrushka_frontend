@@ -6,20 +6,22 @@ import { RxCross2 } from 'react-icons/rx';
 import CustomImage from '@/components/ui/CustomImage';
 import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
-import { TCartListItem, TSearchListItem } from '@/types';
+import { TCard, TSearchListItem } from '@/types';
 
 type TDropdownListItemProps = {
-  item: TCartListItem | TSearchListItem;
+  item: TCard | TSearchListItem;
+  isCart?: boolean;
+  onDeleteButtonClick?: () => void;
+  onStepperCountChange?: (count: number) => void;
 };
 
-const DropdownListItem: FC<TDropdownListItemProps> = ({ item }) => {
-  const { name, pic, price, count, onClick } = item;
-
-  const isCart = 'count' in item;
-
-  const [stepperCount, setStepperCount] = useState<number>(count || 0); //  to fix, state have to be in parent component
-
-  const onDeleteButtonClick = () => message.error(`deleted ${name}`);
+const DropdownListItem: FC<TDropdownListItemProps> = ({
+  item,
+  isCart = false,
+  onDeleteButtonClick,
+  onStepperCountChange,
+}) => {
+  const { name, pic, price, quantity, onClick } = item;
 
   return (
     <div onClick={onClick} className={cn('flex w-full gap-3', onClick && 'cursor-pointer')}>
@@ -43,7 +45,9 @@ const DropdownListItem: FC<TDropdownListItemProps> = ({ item }) => {
           <p className="text-nowrap">
             <span>{price}</span> {CurrencySymbol.RUB}
           </p>
-          {isCart && <StepperButton setCount={setStepperCount} count={stepperCount} minValue={1} />}
+          {isCart && !!onStepperCountChange && (
+            <StepperButton setCount={onStepperCountChange} count={quantity ?? 0} minValue={1} />
+          )}
         </div>
       </div>
     </div>

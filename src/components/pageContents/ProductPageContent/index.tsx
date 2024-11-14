@@ -52,6 +52,7 @@ export type TProductProps = {
     sizesImages: Productsizeimages[];
     title?: string;
   };
+  onOrder: (data: API.Cart.CartItem.Create.RequestItem[]) => void;
 };
 
 const getModifierGroupData = (modifiersGroups: ModifiersGroups[]) =>
@@ -86,7 +87,7 @@ const getModifierGroupData = (modifiersGroups: ModifiersGroups[]) =>
     return { ...acc, [id]: groupInfo };
   }, {});
 
-const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
+const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
   const {
     allergens,
     category,
@@ -105,7 +106,6 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   } = productInfo;
 
   const initialSize = sizes?.find((size) => size.is_default) || sizes?.[0];
-  const { showMessage } = useMessage();
 
   const [activeSize, setActiveSize] = useState<Partial<Productsizes> | undefined>(initialSize);
   const [amount, setAmount] = useState(1);
@@ -160,7 +160,19 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   };
 
   const onOrderButtonClick = () => {
-    showMessage({ type: 'success', text: `Добавлено в корзину: ${id}` });
+    if (!id || !activeSize?.id) {
+      return;
+    }
+
+    const orderDataItem: API.Cart.CartItem.Create.RequestItem = {
+      product_id: id,
+      size_id: activeSize?.id,
+      modifiers: activeModifiers.map((modifier) => ({ id: modifier.id, quantity: 1 })),
+    };
+
+    const orderDataItems = new Array(amount).fill(orderDataItem);
+
+    onOrder(orderDataItems);
   };
 
   const onSizeClick = (size: Partial<Productsizes>) => () => {
@@ -233,7 +245,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
                   {sizes?.map((size) => (
                     <ProductModificator
                       key={size.id}
-                      isSelected={activeSize?.size_id === size.size_id}
+                      isSelected={activeSize?.id === size.id}
                       onClick={onSizeClick(size)}
                       title={size.size_name || ''}
                       price={size.price}

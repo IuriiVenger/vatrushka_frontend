@@ -11,12 +11,11 @@ import ItemCard from './ItemCard';
 import AuthModal from '@/components/modals/AuthModal';
 import Input from '@/components/ui/Form/Input';
 import { CurrencySymbol } from '@/constants';
-import { order, products } from '@/mocks';
+// import { order, products } from '@/mocks';
+import useCart from '@/hooks/useCart';
 import { useAppSelector } from '@/store';
 import { selectIsUserLoggedIn } from '@/store/selectors';
 import { getNounWithDeclension } from '@/utils/formatters';
-
-const count = 3;
 
 type TDiscountForm = {
   promoCode: string;
@@ -25,8 +24,15 @@ type TDiscountForm = {
 const CartPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { activeCart, cartCardsData, removeGroupedCartItem, deleteCartItems, onGroupedCartItemQuantityChange } =
+    useCart();
 
-  const itemsCountText = `${count} ${getNounWithDeclension(count, 'товар', 'товара', 'товаров')}`;
+  const itemsCountText = `${activeCart.data?.items?.length ?? 0} ${getNounWithDeclension(
+    activeCart.data?.items?.length ?? 0,
+    'товар',
+    'товара',
+    'товаров',
+  )}`;
 
   const {
     handleSubmit,
@@ -35,10 +41,6 @@ const CartPageContent: FC = () => {
   } = useForm<TDiscountForm>({
     mode: 'onChange',
   });
-
-  const onClear = () => {
-    console.log('Очистить корзину clicked');
-  };
 
   const onCheckPromoCode: SubmitHandler<TDiscountForm> = (data) => {
     console.log('onCheckPromoCode:', data);
@@ -50,7 +52,7 @@ const CartPageContent: FC = () => {
     }
   };
 
-  if (!products.length) return <EmptyCartScreen />;
+  if (!cartCardsData.length) return <EmptyCartScreen />;
 
   return (
     <>
@@ -61,15 +63,24 @@ const CartPageContent: FC = () => {
               <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">Корзина</h1>
               <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">{itemsCountText}</p>
             </div>
-            <Button type="text" onClick={onClear} className="text-lg leading-lg max-sm:text-base max-sm:leading-base">
+            <Button
+              type="text"
+              onClick={deleteCartItems}
+              className="text-lg leading-lg max-sm:text-base max-sm:leading-base"
+            >
               Очистить корзину
             </Button>
           </div>
           <div className="flex flex-col">
-            {products.slice(0, 2).map((product, index) => (
+            {cartCardsData.map((product, index) => (
               <Fragment key={product.id}>
                 {index !== 0 && <Divider />}
-                <ItemCard key={product.id} card={product} />
+                <ItemCard
+                  key={product.id}
+                  card={product}
+                  onRemoveItem={removeGroupedCartItem}
+                  setQuantity={onGroupedCartItemQuantityChange}
+                />
               </Fragment>
             ))}
           </div>
@@ -83,15 +94,15 @@ const CartPageContent: FC = () => {
               <div className="flex items-center justify-between">
                 <p>{itemsCountText} на сумму</p>
                 <p>
-                  {order.totalPrice} {CurrencySymbol.RUB}
+                  {activeCart.data?.total_sum} {CurrencySymbol.RUB}
                 </p>
               </div>
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <p>Скидка по промокоду</p>
                 <p>
                   {order.discounts[0].discount} {CurrencySymbol.RUB}
                 </p>
-              </div>
+              </div> */}
             </div>
             <Input
               name="promoCode"
@@ -114,7 +125,7 @@ const CartPageContent: FC = () => {
               <div className="flex justify-between text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">
                 <p>Итого:</p>
                 <p>
-                  {order.totalPrice} {CurrencySymbol.RUB}
+                  {activeCart.data?.total_sum} {CurrencySymbol.RUB}
                 </p>
               </div>
               <p className="text-base leading-base">Без учета возможной стоимости доставки</p>

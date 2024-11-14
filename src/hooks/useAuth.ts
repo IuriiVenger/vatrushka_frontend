@@ -8,7 +8,8 @@ import { auth } from '@/api/auth';
 
 import { RequestStatus } from '@/constants';
 
-import { setUser, setUserData, setUserLoadingStatus } from '@/store/slices/user';
+import { clearCart, initCart } from '@/store/slices/cart';
+import { logout, setUser, setUserLoadingStatus } from '@/store/slices/user';
 import { AppDispatch } from '@/store/types';
 import { deleteTokens, setTokens } from '@/utils/tokensFactory';
 
@@ -29,9 +30,13 @@ const useAuth = (dispatch: AppDispatch) => {
     dispatch(setUser(data));
   };
 
+  const loadUserContent = async () => {
+    await dispatch(initCart());
+  };
+
   const clearUserContent = async () => {
-    dispatch(setUser(null));
-    dispatch(setUserData(null));
+    dispatch(logout());
+    dispatch(clearCart());
   };
 
   const resetAuthState = () => {
@@ -45,6 +50,7 @@ const useAuth = (dispatch: AppDispatch) => {
     try {
       setLoadingStatus(RequestStatus.PENDING);
       await getUser();
+      await loadUserContent();
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
@@ -66,6 +72,7 @@ const useAuth = (dispatch: AppDispatch) => {
       session && setTokens(session);
 
       dispatch(setUser(user));
+      await loadUserContent();
 
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
@@ -90,7 +97,7 @@ const useAuth = (dispatch: AppDispatch) => {
       }
       session && setTokens(session);
       dispatch(setUser(user));
-
+      await loadUserContent();
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
@@ -190,6 +197,7 @@ const useAuth = (dispatch: AppDispatch) => {
       }
 
       dispatch(setUser(data.user));
+      await loadUserContent();
       message.success('You have successfully logged in');
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {

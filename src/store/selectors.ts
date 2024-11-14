@@ -5,3 +5,4 @@ export const selectEntities = (state: RootState) => state.entities;
 export const selectUI = (state: RootState) => state.ui;
 export const selectUser = (state: RootState) => state.user;
 export const selectIsUserLoggedIn = (state: RootState) => !!state.user.user?.id;
+export const selectCart = (state: RootState) => state.cart;

@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { CartSliceState, RootState } from '../types';
 
 import { cart } from '@/api/cart';
 import { API } from '@/api/types';
 import { RequestStatus, emptyStoreDataWithStatus } from '@/constants';
+import { GroupedCartItem } from '@/types';
+import { getGroupedCartItems } from '@/utils/converters';
 
 const initialState: CartSliceState = {
   activeCart: emptyStoreDataWithStatus,
@@ -13,16 +15,19 @@ const initialState: CartSliceState = {
 };
 
 export const initCart = createAsyncThunk<API.Cart.Cart | null>('cart/init', async () => {
+  let activeCartId: string | null = null;
   const { data: carts } = await cart.getAll();
 
   if (carts.length === 0) {
     const { data: initializedCart } = await cart.init();
-    const { data: newCart } = await cart.getById(initializedCart.id);
-
-    return newCart;
+    activeCartId = initializedCart.id;
+  } else {
+    activeCartId = carts[0].id;
   }
 
-  return carts[0];
+  const { data: newCart } = await cart.getById(activeCartId);
+
+  return newCart;
 });
 
 export const addCartItem = createAsyncThunk<
@@ -61,7 +66,16 @@ export const deleteCartItem = createAsyncThunk<
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {},
+  selectors: {
+    selectGroupedCartItems: (state) => getGroupedCartItems(state.activeCart.data?.items ?? []),
+    selectCart: (state) => state,
+  },
+  reducers: {
+    clearCart: (state) => {
+      state.activeCart = emptyStoreDataWithStatus;
+      state.isCartInitialized = false;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(initCart.pending, (state) => {
       state.activeCart.status = RequestStatus.PENDING;
@@ -96,5 +110,8 @@ const cartSlice = createSlice({
     });
   },
 });
+
+export const { clearCart } = cartSlice.actions;
+export const { selectGroupedCartItems, selectCart } = cartSlice.selectors;
 
 export default cartSlice.reducer;

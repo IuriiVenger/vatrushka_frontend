@@ -4,6 +4,7 @@ import { store } from '.';
 
 import { API } from '@/api/types';
 import { RequestStatus } from '@/constants';
+import { GroupedCartItem } from '@/types';
 
 export type StoreDataWithStatus<T> = {
   status: RequestStatus;

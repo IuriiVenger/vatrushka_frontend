@@ -1,15 +1,34 @@
 import { Button, Divider } from 'antd';
+import Link from 'next/link';
 import { FC, useMemo } from 'react';
 
 import DropdownListItem from './DropdownListItem';
 
 import { CurrencySymbol } from '@/constants';
-import { cartList } from '@/mocks';
+
+import { TCard } from '@/types';
 import { getNounWithDeclension } from '@/utils/formatters';
 
-const CartList: FC = () => {
+type CartListProps = {
+  cartItems: TCard[];
+  totalPrice: number;
+  onDeleteButtonClick: (id: string) => void;
+  onStepperCountChange: (count: number, id: string) => void;
+};
+
+const CartList: FC<CartListProps> = ({ cartItems, totalPrice, onDeleteButtonClick, onStepperCountChange }) => {
+  const itemsCountNum = cartItems.reduce<number>((acc, item) => acc + item.quantity, 0);
+
+  const handleStepperCountChange = (cardId: string) => (count: number) => {
+    onStepperCountChange(count, cardId);
+  };
+
+  const handleDeleteButtonClick = (cardId: string) => () => {
+    onDeleteButtonClick(cardId);
+  };
+
   const itemsCount = useMemo(
-    () => `${cartList.length} ${getNounWithDeclension(cartList.length, 'товар', 'товара', 'товаров')}`,
+    () => `${itemsCountNum} ${getNounWithDeclension(itemsCountNum, 'товар', 'товара', 'товаров')}`,
     [],
   );
 
@@ -25,12 +44,17 @@ const CartList: FC = () => {
         </p>
         <p className="text-textTertiary">{itemsCount}</p>
       </div>
-      {cartList.length ? (
+      {cartItems.length ? (
         <ul className="flex max-h-108 flex-col overflow-auto pr-3">
-          {cartList.map((item, index) => (
+          {cartItems.map((item, index) => (
             <li key={index}>
-              <DropdownListItem item={item} />
-              {index !== cartList.length - 1 && <Divider className="my-4" />}
+              <DropdownListItem
+                item={item}
+                isCart
+                onDeleteButtonClick={handleDeleteButtonClick(item.id)}
+                onStepperCountChange={handleStepperCountChange(item.id)}
+              />
+              {index !== cartItems.length - 1 && <Divider className="my-4" />}
             </li>
           ))}
         </ul>
@@ -41,16 +65,14 @@ const CartList: FC = () => {
         <p>
           Итого:{' '}
           <span className="text-lg font-medium leading-lg">
-            <span>{cartList.reduce<number>((acc, item) => acc + Number(item.price), 0)}</span> {CurrencySymbol.RUB}
+            <span>{totalPrice}</span> {CurrencySymbol.RUB}
           </span>
         </p>
-        <Button
-          type="primary"
-          href="/cart"
-          className="text-lg leading-lg max-sm:h-10 max-sm:text-base max-sm:leading-base"
-        >
-          В корзину
-        </Button>
+        <Link href="/cart">
+          <Button type="primary" className="text-lg leading-lg max-sm:h-10 max-sm:text-base max-sm:leading-base">
+            В корзину
+          </Button>
+        </Link>
       </div>
     </div>
   );
