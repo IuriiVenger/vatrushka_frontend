@@ -102,32 +102,6 @@ export const categories = {
         : pageInfo.offset;
     } while (pageInfo.hasNextPage);
 
-    // console.log(targetData.categoriesCollection?.edges[0]?.node.categoryitemsCollection?.edges);
-
-    // const default_sizes_modifiers = await Promise.all(
-    //   targetData.categoriesCollection?.edges[0]?.node.categoryitemsCollection?.edges.map(async ({ node }) => {
-    //     const defaultSize =
-    //       node.products.productsizesCollection?.edges.find((product) => product.node.is_default) ||
-    //       node.products.productsizesCollection?.edges[0];
-
-    //     if (!defaultSize) return null;
-
-    //     const { data } = await products.productSizes.modifiers.getBySizeAndProductId(
-    //       defaultSize.node.size_id,
-    //       node.products.id,
-    //     );
-
-    //     return {
-    //       [defaultSize.node.size_id]: data.productSizeModifierGroupsCollection?.edges,
-    //     };
-    //   }) ?? [],
-    // );
-
-    return {
-      data: {
-        ...targetData,
-        // default_sizes_modifiers
-      },
-    };
+    return { data: targetData };
   },
 };
