@@ -1,6 +1,17 @@
 import { GetAllPromotionsQuery, ProductBySlugQuery } from '@/__generated__/graphql';
+import { OrderStatus, OrderType } from '@/constants';
 
 export namespace API {
+  export namespace Common {
+    export namespace Pagination {
+      export namespace REST {
+        export type RequestArgs = {
+          limit?: number;
+          offset?: number;
+        };
+      }
+    }
+  }
   export namespace QraphQL {
     export namespace Query {
       export type Collection<T> = {
@@ -35,6 +46,28 @@ export namespace API {
       startCursor?: string;
       endCursor?: string;
     };
+  }
+
+  export namespace Address {
+    export type Address = {
+      user_id: string;
+      street_name: string;
+      house: string;
+      building: string | null;
+      flat: string;
+      doorphone: string | null;
+      city: string;
+      country: string;
+      zip_code: string;
+      latitude: number;
+      longitude: number;
+      id: string;
+      street_classifier_id: string;
+    };
+
+    export namespace Create {
+      export type Request = Omit<Address, 'id' | 'user_id'>;
+    }
   }
 
   export namespace Auth {
@@ -227,6 +260,47 @@ export namespace API {
         slug: string;
         offset: number;
         first: number;
+      };
+    }
+  }
+
+  export namespace Orders {
+    export namespace List {
+      export type Request = Common.Pagination.REST.RequestArgs;
+    }
+    export type Order = {
+      user_id: string;
+      cart_id: string;
+      address_id: string;
+      total_price: number;
+      special_instructions: string;
+      delivery_time: string;
+      type: OrderType;
+      status: OrderStatus;
+    };
+
+    export namespace Create {
+      export type Request = Omit<Order, 'id' | 'user_id' | 'status' | 'total_price'> & {
+        payment_type: string; // uuid
+      };
+    }
+  }
+
+  export namespace Payment {
+    export namespace PaymentMethods {
+      export type Request = {
+        sum: number;
+        delivery_zone: string;
+      };
+
+      export type PaymentMethod = {
+        id: string;
+        name: string;
+        iiko_code: string;
+        enabled: boolean;
+        delivery_zones: string;
+        min_sum: string;
+        max_sum: string;
       };
     }
   }

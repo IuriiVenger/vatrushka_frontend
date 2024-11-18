@@ -14,7 +14,7 @@ const initialState: CartSliceState = {
 
 export const initCartThunk = createAsyncThunk<API.Cart.Cart | null>('cart/init', async () => {
   let activeCartId: string | null = null;
-  const { data: carts } = await cartApi.getAll();
+  const { data: carts } = await cartApi.getAll.active();
 
   if (carts.length === 0) {
     const { data: initializedCart } = await cartApi.init();

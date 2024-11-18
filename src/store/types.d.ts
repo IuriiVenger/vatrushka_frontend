@@ -14,12 +14,16 @@ export type StoreDataWithStatus<T> = {
 export type StorePaginationParams = {
   meta: {
     offset: number;
-    first?: number;
+    first: number;
     isLastPage?: boolean;
   };
 };
 
 export type StoreDataWithStatusAndMeta<T> = StoreDataWithStatus<T> & StorePaginationParams;
+
+type AddressSliceState = {
+  addresses: StoreDataWithStatusAndMeta<API.Address.Address[] | null>;
+};
 
 type UISliceState = {
   isPageScrollBlocked: boolean;
@@ -46,6 +50,10 @@ type ConfigSliceState = {
 type CartSliceState = {
   activeCart: StoreDataWithStatus<API.Cart.Cart | null>;
   isCartInitialized: boolean;
+};
+
+type OrdersSliceState = {
+  orders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
 };
 
 export type RootState = ReturnType<typeof store.getState>;

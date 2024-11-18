@@ -67,7 +67,11 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
     dispatch(
       setCategoryProducts({
         data: initialProducts,
-        meta: { offset: categoryItems?.edges.length || 0, isLastPage: categoryItems?.pageInfo.hasNextPage === false },
+        meta: {
+          offset: categoryItems?.edges.length || 0,
+          first: defaultPaginationParams.first,
+          isLastPage: categoryItems?.pageInfo.hasNextPage === false,
+        },
       }),
     );
   }, []);

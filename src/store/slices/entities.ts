@@ -65,6 +65,7 @@ const entitiesSlice = createSlice({
         status: RequestStatus.FULFILLED,
         data: products,
         meta: {
+          first: state.categoryProducts.meta.first,
           offset: state.categoryProducts.meta.offset + products.length,
           isLastPage:
             !action.payload.data.categoriesCollection?.edges[0].node.categoryitemsCollection?.pageInfo.hasNextPage,
@@ -88,6 +89,7 @@ const entitiesSlice = createSlice({
         status: RequestStatus.FULFILLED,
         data: state.categoryProducts.data ? [...state.categoryProducts.data, ...products] : products,
         meta: {
+          first: state.categoryProducts.meta.first,
           offset: state.categoryProducts.meta.offset + products.length,
           isLastPage:
             !action.payload.data.categoriesCollection?.edges[0].node.categoryitemsCollection?.pageInfo.hasNextPage,
