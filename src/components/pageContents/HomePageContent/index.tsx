@@ -1,11 +1,12 @@
 'use client';
 
 import { useRouter } from 'next-nprogress-bar';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import Catalog from '../../Catalog/Catalog';
 
 import { CategoriesConnection } from '@/__generated__/graphql';
+import { address } from '@/api/address';
 import { API } from '@/api/types';
 import ProductSlider from '@/components/Carousels/ProductSlider';
 import PromoCarousel from '@/components/Carousels/PromoCarousel';

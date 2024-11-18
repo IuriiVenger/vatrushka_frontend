@@ -28,3 +28,4 @@ export const apolloClient = new ApolloClient({
 });
 
 export const { getRequest, postRequest, patchRequest, deleteRequest } = createCustomAxiosInstance(restApiUrl);
+export const internalAxiosInstance = createCustomAxiosInstance('/api');
