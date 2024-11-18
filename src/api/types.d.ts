@@ -362,6 +362,18 @@ export namespace API {
         distance: number;
       }>;
     };
+
+    export namespace Suggestions {
+      export type Suggestion = {
+        value: string;
+        unrestricted_value: string;
+        data: Address[];
+      };
+
+      export type Suggestions = {
+        suggestions: Suggestion[];
+      };
+    }
   }
 
   export namespace Orders {

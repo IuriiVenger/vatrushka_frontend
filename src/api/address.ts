@@ -7,6 +7,10 @@ export const address = {
   getById: async (id: string) => getRequest<API.Address.Address>(`/address/addresses/${id}`),
   decode: (decoding_address: string) =>
     internalAxiosInstance.postRequest<API.Dadata.Address[]>(`/address/decode`, { data: [decoding_address] }),
+  suggestions: (finding_address: string) =>
+    internalAxiosInstance.getRequest<API.Dadata.Suggestions.Suggestions>(`/address/suggestions`, {
+      params: { address: finding_address },
+    }),
   delete: async (id: string) => deleteRequest(`/address/addresses/${id}`), // not implemented on backend
   create: async (data: API.Address.Create.Request) => postRequest<API.Address.Address>('/address/addresses', { data }),
   update: async (id: string, data: API.Address.Create.Request) =>
