@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import Link from 'next/link';
 import { FC } from 'react';
 
 import CurrentOrderCard from './components/CurrentOrderCard';
@@ -18,9 +19,11 @@ const CurrentOrdersTab: FC = () =>
       <p className="pt-2 text-lg leading-lg max-sm:text-base max-sm:leading-base">
         Чтобы сделать заказ, перейдите в каталог и добавьте товары в корзину
       </p>
-      <Button type="primary" href="/" className="mt-6 w-max text-lg leading-lg max-sm:text-base max-sm:leading-base">
-        Перейти в каталог
-      </Button>
+      <Link href="/">
+        <Button type="primary" className="mt-6 w-max text-lg leading-lg max-sm:text-base max-sm:leading-base">
+          Перейти в каталог
+        </Button>
+      </Link>
     </div>
   );
 

@@ -1,17 +1,18 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-type ConfigState = {
-  isWebAppInitialized: boolean;
-};
+import { ConfigSliceState } from '../types';
 
-const initialState: ConfigState = {
+const initialState: ConfigSliceState = {
   isWebAppInitialized: false,
 };
 
 const confgiSlice = createSlice({
   name: 'config',
   initialState,
+  selectors: {
+    selectConfig: (state) => state,
+  },
   reducers: {
     setWebAppInitialized: (state, action) => {
       state.isWebAppInitialized = action.payload;
@@ -19,6 +20,10 @@ const confgiSlice = createSlice({
   },
 });
 
-export const { setWebAppInitialized } = confgiSlice.actions;
+export const {
+  selectors: { selectConfig },
+  actions: { setWebAppInitialized },
+  reducer: config,
+} = confgiSlice;
 
 export default confgiSlice.reducer;

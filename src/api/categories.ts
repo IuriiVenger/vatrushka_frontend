@@ -14,6 +14,7 @@ import {
   GetProductsByCategorySlugQuery,
   QueryCategoriesCollectionArgs,
   GetProductsAndRecommendedProductsByCategorySlugQuery,
+  GetProductsAndRecommendedProductsByCategorySlugQueryVariables,
 } from '@/__generated__/graphql';
 
 export const categories = {
@@ -60,13 +61,47 @@ export const categories = {
         },
       },
     }),
-  getCategoryRecommendedProductsAndProductsBySlug: (slug: string) =>
+  getCategoryRecommendedProductsAndProductsBySlug: ({
+    filter,
+    offset,
+    first,
+  }: GetProductsAndRecommendedProductsByCategorySlugQueryVariables) =>
     apolloClient.query<GetProductsAndRecommendedProductsByCategorySlugQuery>({
       query: GET_PRODUCTS_AND_RECOMMENDED_PRODUCTS_BY_CATEGORY_SLUG,
       variables: {
-        filter: {
-          slug: { eq: slug },
-        },
+        filter,
+        offset,
+        first,
       },
     }),
+  getCategoryRecommendedProductsAndProductsBySlugWithoutPagination: async (
+    variables: GetProductsAndRecommendedProductsByCategorySlugQueryVariables,
+  ) => {
+    const targetData: Partial<GetProductsAndRecommendedProductsByCategorySlugQuery> = {};
+    const pageInfo = { hasNextPage: false, offset: 0 };
+
+    do {
+      // eslint-disable-next-line no-await-in-loop
+      const { data } = await categories.getCategoryRecommendedProductsAndProductsBySlug({
+        ...variables,
+        offset: pageInfo.offset,
+      });
+
+      if (!targetData.categoriesCollection) {
+        targetData.categoriesCollection = data.categoriesCollection;
+      } else {
+        targetData.categoriesCollection.edges[0]?.node.categoryitemsCollection?.edges.push(
+          ...(data.categoriesCollection?.edges[0].node.categoryitemsCollection?.edges || []),
+        );
+      }
+      pageInfo.hasNextPage =
+        data.categoriesCollection?.edges[0]?.node.categoryitemsCollection?.pageInfo.hasNextPage || false;
+
+      pageInfo.offset = data.categoriesCollection?.edges[0]?.node.categoryitemsCollection?.edges.length
+        ? pageInfo.offset + data.categoriesCollection.edges[0].node.categoryitemsCollection.edges.length
+        : pageInfo.offset;
+    } while (pageInfo.hasNextPage);
+
+    return { data: targetData };
+  },
 };

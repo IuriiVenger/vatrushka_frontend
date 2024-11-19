@@ -1,17 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-import { API } from '@/api/types';
+import { UserSliceState } from '../types';
+
 import { RequestStatus } from '@/constants';
-import { SupabaseUser } from '@/types';
 
-type InitialState = {
-  user: SupabaseUser | null;
-  userData: API.Auth.UserData | null;
-  userLoadingStatus: RequestStatus;
-};
-
-const initialState: InitialState = {
+const initialState: UserSliceState = {
   user: null,
   userData: null,
   userLoadingStatus: RequestStatus.NONE,
@@ -20,6 +14,10 @@ const initialState: InitialState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
+  selectors: {
+    selectUser: (state) => state,
+    selectIsNonAnonymousUser: (state) => state.user?.is_anonymous === false,
+  },
   reducers: {
     setUser: (state, action) => {
       state.userLoadingStatus = RequestStatus.FULFILLED;
@@ -31,9 +29,16 @@ const userSlice = createSlice({
     setUserData: (state, action) => {
       state.userData = action.payload;
     },
+    logout: (state) => {
+      state.user = null;
+      state.userData = null;
+      state.userLoadingStatus = RequestStatus.NONE;
+    },
   },
 });
 
-export const { setUser, setUserLoadingStatus, setUserData } = userSlice.actions;
-
-export default userSlice.reducer;
+export const {
+  selectors: { selectUser, selectIsNonAnonymousUser },
+  actions: { setUser, setUserLoadingStatus, setUserData, logout },
+  reducer: user,
+} = userSlice;

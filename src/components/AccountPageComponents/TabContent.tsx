@@ -7,16 +7,18 @@ import CurrentOrdersTab from './CurrentOrdersTab';
 import OrdersHistoryTab from './OrdersHistoryTab';
 
 import { AccountTabsOptions, accountTabs } from '@/constants';
+import { SupabaseUser } from '@/types';
 
 type TTabContentProps = {
   tab: AccountTabsOptions | null;
+  user: SupabaseUser | null;
 };
 
-const TabContent: FC<TTabContentProps> = ({ tab }) => {
+const TabContent: FC<TTabContentProps> = ({ tab, user }) => {
   const content = useMemo(() => {
     switch (tab) {
       case accountTabs[AccountTabsOptions.PROFILE].value:
-        return <AccountTab />;
+        return <AccountTab user={user} />;
 
       case accountTabs[AccountTabsOptions.BONUSES].value:
         return <BonusesTab />;
@@ -33,7 +35,7 @@ const TabContent: FC<TTabContentProps> = ({ tab }) => {
       default:
         return null;
     }
-  }, [tab]);
+  }, [tab, user]);
 
   return <div>{content}</div>;
 };

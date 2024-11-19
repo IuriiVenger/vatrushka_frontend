@@ -2,6 +2,7 @@
 
 import { Breadcrumb, Button } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
 import { FC, useEffect, useState } from 'react';
 
 import TextBlock from '../../ui/TextBlock';
@@ -14,12 +15,12 @@ import {
 } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import ProductCarousel from '@/components/Carousels/ProductCarousel';
-import Slider from '@/components/Carousels/Slider';
+import ProductSlider from '@/components/Carousels/ProductSlider';
 import ProductModificator from '@/components/Product/ProductModificator';
 import PromoTag from '@/components/ui/PromoTag';
 import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
-import { useMessage } from '@/hooks/useMessage';
+import { TProductSliderSlide } from '@/types';
 import { conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 
 export type ActiveModifierGroupIds = {
@@ -52,6 +53,7 @@ export type TProductProps = {
     sizesImages: Productsizeimages[];
     title?: string;
   };
+  onOrder: (data: API.Cart.CartItem.Create.RequestItem[]) => Promise<void>;
 };
 
 const getModifierGroupData = (modifiersGroups: ModifiersGroups[]) =>
@@ -86,7 +88,7 @@ const getModifierGroupData = (modifiersGroups: ModifiersGroups[]) =>
     return { ...acc, [id]: groupInfo };
   }, {});
 
-const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
+const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
   const {
     allergens,
     category,
@@ -105,10 +107,11 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   } = productInfo;
 
   const initialSize = sizes?.find((size) => size.is_default) || sizes?.[0];
-  const { showMessage } = useMessage();
 
   const [activeSize, setActiveSize] = useState<Partial<Productsizes> | undefined>(initialSize);
   const [amount, setAmount] = useState(1);
+  const [isOrderButtonLoading, setIsOrderButtonLoading] = useState(false);
+  const router = useRouter();
 
   const selectedSizeModifiers = modifiers.filter((group) => group.productsize_id === activeSize?.size_id);
 
@@ -138,6 +141,20 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
   const totalPrice = pricePerItem * amount;
   const weight = activeSize?.portion_weight_grams;
   const recomendatedProductsData = conertCategoryRecommendedProductsToCards(recommendedProducts);
+  const recomendatedProductsSlides: TProductSliderSlide[] = recomendatedProductsData.map((item) => {
+    const onBuyButtonClick = async () => {
+      if (item.buttonType === 'button') {
+        await onOrder([{ product_id: item.productId || '', size_id: item.sizeId || '', modifiers: [] }]);
+      } else {
+        router.push(item.href);
+      }
+    };
+    return {
+      ...item,
+      onBuyButtonClick,
+      buyButtonText: 'Заказать',
+    };
+  });
 
   const isSizeSelectorEnabled = sizes && sizes?.length > 1;
 
@@ -159,8 +176,25 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
     setModifiersGroupsData({ ...modifiersGroupsData, [groupId]: selectedGroup });
   };
 
-  const onOrderButtonClick = () => {
-    showMessage({ type: 'success', text: `Добавлено в корзину: ${id}` });
+  const onOrderButtonClick = async () => {
+    if (!id || !activeSize?.id) {
+      return;
+    }
+
+    const orderDataItem: API.Cart.CartItem.Create.RequestItem = {
+      product_id: id,
+      size_id: activeSize?.id,
+      modifiers: activeModifiers.map((modifier) => ({ id: modifier.id, quantity: 1 })),
+    };
+
+    const orderDataItems = new Array(amount).fill(orderDataItem);
+
+    try {
+      setIsOrderButtonLoading(true);
+      await onOrder(orderDataItems);
+    } finally {
+      setIsOrderButtonLoading(false);
+    }
   };
 
   const onSizeClick = (size: Partial<Productsizes>) => () => {
@@ -233,7 +267,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
                   {sizes?.map((size) => (
                     <ProductModificator
                       key={size.id}
-                      isSelected={activeSize?.size_id === size.size_id}
+                      isSelected={activeSize?.id === size.id}
                       onClick={onSizeClick(size)}
                       title={size.size_name || ''}
                       price={size.price}
@@ -264,7 +298,12 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
             </p>
             <div className="flex gap-6 py-6 max-xs:grid max-xs:grid-cols-2">
               <StepperButton count={amount} setCount={setAmount} minValue={1} />
-              <Button type="primary" className="w-max max-xs:w-full" onClick={onOrderButtonClick}>
+              <Button
+                type="primary"
+                className="w-max max-xs:w-full"
+                onClick={onOrderButtonClick}
+                loading={isOrderButtonLoading}
+              >
                 Заказать
               </Button>
             </div>
@@ -307,7 +346,7 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo }) => {
           </div>
         </div>
       </div>
-      {!!recomendatedProductsData.length && <Slider title="Рекомендуем" slides={recomendatedProductsData} />}
+      {!!recomendatedProductsSlides.length && <ProductSlider title="Рекомендуем" slides={recomendatedProductsSlides} />}
     </>
   );
 };

@@ -7,6 +7,7 @@ import { FC } from 'react';
 import { ProductBySlugQuery, Productsizeimages, Productsizes } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import ProductPageContent, { ModifiersGroups, TProductProps } from '@/components/pageContents/ProductPageContent';
+import useCart from '@/hooks/useCart';
 
 type ClientProductPageProps = {
   product: ProductBySlugQuery;
@@ -16,6 +17,7 @@ type ClientProductPageProps = {
 
 const ClientProductPage: FC<ClientProductPageProps> = (props) => {
   const { product, sizesImages, modifiersGrops } = props;
+  const { addToCart } = useCart();
 
   const currentProduct = product.productsCollection?.edges[0].node;
 
@@ -44,23 +46,27 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
     currentProduct?.categoryitemsCollection?.edges[0].node.categories.rec_categoryCollection?.edges.reduce(
       (acc: API.Products.Recomedation[], rec) => {
         const productSizes = rec.node.products?.productsizesCollection?.edges || [];
+        const multiple_sizes = productSizes.length > 1;
+        const defaultSize = multiple_sizes ? productSizes.find((item) => item.node.is_default) : productSizes[0];
 
-        productSizes.forEach((item) => {
-          if (item.node) {
-            acc.push({
-              button_image_url: item.node.button_image_url || '',
-              nodeId: item.node.nodeId,
-              price: item.node.price ? Number(item.node.price) : 0,
-              name: item.node.products?.name || '',
-              short_description: item.node.products?.short_description || '',
-              slug: item.node.products?.slug || '',
-              category: {
-                name: rec.node.products?.categoryitemsCollection?.edges[0]?.node.categories.name || '',
-                slug: rec.node.products?.categoryitemsCollection?.edges[0]?.node.categories.slug || '',
-              },
-            });
-          }
-        });
+        if (defaultSize) {
+          acc.push({
+            product_id: defaultSize.node.products?.id || '',
+            button_image_url: defaultSize.node.button_image_url || '',
+            size_id: defaultSize.node.id || '',
+            multiple_sizes,
+            nodeId: defaultSize.node.nodeId,
+            price: defaultSize.node.price ? Number(defaultSize.node.price) : 0,
+            name: defaultSize.node.products?.name || '',
+            short_description: defaultSize.node.products?.short_description || '',
+            slug: defaultSize.node.products?.slug || '',
+            category: {
+              name: rec.node.products?.categoryitemsCollection?.edges[0]?.node.categories.name || '',
+              slug: rec.node.products?.categoryitemsCollection?.edges[0]?.node.categories.slug || '',
+            },
+          });
+        }
+
         return acc;
       },
       [],
@@ -103,7 +109,11 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
     recommendedProducts,
   };
 
-  return <ProductPageContent productInfo={productInfo} />;
+  const onOrder = async (data: API.Cart.CartItem.Create.RequestItem[]) => {
+    await addToCart(data);
+  };
+
+  return <ProductPageContent productInfo={productInfo} onOrder={onOrder} />;
 };
 
 export default ClientProductPage;

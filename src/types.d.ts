@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import { GetProductsByCategorySlugQuery } from './__generated__/graphql';
+import { API } from './api/types';
 import { TagType } from './mock';
 
 type TValueOf<T> = T[keyof T];
@@ -17,6 +18,10 @@ export type TCard = {
   inStock: boolean;
   href: string;
   quantity: number;
+  onClick?: () => void;
+  buttonType: 'button' | 'link';
+  sizeId: string | null;
+  productId: string | null;
 };
 
 export type TMenuLevelOneOption = {
@@ -41,6 +46,15 @@ export type TCartListItem = {
   pic: string;
   price: number | string;
   count: number;
+  onClick?: () => void;
+};
+
+export type TSearchListItem = {
+  name: string;
+  pic: string;
+  price: number | string;
+  onClick?: () => void;
+  quantity?: never;
 };
 
 export type TTag = {
@@ -150,4 +164,49 @@ export type SupabaseUser = {
   updated_at?: string;
   identities?: UserIdentity[];
   factors?: Factor[];
+  is_anonymous?: boolean;
+};
+
+type TRecCategoryEdge = {
+  node: {
+    products?: {
+      productsizesCollection?: {
+        edges: {
+          node: {
+            button_image_url?: string | null;
+            nodeId: string;
+            price?: string | null;
+            is_default?: boolean | null | undefined;
+            id?: string;
+            size_id?: string;
+            products?: {
+              id?: string;
+              short_description?: any;
+              slug?: string | null;
+              name?: string;
+            } | null;
+          };
+        }[];
+      } | null;
+      categoryitemsCollection?: {
+        edges: {
+          node: {
+            categories: { name?: string; slug?: string | null };
+          };
+        }[];
+      } | null;
+    } | null;
+  };
+};
+
+export type GroupedCartItem = API.Cart.CartItem.CartItem & {
+  group_id: string;
+  quantity: number;
+  total_price: number;
+  rawCartItems: API.Cart.CartItem.CartItem[];
+};
+
+export type TProductSliderSlide = TCard & {
+  onBuyButtonClick: () => Promise<void>;
+  buyButtonText: string;
 };

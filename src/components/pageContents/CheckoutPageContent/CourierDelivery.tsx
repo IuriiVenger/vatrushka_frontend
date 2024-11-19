@@ -11,10 +11,10 @@ import Map from '@/components/ui/Map';
 import { addressesTypes, AddressType } from '@/constants';
 import { userInfo } from '@/mocks';
 import { useAppSelector } from '@/store';
-import { selectIsUserLoggedIn } from '@/store/selectors';
+import { selectIsNonAnonymousUser } from '@/store/slices/user';
 
 const CourierDelivery: FC = () => {
-  const isUserLoggedIn = useAppSelector(selectIsUserLoggedIn);
+  const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const [isAddressesModalOpen, setIsAddressesModalOpen] = useState(false);
 
   const addressTypeOptions = Object.values(addressesTypes);

@@ -1,15 +1,14 @@
 'use client';
 
 import { Button } from 'antd';
-import { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
 import { companyInfo } from '@/config/links';
-import { AuthModalProcessType } from '@/constants';
 import { useMessage } from '@/hooks/useMessage';
-import { getNounWithDeclension } from '@/utils/formatters';
+import { getNounWithDeclension, prettifyPhone } from '@/utils/formatters';
 import { isConfirmationCodeValid } from '@/utils/validation';
 
 type ConfirmPhoneForm = {
@@ -17,7 +16,7 @@ type ConfirmPhoneForm = {
 };
 
 export type TConfirmPhoneModalProps = {
-  processType: AuthModalProcessType | null;
+  successMessage: string;
   onClose: () => void;
   phone: string;
   verifyPhoneOtp: () => Promise<void>;
@@ -26,7 +25,7 @@ export type TConfirmPhoneModalProps = {
 };
 
 export const ConfirmPhone: FC<TConfirmPhoneModalProps> = (props) => {
-  const { processType, onClose, phone, verifyPhoneOtp, getPhoneOtp, setOtp } = props;
+  const { successMessage, onClose, phone, verifyPhoneOtp, getPhoneOtp, setOtp } = props;
   const [seconds, setSeconds] = useState(60);
   const [isSendingPossible, setIsSendingPossible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,18 +41,18 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = (props) => {
     mode: 'onChange',
   });
 
-  const successMessage = useMemo(() => {
-    switch (processType) {
-      case AuthModalProcessType.SIGN_IN:
-        return 'Вы успешно авторизовались';
+  // const successMessage = useMemo(() => {
+  //   switch (processType) {
+  //     case AuthModalProcessType.SIGN_IN:
+  //       return 'Вы успешно авторизовались';
 
-      case AuthModalProcessType.SIGN_UP:
-        return 'Вы успешно зарегистрировались';
+  //     case AuthModalProcessType.SIGN_UP:
+  //       return 'Вы успешно зарегистрировались';
 
-      default:
-        return 'Номер успешно изменён';
-    }
-  }, [processType]);
+  //     default:
+  //       return 'Номер успешно изменён';
+  //   }
+  // }, [processType]);
 
   const submitHandler: SubmitHandler<ConfirmPhoneForm> = async () => {
     try {
@@ -106,7 +105,7 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = (props) => {
 
   return (
     <div className="flex flex-col gap-6 text-lg leading-lg max-sm:gap-4 max-sm:text-base max-sm:leading-base">
-      <p className="mb-2">На ваш телефон {phone} выслан СМС-код для подтверждения</p>
+      <p className="mb-2">На ваш телефон {prettifyPhone(phone)} выслан СМС-код для подтверждения</p>
       <Form className="flex flex-col gap-6 max-sm:gap-4" onSubmit={handleSubmit(submitHandler)}>
         <div>
           <Input

@@ -17,16 +17,35 @@ type TProductsListProps = {
   onLoadMore?: () => void;
   isLoading?: boolean;
   loadMoreAvailable?: boolean;
+  onBuyButtonClick: (card: TCard) => Promise<void>;
 };
 
 const ProductsList: FC<TProductsListProps> = (props) => {
-  const { products, title, onLoadMore, isLoading, loadMoreAvailable } = props;
-  const [sort, setSort] = useState<SortType>(SortType.PRICE_ASCENDING);
+  const { products, title, onLoadMore, isLoading, loadMoreAvailable, onBuyButtonClick } = props;
+  const [sort, setSort] = useState<SortType>(SortType.MOST_POPULAR);
+
+  const sortedProducts = useMemo(() => {
+    const sortedProductsItems = [...products];
+
+    if (sort === SortType.PRICE_ASCENDING) {
+      sortedProductsItems.sort((a, b) => +a.price - +b.price);
+    }
+
+    if (sort === SortType.PRICE_DESCENDING) {
+      sortedProductsItems.sort((a, b) => +b.price - +a.price);
+    }
+
+    return sortedProductsItems;
+  }, [products, sort]);
 
   const productsCount = useMemo(
     () => `${products.length} ${getNounWithDeclension(products.length, 'товар', 'товара', 'товаров')}`,
     [products.length],
   );
+
+  const handleBuyButtonClick = (card: TCard) => async () => {
+    await onBuyButtonClick(card);
+  };
 
   return (
     <div className="flex flex-col gap-12 max-lg:gap-8 max-md:gap-4">
@@ -39,8 +58,8 @@ const ProductsList: FC<TProductsListProps> = (props) => {
       </div>
       <div className="flex max-w-300 flex-col items-center gap-6">
         <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1">
-          {products.map((item, index) => (
-            <ProductCard key={item.id + index} info={item} />
+          {sortedProducts.map((item, index) => (
+            <ProductCard key={item.id + index} info={item} handleBuyButtonClick={handleBuyButtonClick(item)} />
           ))}
         </div>
         {loadMoreAvailable && (

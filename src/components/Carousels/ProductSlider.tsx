@@ -7,29 +7,35 @@ import SlickSlider, { Settings } from 'react-slick';
 
 import ProductCard from '../Product/ProductCard';
 
-import { TCard } from '@/types';
+import { TProductSliderSlide } from '@/types';
 
-type TSliderComponentProps = {
+export type TSliderComponentProps = {
   title: string;
-  slides: TCard[];
+  slides: TProductSliderSlide[];
 };
 
-const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
+const ProductSlider: FC<TSliderComponentProps> = ({ title, slides }) => {
   const sliderRef = useRef<SlickSlider>(null);
 
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
 
-  const handleButtons = (currentSlide: number): void => {
+  const handleButtons = (_: number, next: number): void => {
     if (sliderRef.current) {
-      const { slidesToShow } = sliderRef.current.props;
-
-      const isFirstSlide = currentSlide === 0;
-      const isLastSlide = !!slidesToShow && currentSlide === slides.length - slidesToShow;
+      const isFirstSlide = next === 0;
+      const isLastSlide = next === slides.length - 3;
 
       setIsPrevDisabled(isFirstSlide);
       setIsNextDisabled(isLastSlide);
     }
+  };
+
+  const handlePrev = (): void => {
+    sliderRef.current?.slickPrev();
+  };
+
+  const handleNext = (): void => {
+    sliderRef.current?.slickNext();
   };
 
   const settings: Settings = {
@@ -42,7 +48,7 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
     slidesToShow: 3,
     slidesToScroll: 1,
     swipeToSlide: true,
-    afterChange: handleButtons,
+    beforeChange: handleButtons,
     responsive: [
       {
         breakpoint: 1023,
@@ -71,7 +77,7 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
         <p className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">{title}</p>
         <div className="flex flex-nowrap gap-4 max-sm:hidden">
           <Button
-            onClick={sliderRef.current?.slickPrev}
+            onClick={handlePrev}
             disabled={isPrevDisabled}
             shape="circle"
             type="primary"
@@ -79,7 +85,7 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
             icon={<IoIosArrowBack />}
           />
           <Button
-            onClick={sliderRef.current?.slickNext}
+            onClick={handleNext}
             disabled={isNextDisabled}
             shape="circle"
             type="primary"
@@ -91,7 +97,7 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
       <div className="slider-container mx-auto grid grid-cols-1 overflow-hidden max-xs:mr-0 max-xs:pl-0">
         <SlickSlider className="additional-list-padding" {...settings} ref={sliderRef}>
           {slides.map((slide, index) => (
-            <ProductCard key={slide.id + index} info={slide} slider />
+            <ProductCard key={slide.id + index} info={slide} slider handleBuyButtonClick={slide.onBuyButtonClick} />
           ))}
         </SlickSlider>
       </div>
@@ -99,4 +105,4 @@ const Slider: FC<TSliderComponentProps> = ({ title, slides }) => {
   );
 };
 
-export default Slider;
+export default ProductSlider;

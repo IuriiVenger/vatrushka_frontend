@@ -1,26 +1,27 @@
 import { Button } from 'antd';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 
 import CustomImage from '@/components/ui/CustomImage';
 import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
-import { useMessage } from '@/hooks/useMessage';
 import { TCard } from '@/types';
 
 type TItemCardProps = {
   card: TCard;
+  setQuantity: (quantity: number, cartItemId: string) => void;
+  onRemoveItem: (cartItemId: string) => void;
 };
 
-const ItemCard: FC<TItemCardProps> = ({ card }) => {
-  const { id, name, pic, price, weight, inStock, quantity } = card;
+const ItemCard: FC<TItemCardProps> = ({ card, onRemoveItem, setQuantity }) => {
+  const { id, name, pic, price, weight, inStock, quantity, description } = card;
 
-  const [count, setCount] = useState(quantity);
+  const onQuantityChange = (count: number) => {
+    setQuantity(count, id);
+  };
 
-  const { showMessage } = useMessage();
-
-  const onRemoveItem = () => {
-    showMessage({ type: 'info', text: `Товар ${name} удален из корзины ${id}` });
+  const onRemoveItemClick = () => {
+    onRemoveItem(id);
   };
 
   return (
@@ -38,15 +39,9 @@ const ItemCard: FC<TItemCardProps> = ({ card }) => {
             <div className="flex max-w-65 flex-col gap-2 text-lg leading-lg max-sm:text-base max-sm:leading-base">
               <p>{name}</p>
               <div className="flex flex-col gap-0.5 text-textTertiary">
-                <p>Modifiers</p>
+                <p>{description}</p>
                 <p>{weight} г</p>
               </div>
-              <Button
-                type="link"
-                className="h-6 w-max p-0 text-base leading-base text-primary underline underline-offset-4"
-              >
-                Изменить
-              </Button>
             </div>
           </div>
 
@@ -54,13 +49,13 @@ const ItemCard: FC<TItemCardProps> = ({ card }) => {
             icon={<RxCross2 className="h-4 w-4" />}
             type="text"
             className="hidden max-h-6 max-w-6 text-textTertiary active:text-text max-sm:flex"
-            onClick={onRemoveItem}
+            onClick={onRemoveItemClick}
           />
         </div>
         <div className="flex w-full items-center justify-end gap-6 max-sm:justify-normal">
           {inStock ? (
             <div className="flex w-max items-center gap-6 max-sm:w-full max-sm:justify-between">
-              <StepperButton count={count} setCount={setCount} minValue={1} />
+              <StepperButton count={quantity} setCount={onQuantityChange} minValue={1} />
               <p className="text-nowrap text-xl font-medium leading-xl max-sm:text-base max-sm:leading-base">
                 {price} {CurrencySymbol.RUB}
               </p>
@@ -75,7 +70,7 @@ const ItemCard: FC<TItemCardProps> = ({ card }) => {
             icon={<RxCross2 className="h-6 w-6" />}
             type="text"
             className="ml-1 min-h-8 min-w-8 text-textTertiary active:text-text max-sm:hidden"
-            onClick={onRemoveItem}
+            onClick={onRemoveItemClick}
           />
         </div>
       </div>

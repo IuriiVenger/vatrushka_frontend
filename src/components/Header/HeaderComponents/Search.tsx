@@ -1,44 +1,52 @@
 'use client';
 
 import { AutoComplete, AutoCompleteProps, Button, Divider, Drawer } from 'antd';
+import { DefaultOptionType } from 'antd/es/select';
+import { useRouter } from 'next-nprogress-bar';
 import { ChangeEvent, FC, Fragment, useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { RxCross2 } from 'react-icons/rx';
 
 import DropdownListItem from './DropdownListItem';
 
+import { products } from '@/api/products';
 import SearchInput from '@/components/ui/SearchInput';
 import useDebounce from '@/hooks/useDebounce';
-import { cartList } from '@/mocks';
+
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectUI } from '@/store/selectors';
-import { toggleSearch } from '@/store/slices/ui';
-import { TCartListItem } from '@/types';
+
+import { toggleSearch, selectUI } from '@/store/slices/ui';
+import { TSearchListItem } from '@/types';
 
 const Search: FC = () => {
-  const [options, setOptions] = useState<TCartListItem[]>([]);
+  const [options, setOptions] = useState<TSearchListItem[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const router = useRouter();
 
   const dispatch = useAppDispatch();
   const { isMobileSearchOpened } = useAppSelector(selectUI);
 
   const debouncedSearch = useDebounce<string>(searchValue);
 
-  console.log('query filter:', debouncedSearch);
-
   const dropdownOptions: AutoCompleteProps['options'] = options.map((item) => ({
     value: item.name,
     label: <DropdownListItem item={item} />,
+    onClick: item.onClick,
   }));
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    setOptions(cartList);
+    setIsSearching(true);
   };
 
   const onInputClear = () => {
     setOptions([]);
     setSearchValue('');
+  };
+
+  const closeMobileSearch = () => {
+    dispatch(toggleSearch(false));
   };
 
   const onSearchButtonClick = () => {
@@ -49,11 +57,48 @@ const Search: FC = () => {
     dispatch(toggleSearch(false));
   };
 
-  useEffect(() => {
-    if (!searchValue.length) {
+  const loadProducts = async () => {
+    if (!debouncedSearch.length) {
       setOptions([]);
+      setIsSearching(false);
+      return;
     }
-  }, [searchValue.length]);
+
+    try {
+      const { data } = await products.getByName(debouncedSearch);
+      const productList =
+        data.productsCollection?.edges.map((edge) => {
+          const product = edge.node;
+          const category = product.categoryitemsCollection?.edges[0]?.node.categories.slug;
+          return {
+            name: product.name,
+            pic: product.productsizesCollection?.edges[0]?.node.button_image_url || '',
+            price: product.productsizesCollection?.edges[0]?.node.price
+              ? Number(product.productsizesCollection.edges[0].node.price)
+              : 0,
+            onClick: () => {
+              setSearchValue(product.name);
+              closeMobileSearch();
+              router.push(`/${category}/${product.slug}`);
+            },
+          };
+        }) || [];
+
+      setOptions(productList);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const onOptionSelect = (value: string, option: DefaultOptionType) => {
+    if (option.onClick) {
+      option.onClick();
+    }
+  };
+
+  useEffect(() => {
+    loadProducts();
+  }, [debouncedSearch]);
 
   return (
     <>
@@ -65,8 +110,11 @@ const Search: FC = () => {
       />
       <AutoComplete
         options={dropdownOptions}
+        onSelect={onOptionSelect}
         className="h-full w-full max-lg:w-auto max-md:w-full max-sm:hidden"
-        notFoundContent={searchValue.length ? <p className="py-4 text-center">Ничего не найдено</p> : null}
+        notFoundContent={
+          debouncedSearch.length && !isSearching ? <p className="py-4 text-center">Ничего не найдено</p> : null
+        }
       >
         <SearchInput onChange={onInputChange} onClear={onInputClear} value={searchValue} />
       </AutoComplete>

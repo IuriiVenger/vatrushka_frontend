@@ -7,46 +7,92 @@ import { TMenuItem } from '../Header';
 import CartList from './CartList';
 
 import { color } from '@/config/variables';
-import { cartList } from '@/mocks';
+import { TCard } from '@/types';
 
-const cartItems: TMenuItem[] = [
-  {
-    key: 'cart',
-    label: <CartList />,
-    type: 'group',
-  },
-];
+// const cartItems: TMenuItem[] = [
+//   {
+//     key: 'cart',
+//     label: <CartList />,
+//     type: 'group',
+//   },
+// ];
 
 type TCartProps = {
   onCloseAll: () => void;
+  cartItems: TCard[];
+  totalPrice: number;
+  onCartClick: () => void;
+  onDeleteButtonClick: (id: string) => void;
+  onStepperCountChange: (count: number, id: string) => void | Promise<void>;
+  isCartDropdownHidden: boolean;
 };
 
-const Cart: FC<TCartProps> = ({ onCloseAll }) => {
-  const dropDownTrigger = useMemo(() => {
-    const trigger: Array<'click'> = [];
+const Cart: FC<TCartProps> = (props) => {
+  const {
+    onCloseAll,
+    cartItems,
+    totalPrice,
+    onDeleteButtonClick,
+    onStepperCountChange,
+    isCartDropdownHidden,
+    onCartClick,
+  } = props;
 
-    if (cartList.length) {
-      trigger.push('click');
+  const dropdownItems: TMenuItem[] = [
+    {
+      key: 'cart',
+      label: (
+        <CartList
+          cartItems={cartItems}
+          totalPrice={totalPrice}
+          onDeleteButtonClick={onDeleteButtonClick}
+          onStepperCountChange={onStepperCountChange}
+        />
+      ),
+      type: 'group',
+    },
+  ];
+
+  const itemsCount = cartItems.reduce<number>((acc, item) => acc + item.quantity, 0);
+
+  const dropDownTrigger = useMemo(() => {
+    const trigger: Array<'hover'> = [];
+
+    if (itemsCount) {
+      trigger.push('hover');
     }
 
     return trigger;
-  }, [cartList.length]);
+  }, [itemsCount]);
+
+  if (isCartDropdownHidden) {
+    return (
+      <Button
+        aria-label={`Просмотр корзины. Сейчас товаров в корзине: ${itemsCount}`}
+        className="h-6 w-5 border-none p-0"
+        icon={
+          <Badge count={itemsCount} className="max-xs:small" color={color.accent.default}>
+            <LuShoppingCart className="h-6 min-w-5 text-textTertiary transition-all hover:text-textQuaternary" />
+          </Badge>
+        }
+      />
+    );
+  }
 
   return (
     <Dropdown
-      menu={{ items: cartItems }}
+      menu={{ items: dropdownItems }}
       trigger={dropDownTrigger}
       onOpenChange={onCloseAll}
       placement="bottomRight"
       overlayClassName="pt-2"
     >
       <Button
-        type="link"
-        aria-label={`Просмотр корзины. Сейчас товаров в корзине: ${cartList.length}`}
-        className="h-6 w-5 p-0"
-        href={!cartList.length ? '/cart' : undefined}
+        onClick={onCartClick}
+        aria-label={`Просмотр корзины. Сейчас товаров в корзине: ${itemsCount}`}
+        className="h-6 w-5 border-none p-0"
         icon={
-          <Badge count={cartList.length} className="max-xs:small" color={color.accent.default}>
+          <Badge count={itemsCount} className="max-xs:small" color={color.accent.default}>
             <LuShoppingCart className="h-6 min-w-5 text-textTertiary transition-all hover:text-textQuaternary" />
           </Badge>
         }

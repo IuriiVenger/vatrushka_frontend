@@ -12,7 +12,9 @@ import {
   FilterOrdersType,
   filterOrdersTypeTranslation,
 } from '@/constants';
+import useAuth from '@/hooks/useAuth';
 import { useUrlParams } from '@/hooks/useUrlParams';
+import { useAppDispatch } from '@/store';
 
 type TTabsControllerProps = {
   tab: AccountTabsOptions | null;
@@ -23,7 +25,8 @@ type TTabsControllerProps = {
 
 const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isHistoryTab, isProfileTab }) => {
   const [filter, setFilter] = useState<FilterOrdersType>(FilterOrdersType.ALL);
-
+  const dispatch = useAppDispatch();
+  const { signOut } = useAuth(dispatch);
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
@@ -75,7 +78,7 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isHistoryTab, i
         className="w-max text-lg leading-lg max-lg:text-base max-lg:leading-base"
       />
       {isProfileTab && (
-        <Button className="border-none max-lg:text-base max-lg:leading-base max-md:hidden">
+        <Button className="border-none max-lg:text-base max-lg:leading-base max-md:hidden" onClick={signOut}>
           <FiLogOut className="h-6 w-6" />
           Выйти из аккаунта
         </Button>

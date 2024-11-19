@@ -1,16 +1,17 @@
 /* eslint-disable no-restricted-globals */
 
-import { message } from 'antd';
-
 import { useState } from 'react';
+
+import useCart from './useCart';
 
 import { auth } from '@/api/auth';
 
 import { RequestStatus } from '@/constants';
 
-import { setUser, setUserData, setUserLoadingStatus } from '@/store/slices/user';
+import { clearCart } from '@/store/slices/cart';
+import { logout, setUser, setUserLoadingStatus } from '@/store/slices/user';
 import { AppDispatch } from '@/store/types';
-import { deleteTokens, setTokens } from '@/utils/tokensFactory';
+import { deleteTokens, getTokens, setTokens } from '@/utils/tokensFactory';
 
 const useAuth = (dispatch: AppDispatch) => {
   const [email, setEmail] = useState('');
@@ -19,6 +20,8 @@ const useAuth = (dispatch: AppDispatch) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [isOtpRequested, setIsOtpRequested] = useState(false);
+
+  const { initCart, activeCart, mergeCartItems } = useCart();
 
   const setLoadingStatus = (status: RequestStatus) => {
     dispatch(setUserLoadingStatus(status));
@@ -29,18 +32,17 @@ const useAuth = (dispatch: AppDispatch) => {
     dispatch(setUser(data));
   };
 
-  const loadUserData = async () => {
-    const { data } = await auth.user_data();
-    dispatch(setUserData(data));
-  };
-
   const loadUserContent = async () => {
-    await Promise.all([loadUserData()]);
+    const oldCart = activeCart.data;
+    await initCart();
+    if (oldCart) {
+      await mergeCartItems(oldCart);
+    }
   };
 
   const clearUserContent = async () => {
-    dispatch(setUser(null));
-    dispatch(setUserData(null));
+    dispatch(logout());
+    dispatch(clearCart());
   };
 
   const resetAuthState = () => {
@@ -50,7 +52,7 @@ const useAuth = (dispatch: AppDispatch) => {
     setIsOtpRequested(false);
   };
 
-  const initUser = async () => {
+  const initExistingUser = async () => {
     try {
       setLoadingStatus(RequestStatus.PENDING);
       await getUser();
@@ -58,7 +60,43 @@ const useAuth = (dispatch: AppDispatch) => {
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
-      deleteTokens();
+      throw e;
+    }
+  };
+
+  const initAnonymousUser = async () => {
+    try {
+      const { data } = await auth.signin.anonymous();
+
+      const { error, user, session } = data;
+
+      if (error) {
+        setLoadingStatus(RequestStatus.REJECTED);
+
+        throw error;
+      }
+      session && setTokens(session);
+      dispatch(setUser(user));
+      await loadUserContent();
+      setLoadingStatus(RequestStatus.FULFILLED);
+    } catch (e) {
+      setLoadingStatus(RequestStatus.REJECTED);
+
+      throw e;
+    }
+  };
+
+  const initUser = async () => {
+    const { access_token } = getTokens();
+    if (!access_token) {
+      await initAnonymousUser();
+    } else {
+      try {
+        await initExistingUser();
+      } catch (e) {
+        await initAnonymousUser();
+        throw e;
+      }
     }
   };
 
@@ -74,8 +112,9 @@ const useAuth = (dispatch: AppDispatch) => {
         throw error;
       }
       session && setTokens(session);
-      await loadUserContent();
+
       dispatch(setUser(user));
+      await loadUserContent();
 
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
@@ -99,9 +138,8 @@ const useAuth = (dispatch: AppDispatch) => {
         throw error;
       }
       session && setTokens(session);
-      await loadUserContent();
       dispatch(setUser(user));
-
+      await loadUserContent();
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
@@ -169,9 +207,6 @@ const useAuth = (dispatch: AppDispatch) => {
       }
 
       dispatch(setUser(data.user));
-      await loadUserContent();
-
-      message.success('You have successfully logged in');
 
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
@@ -202,8 +237,7 @@ const useAuth = (dispatch: AppDispatch) => {
       }
 
       dispatch(setUser(data.user));
-      // await loadUserContent();
-      message.success('You have successfully logged in');
+      await loadUserContent();
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
@@ -224,12 +258,13 @@ const useAuth = (dispatch: AppDispatch) => {
   };
 
   return {
+    initUser,
     signIn,
     verifyEmailOtp,
     verifyPhoneOtp,
     signUp,
     signOut,
-    initUser,
+    initExistingUser,
     setEmail,
     setPhone,
     setPassword,
@@ -242,6 +277,7 @@ const useAuth = (dispatch: AppDispatch) => {
     getEmailOtp,
     getPhoneOtp,
     isOtpRequested,
+    initAnonymousUser,
     name,
     setName,
   };

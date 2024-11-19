@@ -1,4 +1,5 @@
 import { Button, Input as AntInput, Form as AntForm } from 'antd';
+
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -9,6 +10,8 @@ import Input from '@/components/ui/Form/Input';
 import Switch from '@/components/ui/Form/Switch';
 import { useMessage } from '@/hooks/useMessage';
 import { userInfo } from '@/mocks';
+import { SupabaseUser } from '@/types';
+import { prettifyPhone } from '@/utils/formatters';
 
 type TAccountForm = {
   name: string;
@@ -17,11 +20,16 @@ type TAccountForm = {
   emailNewsletter: boolean;
 };
 
-const AccountTab: FC = () => {
+type TAccountTabProps = {
+  user: SupabaseUser | null;
+};
+
+const AccountTab: FC<TAccountTabProps> = ({ user }) => {
   const [isChangePhoneModalOpen, setIsChangePhoneModalOpen] = useState(false);
   const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
 
   const { showMessage } = useMessage();
+  const prettifiedPhone = user?.phone && prettifyPhone(user?.phone);
 
   const {
     handleSubmit,
@@ -48,10 +56,11 @@ const AccountTab: FC = () => {
   return (
     <>
       <div className="rounded-2xl border border-borderSecondary p-6">
-        <h2 className="text-2xl font-medium leading-2xl">Настройки профиля</h2>
+        {/* <h2 className="text-2xl font-medium leading-2xl">Настройки профиля</h2> */}
+        <h2 className="text-2xl font-medium leading-2xl">Профиль</h2>
         <Form className="flex flex-col gap-8 pt-6" onSubmit={handleSubmit(submitHandler)}>
           <div className=" grid grid-cols-3 gap-4 max-md:flex max-md:flex-col">
-            <Input
+            {/* <Input
               name="name"
               placeholder="Иван"
               inputMode="text"
@@ -60,25 +69,25 @@ const AccountTab: FC = () => {
               control={control}
               errors={!!errors.name}
               autoComplete="given-name"
-            />
+            /> */}
             <AntForm.Item label="Номер телефона" layout="vertical">
               <AntInput
                 type="tel"
                 placeholder="+7 (999) 999-99-99"
-                defaultValue={userInfo.phone}
+                defaultValue={prettifiedPhone}
                 readOnly
-                suffix={
-                  <Button
-                    type="link"
-                    className="h-5 p-0 text-base leading-base text-primary underline hover:text-primaryHover"
-                    onClick={onChangePhone}
-                  >
-                    Изменить
-                  </Button>
-                }
+                // suffix={
+                //   <Button
+                //     type="link"
+                //     className="h-5 p-0 text-base leading-base text-primary underline hover:text-primaryHover"
+                //     onClick={onChangePhone}
+                //   >
+                //     Изменить
+                //   </Button>
+                // }
               />
             </AntForm.Item>
-            <Input
+            {/* <Input
               name="email"
               type="email"
               placeholder="ivanov@mail.ru"
@@ -87,9 +96,9 @@ const AccountTab: FC = () => {
               control={control}
               errors={!!errors.email}
               autoComplete="email"
-            />
+            /> */}
           </div>
-          <div className="flex flex-col gap-4">
+          {/* <div className="flex flex-col gap-4">
             <Switch
               name="smsNewsletter"
               control={control}
@@ -112,7 +121,7 @@ const AccountTab: FC = () => {
             >
               Удалить аккаунт
             </Button>
-          </div>
+          </div> */}
         </Form>
       </div>
       <DeleteAccountModal isOpen={isDeleteAccountModalOpen} setIsOpen={setIsDeleteAccountModalOpen} />

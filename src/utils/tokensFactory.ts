@@ -1,6 +1,15 @@
 // import { auth } from '@/api/auth';
+import { getFromLocalStorage } from './common';
+
 import { auth } from '@/api/auth';
 import { API } from '@/api/types';
+
+export function getTokens() {
+  return {
+    access_token: getFromLocalStorage('access_token'),
+    refresh_token: getFromLocalStorage('refresh_token'),
+  };
+}
 
 export function setTokens({ access_token, refresh_token }: API.Auth.Tokens) {
   if (access_token && refresh_token) {

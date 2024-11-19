@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from 'antd';
+import Link from 'next/link';
 import { FC } from 'react';
 
 import image from '../../../assets/images/empty_cart.svg';
@@ -13,9 +14,11 @@ const EmptyCartScreen: FC = () => (
       <p className="pt-2 text-lg leading-lg max-sm:text-base max-sm:leading-base">
         Завтраки, пирожные, готовая еда и многое другое ждут вас в каталоге
       </p>
-      <Button type="primary" href="/" className="mt-6 text-lg leading-lg max-sm:text-base max-sm:leading-base">
-        Перейти в каталог
-      </Button>
+      <Link href="/">
+        <Button type="primary" className="mt-6 text-lg leading-lg max-sm:text-base max-sm:leading-base">
+          Перейти в каталог
+        </Button>
+      </Link>
     </div>
   </section>
 );

@@ -2,6 +2,8 @@
 
 import { MenuProps, Button, Grid } from 'antd';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import { FC, useEffect } from 'react';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { RxCross2 } from 'react-icons/rx';
@@ -15,9 +17,10 @@ import Search from './HeaderComponents/Search';
 import UserMenu from './HeaderComponents/UserMenu';
 import PreHeader from './PreHeader';
 
+import useCart from '@/hooks/useCart';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectUI } from '@/store/selectors';
-import { toggleMenu, toggleSearch, resetAll } from '@/store/slices/ui';
+import { selectEntities } from '@/store/slices/entities';
+import { toggleMenu, toggleSearch, resetAll, selectUI } from '@/store/slices/ui';
 
 export type TMenuItem = Required<MenuProps>['items'][number];
 
@@ -27,9 +30,23 @@ const Header: FC = () => {
 
   const dispatch = useAppDispatch();
   const { isMenuOpened } = useAppSelector(selectUI);
+  const { categories } = useAppSelector(selectEntities);
+
+  const { cartCardsData, activeCart, removeGroupedCartItem, onGroupedCartItemQuantityChange } = useCart();
+
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const totalPrice = activeCart.data?.total_sum ?? 0;
+
+  const isCartDropdownHidden = cartCardsData.length === 0 || pathname === '/cart';
 
   const onBurgerButtonClick = () => {
     dispatch(toggleMenu(!isMenuOpened));
+  };
+
+  const onCartClick = () => {
+    router.push('/cart');
   };
 
   const onCloseAll = () => {
@@ -67,11 +84,19 @@ const Header: FC = () => {
               />
             </Link>
           </div>
-          <Menu />
+          <Menu catalogOptions={categories.data} />
           <div className="flex w-full items-center justify-end gap-8 max-md:gap-4">
             <Search />
             <UserMenu onCloseAll={onCloseAll} />
-            <Cart onCloseAll={onCloseAll} />
+            <Cart
+              onCloseAll={onCloseAll}
+              cartItems={cartCardsData}
+              totalPrice={totalPrice}
+              onDeleteButtonClick={removeGroupedCartItem}
+              onStepperCountChange={onGroupedCartItemQuantityChange}
+              isCartDropdownHidden={isCartDropdownHidden}
+              onCartClick={onCartClick}
+            />
           </div>
         </div>
       </header>

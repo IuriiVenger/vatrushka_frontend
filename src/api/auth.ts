@@ -15,6 +15,7 @@ export const auth = {
     },
     password: (email: string, password: string) =>
       postRequest<API.Auth.SupabaseGetSessionResponse>('/auth/signin/password', { data: { email, password } }),
+    anonymous: () => postRequest<API.Auth.SupabaseGetSessionResponse>('/auth/signin/anonymous'),
   },
   verify: {
     email: {

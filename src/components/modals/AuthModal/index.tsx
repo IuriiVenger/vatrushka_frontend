@@ -2,11 +2,13 @@ import { Button } from 'antd';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 
-import Modal from './Modal';
-import AuthActionModal, { TAuthActionModalProps } from './ModalSteps/AuthActionModal';
-import ConfirmPhone, { TConfirmPhoneModalProps } from './ModalSteps/ConfirmPhone';
-import SignIn, { TSignInModalProps } from './ModalSteps/SignIn';
-import SignUp, { TSignUpProps } from './ModalSteps/SignUp';
+import ConfirmPhone, { TConfirmPhoneModalProps } from '../CommonModalSteps/ConfirmPhone';
+import Modal from '../Modal';
+
+import AuthActionModal, { TAuthActionModalProps } from './steps/AuthActionModal';
+
+import SignIn, { TSignInModalProps } from './steps/SignIn';
+import SignUp, { TSignUpProps } from './steps/SignUp';
 
 import { AuthModalProcessType, AuthModalSteps } from '@/constants';
 import useAuth from '@/hooks/useAuth';
@@ -42,6 +44,19 @@ const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = AuthMod
     }
   }, [step, processType]);
 
+  const confirmPhoneSuccessMessage = useMemo(() => {
+    switch (processType) {
+      case AuthModalProcessType.SIGN_IN:
+        return 'Вы успешно авторизовались';
+
+      case AuthModalProcessType.SIGN_UP:
+        return 'Вы успешно зарегистрировались';
+
+      default:
+        return '';
+    }
+  }, [processType]);
+
   const hasBackButton = [AuthModalSteps.SIGN_UP, AuthModalSteps.CONFIRM_PHONE].includes(step);
 
   const onClose = () => {
@@ -67,7 +82,7 @@ const AuthModal: FC<TAuthModalProps> = ({ isOpen, setIsOpen, firstStep = AuthMod
   };
 
   const stepsProps: TAuthModalStepsProps = {
-    processType,
+    successMessage: confirmPhoneSuccessMessage,
     setProcessType,
     setStep,
     setPhone,

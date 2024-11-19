@@ -38,6 +38,50 @@ export const GET_CATEGORIES = gql`
   }
 `;
 
+export const GET_COMMON_REC_PRODUCTS = gql`
+  query GetCommonRecProducts {
+    rec_categoryCollection {
+      edges {
+        node {
+          products {
+            productsizesCollection {
+              edges {
+                node {
+                  price
+                  button_image_url
+                  nodeId
+                  is_default
+                  id
+                  size_id
+                  products {
+                    short_description
+                    slug
+                    name
+                    nodeId
+                    id
+                  }
+                }
+              }
+            }
+            nodeId
+            categoryitemsCollection {
+              edges {
+                node {
+                  categories {
+                    name
+                    slug
+                  }
+                }
+              }
+            }
+          }
+          nodeId
+        }
+      }
+    }
+  }
+`;
+
 export const GET_PRODUCTS_BY_CATEGORY_SLUG = gql`
   query GetProductsByCategorySlug(
     $filter: categoriesFilter
@@ -117,11 +161,15 @@ export const GET_RECOMMENDED_PRODUCTS_BY_CATEGORY_SLUG = gql`
                         price
                         button_image_url
                         nodeId
+                        is_default
+                        id
+                        size_id
                         products {
                           short_description
                           slug
                           name
                           nodeId
+                          id
                         }
                       }
                     }
@@ -211,11 +259,15 @@ export const GET_PRODUCTS_AND_RECOMMENDED_PRODUCTS_BY_CATEGORY_SLUG = gql`
                         price
                         button_image_url
                         nodeId
+                        is_default
+                        id
+                        size_id
                         products {
                           short_description
                           slug
                           name
                           nodeId
+                          id
                         }
                       }
                     }
@@ -331,11 +383,161 @@ export const GET_PROUCT_BY_SLUG = gql`
                                 price
                                 button_image_url
                                 nodeId
+                                is_default
+                                id
+                                size_id
                                 products {
                                   short_description
                                   slug
                                   name
                                   nodeId
+                                  id
+                                }
+                              }
+                            }
+                          }
+                          nodeId
+                          categoryitemsCollection {
+                            edges {
+                              node {
+                                categories {
+                                  name
+                                  slug
+                                }
+                              }
+                            }
+                          }
+                        }
+                        nodeId
+                      }
+                    }
+                  }
+                  slug
+                }
+                nodeId
+              }
+            }
+          }
+          productallergensCollection {
+            edges {
+              node {
+                id
+                allergen_group_id
+                allergengroups {
+                  code
+                  name
+                  id
+                  nodeId
+                }
+                nodeId
+              }
+            }
+          }
+          nodeId
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PRODUCT_BY_NAME = gql`
+  query ProductByName($filter: productsFilter, $productsizesCollectionFilter2: productsizesFilter) {
+    productsCollection(filter: $filter) {
+      edges {
+        node {
+          description
+          ingredients
+          isPopular
+          name
+          optional_text
+          slug
+          short_description
+          id
+          nodeId
+          productsizesCollection {
+            edges {
+              node {
+                id
+                is_default
+                nutrition_per_hundred_grams
+                nutritions
+                portion_weight_grams
+                price
+                product_id
+                size_code
+                size_id
+                size_name
+                sku
+                button_image_url
+                nodeId
+              }
+            }
+          }
+          productTagsCollection {
+            edges {
+              node {
+                slug
+                name
+                id
+                tag_id
+                nodeId
+              }
+            }
+          }
+          productlabelsCollection {
+            edges {
+              node {
+                name
+                id
+                slug
+                nodeId
+              }
+            }
+          }
+          productpromotionsCollection {
+            edges {
+              node {
+                promotions {
+                  id
+                  name
+                  description
+                  homepageBanner
+                  homepageEnabled
+                  productButtonText
+                  productButtonType
+                  productPagesEnabled
+                  slug
+                  nodeId
+                }
+                nodeId
+              }
+            }
+          }
+          sku
+          categoryitemsCollection {
+            edges {
+              node {
+                categories {
+                  name
+                  rec_categoryCollection {
+                    edges {
+                      node {
+                        products {
+                          productsizesCollection {
+                            edges {
+                              node {
+                                price
+                                button_image_url
+                                nodeId
+                                is_default
+                                id
+                                size_id
+                                products {
+                                  short_description
+                                  slug
+                                  name
+                                  nodeId
+                                  id
                                 }
                               }
                             }
