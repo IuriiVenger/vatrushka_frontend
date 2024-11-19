@@ -15,16 +15,16 @@ const PromoCarousel: FC<TCarouselProps> = ({ slides }) => (
       arrows
       adaptiveHeight
       pauseOnHover
-      className="max-md:no-arrows box-content aspect-21/9 h-full w-full max-w-300 max-xs:max-w-82"
+      className="max-md:no-arrows box-content aspect-21/9 h-full w-full max-w-300"
     >
       {slides.map((slide, index) => (
-        <div key={index} className="aspect-21/9 h-full max-w-320 rounded-3xl max-xs:max-w-82">
+        <div key={index} className="aspect-21/9 h-full max-w-300 rounded-3xl max-xs:rounded-2xl">
           <Image
             width={1200}
             height={514}
             alt={slide}
             src={slide}
-            className="w-1200 aspect-21/9 rounded-3xl object-cover object-center max-xs:max-w-82"
+            className="w-1200 aspect-21/9 rounded-3xl object-cover object-center max-xs:rounded-2xl"
           />
         </div>
       ))}

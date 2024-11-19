@@ -71,7 +71,7 @@ const AccountPageContent: FC = () => {
   if (!isUserLoggedIn) return <UnauthorizedScreen />;
 
   return (
-    <section className="flex flex-col">
+    <section className="flex w-full flex-col">
       <div className="flex flex-col items-start">
         {tab && (
           <Button

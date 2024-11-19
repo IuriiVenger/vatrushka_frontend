@@ -24,7 +24,7 @@ const DeliveryPageContent: FC = () => {
   ];
 
   return (
-    <section className="flex flex-col gap-8 max-sm:gap-6">
+    <section className="flex w-full flex-col gap-8 max-sm:gap-6">
       <Breadcrumb items={breadcrumbs} />
       <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">Условия доставки</h1>
       <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1">

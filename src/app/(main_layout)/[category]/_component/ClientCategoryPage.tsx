@@ -78,7 +78,7 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
       products={products}
       isLoading={isProductsPending}
       loadMoreProducts={loadMoreProducts}
-      loadMoreAvalible={categoryProducts.meta?.isLastPage === false}
+      loadMoreAvailable={categoryProducts.meta?.isLastPage === false}
       categoryRecommendedSlides={categoryRecommendedSlides}
       onBuyButtonClick={onBuyButtonClick}
     />

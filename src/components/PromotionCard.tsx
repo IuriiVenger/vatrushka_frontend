@@ -13,7 +13,7 @@ const PromotionCard: FC<TProductCardProps> = ({ item }) => {
 
   return (
     <Link
-      className="flex h-full w-full cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-t-lg"
+      className="flex h-full w-full cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-lg"
       href={`/promotions/${item.id}`}
     >
       {homepageBanner && (
@@ -22,7 +22,7 @@ const PromotionCard: FC<TProductCardProps> = ({ item }) => {
           height={372}
           alt={name || 'promotion banner'}
           src={homepageBanner}
-          className="aspect-3/2 rounded-t-2xl object-cover object-center max-md:rounded-t-lg"
+          className="aspect-3/2 rounded-t-2xl object-cover object-center max-md:rounded-lg"
         />
       )}
       <div className="flex h-full flex-grow flex-col justify-between p-6 max-md:p-4">

@@ -67,7 +67,7 @@ const Header: FC = () => {
     <>
       <header className="w-full">
         <PreHeader />
-        <div className="mx-auto flex w-full max-w-320 items-center gap-12 px-10 pt-10 max-lg:gap-6 max-lg:pt-6 max-sm:gap-0 max-sm:py-2 max-xs:max-w-82 max-xs:gap-6 max-xs:px-0">
+        <div className="mx-auto flex w-full max-w-300 items-center gap-12 pt-10 max-xl:px-10 max-lg:gap-6 max-lg:pt-6 max-sm:gap-0 max-sm:py-2 max-xs:gap-6 max-xs:px-4">
           <div className="flex min-w-45 items-center gap-6">
             <Button
               type="link"

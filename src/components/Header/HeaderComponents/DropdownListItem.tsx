@@ -33,7 +33,7 @@ const DropdownListItem: FC<TDropdownListItemProps> = ({
       />
       <div className={`flex w-full flex-col ${isCart ? 'gap-4' : 'gap-3'}`}>
         <div className="flex items-start justify-between">
-          <p className="max-w-54.5 text-wrap">{name}</p>
+          <p className={cn('text-wrap', isCart && 'max-w-54.5')}>{name}</p>
           {isCart && (
             <button type="button" onClick={onDeleteButtonClick}>
               <RxCross2 className="h-4 w-4 text-textTertiary transition-all hover:text-accent" />
