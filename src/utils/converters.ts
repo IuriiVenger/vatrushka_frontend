@@ -1,5 +1,6 @@
+import { address as addressApi } from '@/api/address';
 import { API } from '@/api/types';
-import { CategoryItemsConnectionType, GroupedCartItem, TCard, TRecCategoryEdge } from '@/types';
+import { CategoryItemsConnectionType, GroupedCartItem, TAddressForm, TCard, TRecCategoryEdge } from '@/types';
 
 export const convertCategoryItemsQueryProductsToCards = (categoryItems: CategoryItemsConnectionType): TCard[] =>
   categoryItems?.edges.map(({ node }) => {
@@ -122,3 +123,93 @@ export const convertGroupedCartItemsToCards = (groupedCartItems: GroupedCartItem
     sizeId: item.size.size_id,
     productId: item.product.id,
   }));
+
+export const convertDadataAddressToAddress = (
+  dadataAddress: API.Dadata.Address,
+): API.Address.Update.Request | API.Address.Create.Request => {
+  const place: API.Address.Update.Request | API.Address.Create.Request = {
+    city: null,
+    street_name: null,
+    street_classifier_id: null,
+    house: null,
+    building: null,
+    flat: null,
+    zip_code: dadataAddress.postal_code,
+    latitude: +dadataAddress.geo_lat,
+    longitude: +dadataAddress.geo_lon,
+    country: dadataAddress.country,
+  };
+
+  if (dadataAddress.city) {
+    place.city = `${dadataAddress.city_type} ${dadataAddress.city}`;
+  } else if (dadataAddress.settlement_with_type) {
+    place.city = dadataAddress.settlement_with_type;
+  } else if (dadataAddress.region_type_full === 'город') {
+    place.city = dadataAddress.region_with_type;
+  }
+
+  if (dadataAddress.street) {
+    place.street_name = dadataAddress.street_with_type;
+    place.street_classifier_id = dadataAddress.street_kladr_id;
+  } else if (dadataAddress.city && dadataAddress.settlement_with_type) {
+    place.street_name = dadataAddress.settlement_with_type;
+    place.street_classifier_id = dadataAddress.settlement_kladr_id;
+  }
+
+  if (dadataAddress.house) {
+    place.house = `${dadataAddress.house_type} ${dadataAddress.house}`;
+  }
+
+  if (dadataAddress.block) {
+    place.building = `${dadataAddress.block_type} ${dadataAddress.block}`;
+  }
+
+  if (dadataAddress.flat) {
+    place.flat = `${dadataAddress.flat_type} ${dadataAddress.flat}`;
+  }
+
+  return place;
+};
+
+export const convertAddressFormDataToAddress = async (
+  formData: TAddressForm,
+): Promise<API.Address.Update.Request | API.Address.Create.Request> => {
+  if (!formData.cityStreetBuildingFlat) {
+    return {
+      city: null,
+      street_name: null,
+      street_classifier_id: null,
+      house: null,
+      building: null,
+      flat: null,
+      zip_code: null,
+      latitude: null,
+      longitude: null,
+      country: null,
+    };
+  }
+
+  const { data: decodedFormData } = await addressApi.decode(formData.cityStreetBuildingFlat);
+  const convertedFormData = convertDadataAddressToAddress(decodedFormData[0]);
+
+  return { ...convertedFormData, doorphone: formData.doorphone };
+};
+
+export const convertAddressToCityStreetBuildingFlat = (address: Partial<API.Address.Address>): string => {
+  const addressParts = [address.city, address.street_name, address.house, address.building, address.flat];
+  const validAddressParts = addressParts.filter(Boolean);
+  const fullAddress = validAddressParts.join(', ');
+
+  return fullAddress;
+};
+
+export const convertAddressToAddressFormData = (address: Partial<API.Address.Address>): TAddressForm => {
+  const cityStreetBuildingFlat = convertAddressToCityStreetBuildingFlat(address);
+
+  return {
+    cityStreetBuildingFlat,
+    doorphone: address.doorphone || '',
+    entrance: address.doorphone || '', // TODO: add entrance
+    floor: address.doorphone || '', // TODO: add floor
+  };
+};

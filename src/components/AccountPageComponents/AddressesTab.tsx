@@ -3,22 +3,41 @@ import { FC, useState } from 'react';
 
 import AddressCard from './components/AddressCard';
 
+import { API } from '@/api/types';
 import AddressModal from '@/components/modals/AddressModal';
-import { userInfo } from '@/mocks';
+import { TAddressForm } from '@/types';
 
-const AddressesTab: FC = () => {
+type TAddressesTabProps = {
+  addresses: API.Address.Address[] | null;
+  getSuggestions: (value: string) => Promise<API.Dadata.Suggestions.Suggestion[]>;
+  updateAddress: (address_id: string, data: TAddressForm) => Promise<void>;
+  createAddress: (data: TAddressForm) => Promise<void>;
+};
+
+const AddressesTab: FC<TAddressesTabProps> = (props) => {
+  const { addresses, getSuggestions, updateAddress, createAddress } = props;
   const [isNewAddressModalOpen, setIsNewAddressModalOpen] = useState(false);
 
   const onClick = () => {
     setIsNewAddressModalOpen(true);
   };
 
+  const handleCreateAddress = async ({ formData }: { formData: TAddressForm }) => {
+    await createAddress(formData);
+    setIsNewAddressModalOpen(false);
+  };
+
   return (
     <>
-      {userInfo.addresses.length ? (
+      {addresses && addresses.length ? (
         <div className="flex flex-col gap-6 max-sm:gap-4">
-          {userInfo.addresses.map((address) => (
-            <AddressCard key={address.id} address={address} />
+          {addresses.map((address) => (
+            <AddressCard
+              key={address.id}
+              address={address}
+              getSuggestions={getSuggestions}
+              updateAddress={updateAddress}
+            />
           ))}
           <Button
             type="primary"
@@ -46,7 +65,12 @@ const AddressesTab: FC = () => {
         </div>
       )}
 
-      <AddressModal isOpen={isNewAddressModalOpen} setIsOpen={setIsNewAddressModalOpen} />
+      <AddressModal
+        isOpen={isNewAddressModalOpen}
+        setIsOpen={setIsNewAddressModalOpen}
+        getSuggestions={getSuggestions}
+        onSubmit={handleCreateAddress}
+      />
     </>
   );
 };

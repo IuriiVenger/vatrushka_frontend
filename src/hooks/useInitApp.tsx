@@ -4,12 +4,14 @@ import useAuth from './useAuth';
 
 import useCart from './useCart';
 
-import { RequestStatus } from '@/constants';
+import { RequestStatus, defaultPaginationParams } from '@/constants';
 
 import { useAppDispatch } from '@/store';
 
+import { loadAddresses } from '@/store/slices/address';
 import { setWebAppInitialized } from '@/store/slices/config';
 import { loadCategories } from '@/store/slices/entities';
+import { loadOrders } from '@/store/slices/orders';
 
 const useInitApp = () => {
   const dispatch = useAppDispatch();
@@ -25,9 +27,13 @@ const useInitApp = () => {
 
     try {
       initializeStatusRef.current = RequestStatus.PENDING;
-      await dispatch(loadCategories());
+      dispatch(loadCategories());
       await initUser();
-      await initCart();
+      await Promise.all([
+        initCart(),
+        dispatch(loadOrders(defaultPaginationParams)), // not implemented on backend
+        dispatch(loadAddresses()),
+      ]);
       initializeStatusRef.current = RequestStatus.FULFILLED;
     } catch (error) {
       initializeStatusRef.current = RequestStatus.REJECTED;

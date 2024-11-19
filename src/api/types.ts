@@ -1,6 +1,18 @@
-import { GetAllPromotionsQuery, ProductBySlugQuery } from '@/__generated__/graphql';
+import { GetAllPromotionsQuery, InputMaybe, ProductBySlugQuery, Scalars } from '@/__generated__/graphql';
+import { AddressType, OrderStatus, OrderType } from '@/constants';
+import { SupabaseUser } from '@/types';
 
 export namespace API {
+  export namespace Common {
+    export namespace Pagination {
+      export namespace REST {
+        export type RequestArgs = {
+          limit?: number;
+          offset?: number;
+        };
+      }
+    }
+  }
   export namespace QraphQL {
     export namespace Query {
       export type Collection<T> = {
@@ -37,8 +49,36 @@ export namespace API {
     };
   }
 
+  export namespace Address {
+    export type Address = {
+      user_id: string | null;
+      street_name: string | null;
+      house: string | null;
+      building: string | null;
+      flat: string | null;
+      doorphone?: string | null;
+      city: string | null;
+      country?: string | null;
+      zip_code: string | null;
+      latitude: number | null;
+      longitude: number | null;
+      id: string;
+      street_classifier_id: string | null;
+      type?: AddressType;
+      // entrance: string; // TODO: add entrance
+      // floor: string; // TODO: add floor
+    };
+
+    export namespace Create {
+      export type Request = Omit<Address, 'id' | 'user_id'>;
+    }
+    export namespace Update {
+      export type Request = Omit<Address, 'id' | 'user_id'>;
+    }
+  }
+
   export namespace Auth {
-    export type Me = User;
+    export type Me = SupabaseUser;
 
     export namespace Telegram {
       export interface Signin {
@@ -64,7 +104,6 @@ export namespace API {
       id: number;
       created_at: string;
       user_id: string;
-      kyc_status: KYCStatuses;
       kyc_date: string;
       turnover_limit?: number;
       default_fiat: string;
@@ -76,12 +115,12 @@ export namespace API {
     }
     export interface SupabaseGetSessionResponse {
       session?: Tokens;
-      user?: User;
+      user?: SupabaseUser;
       error?: string;
     }
 
     export namespace VerifyOtp {
-      export type Response = { access_token: string; refresh_token: string; user: User; error?: string };
+      export type Response = { access_token: string; refresh_token: string; user: SupabaseUser; error?: string };
     }
   }
 
@@ -93,7 +132,7 @@ export namespace API {
       created_at: string;
       updated_at: string;
     }
-    export interface Cart extends CartListItem {
+    export interface Cart extends CartList {
       id: string;
       user_id: number;
       status: string;
@@ -227,6 +266,159 @@ export namespace API {
         slug: string;
         offset: number;
         first: number;
+      };
+    }
+  }
+
+  export namespace Dadata {
+    export type Address = {
+      source: string;
+      result: string;
+      postal_code: string;
+      country: string;
+      country_iso_code: string;
+      federal_district: string;
+      region_fias_id: string;
+      region_kladr_id: string;
+      region_iso_code: string;
+      region_with_type: string;
+      region_type: string;
+      region_type_full: string;
+      region: string;
+      area_fias_id: string | null;
+      area_kladr_id: string | null;
+      area_with_type: string | null;
+      area_type: null;
+      area_type_full: null;
+      area: null;
+      city_fias_id: null;
+      city_kladr_id: null;
+      city_with_type: null;
+      city_type: null;
+      city_type_full: null;
+      city: null;
+      city_area: string | null;
+      city_district_fias_id: string | null;
+      city_district_kladr_id: string | null;
+      city_district_with_type: string | null;
+      city_district_type: string | null;
+      city_district_type_full: string | null;
+      city_district: string | null;
+      settlement_fias_id: null;
+      settlement_kladr_id: null;
+      settlement_with_type: null;
+      settlement_type: null;
+      settlement_type_full: null;
+      settlement: null;
+      street_fias_id: string;
+      street_kladr_id: string;
+      street_with_type: string;
+      street_type: string;
+      street_type_full: string;
+      street: string;
+      stead_fias_id: string | null;
+      stead_kladr_id: string | null;
+      stead_cadnum: string | null;
+      stead_type: null;
+      stead_type_full: null;
+      stead: null;
+      house_fias_id: string;
+      house_kladr_id: string;
+      house_cadnum: string;
+      house_type: string;
+      house_type_full: string;
+      house: string;
+      block_type: string | null;
+      block_type_full: string | null;
+      block: string | null;
+      entrance: string | null;
+      floor: string | null;
+      flat_fias_id: string;
+      flat_cadnum: string;
+      flat_type: string;
+      flat_type_full: string;
+      flat: string;
+      flat_area: string;
+      square_meter_price: string;
+      flat_price: string;
+      postal_box: string | null;
+      fias_id: string;
+      fias_code: string;
+      fias_level: string;
+      fias_actuality_state: string;
+      kladr_id: string;
+      capital_marker: string;
+      okato: string;
+      oktmo: string;
+      tax_office: string;
+      tax_office_legal: string;
+      timezone: string;
+      geo_lat: string;
+      geo_lon: string;
+      beltway_hit: string;
+      beltway_distance: string | null;
+      qc_geo: number;
+      qc_complete: number;
+      qc_house: number;
+      qc: number;
+      unparsed_parts: string | null;
+      metro: Array<{
+        name: string;
+        line: string;
+        distance: number;
+      }>;
+    };
+
+    export namespace Suggestions {
+      export type Suggestion = {
+        value: string;
+        unrestricted_value: string;
+        data: Address;
+      };
+
+      export type Suggestions = {
+        suggestions: Suggestion[];
+      };
+    }
+  }
+
+  export namespace Orders {
+    export namespace List {
+      export type Request = Common.Pagination.REST.RequestArgs;
+    }
+    export type Order = {
+      user_id: string;
+      cart_id: string;
+      address_id: string;
+      total_price: number;
+      special_instructions: string;
+      delivery_time: string;
+      type: OrderType;
+      status: OrderStatus;
+    };
+
+    export namespace Create {
+      export type Request = Omit<Order, 'id' | 'user_id' | 'status' | 'total_price'> & {
+        payment_type: string; // uuid
+      };
+    }
+  }
+
+  export namespace Payment {
+    export namespace PaymentMethods {
+      export type Request = {
+        sum: number;
+        delivery_zone: string;
+      };
+
+      export type PaymentMethod = {
+        id: string;
+        name: string;
+        iiko_code: string;
+        enabled: boolean;
+        delivery_zones: string;
+        min_sum: string;
+        max_sum: string;
       };
     }
   }

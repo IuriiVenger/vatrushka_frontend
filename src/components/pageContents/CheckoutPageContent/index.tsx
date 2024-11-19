@@ -1,9 +1,9 @@
 'use client';
 
 import { Alert, Button, Divider, Segmented } from 'antd';
-import dayjs from 'dayjs';
+
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, DefaultValues } from 'react-hook-form';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
@@ -11,6 +11,9 @@ import CheckoutItem from './CheckoutItem';
 import CourierDelivery from './CourierDelivery';
 import PickupDelivery from './PickupDelivery';
 
+import { address as addressesApi } from '@/api/address';
+
+import { API } from '@/api/types';
 import OrderConfirmationModal from '@/components/modals/OrderConfirmationModal';
 import DatePicker from '@/components/ui/Form/DatePicker';
 import Form from '@/components/ui/Form/Form';
@@ -20,7 +23,6 @@ import TextAreaInput from '@/components/ui/Form/TextArea';
 import StepperButton from '@/components/ui/StepperButton';
 import { companyInfo, legalLinks } from '@/config/links';
 import {
-  addressesTypes,
   CurrencySymbol,
   DeliveryTimeOptions,
   deliveryTimeOptions,
@@ -29,44 +31,31 @@ import {
   PaymentOptions,
   paymentOptions,
 } from '@/constants';
-import { order, userInfo } from '@/mocks';
-import { TTab } from '@/types';
+import { order } from '@/mocks';
+import { useAppSelector } from '@/store';
+import { selectAddresses } from '@/store/slices/address';
+import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
+import { TAddressForm, TCheckoutForm, TTab } from '@/types';
+import { convertAddressFormDataToAddress, convertAddressToAddressFormData } from '@/utils/converters';
 import { getNounWithDeclension } from '@/utils/formatters';
 
 const count = 3;
 
-export type TCheckoutForm = {
-  userAddress: {
-    address: string;
-    entrance: string;
-    floor: string;
-    apartment: string;
-    type: {
-      id: string;
-      label: string;
-    };
-  };
-  branchAddress: string | null;
-  name: string;
-  phone: string;
-  message: string;
-  date: dayjs.Dayjs | null;
-  time: string;
-  change: number | null;
-  bonusPoints: number | null;
-};
-
 const CheckoutPageContent: FC = () => {
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
+  const { addresses } = useAppSelector(selectAddresses);
+  const { user } = useAppSelector(selectUser);
 
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [deliveryType, setDeliveryType] = useState<DeliveryTypeOptions>(DeliveryTypeOptions.COURIER);
   const [deliveryTime, setDeliveryTime] = useState<DeliveryTimeOptions>(DeliveryTimeOptions.ASAP);
   const [paymentType, setPaymentType] = useState<PaymentOptions>(PaymentOptions.ONLINE);
-
   const [cutleryCount, setCutleryCount] = useState(0);
-
-  const [userBonusPoint, setUserBonusPoint] = useState(userInfo.points);
+  const [userBonusPoint, setUserBonusPoint] = useState(0); // TODO: add user bonus points
   const [totalSum, setTotalSum] = useState(order.totalPrice);
+  const [address, setAddress] = useState<API.Address.Create.Request | null>(null);
+  const [isAddressLoading, setIsAddressLoading] = useState(false);
+  const [isOrderLoading, setIsOrderLoading] = useState(false);
 
   const getSegmentedItems = (options: Record<string, TTab>) => Object.values(options).map((option) => option);
 
@@ -77,10 +66,10 @@ const CheckoutPageContent: FC = () => {
   const itemsCountText = `${count} ${getNounWithDeclension(count, 'товар', 'товара', 'товаров')}`;
 
   const defaultFormData: DefaultValues<TCheckoutForm> = {
-    userAddress: { address: '', entrance: '', floor: '', apartment: '', type: addressesTypes.flat },
+    userAddress: { cityStreetBuildingFlat: '', entrance: '', floor: '', doorphone: '' },
     branchAddress: companyInfo.branches[0].id,
-    name: '',
-    phone: '',
+    name: '', // TODO add user name
+    phone: user?.phone || '',
     message: '',
     date: null,
     time: '',
@@ -100,16 +89,30 @@ const CheckoutPageContent: FC = () => {
     unregister,
     register,
     resetField,
+    setValue,
     formState: { errors, isDirty, isValid },
   } = methods;
 
   const dateFields: (keyof TCheckoutForm)[] = ['date', 'time'];
+
+  const setSelectedAddress = async (formData: TAddressForm) => {
+    setIsAddressLoading(true);
+    const convertedAddress = await convertAddressFormDataToAddress(formData);
+    setAddress(convertedAddress);
+    setIsAddressLoading(false);
+  };
+
+  const getSuggestionsHandler = async (value: string) => {
+    const { data } = await addressesApi.suggestions(value);
+    return data.suggestions;
+  };
 
   const onDeliveryTypeClick = (value: DeliveryTypeOptions) => {
     setDeliveryType(value);
 
     if (value === DeliveryTypeOptions.COURIER) {
       register('userAddress');
+      address && setValue('userAddress', convertAddressToAddressFormData(address));
       unregister('branchAddress');
     } else {
       register('branchAddress');
@@ -148,21 +151,34 @@ const CheckoutPageContent: FC = () => {
     resetField('bonusPoints');
   };
 
-  const submitHandler: SubmitHandler<TCheckoutForm> = (data) => {
-    console.log(
-      'checkout order',
-      data,
-      'time:',
-      deliveryTime === DeliveryTimeOptions.ASAP ? deliveryTime : ` ${(data.date?.toDate(), data.time)}`,
-      'payment:',
-      paymentType === PaymentOptions.ONLINE ? paymentType : data.change,
-      'cutlery:',
-      cutleryCount,
-      'data.change,',
-      data.change,
-    );
-    setIsConfirmationModalOpen(true);
+  const submitHandler: SubmitHandler<TCheckoutForm> = async (data) => {
+    try {
+      console.log(
+        'checkout order',
+        data,
+        'address:',
+        address,
+        'time:',
+        deliveryTime === DeliveryTimeOptions.ASAP ? deliveryTime : ` ${(data.date?.toDate(), data.time)}`,
+        'payment:',
+        paymentType === PaymentOptions.ONLINE ? paymentType : data.change,
+        'cutlery:',
+        cutleryCount,
+        'data.change,',
+        data.change,
+      );
+      setIsConfirmationModalOpen(true);
+    } finally {
+      setIsOrderLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (user?.phone) {
+      setValue('phone', user.phone);
+      // TODO: add user name
+    }
+  }, [user]);
 
   return (
     <>
@@ -189,7 +205,17 @@ const CheckoutPageContent: FC = () => {
                 block
                 className="-mt-2 text-lg leading-lg max-lg:text-base max-lg:leading-base"
               />
-              {deliveryType === DeliveryTypeOptions.COURIER ? <CourierDelivery /> : <PickupDelivery />}
+              {deliveryType === DeliveryTypeOptions.COURIER ? (
+                <CourierDelivery
+                  selectedAddress={address}
+                  setSelectedAddress={setSelectedAddress}
+                  getSuggestions={getSuggestionsHandler}
+                  isUserLoggedIn={isUserLoggedIn}
+                  addresses={addresses.data}
+                />
+              ) : (
+                <PickupDelivery />
+              )}
               <div className="flex flex-col gap-5">
                 <h3 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Дата и время</h3>
                 <div className="flex flex-col gap-4">
@@ -406,6 +432,7 @@ const CheckoutPageContent: FC = () => {
                     className="text-lg leading-lg max-sm:text-base max-sm:leading-base"
                     htmlType="submit"
                     disabled={!isDirty || !isValid}
+                    loading={isOrderLoading}
                   >
                     Заказать
                   </Button>

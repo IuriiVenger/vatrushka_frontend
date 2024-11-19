@@ -260,3 +260,24 @@ export const selectedPlacemarkOptions = {
   iconImageHref: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(selectedPlacemarkLayout)}`,
   iconColor: color.accent.default,
 };
+
+export enum OrderStatus {
+  UNCONFIRMED = 'UNCONFIRMED',
+  CONFIRMED = 'CONFIRMED',
+  PREPARING = 'PREPARING',
+  READY = 'READY',
+  ON_THE_WAY = 'ON_THE_WAY',
+  DELIVERED = 'DELIVERED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum OrderType {
+  DELIVERY = 'DELIVERY',
+  TAKEOUT = 'TAKEOUT',
+}
+export enum CartStatus {
+  ACTIVE = 'ACTIVE',
+  CANCELED = 'CANCELED',
+  EXPIRED = 'EXPIRED',
+  MERGED = 'MERGED',
+}

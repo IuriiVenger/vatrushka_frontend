@@ -10,29 +10,36 @@ import TabsController from '../../AccountPageComponents/components/TabsControlle
 import TabContent from '../../AccountPageComponents/TabContent';
 import UnauthorizedScreen from '../../AccountPageComponents/UnauthorizedScreen';
 
+import { address as addressesApi } from '@/api/address';
 import { AccountTabsOptions, accountTabs } from '@/constants';
 import useAuth from '@/hooks/useAuth';
 import { useUrlParams } from '@/hooks/useUrlParams';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { createAddress, selectAddresses, updateAddress } from '@/store/slices/address';
 import { selectConfig } from '@/store/slices/config';
 import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
+import { TAddressForm } from '@/types';
+import { convertAddressFormDataToAddress } from '@/utils/converters';
 
 const AccountPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
+  const { addresses } = useAppSelector(selectAddresses);
   const { user } = useAppSelector(selectUser);
   const { isWebAppInitialized } = useAppSelector(selectConfig);
   const dispatch = useAppDispatch();
+
   const { signOut } = useAuth(dispatch);
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+  const { paramValue, setParam, removeParam } = useUrlParams('tab');
 
   const [tab, setTab] = useState<AccountTabsOptions | null>(null);
 
   const isHistoryTab = tab === accountTabs[AccountTabsOptions.ORDER_HISTORY].value;
   const isProfileTab = tab === accountTabs[AccountTabsOptions.PROFILE].value;
 
-  const { paramValue, setParam, removeParam } = useUrlParams('tab');
-
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
+  const isValidTabParam = (value: string): value is AccountTabsOptions =>
+    Object.values(AccountTabsOptions).includes(value as AccountTabsOptions);
 
   const onGoBack = () => {
     setTab(null);
@@ -44,8 +51,29 @@ const AccountPageContent: FC = () => {
     setParam(value);
   };
 
-  const isValidTabParam = (value: string): value is AccountTabsOptions =>
-    Object.values(AccountTabsOptions).includes(value as AccountTabsOptions);
+  const createAddressHandler = async (addressFormData: TAddressForm) => {
+    const data = await convertAddressFormDataToAddress(addressFormData);
+    const resultAction = await dispatch(createAddress(data));
+
+    if (createAddress.rejected.match(resultAction)) {
+      throw resultAction.payload;
+    }
+  };
+
+  const updateAddressHandler = async (address_id: string, addressFormData: TAddressForm) => {
+    const data = await convertAddressFormDataToAddress(addressFormData);
+
+    const resultAction = await dispatch(updateAddress({ id: address_id, data }));
+
+    if (updateAddress.rejected.match(resultAction)) {
+      throw resultAction.payload;
+    }
+  };
+
+  const getSuggestionsHandler = async (value: string) => {
+    const { data } = await addressesApi.suggestions(value);
+    return data.suggestions;
+  };
 
   useEffect(() => {
     if (paramValue && isValidTabParam(paramValue)) {
@@ -102,7 +130,14 @@ const AccountPageContent: FC = () => {
       {(screens.md || !tab) && (
         <TabsController tab={tab} setTab={setTab} isHistoryTab={isHistoryTab} isProfileTab={isProfileTab} />
       )}
-      <TabContent tab={tab} user={user} />
+      <TabContent
+        tab={tab}
+        user={user}
+        addresses={addresses.data}
+        getSuggestions={getSuggestionsHandler}
+        updateAddress={updateAddressHandler}
+        createAddress={createAddressHandler}
+      />
     </section>
   );
 };

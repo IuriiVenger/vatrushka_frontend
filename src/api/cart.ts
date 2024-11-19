@@ -1,9 +1,12 @@
 import { API } from './types';
 
 import { deleteRequest, getRequest, postRequest } from '@/api';
+import { CartStatus } from '@/constants';
 
 export const cart = {
-  getAll: () => getRequest<API.Cart.CartList[]>('/cart'),
+  getAll: {
+    active: () => getRequest<API.Cart.CartList[]>('/cart', { params: { status: CartStatus.ACTIVE } }),
+  },
   getById: (cart_id: string) => getRequest<API.Cart.Cart>(`/cart/${cart_id}`),
   init: () => postRequest<API.Cart.CartList>('/cart/init'),
   delete: (id: string) => deleteRequest(`/cart/${id}`),
