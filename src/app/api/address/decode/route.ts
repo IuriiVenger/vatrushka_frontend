@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   const data = await request.json();
 
+  if (!data) {
+    return NextResponse.json({ error: 'Missing address' }, { status: 422 });
+  }
+
   const res = await fetch('https://cleaner.dadata.ru/api/v1/clean/address', {
     method: 'POST',
     headers: {

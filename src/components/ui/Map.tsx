@@ -1,7 +1,7 @@
 'use client';
 
 import { YMaps, Map as YMap, Placemark } from '@pbe/react-yandex-maps';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useRef } from 'react';
 
 import { defaultPlacemarkOptions, selectedPlacemarkOptions } from '@/constants';
 
@@ -9,13 +9,11 @@ type TMapProps = {
   placemarks: { id: string; coords: number[] | undefined; isSelected: boolean }[];
   width?: string | number;
   mapZoom?: number;
-  inputAddress?: string;
 };
 
-const Map: FC<TMapProps> = ({ placemarks, width = 720, mapZoom = 13, inputAddress }) => {
+const Map: FC<TMapProps> = ({ placemarks, width = 720, mapZoom = 13 }) => {
   const [mapKey, setMapKey] = useState(0);
-
-  console.log('address to show on the map', inputAddress);
+  const mapRef = useRef<any>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,10 +27,20 @@ const Map: FC<TMapProps> = ({ placemarks, width = 720, mapZoom = 13, inputAddres
     };
   }, []);
 
+  useEffect(() => {
+    if (mapRef.current && placemarks.length > 0) {
+      const selectedPlacemark = placemarks.find((placemark) => placemark.isSelected);
+      if (selectedPlacemark && selectedPlacemark.coords) {
+        mapRef.current.setCenter(selectedPlacemark.coords);
+      }
+    }
+  }, [placemarks]);
+
   return (
     <div className="aspect-video overflow-hidden rounded-2xl max-sm:aspect-square max-xs:max-w-82">
       <YMaps>
         <YMap
+          instanceRef={mapRef}
           key={mapKey}
           width={width}
           defaultState={{

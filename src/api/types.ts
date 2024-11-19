@@ -1,5 +1,6 @@
-import { GetAllPromotionsQuery, ProductBySlugQuery } from '@/__generated__/graphql';
-import { OrderStatus, OrderType } from '@/constants';
+import { GetAllPromotionsQuery, InputMaybe, ProductBySlugQuery, Scalars } from '@/__generated__/graphql';
+import { AddressType, OrderStatus, OrderType } from '@/constants';
+import { SupabaseUser } from '@/types';
 
 export namespace API {
   export namespace Common {
@@ -50,28 +51,34 @@ export namespace API {
 
   export namespace Address {
     export type Address = {
-      user_id: string;
-      street_name: string;
-      house: string;
+      user_id: string | null;
+      street_name: string | null;
+      house: string | null;
       building: string | null;
-      flat: string;
-      doorphone: string | null;
-      city: string;
-      country: string;
-      zip_code: string;
-      latitude: number;
-      longitude: number;
+      flat: string | null;
+      doorphone?: string | null;
+      city: string | null;
+      country?: string | null;
+      zip_code: string | null;
+      latitude: number | null;
+      longitude: number | null;
       id: string;
-      street_classifier_id: string;
+      street_classifier_id: string | null;
+      type?: AddressType;
+      // entrance: string; // TODO: add entrance
+      // floor: string; // TODO: add floor
     };
 
     export namespace Create {
       export type Request = Omit<Address, 'id' | 'user_id'>;
     }
+    export namespace Update {
+      export type Request = Omit<Address, 'id' | 'user_id'>;
+    }
   }
 
   export namespace Auth {
-    export type Me = User;
+    export type Me = SupabaseUser;
 
     export namespace Telegram {
       export interface Signin {
@@ -97,7 +104,6 @@ export namespace API {
       id: number;
       created_at: string;
       user_id: string;
-      kyc_status: KYCStatuses;
       kyc_date: string;
       turnover_limit?: number;
       default_fiat: string;
@@ -109,12 +115,12 @@ export namespace API {
     }
     export interface SupabaseGetSessionResponse {
       session?: Tokens;
-      user?: User;
+      user?: SupabaseUser;
       error?: string;
     }
 
     export namespace VerifyOtp {
-      export type Response = { access_token: string; refresh_token: string; user: User; error?: string };
+      export type Response = { access_token: string; refresh_token: string; user: SupabaseUser; error?: string };
     }
   }
 
@@ -126,7 +132,7 @@ export namespace API {
       created_at: string;
       updated_at: string;
     }
-    export interface Cart extends CartListItem {
+    export interface Cart extends CartList {
       id: string;
       user_id: number;
       status: string;
@@ -367,7 +373,7 @@ export namespace API {
       export type Suggestion = {
         value: string;
         unrestricted_value: string;
-        data: Address[];
+        data: Address;
       };
 
       export type Suggestions = {

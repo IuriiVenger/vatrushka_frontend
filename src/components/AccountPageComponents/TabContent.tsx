@@ -6,15 +6,22 @@ import BonusesTab from './BonusesTab';
 import CurrentOrdersTab from './CurrentOrdersTab';
 import OrdersHistoryTab from './OrdersHistoryTab';
 
+import { API } from '@/api/types';
 import { AccountTabsOptions, accountTabs } from '@/constants';
-import { SupabaseUser } from '@/types';
+import { SupabaseUser, TAddressForm } from '@/types';
 
 type TTabContentProps = {
   tab: AccountTabsOptions | null;
   user: SupabaseUser | null;
+  addresses: API.Address.Address[] | null;
+  getSuggestions: (value: string) => Promise<API.Dadata.Suggestions.Suggestion[]>;
+  updateAddress: (address_id: string, data: TAddressForm) => Promise<void>;
+  createAddress: (data: TAddressForm) => Promise<void>;
 };
 
-const TabContent: FC<TTabContentProps> = ({ tab, user }) => {
+const TabContent: FC<TTabContentProps> = (props) => {
+  const { tab, user, addresses } = props;
+
   const content = useMemo(() => {
     switch (tab) {
       case accountTabs[AccountTabsOptions.PROFILE].value:
@@ -30,12 +37,12 @@ const TabContent: FC<TTabContentProps> = ({ tab, user }) => {
         return <OrdersHistoryTab />;
 
       case accountTabs[AccountTabsOptions.ADDRESSES].value:
-        return <AddressesTab />;
+        return <AddressesTab {...props} />;
 
       default:
         return null;
     }
-  }, [tab, user]);
+  }, [tab, user, addresses]);
 
   return <div>{content}</div>;
 };

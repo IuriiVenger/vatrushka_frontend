@@ -2,9 +2,10 @@ import { TypedUseSelectorHook } from 'react-redux';
 
 import { store } from '.';
 
+import { Categories } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import { RequestStatus } from '@/constants';
-import { SupabaseUser } from '@/types';
+import { SupabaseUser, TCard } from '@/types';
 
 export type StoreDataWithStatus<T> = {
   status: RequestStatus;
@@ -21,38 +22,38 @@ export type StorePaginationParams = {
 
 export type StoreDataWithStatusAndMeta<T> = StoreDataWithStatus<T> & StorePaginationParams;
 
-type AddressSliceState = {
+export type AddressSliceState = {
   addresses: StoreDataWithStatusAndMeta<API.Address.Address[] | null>;
 };
 
-type UISliceState = {
+export type UISliceState = {
   isPageScrollBlocked: boolean;
   isMenuOpened: boolean;
   isSubMenuOpened: boolean;
   isMobileSearchOpened: boolean;
 };
 
-type EntitiesSliceState = {
+export type EntitiesSliceState = {
   categories: StoreDataWithStatus<Categories[] | null>;
   categoryProducts: StoreDataWithStatusAndMeta<TCard[] | null>;
 };
 
-type UserSliceState = {
+export type UserSliceState = {
   user: SupabaseUser | null;
   userData: API.Auth.UserData | null;
   userLoadingStatus: RequestStatus;
 };
 
-type ConfigSliceState = {
+export type ConfigSliceState = {
   isWebAppInitialized: boolean;
 };
 
-type CartSliceState = {
+export type CartSliceState = {
   activeCart: StoreDataWithStatus<API.Cart.Cart | null>;
   isCartInitialized: boolean;
 };
 
-type OrdersSliceState = {
+export type OrdersSliceState = {
   orders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
 };
 

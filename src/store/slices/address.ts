@@ -30,7 +30,7 @@ export const deleteAddress = createAsyncThunk('address/deleteAddress', async (id
 
 export const updateAddress = createAsyncThunk(
   'address/updateAddress',
-  async ({ id, data }: { id: string; data: API.Address.Create.Request }) => {
+  async ({ id, data }: { id: string; data: API.Address.Update.Request }) => {
     await addressApi.update(id, data);
     const { data: addresses } = await addressApi.getAll();
     return addresses;
@@ -41,7 +41,7 @@ const addressSlice = createSlice({
   name: 'address',
   initialState,
   selectors: {
-    selectAddresses: (state) => state.addresses,
+    selectAddresses: (state) => state,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -90,4 +90,7 @@ const addressSlice = createSlice({
   },
 });
 
-export const { reducer: address } = addressSlice;
+export const {
+  reducer: address,
+  selectors: { selectAddresses },
+} = addressSlice;

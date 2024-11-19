@@ -1,17 +1,21 @@
 import { Button } from 'antd';
 import { FC, useState } from 'react';
 
+import { API } from '@/api/types';
 import AddressModal from '@/components/modals/AddressModal';
 import DeleteAddressModal from '@/components/modals/DeleteAddressModal';
-import { AddressType } from '@/constants';
-import { TAddress } from '@/types';
+import { TAddressForm } from '@/types';
+import { convertAddressToCityStreetBuildingFlat } from '@/utils/converters';
 
 type TAddressCardProps = {
-  address: TAddress;
+  address: API.Address.Address;
+  getSuggestions: (value: string) => Promise<API.Dadata.Suggestions.Suggestion[]>;
+  updateAddress: (address_id: string, data: TAddressForm) => Promise<void>;
 };
 
-const AddressCard: FC<TAddressCardProps> = ({ address }) => {
-  const { id, address: street, entrance, floor, apartment, type } = address;
+const AddressCard: FC<TAddressCardProps> = (props) => {
+  const { address, getSuggestions, updateAddress } = props;
+  const { id, street_name } = address;
 
   const [isEditAddressModalOpen, setIsEditAddressModalOpen] = useState(false);
   const [isDeleteAddressModalOpen, setIsDeleteAddressModalOpen] = useState(false);
@@ -24,12 +28,14 @@ const AddressCard: FC<TAddressCardProps> = ({ address }) => {
     setIsDeleteAddressModalOpen(true);
   };
 
-  const additionalInfo = `${entrance.length ? `Подъезд ${entrance}, ` : ''}${floor.length ? `этаж ${floor}, ` : ''}${type.id === AddressType.FLAT ? `квартира ${apartment}` : type.label}`;
+  const handleUpdateAddress = async ({ formData }: { formData: TAddressForm }) => updateAddress(id, formData);
+
+  const additionalInfo = convertAddressToCityStreetBuildingFlat(address);
 
   return (
     <>
       <div className="w-full max-w-144 rounded-2xl border border-borderSecondary p-6 text-lg leading-lg max-sm:p-4 max-sm:text-base max-sm:leading-base">
-        <h2 className="text-2xl font-medium leading-2xl max-sm:text-lg max-sm:leading-lg">{street}</h2>
+        <h2 className="text-2xl font-medium leading-2xl max-sm:text-lg max-sm:leading-lg">{street_name}</h2>
         <p className="pt-3 max-sm:pt-2">{additionalInfo}</p>
         <div className="flex gap-6 pt-5">
           <Button
@@ -48,7 +54,14 @@ const AddressCard: FC<TAddressCardProps> = ({ address }) => {
           </Button>
         </div>
       </div>
-      <AddressModal isOpen={isEditAddressModalOpen} setIsOpen={setIsEditAddressModalOpen} isEdit address={address} />
+      <AddressModal
+        isOpen={isEditAddressModalOpen}
+        setIsOpen={setIsEditAddressModalOpen}
+        isEdit
+        address={address}
+        getSuggestions={getSuggestions}
+        onSubmit={handleUpdateAddress}
+      />
       <DeleteAddressModal isOpen={isDeleteAddressModalOpen} setIsOpen={setIsDeleteAddressModalOpen} addressId={id} />
     </>
   );

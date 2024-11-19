@@ -1,10 +1,13 @@
-import { ReactNode } from 'react';
+import dayjs from 'dayjs';
+import { Dispatch, ReactElement, ReactNode, SetStateAction } from 'react';
+
+import { FieldValues, Validate } from 'react-hook-form';
 
 import { GetProductsByCategorySlugQuery } from './__generated__/graphql';
 import { API } from './api/types';
-import { TagType } from './mock';
+import { TagType } from './constants';
 
-type TValueOf<T> = T[keyof T];
+export type TValueOf<T> = T[keyof T];
 
 export type TCard = {
   id: string;
@@ -67,11 +70,11 @@ export type CategoryItemsConnectionType = NonNullable<
 
 export type Sluggable<T> = T & { slug: string };
 
-type THours = { open: string; close: string };
+export type THours = { open: string; close: string };
 
-type TBusinessHours = Record<string, THours>;
+export type TBusinessHours = Record<string, THours>;
 
-type TBranch = {
+export type TBranch = {
   id: string;
   name: string;
   address: string;
@@ -80,7 +83,7 @@ type TBranch = {
   coords?: number[];
 };
 
-type TCompanyInfo = {
+export type TCompanyInfo = {
   fullName: string;
   legalName: string;
   mainPhone: string;
@@ -91,7 +94,7 @@ type TCompanyInfo = {
   partners: TBranch[];
 };
 
-type TPromotion = {
+export type TPromotion = {
   id: string;
   name: string;
   pic: string;
@@ -143,8 +146,8 @@ export type TOrderStatus = {
 
 export type SupabaseUser = {
   id: string;
-  app_metadata: UserAppMetadata;
-  user_metadata: UserMetadata;
+  app_metadata: any;
+  user_metadata: any;
   aud: string;
   confirmation_sent_at?: string;
   recovery_sent_at?: string;
@@ -162,12 +165,12 @@ export type SupabaseUser = {
   last_sign_in_at?: string;
   role?: string;
   updated_at?: string;
-  identities?: UserIdentity[];
-  factors?: Factor[];
+  identities?: any[];
+  factors?: any[];
   is_anonymous?: boolean;
 };
 
-type TRecCategoryEdge = {
+export type TRecCategoryEdge = {
   node: {
     products?: {
       productsizesCollection?: {
@@ -209,4 +212,23 @@ export type GroupedCartItem = API.Cart.CartItem.CartItem & {
 export type TProductSliderSlide = TCard & {
   onBuyButtonClick: () => Promise<void>;
   buyButtonText: string;
+};
+
+export type TAddressForm = {
+  cityStreetBuildingFlat: string;
+  entrance: string;
+  floor: string;
+  doorphone: string;
+};
+
+export type TCheckoutForm = {
+  userAddress: TAddressForm;
+  branchAddress: string | null;
+  name: string;
+  phone: string;
+  message: string;
+  date: dayjs.Dayjs | null;
+  time: string;
+  change: number | null;
+  bonusPoints: number | null;
 };

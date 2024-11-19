@@ -11,8 +11,8 @@ export const address = {
     internalAxiosInstance.getRequest<API.Dadata.Suggestions.Suggestions>(`/address/suggestions`, {
       params: { address: finding_address },
     }),
-  delete: async (id: string) => deleteRequest(`/address/addresses/${id}`), // not implemented on backend
-  create: async (data: API.Address.Create.Request) => postRequest<API.Address.Address>('/address/addresses', { data }),
-  update: async (id: string, data: API.Address.Create.Request) =>
-    patchRequest<API.Address.Address>(`/address/addresses/${id}`, { data }),
+  delete: async (id: string) => deleteRequest(`/address/address/${id}`), // not implemented on backend
+  create: async (data: API.Address.Create.Request) => postRequest<API.Address.Address>('/address/address', { data }),
+  update: async (id: string, data: API.Address.Update.Request) =>
+    patchRequest<API.Address.Address>(`/address/address/${id}`, { data }),
 };
