@@ -38,8 +38,8 @@ const AddressModal: FC<TAddressModalProps> = (props) => {
 
   const defaultValues: TAddressForm = {
     cityStreetBuildingFlat: address ? convertAddressToCityStreetBuildingFlat(address) : '',
-    entrance: address?.building || '',
-    floor: address?.doorphone || '',
+    entrance: address?.entrance || '',
+    floor: address?.floor || '',
     doorphone: address?.doorphone || '',
   };
 

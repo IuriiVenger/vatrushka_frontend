@@ -58,15 +58,14 @@ export namespace API {
       flat: string | null;
       doorphone?: string | null;
       city: string | null;
-      country?: string | null;
+      country: string | null;
       zip_code: string | null;
       latitude: number | null;
       longitude: number | null;
       id: string;
       street_classifier_id: string | null;
-      type?: AddressType;
-      // entrance: string; // TODO: add entrance
-      // floor: string; // TODO: add floor
+      entrance: string | null;
+      floor: string | null;
     };
 
     export namespace Create {

@@ -138,6 +138,8 @@ export const convertDadataAddressToAddress = (
     latitude: +dadataAddress.geo_lat,
     longitude: +dadataAddress.geo_lon,
     country: dadataAddress.country,
+    entrance: null,
+    floor: null,
   };
 
   if (dadataAddress.city) {
@@ -186,13 +188,15 @@ export const convertAddressFormDataToAddress = async (
       latitude: null,
       longitude: null,
       country: null,
+      entrance: null,
+      floor: null,
     };
   }
 
   const { data: decodedFormData } = await addressApi.decode(formData.cityStreetBuildingFlat);
   const convertedFormData = convertDadataAddressToAddress(decodedFormData[0]);
 
-  return { ...convertedFormData, doorphone: formData.doorphone };
+  return { ...convertedFormData, doorphone: formData.doorphone, entrance: formData.entrance, floor: formData.floor };
 };
 
 export const convertAddressToCityStreetBuildingFlat = (address: Partial<API.Address.Address>): string => {
@@ -209,7 +213,7 @@ export const convertAddressToAddressFormData = (address: Partial<API.Address.Add
   return {
     cityStreetBuildingFlat,
     doorphone: address.doorphone || '',
-    entrance: address.doorphone || '', // TODO: add entrance
-    floor: address.doorphone || '', // TODO: add floor
+    entrance: address.entrance || '',
+    floor: address.floor || '',
   };
 };
