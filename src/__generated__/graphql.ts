@@ -277,7 +277,7 @@ export type Mutation = {
   /** Adds one or more `user_dats` records to the collection */
   insertIntouser_datsCollection?: Maybe<User_DatsInsertResponse>;
   /** Updates zero or more records in the `addresses` collection */
-  updateaddressesCollection: AddressesUpdateResponse;
+  updateUserAddressesCollection: AddressesUpdateResponse;
   /** Updates zero or more records in the `allergengroups` collection */
   updateallergengroupsCollection: AllergengroupsUpdateResponse;
   /** Updates zero or more records in the `cart` collection */
@@ -610,7 +610,7 @@ export type MutationInsertIntouser_DatsCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationUpdateaddressesCollectionArgs = {
+export type MutationupdateUserAddressesCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<AddressesFilter>;
   set: AddressesUpdateInput;

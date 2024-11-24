@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
 import { AuthModalProcessType, AuthModalSteps } from '@/constants';
+import { formatPhoneNumberInput } from '@/utils/formatters';
 
 type TSignInForm = {
   phone: string;
@@ -24,6 +25,7 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone, getP
     control,
     formState: { errors, isValid, isDirty },
     watch,
+    setValue,
   } = useForm<TSignInForm>({
     mode: 'onChange',
   });
@@ -50,7 +52,10 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone, getP
   }, []);
 
   useEffect(() => {
-    setPhone(formPhoneValue);
+    if (formPhoneValue) {
+      setPhone(formatPhoneNumberInput(formPhoneValue));
+      setValue('phone', formatPhoneNumberInput(formPhoneValue));
+    }
   }, [formPhoneValue]);
 
   return (

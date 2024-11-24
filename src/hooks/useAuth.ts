@@ -8,7 +8,7 @@ import { auth } from '@/api/auth';
 
 import { RequestStatus, defaultPaginationParams } from '@/constants';
 
-import { loadAddresses } from '@/store/slices/address';
+import { loadUserAddresses } from '@/store/slices/address';
 import { clearCart } from '@/store/slices/cart';
 import { loadOrders } from '@/store/slices/orders';
 import { logout, setUser, setUserLoadingStatus } from '@/store/slices/user';
@@ -36,11 +36,7 @@ const useAuth = (dispatch: AppDispatch) => {
 
   const loadUserContent = async () => {
     const oldCart = activeCart.data;
-    await Promise.all([
-      initCart(),
-      dispatch(loadAddresses()),
-      // dispatch(loadOrders(defaultPaginationParams))
-    ]);
+    await Promise.all([initCart(), dispatch(loadUserAddresses()), dispatch(loadOrders(defaultPaginationParams))]);
     await initCart();
     if (oldCart) {
       await mergeCartItems(oldCart);

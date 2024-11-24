@@ -13,6 +13,7 @@ import PickupDelivery from './PickupDelivery';
 
 import { address as addressesApi } from '@/api/address';
 
+import { orders } from '@/api/orders';
 import { API } from '@/api/types';
 import OrderConfirmationModal from '@/components/modals/OrderConfirmationModal';
 import DatePicker from '@/components/ui/Form/DatePicker';
@@ -43,7 +44,7 @@ const count = 3;
 
 const CheckoutPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
-  const { addresses } = useAppSelector(selectAddresses);
+  const { userAddresses } = useAppSelector(selectAddresses);
   const { user } = useAppSelector(selectUser);
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
@@ -57,10 +58,19 @@ const CheckoutPageContent: FC = () => {
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [isOrderLoading, setIsOrderLoading] = useState(false);
 
+  const [availablePaymentMethods, setAvailablePaymentMethods] = useState<API.Payment.PaymentMethods.PaymentMethod[]>(
+    [],
+  );
+
   const getSegmentedItems = (options: Record<string, TTab>) => Object.values(options).map((option) => option);
+  const loadAvailablePaymentMethods = async () => {
+    const { data } = await orders.paymentMethods({ sum: totalSum });
+    setAvailablePaymentMethods(data);
+  };
 
   const deliveryTypeSegmentedItems = getSegmentedItems(deliveryTypeOptions);
   const timeSegmentedItems = getSegmentedItems(deliveryTimeOptions);
+
   const paymentSegmentedItems = getSegmentedItems(paymentOptions);
 
   const itemsCountText = `${count} ${getNounWithDeclension(count, 'товар', 'товара', 'товаров')}`;
@@ -180,6 +190,10 @@ const CheckoutPageContent: FC = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    loadAvailablePaymentMethods();
+  }, [totalSum]);
+
   return (
     <>
       <section className="flex flex-col items-start gap-6 max-sm:gap-4">
@@ -211,7 +225,7 @@ const CheckoutPageContent: FC = () => {
                   setSelectedAddress={setSelectedAddress}
                   getSuggestions={getSuggestionsHandler}
                   isUserLoggedIn={isUserLoggedIn}
-                  addresses={addresses.data}
+                  addresses={userAddresses.data}
                 />
               ) : (
                 <PickupDelivery />

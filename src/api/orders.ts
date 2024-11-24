@@ -7,5 +7,5 @@ export const orders = {
   getById: (id: string) => getRequest<API.Orders.Order>(`/orders/${id}`),
   create: (data: API.Orders.Create.Request) => postRequest<API.Orders.Order>('/order', { data }),
   paymentMethods: (params: API.Payment.PaymentMethods.Request) =>
-    getRequest<API.Payment.PaymentMethods.PaymentMethod[]>('/payment/payment-methods', { params }),
+    getRequest<API.Payment.PaymentMethods.PaymentMethod[]>('/payment_method', { params }),
 };

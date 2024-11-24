@@ -1,26 +1,35 @@
 import { Button } from 'antd';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import Modal from './Modal';
 
 import { useMessage } from '@/hooks/useMessage';
 import { TModalProps } from '@/types';
 
-type TDeleteAddressModalProps = TModalProps & {
+type TDeleteUserAddressModalProps = TModalProps & {
   addressId: string;
+  onSubmit: () => Promise<void>;
 };
 
-const DeleteAddressModal: FC<TDeleteAddressModalProps> = ({ isOpen, setIsOpen, addressId }) => {
+const DeleteUserAddressModal: FC<TDeleteUserAddressModalProps> = ({ isOpen, setIsOpen, addressId, onSubmit }) => {
   const { showMessage } = useMessage();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onClose = () => {
     setIsOpen(false);
   };
 
-  const onDelete = () => {
-    console.log('address deleted', addressId);
-    onClose();
-    showMessage({ type: 'success', text: 'Адрес успешно удалён' });
+  const onDelete = async () => {
+    try {
+      setIsLoading(true);
+      await onSubmit();
+      onClose();
+      showMessage({ type: 'success', text: 'Адрес успешно удалён' });
+    } catch (error) {
+      showMessage({ type: 'error', text: 'Ошибка при удалении адреса' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -33,7 +42,7 @@ const DeleteAddressModal: FC<TDeleteAddressModalProps> = ({ isOpen, setIsOpen, a
           <Button type="primary" className="w-full max-sm:text-base max-sm:leading-base" onClick={onClose}>
             Нет, оставить
           </Button>
-          <Button className="w-full max-sm:text-base max-sm:leading-base" onClick={onDelete}>
+          <Button className="w-full max-sm:text-base max-sm:leading-base" onClick={onDelete} loading={isLoading}>
             Удалить
           </Button>
         </div>
@@ -42,4 +51,4 @@ const DeleteAddressModal: FC<TDeleteAddressModalProps> = ({ isOpen, setIsOpen, a
   );
 };
 
-export default DeleteAddressModal;
+export default DeleteUserAddressModal;

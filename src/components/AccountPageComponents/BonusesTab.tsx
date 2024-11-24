@@ -2,11 +2,15 @@ import { Button } from 'antd';
 import { FC } from 'react';
 
 import { CurrencySymbol } from '@/constants';
-import { userInfo } from '@/mocks';
+
 import { getNounWithDeclension } from '@/utils/formatters';
 
-const BonusesTab: FC = () => {
-  const balance = `${userInfo.points} ${getNounWithDeclension(userInfo.points, 'балл', 'балла', 'баллов')}`;
+type TBonusesTabProps = {
+  bonusBalance: number;
+};
+
+const BonusesTab: FC<TBonusesTabProps> = ({ bonusBalance }) => {
+  const balance = `${bonusBalance} ${getNounWithDeclension(bonusBalance, 'балл', 'балла', 'баллов')}`;
 
   return (
     <div className="rounded-2xl border border-borderSecondary p-6 text-lg leading-lg max-sm:border-none  max-sm:p-0 max-sm:text-base max-sm:leading-base">

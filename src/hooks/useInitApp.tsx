@@ -6,12 +6,17 @@ import { RequestStatus } from '@/constants';
 
 import { useAppDispatch } from '@/store';
 
+import { loadOrganizationAddresses } from '@/store/slices/address';
 import { setWebAppInitialized } from '@/store/slices/config';
 import { loadCategories } from '@/store/slices/entities';
 
 const useInitApp = () => {
   const dispatch = useAppDispatch();
   const initializeStatusRef = useRef(RequestStatus.NONE);
+
+  const commonInitRequests = async () => {
+    await Promise.all([dispatch(loadCategories()), dispatch(loadOrganizationAddresses())]);
+  };
 
   const { initUser } = useAuth(dispatch);
 
@@ -22,7 +27,7 @@ const useInitApp = () => {
 
     try {
       initializeStatusRef.current = RequestStatus.PENDING;
-      dispatch(loadCategories());
+      commonInitRequests();
       await initUser();
 
       initializeStatusRef.current = RequestStatus.FULFILLED;

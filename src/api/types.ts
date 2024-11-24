@@ -68,6 +68,13 @@ export namespace API {
       floor: string | null;
     };
 
+    export type OrganizationAddresses = {
+      id: string;
+      organization_id: string;
+      iiko_id: string | null;
+      terminal_addresses: Address[];
+    };
+
     export namespace Create {
       export type Request = Omit<Address, 'id' | 'user_id'>;
     }
@@ -77,7 +84,18 @@ export namespace API {
   }
 
   export namespace Auth {
-    export type Me = SupabaseUser;
+    export type WalletBalance = {
+      id: string;
+      name: string;
+      type: number;
+      balance: number;
+    };
+
+    export type Me = Omit<SupabaseUser, 'user_metadata'> & {
+      user_metadata: {
+        walletBalances?: WalletBalance[];
+      };
+    };
 
     export namespace Telegram {
       export interface Signin {
@@ -406,8 +424,8 @@ export namespace API {
   export namespace Payment {
     export namespace PaymentMethods {
       export type Request = {
-        sum: number;
-        delivery_zone: string;
+        sum?: number;
+        delivery_zone?: string;
       };
 
       export type PaymentMethod = {

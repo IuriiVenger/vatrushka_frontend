@@ -1,7 +1,11 @@
-import { Input as AntInput, Form as AntForm } from 'antd';
+import { Input as AntInput, Form as AntForm, Button } from 'antd';
 
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+
+import Input from '../ui/Form/Input';
+
+import Switch from '../ui/Form/Switch';
 
 import ChangePhoneModal from '@/components/modals/ChangePhoneModal';
 import DeleteAccountModal from '@/components/modals/DeleteAccountModal';
@@ -12,9 +16,9 @@ import { prettifyPhone } from '@/utils/formatters';
 
 type TAccountForm = {
   name: string;
-  email: string;
-  smsNewsletter: boolean;
-  emailNewsletter: boolean;
+  surname: string;
+  // smsNewsletter: boolean;
+  // emailNewsletter: boolean;
 };
 
 type TAccountTabProps = {
@@ -53,8 +57,8 @@ const AccountTab: FC<TAccountTabProps> = ({ user }) => {
   return (
     <>
       <div className="rounded-2xl border border-borderSecondary p-6">
-        {/* <h2 className="text-2xl font-medium leading-2xl">Настройки профиля</h2> */}
         <h2 className="text-2xl font-medium leading-2xl">Профиль</h2>
+
         <Form className="flex flex-col gap-8 pt-6" onSubmit={handleSubmit(submitHandler)}>
           <div className=" grid grid-cols-3 gap-4 max-md:flex max-md:flex-col">
             {/* <Input
@@ -66,44 +70,30 @@ const AccountTab: FC<TAccountTabProps> = ({ user }) => {
               control={control}
               errors={!!errors.name}
               autoComplete="given-name"
+            />
+            <Input
+              name="surname"
+              placeholder="Иванов"
+              inputMode="text"
+              label="Фамилия"
+              required
+              control={control}
+              errors={!!errors.surname}
+              autoComplete="family-name"
             /> */}
             <AntForm.Item label="Номер телефона" layout="vertical">
-              <AntInput
-                type="tel"
-                placeholder="+7 (999) 999-99-99"
-                defaultValue={prettifiedPhone}
-                readOnly
-                // suffix={
-                //   <Button
-                //     type="link"
-                //     className="h-5 p-0 text-base leading-base text-primary underline hover:text-primaryHover"
-                //     onClick={onChangePhone}
-                //   >
-                //     Изменить
-                //   </Button>
-                // }
-              />
+              <AntInput type="tel" placeholder="+7 (999) 999-99-99" defaultValue={prettifiedPhone} readOnly />
             </AntForm.Item>
-            {/* <Input
-              name="email"
-              type="email"
-              placeholder="ivanov@mail.ru"
-              inputMode="email"
-              label="Email"
-              control={control}
-              errors={!!errors.email}
-              autoComplete="email"
-            /> */}
           </div>
-          {/* <div className="flex flex-col gap-4">
-            <Switch
+          <div className="flex flex-col gap-4">
+            {/* <Switch
               name="smsNewsletter"
               control={control}
               label="Получать SMS-уведомления об акциях и особых предложениях"
             />
-            <Switch name="emailNewsletter" control={control} label="Получать e-mail рассылки" />
+            <Switch name="emailNewsletter" control={control} label="Получать e-mail рассылки" /> */}
           </div>
-          <div className="flex justify-between max-xs:flex-col max-xs:gap-2">
+          {/* <div className="flex justify-between max-xs:flex-col max-xs:gap-2">
             <Button
               type="primary"
               className="w-max max-sm:text-base max-sm:leading-base max-xs:w-full"
