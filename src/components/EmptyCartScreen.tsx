@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import Link from 'next/link';
 import { FC } from 'react';
 
-import image from '../../../assets/images/empty_cart.svg';
+import image from '../assets/images/empty_cart.svg';
 
 const EmptyCartScreen: FC = () => (
   <section className="flex flex-col items-center gap-6 py-14 max-sm:gap-4">
