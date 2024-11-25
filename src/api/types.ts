@@ -93,6 +93,8 @@ export namespace API {
 
     export type Me = Omit<SupabaseUser, 'user_metadata'> & {
       user_metadata: {
+        first_name?: string;
+        last_name?: string;
         walletBalances?: WalletBalance[];
       };
     };
@@ -116,6 +118,17 @@ export namespace API {
     export interface Tokens {
       access_token: string;
       refresh_token: string;
+    }
+
+    export namespace UserMetadata {
+      export namespace Update {
+        export type Request = {
+          first_name?: string;
+          last_name?: string;
+          birth_date?: string;
+          gender?: string;
+        };
+      }
     }
     export interface UserData {
       id: number;

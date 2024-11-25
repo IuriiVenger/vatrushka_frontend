@@ -50,7 +50,7 @@ const UserMenu: FC<TUserMenuProps> = ({ onCloseAll }) => {
         label: (
           <UserInfo
             user={{
-              // name: user?.name,
+              name: user?.user_metadata?.first_name,
               phone: user?.phone && prettifyPhone(user?.phone),
               email: user?.email,
             }}

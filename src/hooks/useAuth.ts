@@ -29,7 +29,7 @@ const useAuth = (dispatch: AppDispatch) => {
     dispatch(setUserLoadingStatus(status));
   };
 
-  const getUser = async () => {
+  const loadUser = async () => {
     const { data } = await auth.me();
     dispatch(setUser(data));
   };
@@ -58,7 +58,7 @@ const useAuth = (dispatch: AppDispatch) => {
   const initExistingUser = async () => {
     try {
       setLoadingStatus(RequestStatus.PENDING);
-      await getUser();
+      await loadUser();
       await loadUserContent();
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
@@ -283,6 +283,7 @@ const useAuth = (dispatch: AppDispatch) => {
     initAnonymousUser,
     name,
     setName,
+    loadUser,
   };
 };
 

@@ -11,6 +11,8 @@ import TabContent from '../../AccountPageComponents/TabContent';
 import UnauthorizedScreen from '../../AccountPageComponents/UnauthorizedScreen';
 
 import { address as addressesApi } from '@/api/address';
+import { auth } from '@/api/auth';
+import { API } from '@/api/types';
 import { AccountTabsOptions, accountTabs } from '@/constants';
 import useAuth from '@/hooks/useAuth';
 import { useUrlParams } from '@/hooks/useUrlParams';
@@ -28,7 +30,7 @@ const AccountPageContent: FC = () => {
   const { isWebAppInitialized } = useAppSelector(selectConfig);
   const dispatch = useAppDispatch();
 
-  const { signOut } = useAuth(dispatch);
+  const { signOut, loadUser } = useAuth(dispatch);
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
   const { paramValue, setParam, removeParam } = useUrlParams('tab');
@@ -40,6 +42,11 @@ const AccountPageContent: FC = () => {
 
   const isValidTabParam = (value: string): value is AccountTabsOptions =>
     Object.values(AccountTabsOptions).includes(value as AccountTabsOptions);
+
+  const updateUserMetadata = async (data: API.Auth.UserMetadata.Update.Request) => {
+    await auth.user_metadata.update(data);
+    await loadUser();
+  };
 
   const onGoBack = () => {
     setTab(null);
@@ -146,6 +153,7 @@ const AccountPageContent: FC = () => {
         updateUserAddress={updateUserAddressHandler}
         createUserAddress={createUserAddressHandler}
         deleteUserAddress={deleteUserAddressHandler}
+        updateUserMetadata={updateUserMetadata}
       />
     </section>
   );
