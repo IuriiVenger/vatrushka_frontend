@@ -47,7 +47,7 @@ const CatalogItem: FC<TCatalogItemProps> = ({ item, subCatalog }) => {
           height={197}
           src={button_image_url}
           alt={name}
-          className={`z-1 ${subCatalog ? 'clip-path-custom' : 'clip-path-custom-square'} bottom-0 right-0 top-0 aspect-square h-full w-full object-cover object-[25%_35px]`}
+          className={`z-1 ${subCatalog ? 'clip-path-custom' : 'clip-path-custom-square'} bottom-0 right-0 top-0 aspect-square h-full w-full object-cover object-[25%_35px] xs:object-[25%_30px]`}
           skeletonClassName="top-10 left-0 w-[calc(100%_+_4rem)]"
           absolute
         />

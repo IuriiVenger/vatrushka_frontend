@@ -95,27 +95,27 @@ export const navigationLinks: Record<NavigationLinks, TNavigationLink> = {
   //   title: 'О нас',
   // },
   [NavigationLinks.CONTACTS]: {
-    link: '/contacts',
+    link: 'contacts',
     title: 'Контакты',
   },
   [NavigationLinks.OFFERS]: {
-    link: '/promotions',
+    link: 'promotions',
     title: 'Акции',
   },
   [NavigationLinks.WHOLESALE]: {
-    link: '/wholesale',
+    link: 'wholesale',
     title: 'Оптовые продажи',
   },
   [NavigationLinks.DELIVERY]: {
-    link: '/delivery',
+    link: 'delivery',
     title: 'Условия доставки',
   },
   [NavigationLinks.BONUS]: {
-    link: '/bonus',
+    link: 'bonus',
     title: 'Бонусная программа',
   },
   [NavigationLinks.CONDITIONS]: {
-    link: '/return-policy',
+    link: 'return-policy',
     title: 'Условия возврата и обмена',
   },
   // [NavigationLinks.FEEDBACK]: {

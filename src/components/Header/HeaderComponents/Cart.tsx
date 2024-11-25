@@ -93,7 +93,7 @@ const Cart: FC<TCartProps> = (props) => {
         className="h-6 w-5 border-none p-0"
         icon={
           <Badge count={itemsCount} className="max-xs:small" color={color.accent.default}>
-            <LuShoppingCart className="h-6 min-w-5 text-textTertiary transition-all hover:text-textQuaternary" />
+            <LuShoppingCart className="mt-1 h-6 min-w-5 text-textTertiary transition-all hover:text-textQuaternary" />
           </Badge>
         }
       />

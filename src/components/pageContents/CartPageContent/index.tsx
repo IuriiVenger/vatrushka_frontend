@@ -5,7 +5,8 @@ import { FC, Fragment, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import EmptyCartScreen from './EmptyCartScreen';
+import EmptyCartScreen from '../../EmptyCartScreen';
+
 import ItemCard from './ItemCard';
 
 import AuthModal from '@/components/modals/AuthModal';
