@@ -186,6 +186,7 @@ const CheckoutPageContent: FC = () => {
   useEffect(() => {
     if (user?.phone) {
       setValue('phone', user.phone);
+      user?.user_metadata?.first_name && setValue('name', user.user_metadata.first_name);
       // TODO: add user name
     }
   }, [user]);

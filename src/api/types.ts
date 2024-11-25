@@ -86,6 +86,7 @@ export namespace API {
       country: string | null;
       building: string | null;
       entrance: string | null;
+      phone: string | null;
       latitude: number;
       zip_code: string | null;
       doorphone: string | null;
@@ -454,7 +455,7 @@ export namespace API {
       address_id: string;
       total_price: number;
       special_instructions: string;
-      delivery_time: string;
+      delivery_time: string; // example: '2024-01-25T13:45:30.123Z'
       type: OrderType;
       status: OrderStatus;
     };
