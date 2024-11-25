@@ -281,3 +281,9 @@ export enum CartStatus {
   EXPIRED = 'EXPIRED',
   MERGED = 'MERGED',
 }
+export enum WalletBalanceType {
+  BONUS = 1,
+}
+export const walletBalanceTypeTranslation = {
+  [WalletBalanceType.BONUS]: 'Бонусный счет',
+};

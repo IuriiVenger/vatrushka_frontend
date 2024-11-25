@@ -15,4 +15,8 @@ export const address = {
   create: async (data: API.Address.Create.Request) => postRequest<API.Address.Address>('/address/address', { data }),
   update: async (id: string, data: API.Address.Update.Request) =>
     patchRequest<API.Address.Address>(`/address/address/${id}`, { data }),
+  getOrganizationAddresses: async () =>
+    getRequest<API.Address.OrganizationAddresses[]>(
+      '/organization/terminal_groups/45c94717-e4b7-493c-afa4-f770a9ad178c',
+    ),
 };

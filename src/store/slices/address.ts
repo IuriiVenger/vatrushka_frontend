@@ -8,34 +8,43 @@ import { API } from '@/api/types';
 import { RequestStatus, emptyStoreDataWithStatusAndMeta } from '@/constants';
 
 const initialState: AddressSliceState = {
-  addresses: emptyStoreDataWithStatusAndMeta,
+  userAddresses: emptyStoreDataWithStatusAndMeta,
+  organizationAddresses: emptyStoreDataWithStatusAndMeta,
 };
 
-export const loadAddresses = createAsyncThunk('address/loadAddresses', async () => {
+export const loadUserAddresses = createAsyncThunk('address/loadUserAddresses', async () => {
   const { data } = await addressApi.getAll();
   return data;
 });
 
-export const createAddress = createAsyncThunk('address/createAddress', async (data: API.Address.Create.Request) => {
-  await addressApi.create(data);
-  const { data: addresses } = await addressApi.getAll();
-  return addresses;
-});
+export const createUserAddress = createAsyncThunk(
+  'address/createUserAddress',
+  async (data: API.Address.Create.Request) => {
+    await addressApi.create(data);
+    const { data: addresses } = await addressApi.getAll();
+    return addresses;
+  },
+);
 
-export const deleteAddress = createAsyncThunk('address/deleteAddress', async (id: string) => {
+export const deleteUserAddress = createAsyncThunk('address/deleteUserAddress', async (id: string) => {
   await addressApi.delete(id);
   const { data: addresses } = await addressApi.getAll();
   return addresses;
 });
 
-export const updateAddress = createAsyncThunk(
-  'address/updateAddress',
+export const updateUserAddress = createAsyncThunk(
+  'address/updateUserAddress',
   async ({ id, data }: { id: string; data: API.Address.Update.Request }) => {
     await addressApi.update(id, data);
     const { data: addresses } = await addressApi.getAll();
     return addresses;
   },
 );
+
+export const loadOrganizationAddresses = createAsyncThunk('address/loadOrganizationAddresses', async () => {
+  const { data } = await addressApi.getOrganizationAddresses();
+  return data;
+});
 
 const addressSlice = createSlice({
   name: 'address',
@@ -45,47 +54,57 @@ const addressSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(loadAddresses.pending, (state) => {
-      state.addresses.status = RequestStatus.PENDING;
+    builder.addCase(loadUserAddresses.pending, (state) => {
+      state.userAddresses.status = RequestStatus.PENDING;
     });
-    builder.addCase(loadAddresses.fulfilled, (state, action) => {
-      state.addresses.status = RequestStatus.FULFILLED;
-      state.addresses.data = action.payload;
+    builder.addCase(loadUserAddresses.fulfilled, (state, action) => {
+      state.userAddresses.status = RequestStatus.FULFILLED;
+      state.userAddresses.data = action.payload;
     });
-    builder.addCase(loadAddresses.rejected, (state) => {
-      state.addresses.status = RequestStatus.REJECTED;
+    builder.addCase(loadUserAddresses.rejected, (state) => {
+      state.userAddresses.status = RequestStatus.REJECTED;
     });
-    builder.addCase(createAddress.pending, (state) => {
-      state.addresses.status = RequestStatus.PENDING;
+    builder.addCase(createUserAddress.pending, (state) => {
+      state.userAddresses.status = RequestStatus.PENDING;
     });
-    builder.addCase(createAddress.fulfilled, (state, action) => {
-      state.addresses.status = RequestStatus.FULFILLED;
-      state.addresses.data = action.payload;
+    builder.addCase(createUserAddress.fulfilled, (state, action) => {
+      state.userAddresses.status = RequestStatus.FULFILLED;
+      state.userAddresses.data = action.payload;
     });
-    builder.addCase(createAddress.rejected, (state) => {
-      state.addresses.status = RequestStatus.REJECTED;
-    });
-
-    builder.addCase(deleteAddress.pending, (state) => {
-      state.addresses.status = RequestStatus.PENDING;
-    });
-    builder.addCase(deleteAddress.fulfilled, (state, action) => {
-      state.addresses.status = RequestStatus.FULFILLED;
-      state.addresses.data = action.payload;
-    });
-    builder.addCase(deleteAddress.rejected, (state) => {
-      state.addresses.status = RequestStatus.REJECTED;
+    builder.addCase(createUserAddress.rejected, (state) => {
+      state.userAddresses.status = RequestStatus.REJECTED;
     });
 
-    builder.addCase(updateAddress.pending, (state) => {
-      state.addresses.status = RequestStatus.PENDING;
+    builder.addCase(deleteUserAddress.pending, (state) => {
+      state.userAddresses.status = RequestStatus.PENDING;
     });
-    builder.addCase(updateAddress.fulfilled, (state, action) => {
-      state.addresses.status = RequestStatus.FULFILLED;
-      state.addresses.data = action.payload;
+    builder.addCase(deleteUserAddress.fulfilled, (state, action) => {
+      state.userAddresses.status = RequestStatus.FULFILLED;
+      state.userAddresses.data = action.payload;
     });
-    builder.addCase(updateAddress.rejected, (state) => {
-      state.addresses.status = RequestStatus.REJECTED;
+    builder.addCase(deleteUserAddress.rejected, (state) => {
+      state.userAddresses.status = RequestStatus.REJECTED;
+    });
+
+    builder.addCase(updateUserAddress.pending, (state) => {
+      state.userAddresses.status = RequestStatus.PENDING;
+    });
+    builder.addCase(updateUserAddress.fulfilled, (state, action) => {
+      state.userAddresses.status = RequestStatus.FULFILLED;
+      state.userAddresses.data = action.payload;
+    });
+    builder.addCase(updateUserAddress.rejected, (state) => {
+      state.userAddresses.status = RequestStatus.REJECTED;
+    });
+    builder.addCase(loadOrganizationAddresses.pending, (state) => {
+      state.organizationAddresses.status = RequestStatus.PENDING;
+    });
+    builder.addCase(loadOrganizationAddresses.fulfilled, (state, action) => {
+      state.organizationAddresses.status = RequestStatus.FULFILLED;
+      state.organizationAddresses.data = action.payload[0]?.terminal_addresses;
+    });
+    builder.addCase(loadOrganizationAddresses.rejected, (state) => {
+      state.organizationAddresses.status = RequestStatus.REJECTED;
     });
   },
 });

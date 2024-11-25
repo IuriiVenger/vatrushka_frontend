@@ -20,14 +20,14 @@ const PromotionPageContent: FC<PromotionPageContentProps> = ({ promotion }) => {
       title: 'Акции',
     },
     {
-      title: 'Скидка именинникам 10%',
+      title: promotion.name,
     },
   ];
 
   const { name, homepageBanner } = promotion;
 
   return (
-    <div className="flex flex-col gap-8 max-sm:gap-6">
+    <div className="flex w-full flex-col gap-8 max-sm:gap-6">
       <Breadcrumb items={breadcrumbs} />
       <section className="flex flex-col text-lg leading-lg max-sm:text-base max-sm:leading-base">
         {homepageBanner && (

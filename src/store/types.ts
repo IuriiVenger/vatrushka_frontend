@@ -23,7 +23,8 @@ export type StorePaginationParams = {
 export type StoreDataWithStatusAndMeta<T> = StoreDataWithStatus<T> & StorePaginationParams;
 
 export type AddressSliceState = {
-  addresses: StoreDataWithStatusAndMeta<API.Address.Address[] | null>;
+  userAddresses: StoreDataWithStatusAndMeta<API.Address.Address[] | null>;
+  organizationAddresses: StoreDataWithStatusAndMeta<API.Address.Address[] | null>;
 };
 
 export type UISliceState = {
@@ -39,7 +40,7 @@ export type EntitiesSliceState = {
 };
 
 export type UserSliceState = {
-  user: SupabaseUser | null;
+  user: API.Auth.Me | null;
   userData: API.Auth.UserData | null;
   userLoadingStatus: RequestStatus;
 };

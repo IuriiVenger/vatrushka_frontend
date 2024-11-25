@@ -3,32 +3,35 @@ import { FC, useState } from 'react';
 
 import { API } from '@/api/types';
 import AddressModal from '@/components/modals/AddressModal';
-import DeleteAddressModal from '@/components/modals/DeleteAddressModal';
+import DeleteUserAddressModal from '@/components/modals/DeleteUserAddressModal';
 import { TAddressForm } from '@/types';
 import { convertAddressToCityStreetBuildingFlat } from '@/utils/converters';
 
 type TAddressCardProps = {
   address: API.Address.Address;
   getSuggestions: (value: string) => Promise<API.Dadata.Suggestions.Suggestion[]>;
-  updateAddress: (address_id: string, data: TAddressForm) => Promise<void>;
+  updateUserAddress: (address_id: string, data: TAddressForm) => Promise<void>;
+  deleteUserAddress: (id: string) => Promise<void>;
 };
 
 const AddressCard: FC<TAddressCardProps> = (props) => {
-  const { address, getSuggestions, updateAddress } = props;
+  const { address, getSuggestions, updateUserAddress, deleteUserAddress } = props;
   const { id, street_name } = address;
 
   const [isEditAddressModalOpen, setIsEditAddressModalOpen] = useState(false);
-  const [isDeleteAddressModalOpen, setIsDeleteAddressModalOpen] = useState(false);
+  const [isdeleteUserAddressModalOpen, setIsdeleteUserAddressModalOpen] = useState(false);
 
   const onEdit = () => {
     setIsEditAddressModalOpen(true);
   };
 
   const onDelete = () => {
-    setIsDeleteAddressModalOpen(true);
+    setIsdeleteUserAddressModalOpen(true);
   };
 
-  const handleUpdateAddress = async ({ formData }: { formData: TAddressForm }) => updateAddress(id, formData);
+  const handleupdateUserAddress = async ({ formData }: { formData: TAddressForm }) => updateUserAddress(id, formData);
+
+  const handleDeleteUserAddress = async () => deleteUserAddress(id);
 
   const additionalInfo = convertAddressToCityStreetBuildingFlat(address);
 
@@ -60,9 +63,14 @@ const AddressCard: FC<TAddressCardProps> = (props) => {
         isEdit
         address={address}
         getSuggestions={getSuggestions}
-        onSubmit={handleUpdateAddress}
+        onSubmit={handleupdateUserAddress}
       />
-      <DeleteAddressModal isOpen={isDeleteAddressModalOpen} setIsOpen={setIsDeleteAddressModalOpen} addressId={id} />
+      <DeleteUserAddressModal
+        isOpen={isdeleteUserAddressModalOpen}
+        setIsOpen={setIsdeleteUserAddressModalOpen}
+        addressId={id}
+        onSubmit={handleDeleteUserAddress}
+      />
     </>
   );
 };

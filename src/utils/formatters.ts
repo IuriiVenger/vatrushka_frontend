@@ -43,3 +43,17 @@ export const unprettifyPhone = (phone: string) => {
   const digits = phone.replace(/\D/g, '');
   return digits.slice(0, 11);
 };
+
+export const formatPhoneNumberInput = (number: string) => {
+  let cleaned = number.replace(/[^\d+]/g, '');
+
+  if (cleaned.startsWith('9')) {
+    cleaned = `+7${cleaned}`;
+  } else if (cleaned.startsWith('8')) {
+    cleaned = `+7${cleaned.slice(1)}`;
+  } else if (cleaned.startsWith('7')) {
+    cleaned = `+${cleaned}`;
+  }
+
+  return cleaned;
+};

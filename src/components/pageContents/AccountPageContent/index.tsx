@@ -15,7 +15,7 @@ import { AccountTabsOptions, accountTabs } from '@/constants';
 import useAuth from '@/hooks/useAuth';
 import { useUrlParams } from '@/hooks/useUrlParams';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { createAddress, selectAddresses, updateAddress } from '@/store/slices/address';
+import { createUserAddress, deleteUserAddress, selectAddresses, updateUserAddress } from '@/store/slices/address';
 import { selectConfig } from '@/store/slices/config';
 import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
 import { TAddressForm } from '@/types';
@@ -23,7 +23,7 @@ import { convertAddressFormDataToAddress } from '@/utils/converters';
 
 const AccountPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
-  const { addresses } = useAppSelector(selectAddresses);
+  const { userAddresses } = useAppSelector(selectAddresses);
   const { user } = useAppSelector(selectUser);
   const { isWebAppInitialized } = useAppSelector(selectConfig);
   const dispatch = useAppDispatch();
@@ -51,21 +51,29 @@ const AccountPageContent: FC = () => {
     setParam(value);
   };
 
-  const createAddressHandler = async (addressFormData: TAddressForm) => {
+  const createUserAddressHandler = async (addressFormData: TAddressForm) => {
     const data = await convertAddressFormDataToAddress(addressFormData);
-    const resultAction = await dispatch(createAddress(data));
+    const resultAction = await dispatch(createUserAddress(data));
 
-    if (createAddress.rejected.match(resultAction)) {
+    if (createUserAddress.rejected.match(resultAction)) {
       throw resultAction.payload;
     }
   };
 
-  const updateAddressHandler = async (address_id: string, addressFormData: TAddressForm) => {
+  const deleteUserAddressHandler = async (address_id: string) => {
+    const resultAction = await dispatch(deleteUserAddress(address_id));
+
+    if (deleteUserAddress.rejected.match(resultAction)) {
+      throw resultAction.payload;
+    }
+  };
+
+  const updateUserAddressHandler = async (address_id: string, addressFormData: TAddressForm) => {
     const data = await convertAddressFormDataToAddress(addressFormData);
 
-    const resultAction = await dispatch(updateAddress({ id: address_id, data }));
+    const resultAction = await dispatch(updateUserAddress({ id: address_id, data }));
 
-    if (updateAddress.rejected.match(resultAction)) {
+    if (updateUserAddress.rejected.match(resultAction)) {
       throw resultAction.payload;
     }
   };
@@ -133,10 +141,11 @@ const AccountPageContent: FC = () => {
       <TabContent
         tab={tab}
         user={user}
-        addresses={addresses.data}
+        addresses={userAddresses.data}
         getSuggestions={getSuggestionsHandler}
-        updateAddress={updateAddressHandler}
-        createAddress={createAddressHandler}
+        updateUserAddress={updateUserAddressHandler}
+        createUserAddress={createUserAddressHandler}
+        deleteUserAddress={deleteUserAddressHandler}
       />
     </section>
   );

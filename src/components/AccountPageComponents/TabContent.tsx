@@ -7,20 +7,23 @@ import CurrentOrdersTab from './CurrentOrdersTab';
 import OrdersHistoryTab from './OrdersHistoryTab';
 
 import { API } from '@/api/types';
-import { AccountTabsOptions, accountTabs } from '@/constants';
-import { SupabaseUser, TAddressForm } from '@/types';
+import { AccountTabsOptions, WalletBalanceType, accountTabs } from '@/constants';
+import { TAddressForm } from '@/types';
 
 type TTabContentProps = {
   tab: AccountTabsOptions | null;
-  user: SupabaseUser | null;
+  user: API.Auth.Me | null;
   addresses: API.Address.Address[] | null;
   getSuggestions: (value: string) => Promise<API.Dadata.Suggestions.Suggestion[]>;
-  updateAddress: (address_id: string, data: TAddressForm) => Promise<void>;
-  createAddress: (data: TAddressForm) => Promise<void>;
+  updateUserAddress: (address_id: string, data: TAddressForm) => Promise<void>;
+  createUserAddress: (data: TAddressForm) => Promise<void>;
+  deleteUserAddress: (id: string) => Promise<void>;
 };
 
 const TabContent: FC<TTabContentProps> = (props) => {
   const { tab, user, addresses } = props;
+  const bonusBalance =
+    user?.user_metadata?.walletBalances?.find((balance) => balance.type === WalletBalanceType.BONUS)?.balance ?? 0;
 
   const content = useMemo(() => {
     switch (tab) {
@@ -28,7 +31,7 @@ const TabContent: FC<TTabContentProps> = (props) => {
         return <AccountTab user={user} />;
 
       case accountTabs[AccountTabsOptions.BONUSES].value:
-        return <BonusesTab />;
+        return <BonusesTab bonusBalance={bonusBalance} />;
 
       case accountTabs[AccountTabsOptions.CURRENT_ORDERS].value:
         return <CurrentOrdersTab />;

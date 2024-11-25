@@ -10,20 +10,21 @@ import { TAddressForm } from '@/types';
 type TAddressesTabProps = {
   addresses: API.Address.Address[] | null;
   getSuggestions: (value: string) => Promise<API.Dadata.Suggestions.Suggestion[]>;
-  updateAddress: (address_id: string, data: TAddressForm) => Promise<void>;
-  createAddress: (data: TAddressForm) => Promise<void>;
+  updateUserAddress: (address_id: string, data: TAddressForm) => Promise<void>;
+  createUserAddress: (data: TAddressForm) => Promise<void>;
+  deleteUserAddress: (id: string) => Promise<void>;
 };
 
 const AddressesTab: FC<TAddressesTabProps> = (props) => {
-  const { addresses, getSuggestions, updateAddress, createAddress } = props;
+  const { addresses, getSuggestions, updateUserAddress, createUserAddress, deleteUserAddress } = props;
   const [isNewAddressModalOpen, setIsNewAddressModalOpen] = useState(false);
 
   const onClick = () => {
     setIsNewAddressModalOpen(true);
   };
 
-  const handleCreateAddress = async ({ formData }: { formData: TAddressForm }) => {
-    await createAddress(formData);
+  const handlecreateUserAddress = async ({ formData }: { formData: TAddressForm }) => {
+    await createUserAddress(formData);
     setIsNewAddressModalOpen(false);
   };
 
@@ -36,7 +37,8 @@ const AddressesTab: FC<TAddressesTabProps> = (props) => {
               key={address.id}
               address={address}
               getSuggestions={getSuggestions}
-              updateAddress={updateAddress}
+              updateUserAddress={updateUserAddress}
+              deleteUserAddress={deleteUserAddress}
             />
           ))}
           <Button
@@ -69,7 +71,7 @@ const AddressesTab: FC<TAddressesTabProps> = (props) => {
         isOpen={isNewAddressModalOpen}
         setIsOpen={setIsNewAddressModalOpen}
         getSuggestions={getSuggestions}
-        onSubmit={handleCreateAddress}
+        onSubmit={handlecreateUserAddress}
       />
     </>
   );
