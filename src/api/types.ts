@@ -1,5 +1,5 @@
 import { GetAllPromotionsQuery, InputMaybe, ProductBySlugQuery, Scalars } from '@/__generated__/graphql';
-import { AddressType, OrderStatus, OrderType } from '@/constants';
+import { AddressType, DayOfWeek, OrderStatus, OrderType } from '@/constants';
 import { SupabaseUser } from '@/types';
 
 export namespace API {
@@ -68,11 +68,43 @@ export namespace API {
       floor: string | null;
     };
 
+    export type Schedule = {
+      [key in DayOfWeek]: {
+        start: string;
+        end: string;
+        is_working: boolean;
+      };
+    };
+
+    export type TerminalAddress = {
+      id: string;
+      city: string;
+      flat: string | null;
+      floor: string | null;
+      house: string;
+      comment: string | null;
+      country: string | null;
+      building: string | null;
+      entrance: string | null;
+      latitude: number;
+      zip_code: string | null;
+      doorphone: string | null;
+      longitude: number;
+      is_deleted: boolean;
+      street_name: string;
+      working_hours: {
+        schedule: Schedule;
+      };
+      address_string: string | null;
+      terminal_group_id: string;
+      street_classifier_id: string;
+    };
+
     export type OrganizationAddresses = {
       id: string;
       organization_id: string;
       iiko_id: string | null;
-      terminal_addresses: Address[];
+      terminal_addresses: TerminalAddress[];
     };
 
     export namespace Create {

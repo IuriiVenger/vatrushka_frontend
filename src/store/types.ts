@@ -24,7 +24,7 @@ export type StoreDataWithStatusAndMeta<T> = StoreDataWithStatus<T> & StorePagina
 
 export type AddressSliceState = {
   userAddresses: StoreDataWithStatusAndMeta<API.Address.Address[] | null>;
-  organizationAddresses: StoreDataWithStatusAndMeta<API.Address.Address[] | null>;
+  organizationAddresses: StoreDataWithStatusAndMeta<API.Address.TerminalAddress[] | null>;
 };
 
 export type UISliceState = {
