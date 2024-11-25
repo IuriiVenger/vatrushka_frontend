@@ -18,6 +18,7 @@ type TTabContentProps = {
   updateUserAddress: (address_id: string, data: TAddressForm) => Promise<void>;
   createUserAddress: (data: TAddressForm) => Promise<void>;
   deleteUserAddress: (id: string) => Promise<void>;
+  updateUserMetadata: (data: API.Auth.UserMetadata.Update.Request) => Promise<void>;
 };
 
 const TabContent: FC<TTabContentProps> = (props) => {
@@ -28,7 +29,7 @@ const TabContent: FC<TTabContentProps> = (props) => {
   const content = useMemo(() => {
     switch (tab) {
       case accountTabs[AccountTabsOptions.PROFILE].value:
-        return <AccountTab user={user} />;
+        return <AccountTab {...props} />;
 
       case accountTabs[AccountTabsOptions.BONUSES].value:
         return <BonusesTab bonusBalance={bonusBalance} />;
