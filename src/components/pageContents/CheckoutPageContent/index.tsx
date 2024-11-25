@@ -312,7 +312,6 @@ const CheckoutPageContent: FC = () => {
                       name="change"
                       control={control}
                       errors={!!errors.change}
-                      required
                       autoComplete="off"
                     />
                   )}
@@ -380,7 +379,6 @@ const CheckoutPageContent: FC = () => {
                         name="change"
                         control={control}
                         errors={!!errors.change}
-                        required
                         autoComplete="off"
                       />
                     )}
