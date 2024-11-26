@@ -1,11 +1,14 @@
 'use client';
 
-import { Alert, Button, Divider, Segmented } from 'antd';
+import { Alert, Button, Divider, Radio, Segmented, Spin } from 'antd';
 
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, DefaultValues } from 'react-hook-form';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+
+// import sbp_icon from '../../../assets/images/payments/sbp_icon.svg';
+// import sbp_logo from '../../../assets/images/payments/sbp_logo.svg';
 
 import CheckoutItem from './CheckoutItem';
 import CourierDelivery from './CourierDelivery';
@@ -15,13 +18,14 @@ import { address as addressesApi } from '@/api/address';
 
 import { orders } from '@/api/orders';
 import { API } from '@/api/types';
-import OrderConfirmationModal from '@/components/modals/OrderConfirmationModal';
+import EmptyCartScreen from '@/components/EmptyCartScreen';
+import OrderPaymentStatusModal from '@/components/modals/OrderPaymentStatusModal';
 import DatePicker from '@/components/ui/Form/DatePicker';
 import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
 import NumericInput from '@/components/ui/Form/NumericInput';
+import RadioGroup from '@/components/ui/Form/Radio';
 import TextAreaInput from '@/components/ui/Form/TextArea';
-import StepperButton from '@/components/ui/StepperButton';
 import { companyInfo, legalLinks } from '@/config/links';
 import {
   CurrencySymbol,
@@ -32,7 +36,7 @@ import {
   PaymentOptions,
   paymentOptions,
 } from '@/constants';
-import { order } from '@/mocks';
+import useCart from '@/hooks/useCart';
 import { useAppSelector } from '@/store';
 import { selectAddresses } from '@/store/slices/address';
 import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
@@ -40,20 +44,19 @@ import { TAddressForm, TCheckoutForm, TTab } from '@/types';
 import { convertAddressFormDataToAddress, convertAddressToAddressFormData } from '@/utils/converters';
 import { getNounWithDeclension } from '@/utils/formatters';
 
-const count = 3;
-
 const CheckoutPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const { userAddresses } = useAppSelector(selectAddresses);
   const { user } = useAppSelector(selectUser);
+  const { activeCart, cartCardsData, isCartInitialized } = useCart();
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [deliveryType, setDeliveryType] = useState<DeliveryTypeOptions>(DeliveryTypeOptions.COURIER);
   const [deliveryTime, setDeliveryTime] = useState<DeliveryTimeOptions>(DeliveryTimeOptions.ASAP);
   const [paymentType, setPaymentType] = useState<PaymentOptions>(PaymentOptions.ONLINE);
-  const [cutleryCount, setCutleryCount] = useState(0);
+  // const [cutleryCount, setCutleryCount] = useState(0);
   const [userBonusPoint, setUserBonusPoint] = useState(0); // TODO: add user bonus points
-  const [totalSum, setTotalSum] = useState(order.totalPrice);
+  const [totalSum, setTotalSum] = useState(0);
   const [address, setAddress] = useState<API.Address.Create.Request | null>(null);
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [isOrderLoading, setIsOrderLoading] = useState(false);
@@ -73,7 +76,7 @@ const CheckoutPageContent: FC = () => {
 
   const paymentSegmentedItems = getSegmentedItems(paymentOptions);
 
-  const itemsCountText = `${count} ${getNounWithDeclension(count, 'товар', 'товара', 'товаров')}`;
+  const itemsCountText = `${activeCart.data?.items?.length ?? 0} ${getNounWithDeclension(activeCart.data?.items?.length ?? 0, 'товар', 'товара', 'товаров')}`;
 
   const defaultFormData: DefaultValues<TCheckoutForm> = {
     userAddress: { cityStreetBuildingFlat: '', entrance: '', floor: '', doorphone: '' },
@@ -172,12 +175,14 @@ const CheckoutPageContent: FC = () => {
         deliveryTime === DeliveryTimeOptions.ASAP ? deliveryTime : ` ${(data.date?.toDate(), data.time)}`,
         'payment:',
         paymentType === PaymentOptions.ONLINE ? paymentType : data.change,
-        'cutlery:',
-        cutleryCount,
+        // 'cutlery:',
+        // cutleryCount,
         'data.change,',
         data.change,
       );
-      setIsConfirmationModalOpen(true);
+      if (paymentType === PaymentOptions.CASH) {
+        setIsConfirmationModalOpen(true);
+      }
     } finally {
       setIsOrderLoading(false);
     }
@@ -194,6 +199,21 @@ const CheckoutPageContent: FC = () => {
   useEffect(() => {
     loadAvailablePaymentMethods();
   }, [totalSum]);
+
+  useEffect(() => {
+    if (!activeCart.data?.total_sum) return;
+
+    setTotalSum(activeCart.data?.total_sum);
+  }, [activeCart.data?.total_sum]);
+
+  if (!isCartInitialized || !user)
+    return (
+      <div className="flex min-h-100 items-center justify-center">
+        <Spin />
+      </div>
+    );
+
+  if (!cartCardsData.length) return <EmptyCartScreen />;
 
   return (
     <>
@@ -305,7 +325,22 @@ const CheckoutPageContent: FC = () => {
                     block
                     className="outlined text-lg leading-lg max-lg:text-base max-lg:leading-base"
                   />
-                  {paymentType === PaymentOptions.CASH && (
+                  {paymentType === PaymentOptions.ONLINE ? (
+                    <RadioGroup className="flex flex-col gap-4" name="branchAddress" control={control} required>
+                      {/* {availablePaymentMethods.map(({id, name, is_online}) => {
+                        if (!is_online) return null;
+
+                        return (
+                          <Radio value={id} className="flex items-start gap-2">
+                            <div className="flex gap-2">
+                              <p>{name}</p>
+                              {name === 'sbp' ? <img src={sbp_icon.src} alt="СБП" /> : <HiOutlineCreditCard />}
+                            </div>
+                          </Radio>
+                        );
+                      })} */}
+                    </RadioGroup>
+                  ) : (
                     <Input
                       label="Подготовим сдачу"
                       placeholder="Введите сумму"
@@ -335,29 +370,31 @@ const CheckoutPageContent: FC = () => {
               <div className="flex w-full flex-col gap-6 max-sm:gap-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Ваш заказ</h2>
-                  <Button type="link" href="/cart" className="h-6 p-0">
-                    Изменить
-                  </Button>
+                  <Link href="/cart">
+                    <Button type="link" className="h-6 p-0">
+                      Изменить
+                    </Button>
+                  </Link>
                 </div>
                 <div className="flex flex-col">
-                  {order.items.map((item) => (
+                  {cartCardsData.map((item) => (
                     <div className="flex flex-col" key={item.id}>
                       <CheckoutItem
                         name={item.name}
                         weight={item.weight}
-                        modifiers={item.modifiers}
+                        description={item.description}
                         quantity={item.quantity}
-                        price={item.unitPrice}
+                        price={item.price}
                       />
                       <Divider />
                     </div>
                   ))}
-                  <div className="flex items-center justify-between">
+                  {/* <div className="flex items-center justify-between">
                     <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">Приборы</p>
                     <div className="w-min">
                       <StepperButton count={cutleryCount} setCount={setCutleryCount} />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="flex w-full flex-col gap-6 max-sm:gap-4">
@@ -388,10 +425,10 @@ const CheckoutPageContent: FC = () => {
                   <div className="flex items-center justify-between">
                     <p>{itemsCountText} на сумму</p>
                     <p>
-                      {order.totalPrice} {CurrencySymbol.RUB}
+                      {activeCart.data?.total_sum} {CurrencySymbol.RUB}
                     </p>
                   </div>
-                  <div className="flex items-center justify-between">
+                  {/* <div className="flex items-center justify-between">
                     <p>Скидка по промокоду</p>
                     <p>
                       {order.discounts[0].discount} {CurrencySymbol.RUB}
@@ -400,14 +437,14 @@ const CheckoutPageContent: FC = () => {
                   <div className="flex items-center justify-between">
                     <p>Стоимость доставки</p>
                     <p>200 {CurrencySymbol.RUB}</p>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="flex flex-col gap-3">
                   <div className="flex justify-between text-nowrap text-lg font-medium leading-lg">
                     <p>Бонусов</p>
-                    <p>{userBonusPoint} Б</p>
+                    <p>{user.user_metadata.walletBalances?.[0].balance ?? 0} Б</p>
                   </div>
-                  <NumericInput
+                  {/* <NumericInput
                     type="number"
                     inputMode="numeric"
                     name="bonusPoints"
@@ -429,7 +466,7 @@ const CheckoutPageContent: FC = () => {
                         className="h-12 w-max px-4 py-0 text-primary hover:text-primaryHover"
                       />
                     }
-                  />
+                  /> */}
                 </div>
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-1">
@@ -461,7 +498,11 @@ const CheckoutPageContent: FC = () => {
           </Form>
         </FormProvider>
       </section>
-      <OrderConfirmationModal isOpen={isConfirmationModalOpen} setIsOpen={setIsConfirmationModalOpen} />
+      <OrderPaymentStatusModal
+        isOpen={isConfirmationModalOpen}
+        setIsOpen={setIsConfirmationModalOpen}
+        paymentMethod={PaymentOptions.CASH}
+      />
     </>
   );
 };

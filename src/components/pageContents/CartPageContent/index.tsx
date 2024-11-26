@@ -10,6 +10,7 @@ import EmptyCartScreen from '../../EmptyCartScreen';
 import ItemCard from './ItemCard';
 
 import AuthModal from '@/components/modals/AuthModal';
+import ConfirmModal from '@/components/modals/ConfirmModal';
 import Input from '@/components/ui/Form/Input';
 import { CurrencySymbol } from '@/constants';
 
@@ -25,6 +26,8 @@ type TDiscountForm = {
 const CartPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
   const {
     activeCart,
     cartCardsData,
@@ -59,6 +62,10 @@ const CartPageContent: FC = () => {
     }
   };
 
+  const onResetCart = () => {
+    setIsConfirmModalOpen(true);
+  };
+
   if (!isCartInitialized)
     return (
       <div className="flex min-h-100 items-center justify-center">
@@ -79,7 +86,7 @@ const CartPageContent: FC = () => {
             </div>
             <Button
               type="text"
-              onClick={deleteCartItems}
+              onClick={onResetCart}
               className="text-lg leading-lg max-sm:text-base max-sm:leading-base"
             >
               Очистить корзину
@@ -167,6 +174,16 @@ const CartPageContent: FC = () => {
         </div>
       </section>
       <AuthModal isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen} href="/checkout" />
+      <ConfirmModal
+        isOpen={isConfirmModalOpen}
+        setIsOpen={setIsConfirmModalOpen}
+        onSubmit={deleteCartItems}
+        title="Очистка корзины"
+        text="Вы действительно хотите очистить корзину?"
+        confirmText="Очистить"
+        successMessage="Корзина успешно очищена"
+        errorMessage="Ошибка при очищении адреса"
+      />
     </>
   );
 };

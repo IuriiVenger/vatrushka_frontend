@@ -33,7 +33,7 @@ const AccountPageContent: FC = () => {
   const { signOut, loadUser } = useAuth(dispatch);
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
-  const { paramValue, setParam, removeParam } = useUrlParams('tab');
+  const { paramValue, setParam, removeParam } = useUrlParams<string>('tab');
 
   const [tab, setTab] = useState<AccountTabsOptions | null>(null);
 
@@ -95,14 +95,10 @@ const AccountPageContent: FC = () => {
       setCurrentTab(paramValue);
     }
 
-    if (screens.md && (!tab || !paramValue)) {
+    if (screens.md && !tab && !paramValue) {
       setCurrentTab(AccountTabsOptions.PROFILE);
     }
   }, [screens.md, paramValue]);
-
-  useEffect(() => {
-    if (paramValue && isValidTabParam(paramValue)) setCurrentTab(paramValue);
-  }, [paramValue]);
 
   if (!isWebAppInitialized)
     return (

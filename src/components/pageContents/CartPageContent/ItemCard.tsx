@@ -52,11 +52,11 @@ const ItemCard: FC<TItemCardProps> = ({ card, onRemoveItem, setQuantity }) => {
             onClick={onRemoveItemClick}
           />
         </div>
-        <div className="flex w-full items-center justify-end gap-6 max-sm:justify-normal">
+        <div className="flex w-full items-center justify-end gap-2 max-sm:justify-normal">
           {inStock ? (
             <div className="flex w-max items-center gap-6 max-sm:w-full max-sm:justify-between">
               <StepperButton count={quantity} setCount={onQuantityChange} minValue={1} />
-              <p className="text-nowrap text-xl font-medium leading-xl max-sm:text-base max-sm:leading-base">
+              <p className="min-w-18 text-nowrap text-end text-xl font-medium leading-xl max-sm:text-base max-sm:leading-base">
                 {price} {CurrencySymbol.RUB}
               </p>
             </div>
