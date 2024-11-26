@@ -193,8 +193,9 @@ export const convertAddressFormDataToAddress = async (
     };
   }
 
-  const { data: decodedFormData } = await addressApi.decode(formData.cityStreetBuildingFlat);
-  const convertedFormData = convertDadataAddressToAddress(decodedFormData[0]);
+  const { data } = await addressApi.suggestions(formData.cityStreetBuildingFlat);
+
+  const convertedFormData = convertDadataAddressToAddress(data.suggestions[0]?.data);
 
   return { ...convertedFormData, doorphone: formData.doorphone, entrance: formData.entrance, floor: formData.floor };
 };
