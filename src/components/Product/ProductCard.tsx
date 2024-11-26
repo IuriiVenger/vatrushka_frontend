@@ -27,14 +27,13 @@ const ProductCard: FC<TProductCardProps> = ({ info, slider = false, handleBuyBut
 
   const onButtonClick = async (e: React.MouseEvent<HTMLElement>) => {
     setIsButtonLoading(true);
-    console.log('setIsButtonLoading(true)');
+
     try {
       e.preventDefault();
       e.stopPropagation();
       await handleBuyButtonClick();
     } finally {
       setIsButtonLoading(false);
-      console.log('setIsButtonLoading(false)');
     }
   };
 
