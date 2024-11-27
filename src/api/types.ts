@@ -1,5 +1,5 @@
 import { GetAllPromotionsQuery, InputMaybe, ProductBySlugQuery, Scalars } from '@/__generated__/graphql';
-import { AddressType, DayOfWeek, OrderStatus, OrderType } from '@/constants';
+import { AddressType, DayOfWeek, OrderPaymentStatus, OrderStatus, OrderType } from '@/constants';
 import { SupabaseUser } from '@/types';
 
 export namespace API {
@@ -197,10 +197,6 @@ export namespace API {
     }
     export interface Cart extends CartList {
       id: string;
-      user_id: number;
-      status: string;
-      created_at: string;
-      updated_at: string;
       items: API.Cart.CartItem.CartItem[];
       total_sum: number;
     }
@@ -446,10 +442,31 @@ export namespace API {
   }
 
   export namespace Orders {
+    export namespace DeliveryTimeframes {
+      export type Request = {
+        address_id: string;
+      };
+
+      export type DeliveryInterval = {
+        start: string;
+        end: string;
+        available: boolean;
+      };
+
+      export type DeliveryTimeframe = {
+        date: string;
+        intervals: DeliveryInterval[];
+      };
+    }
+
     export namespace List {
-      export type Request = Common.Pagination.REST.RequestArgs;
+      export type Request = Common.Pagination.REST.RequestArgs & {
+        order_status?: OrderStatus;
+        payment_status?: OrderPaymentStatus;
+      };
     }
     export type Order = {
+      id: string;
       user_id: string;
       cart_id: string;
       address_id: string;
@@ -458,6 +475,13 @@ export namespace API {
       delivery_time: string; // example: '2024-01-25T13:45:30.123Z'
       type: OrderType;
       status: OrderStatus;
+      payment_status: OrderPaymentStatus;
+      created_at: string;
+      updated_at: string;
+      is_deleted: boolean;
+      payment_methods: API.Payment.PaymentMethods.PaymentMethod[];
+      order_number: string;
+      cart: Pick<API.Cart.Cart, 'items' | 'id'>;
     };
 
     export namespace Create {

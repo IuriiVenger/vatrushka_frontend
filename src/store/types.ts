@@ -5,7 +5,7 @@ import { store } from '.';
 import { Categories } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import { RequestStatus } from '@/constants';
-import { SupabaseUser, TCard } from '@/types';
+import { TCard } from '@/types';
 
 export type StoreDataWithStatus<T> = {
   status: RequestStatus;
@@ -55,7 +55,8 @@ export type CartSliceState = {
 };
 
 export type OrdersSliceState = {
-  orders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
+  activeOrders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
+  inactiveOrders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
 };
 
 export type RootState = ReturnType<typeof store.getState>;

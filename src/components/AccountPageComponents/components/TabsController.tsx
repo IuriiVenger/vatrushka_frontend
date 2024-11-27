@@ -4,13 +4,12 @@ import { Dispatch, FC, Fragment, SetStateAction, useState } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import Dropdown from '@/components/ui/Dropdown';
 import {
   AccountTabsOptions,
   accountTabs,
-  filterDropdownItems,
+  // filterDropdownItems, hide orderHistory filter
   FilterOrdersType,
-  filterOrdersTypeTranslation,
+  // filterOrdersTypeTranslation, hide orderHistory filter
 } from '@/constants';
 import useAuth from '@/hooks/useAuth';
 import { useUrlParams } from '@/hooks/useUrlParams';
@@ -19,12 +18,17 @@ import { useAppDispatch } from '@/store';
 type TTabsControllerProps = {
   tab: AccountTabsOptions | null;
   setTab: Dispatch<SetStateAction<AccountTabsOptions | null>>;
-  isHistoryTab: boolean;
+  // isHistoryTab: boolean; hide orderHistory filter
   isProfileTab: boolean;
 };
 
-const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isHistoryTab, isProfileTab }) => {
-  const [filter, setFilter] = useState<FilterOrdersType>(FilterOrdersType.ALL);
+const TabsController: FC<TTabsControllerProps> = ({
+  tab,
+  setTab,
+  // isHistoryTab, hide orderHistory filter
+  isProfileTab,
+}) => {
+  // const [filter, setFilter] = useState<FilterOrdersType>(FilterOrdersType.ALL); hide orderHistory filter
   const dispatch = useAppDispatch();
   const { signOut } = useAuth(dispatch);
   const { useBreakpoint } = Grid;
@@ -68,7 +72,7 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isHistoryTab, i
     <div
       className={cn(
         'flex justify-between pb-14 pt-10 max-lg:pb-10 max-lg:pt-6',
-        isHistoryTab && 'max-lg:flex-col max-lg:gap-6',
+        // isHistoryTab && 'max-lg:flex-col max-lg:gap-6',
       )}
     >
       <Segmented
@@ -83,14 +87,14 @@ const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isHistoryTab, i
           Выйти из аккаунта
         </Button>
       )}
-      {isHistoryTab && (
+      {/* {isHistoryTab && ( hide orderHistory filter
         <Dropdown
           sort={filter}
           setSort={setFilter}
           items={filterDropdownItems}
           translations={filterOrdersTypeTranslation}
         />
-      )}
+      )} */}
     </div>
   );
 };

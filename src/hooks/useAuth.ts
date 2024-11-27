@@ -6,11 +6,11 @@ import useCart from './useCart';
 
 import { auth } from '@/api/auth';
 
-import { RequestStatus, defaultPaginationParams } from '@/constants';
+import { RequestStatus } from '@/constants';
 
 import { loadUserAddresses } from '@/store/slices/address';
 import { clearCart } from '@/store/slices/cart';
-import { loadOrders } from '@/store/slices/orders';
+import { loadActiveOrders, loadInactiveOrders } from '@/store/slices/orders';
 import { logout, setUser, setUserLoadingStatus } from '@/store/slices/user';
 import { AppDispatch } from '@/store/types';
 import { deleteTokens, getTokens, setTokens } from '@/utils/tokensFactory';
@@ -36,7 +36,12 @@ const useAuth = (dispatch: AppDispatch) => {
 
   const loadUserContent = async () => {
     const oldCart = activeCart.data;
-    await Promise.all([initCart(), dispatch(loadUserAddresses()), dispatch(loadOrders(defaultPaginationParams))]);
+    await Promise.all([
+      initCart(),
+      dispatch(loadUserAddresses()),
+      dispatch(loadActiveOrders()),
+      dispatch(loadInactiveOrders()),
+    ]);
     await initCart();
     if (oldCart) {
       await mergeCartItems(oldCart);
