@@ -4,10 +4,21 @@ import { FC } from 'react';
 
 import OrdersHistoryCard from './components/OrdersHistoryCard';
 
+import { API } from '@/api/types';
 import { currentOrders, ordersHistory } from '@/mocks';
+import { StoreDataWithStatusAndMeta } from '@/store/types';
 
-const OrdersHistoryTab: FC = () =>
-  currentOrders.length ? (
+type OrdersHistoryTabProps = {
+  orders: API.Orders.Order[] | null;
+  loadMoreOrders: () => void;
+  isLoadMoreAvailable: boolean;
+  isLoading: boolean;
+};
+
+const OrdersHistoryTab: FC<OrdersHistoryTabProps> = (props) => {
+  const { orders, loadMoreOrders, isLoadMoreAvailable, isLoading } = props;
+
+  return orders?.length ? (
     <div className="flex flex-col gap-6 max-sm:gap-4">
       {ordersHistory.map((order) => (
         <OrdersHistoryCard key={order.id} order={order} />
@@ -26,5 +37,6 @@ const OrdersHistoryTab: FC = () =>
       </Link>
     </div>
   );
+};
 
 export default OrdersHistoryTab;

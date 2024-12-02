@@ -4,10 +4,20 @@ import { FC } from 'react';
 
 import CurrentOrderCard from './components/CurrentOrderCard';
 
+import { API } from '@/api/types';
 import { currentOrders, ordersHistory } from '@/mocks';
 
-const CurrentOrdersTab: FC = () =>
-  ordersHistory.length ? (
+type CurrentOrdersTabProps = {
+  orders: API.Orders.Order[] | null;
+  loadMoreOrders: () => void;
+  isLoadMoreAvailable: boolean;
+  isLoading: boolean;
+};
+
+const CurrentOrdersTab: FC<CurrentOrdersTabProps> = (props) => {
+  const { orders, loadMoreOrders, isLoadMoreAvailable, isLoading } = props;
+
+  return orders?.length ? (
     <div className="flex flex-col gap-6 max-sm:gap-4">
       {currentOrders.map((order) => (
         <CurrentOrderCard key={order.id} order={order} />
@@ -26,5 +36,6 @@ const CurrentOrdersTab: FC = () =>
       </Link>
     </div>
   );
+};
 
 export default CurrentOrdersTab;

@@ -19,6 +19,7 @@ import { useUrlParams } from '@/hooks/useUrlParams';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { createUserAddress, deleteUserAddress, selectAddresses, updateUserAddress } from '@/store/slices/address';
 import { selectConfig } from '@/store/slices/config';
+import { loadMoreActiveOrders, loadMoreInactiveOrders, selectOrders } from '@/store/slices/orders';
 import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
 import { TAddressForm } from '@/types';
 import { convertAddressFormDataToAddress } from '@/utils/converters';
@@ -26,6 +27,7 @@ import { convertAddressFormDataToAddress } from '@/utils/converters';
 const AccountPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const { userAddresses } = useAppSelector(selectAddresses);
+  const { activeOrders, inactiveOrders } = useAppSelector(selectOrders);
   const { user } = useAppSelector(selectUser);
   const { isWebAppInitialized } = useAppSelector(selectConfig);
   const dispatch = useAppDispatch();
@@ -37,7 +39,7 @@ const AccountPageContent: FC = () => {
 
   const [tab, setTab] = useState<AccountTabsOptions | null>(null);
 
-  const isHistoryTab = tab === accountTabs[AccountTabsOptions.ORDER_HISTORY].value;
+  // const isHistoryTab = tab === accountTabs[AccountTabsOptions.ORDER_HISTORY].value; hide orderHistory filter
   const isProfileTab = tab === accountTabs[AccountTabsOptions.PROFILE].value;
 
   const isValidTabParam = (value: string): value is AccountTabsOptions =>
@@ -90,6 +92,14 @@ const AccountPageContent: FC = () => {
     return data.suggestions;
   };
 
+  const loadMoreActiveOrdersHandler = () => {
+    dispatch(loadMoreActiveOrders());
+  };
+
+  const loadMoreInactiveOrdersHandler = () => {
+    dispatch(loadMoreInactiveOrders());
+  };
+
   useEffect(() => {
     if (paramValue && isValidTabParam(paramValue)) {
       setCurrentTab(paramValue);
@@ -128,7 +138,7 @@ const AccountPageContent: FC = () => {
         <div
           className={cn(
             'flex w-full items-center justify-between max-sm:pb-6',
-            isHistoryTab && 'max-sm:flex-col max-sm:items-start max-sm:gap-6',
+            // isHistoryTab && 'max-sm:flex-col max-sm:items-start max-sm:gap-6', hide orderHistory filter
           )}
         >
           <h1 className="text-4xl font-medium leading-4xl max-lg:text-3xl max-lg:leading-3xl max-sm:text-2xl max-sm:leading-2xl ">
@@ -143,7 +153,12 @@ const AccountPageContent: FC = () => {
         </div>
       </div>
       {(screens.md || !tab) && (
-        <TabsController tab={tab} setTab={setTab} isHistoryTab={isHistoryTab} isProfileTab={isProfileTab} />
+        <TabsController
+          tab={tab}
+          setTab={setTab}
+          // isHistoryTab={isHistoryTab}  hide orderHistory filter
+          isProfileTab={isProfileTab}
+        />
       )}
       <TabContent
         tab={tab}
@@ -154,6 +169,10 @@ const AccountPageContent: FC = () => {
         createUserAddress={createUserAddressHandler}
         deleteUserAddress={deleteUserAddressHandler}
         updateUserMetadata={updateUserMetadata}
+        activeOrders={activeOrders}
+        inactiveOrders={inactiveOrders}
+        loadMoreActiveOrders={loadMoreActiveOrdersHandler}
+        loadMoreInactiveOrders={loadMoreInactiveOrdersHandler}
       />
     </section>
   );
