@@ -211,9 +211,9 @@ const CheckoutPageContent: FC = () => {
   }, [totalSum]);
 
   useEffect(() => {
-       loadAvailableDeliveryTimeframes();
+    loadAvailableDeliveryTimeframes();
   }, [address]);
-  
+
   useEffect(() => {
     if (!activeCart.data?.total_sum) return;
 

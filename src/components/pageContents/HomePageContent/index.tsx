@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next-nprogress-bar';
-import { FC, useState } from 'react';
+import { FC, Suspense, useState } from 'react';
 
 import Catalog from '../../Catalog/Catalog';
 
@@ -62,7 +62,9 @@ const HomePageContent: FC<THomePageContentProps> = ({ categories, recomendations
       <Catalog categories={catalogCategories} />
       {!!recomendatedProductsData && <ProductSlider title="Рекомендуем" slides={productSliderSlides} />}
       <SeoContent />
-      <OrderPaymentStatusModal isOpen={isOrderPaymentStatusModalOpen} setIsOpen={setIsOrderPaymentStatusModalOpen} />
+      <Suspense>
+        <OrderPaymentStatusModal isOpen={isOrderPaymentStatusModalOpen} setIsOpen={setIsOrderPaymentStatusModalOpen} />
+      </Suspense>
     </>
   );
 };
