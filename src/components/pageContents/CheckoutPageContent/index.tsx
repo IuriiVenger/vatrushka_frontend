@@ -60,6 +60,9 @@ const CheckoutPageContent: FC = () => {
   const [address, setAddress] = useState<API.Address.Create.Request | null>(null);
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [isOrderLoading, setIsOrderLoading] = useState(false);
+  const [availableDeliveryTimeframes, setAvailableDeliveryTimeframes] = useState<
+    API.Orders.DeliveryTimeframes.DeliveryTimeframe[]
+  >([]);
 
   const [availablePaymentMethods, setAvailablePaymentMethods] = useState<API.Payment.PaymentMethods.PaymentMethod[]>(
     [],
@@ -118,6 +121,13 @@ const CheckoutPageContent: FC = () => {
   const getSuggestionsHandler = async (value: string) => {
     const { data } = await addressesApi.suggestions(value);
     return data.suggestions;
+  };
+
+  const loadAvailableDeliveryTimeframes = async () => {
+    const { data } = await orders.deliveryTimeframes({
+      address_id: '719ccdd9-8456-4eaf-b8d8-e3ed891ef451', // TODO: address_id will be changed to geo_point
+    });
+    setAvailableDeliveryTimeframes(data);
   };
 
   const onDeliveryTypeClick = (value: DeliveryTypeOptions) => {
@@ -200,6 +210,10 @@ const CheckoutPageContent: FC = () => {
     loadAvailablePaymentMethods();
   }, [totalSum]);
 
+  useEffect(() => {
+       loadAvailableDeliveryTimeframes();
+  }, [address]);
+  
   useEffect(() => {
     if (!activeCart.data?.total_sum) return;
 

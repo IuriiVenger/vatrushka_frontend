@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Form from '@/components/ui/Form/Form';
@@ -26,12 +26,18 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone, getP
     formState: { errors, isValid, isDirty },
     watch,
     setValue,
+    trigger,
   } = useForm<TSignInForm>({
     mode: 'onChange',
   });
   const [isPending, setIsPending] = useState(false);
 
   const formPhoneValue = watch('phone');
+
+  const onPhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue('phone', formatPhoneNumberInput(e.target.value));
+    trigger();
+  };
 
   const submitHandler: SubmitHandler<TSignInForm> = async () => {
     try {
@@ -80,6 +86,7 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone, getP
           label="Номер телефона"
           control={control}
           errors={!!errors.phone}
+          onChange={onPhoneChange}
           required
           autoComplete="tel"
         />

@@ -262,13 +262,25 @@ export const selectedPlacemarkOptions = {
 };
 
 export enum OrderStatus {
-  UNCONFIRMED = 'UNCONFIRMED',
-  CONFIRMED = 'CONFIRMED',
-  PREPARING = 'PREPARING',
-  READY = 'READY',
-  ON_THE_WAY = 'ON_THE_WAY',
-  DELIVERED = 'DELIVERED',
-  CANCELLED = 'CANCELLED',
+  UNCONFIRMED = 'Unconfirmed',
+  WAIT_COOKING = 'WaitCooking',
+  READY_FOR_COOKING = 'ReadyForCooking',
+  COOKING_STARTED = 'CookingStarted',
+  COOKING_COMPLETED = 'CookingCompleted',
+  WAITING = 'Waiting',
+  ON_WAY = 'OnWay',
+  DELIVERED = 'Delivered',
+  CLOSED = 'Closed',
+  CANCELLED = 'Cancelled',
+}
+
+export enum OrderPaymentStatus {
+  UNPAID = 'unpaid',
+  PAID = 'paid',
+  PARTIALLY_PAID = 'partially_paid',
+  REFUNDED = 'refunded',
+  CANCELED = 'canceled',
+  EXPIRED = 'expired',
 }
 
 export enum OrderType {
