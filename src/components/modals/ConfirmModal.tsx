@@ -6,12 +6,27 @@ import Modal from './Modal';
 import { useMessage } from '@/hooks/useMessage';
 import { TModalProps } from '@/types';
 
-type TDeleteUserAddressModalProps = TModalProps & {
-  addressId: string;
+type TConfirmModalProps = TModalProps & {
+  title: string;
+  text: string;
   onSubmit: () => Promise<void>;
+  successMessage: string;
+  errorMessage: string;
+  confirmText?: string;
+  resetText?: string;
 };
 
-const DeleteUserAddressModal: FC<TDeleteUserAddressModalProps> = ({ isOpen, setIsOpen, addressId, onSubmit }) => {
+const ConfirmModal: FC<TConfirmModalProps> = ({
+  isOpen,
+  setIsOpen,
+  title,
+  text,
+  onSubmit,
+  successMessage,
+  errorMessage,
+  confirmText,
+  resetText,
+}) => {
   const { showMessage } = useMessage();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,26 +39,24 @@ const DeleteUserAddressModal: FC<TDeleteUserAddressModalProps> = ({ isOpen, setI
       setIsLoading(true);
       await onSubmit();
       onClose();
-      showMessage({ type: 'success', text: 'Адрес успешно удалён' });
+      showMessage({ type: 'success', text: successMessage });
     } catch (error) {
-      showMessage({ type: 'error', text: 'Ошибка при удалении адреса' });
+      showMessage({ type: 'error', text: errorMessage });
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Modal title="Удаление адреса" isOpen={isOpen} setIsOpen={setIsOpen}>
+    <Modal title={title} isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className="flex flex-col gap-8 max-sm:gap-6">
-        <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">
-          Вы действительно хотите удалить адрес?
-        </p>
+        <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">{text}</p>
         <div className="flex flex-col gap-3 max-sm:gap-2">
           <Button type="primary" className="w-full max-sm:text-base max-sm:leading-base" onClick={onClose}>
-            Нет, оставить
+            {resetText ?? 'Нет, оставить'}
           </Button>
           <Button className="w-full max-sm:text-base max-sm:leading-base" onClick={onDelete} loading={isLoading}>
-            Удалить
+            {confirmText ?? 'Удалить'}
           </Button>
         </div>
       </div>
@@ -51,4 +64,4 @@ const DeleteUserAddressModal: FC<TDeleteUserAddressModalProps> = ({ isOpen, setI
   );
 };
 
-export default DeleteUserAddressModal;
+export default ConfirmModal;

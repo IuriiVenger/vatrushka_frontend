@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 
 import { API } from '@/api/types';
 import AddressModal from '@/components/modals/AddressModal';
-import DeleteUserAddressModal from '@/components/modals/DeleteUserAddressModal';
+import ConfirmModal from '@/components/modals/ConfirmModal';
 import { TAddressForm } from '@/types';
 import { convertAddressToCityStreetBuildingFlat } from '@/utils/converters';
 
@@ -19,17 +19,17 @@ const AddressCard: FC<TAddressCardProps> = (props) => {
   const { id, street_name } = address;
 
   const [isEditAddressModalOpen, setIsEditAddressModalOpen] = useState(false);
-  const [isdeleteUserAddressModalOpen, setIsdeleteUserAddressModalOpen] = useState(false);
+  const [isDeleteUserAddressModalOpen, setIsDeleteUserAddressModalOpen] = useState(false);
 
   const onEdit = () => {
     setIsEditAddressModalOpen(true);
   };
 
   const onDelete = () => {
-    setIsdeleteUserAddressModalOpen(true);
+    setIsDeleteUserAddressModalOpen(true);
   };
 
-  const handleupdateUserAddress = async ({ formData }: { formData: TAddressForm }) => updateUserAddress(id, formData);
+  const handleUpdateUserAddress = async ({ formData }: { formData: TAddressForm }) => updateUserAddress(id, formData);
 
   const handleDeleteUserAddress = async () => deleteUserAddress(id);
 
@@ -63,13 +63,16 @@ const AddressCard: FC<TAddressCardProps> = (props) => {
         isEdit
         address={address}
         getSuggestions={getSuggestions}
-        onSubmit={handleupdateUserAddress}
+        onSubmit={handleUpdateUserAddress}
       />
-      <DeleteUserAddressModal
-        isOpen={isdeleteUserAddressModalOpen}
-        setIsOpen={setIsdeleteUserAddressModalOpen}
-        addressId={id}
+      <ConfirmModal
+        isOpen={isDeleteUserAddressModalOpen}
+        setIsOpen={setIsDeleteUserAddressModalOpen}
         onSubmit={handleDeleteUserAddress}
+        title="Удаление адреса"
+        text="Вы действительно хотите удалить адрес?"
+        successMessage="Адрес успешно удалён"
+        errorMessage="Ошибка при удалении адреса"
       />
     </>
   );

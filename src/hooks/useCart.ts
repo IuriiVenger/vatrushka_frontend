@@ -31,10 +31,8 @@ const useCart = () => {
 
   const deleteCartItems = async () => {
     const deletingItems = groupedCartItems.map((item) => item.rawCartItems).flat();
-    // todo добавить confirmationModal
     const data = deletingItems.map((item) => ({ cart_item_id: item.id }));
     await dispatch(deleteCartItem({ data }));
-    showMessage({ text: 'Корзина очищена', type: 'success' });
   };
 
   const onGroupedCartItemQuantityChange = async (count: number, group_id: string) => {

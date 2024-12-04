@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from 'antd';
-import { FC, useRef, useState } from 'react';
+import { FC, useRef } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import SlickSlider, { Settings } from 'react-slick';
 
@@ -17,19 +17,6 @@ export type TSliderComponentProps = {
 const ProductSlider: FC<TSliderComponentProps> = ({ title, slides }) => {
   const sliderRef = useRef<SlickSlider>(null);
 
-  const [isPrevDisabled, setIsPrevDisabled] = useState(true);
-  const [isNextDisabled, setIsNextDisabled] = useState(false);
-
-  const handleButtons = (_: number, next: number): void => {
-    if (sliderRef.current) {
-      const isFirstSlide = next === 0;
-      const isLastSlide = next === slides.length - 3;
-
-      setIsPrevDisabled(isFirstSlide);
-      setIsNextDisabled(isLastSlide);
-    }
-  };
-
   const handlePrev = (): void => {
     sliderRef.current?.slickPrev();
   };
@@ -43,12 +30,11 @@ const ProductSlider: FC<TSliderComponentProps> = ({ title, slides }) => {
     variableWidth: false,
     arrows: false,
     dots: false,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
     swipeToSlide: true,
-    beforeChange: handleButtons,
     responsive: [
       {
         breakpoint: 1023,
@@ -60,12 +46,14 @@ const ProductSlider: FC<TSliderComponentProps> = ({ title, slides }) => {
         breakpoint: 639,
         settings: {
           slidesToShow: 1.5,
+          centerMode: true,
         },
       },
       {
         breakpoint: 479,
         settings: {
-          slidesToShow: 1.2,
+          slidesToShow: 1,
+          centerMode: true,
         },
       },
     ],
@@ -78,7 +66,6 @@ const ProductSlider: FC<TSliderComponentProps> = ({ title, slides }) => {
         <div className="flex flex-nowrap gap-4 max-sm:hidden">
           <Button
             onClick={handlePrev}
-            disabled={isPrevDisabled}
             shape="circle"
             type="primary"
             className="bg-primary hover:bg-primaryHover active:bg-primaryActive disabled:bg-textQuinary max-sm:h-8 max-sm:w-8 max-sm:min-w-8"
@@ -86,7 +73,6 @@ const ProductSlider: FC<TSliderComponentProps> = ({ title, slides }) => {
           />
           <Button
             onClick={handleNext}
-            disabled={isNextDisabled}
             shape="circle"
             type="primary"
             className="bg-primary hover:bg-primaryHover active:bg-primaryActive disabled:bg-textQuinary max-sm:h-8 max-sm:w-8 max-sm:min-w-8"

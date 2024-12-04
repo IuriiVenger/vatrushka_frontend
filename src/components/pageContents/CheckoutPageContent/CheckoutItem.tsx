@@ -4,14 +4,14 @@ import { CurrencySymbol } from '@/constants';
 
 type TCheckoutItemProps = {
   name: string;
-  weight: number;
+  weight: string | number | undefined;
   quantity: number;
-  price: number;
-  modifiers?: string;
+  price: string | number;
+  description: string;
 };
 
-const CheckoutItem: FC<TCheckoutItemProps> = ({ name, weight, quantity, price, modifiers }) => {
-  const additionalInfo = `${weight} г${modifiers ? `, ${modifiers}` : ''}`;
+const CheckoutItem: FC<TCheckoutItemProps> = ({ name, weight, quantity, price, description }) => {
+  const additionalInfo = `${weight ? `${weight} г, ` : ''}${description}`;
 
   return (
     <div className="flex justify-between gap-8">

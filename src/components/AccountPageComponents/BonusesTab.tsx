@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import Link from 'next/link';
 import { FC } from 'react';
 
 import { CurrencySymbol } from '@/constants';
@@ -23,9 +24,9 @@ const BonusesTab: FC<TBonusesTabProps> = ({ bonusBalance }) => {
         <p>1 бонусный балл = 1 {CurrencySymbol.RUB}</p>
         <p>Оплачивайте баллами до 100% стоимости следующего заказа.</p>
       </div>
-      <Button className="mt-6 max-sm:mt-8 max-xs:w-full" href="/bonus">
-        Подробнее
-      </Button>
+      <Link href="/bonus">
+        <Button className="mt-6 max-sm:mt-8 max-xs:w-full">Подробнее</Button>
+      </Link>
     </div>
   );
 };
