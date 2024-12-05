@@ -21,22 +21,13 @@ type TCartProps = {
   onCloseAll: () => void;
   cartItems: TCard[];
   totalPrice: number;
-  onCartClick: () => void;
   onDeleteButtonClick: (id: string) => void;
   onStepperCountChange: (count: number, id: string) => void | Promise<void>;
   isCartDropdownHidden: boolean;
 };
 
 const Cart: FC<TCartProps> = (props) => {
-  const {
-    onCloseAll,
-    cartItems,
-    totalPrice,
-    onDeleteButtonClick,
-    onStepperCountChange,
-    isCartDropdownHidden,
-    onCartClick,
-  } = props;
+  const { onCloseAll, cartItems, totalPrice, onDeleteButtonClick, onStepperCountChange, isCartDropdownHidden } = props;
 
   const dropdownItems: TMenuItem[] = [
     {
@@ -56,10 +47,10 @@ const Cart: FC<TCartProps> = (props) => {
   const itemsCount = cartItems.reduce<number>((acc, item) => acc + item.quantity, 0);
 
   const dropDownTrigger = useMemo(() => {
-    const trigger: Array<'hover'> = [];
+    const trigger: Array<'click'> = [];
 
     if (itemsCount) {
-      trigger.push('hover');
+      trigger.push('click');
     }
 
     return trigger;
@@ -88,7 +79,6 @@ const Cart: FC<TCartProps> = (props) => {
       overlayClassName="pt-2"
     >
       <Button
-        onClick={onCartClick}
         aria-label={`Просмотр корзины. Сейчас товаров в корзине: ${itemsCount}`}
         className="h-6 w-5 border-none p-0"
         icon={

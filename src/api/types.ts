@@ -490,8 +490,14 @@ export namespace API {
     };
 
     export namespace Create {
-      export type Request = Omit<OrdersData['data'], 'id' | 'user_id' | 'status' | 'total_price'> & {
-        payment_type: string; // uuid
+      export type Request = Pick<
+        OrdersData['data'][number],
+        'cart_id' | 'address_id' | 'special_instructions' | 'delivery_time' | 'type'
+      > & {
+        payment_methods: {
+          payment_method_id: string; // uuid
+          sum: number;
+        }[];
       };
     }
   }

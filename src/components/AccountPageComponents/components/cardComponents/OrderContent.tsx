@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import { FC } from 'react';
 
 import { API } from '@/api/types';
@@ -12,9 +13,10 @@ type TOrderContentProps = {
   }[];
   items: API.Cart.CartItem.CartItem[];
   totalPrice: number;
+  isHistoryOrder?: boolean;
 };
 
-const OrderContent: FC<TOrderContentProps> = ({ discounts, items, totalPrice }) => {
+const OrderContent: FC<TOrderContentProps> = ({ discounts, items, totalPrice, isHistoryOrder }) => {
   const groupedCartItems = getGroupedCartItems(items ?? []);
 
   return (
@@ -24,9 +26,8 @@ const OrderContent: FC<TOrderContentProps> = ({ discounts, items, totalPrice }) 
           {groupedCartItems.map((item) => {
             // const modifiers = item.modifiers.map((modifier) => modifier.name).join(', ');
 
-            // TODO: вывести список названий
+            // TODO: добавить modifiers
             const modifiers = '';
-
             return (
               <div className="flex items-end justify-between gap-10" key={item.product.id}>
                 <p>
@@ -49,6 +50,12 @@ const OrderContent: FC<TOrderContentProps> = ({ discounts, items, totalPrice }) 
           <p>Итого:</p>
           <p className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">{`${totalPrice} ${CurrencySymbol.RUB}`}</p>
         </div>
+        {/* TODO: имплементировать логику повтора заказа */}
+        {isHistoryOrder && (
+          <Button type="primary" className="w-max text-lg leading-lg max-sm:text-base max-sm:leading-base">
+            Повторить заказ
+          </Button>
+        )}
       </div>
     </div>
   );

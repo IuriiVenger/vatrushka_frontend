@@ -132,16 +132,6 @@ export const accountTabs: Record<AccountTabsOptions, TTab> = {
   [AccountTabsOptions.ADDRESSES]: { value: AccountTabsOptions.ADDRESSES, label: 'Мои адреса' },
 };
 
-export enum DeliveryTypeOptions {
-  COURIER = 'DELIVERY',
-  PICKUP = 'TAKEOUT',
-}
-
-export const deliveryTypeOptions: Record<DeliveryTypeOptions, TTab> = {
-  [DeliveryTypeOptions.COURIER]: { value: DeliveryTypeOptions.COURIER, label: 'Доставка курьером' },
-  [DeliveryTypeOptions.PICKUP]: { value: DeliveryTypeOptions.PICKUP, label: 'Самовывоз' },
-};
-
 export enum DeliveryTimeOptions {
   ASAP = 'asap',
   SCHEDULED = 'scheduled',
@@ -300,7 +290,7 @@ export const orderStatusLabels: Record<OrderStatus, string> = {
   [OrderStatus.READY_FOR_COOKING]: 'Заказ подтверждён',
   [OrderStatus.COOKING_STARTED]: 'Начали готовить',
   [OrderStatus.COOKING_COMPLETED]: 'Готов',
-  [OrderStatus.WAITING]: 'Ожидает',
+  [OrderStatus.WAITING]: 'Ожидает курьера',
   [OrderStatus.ON_WAY]: 'В пути',
   [OrderStatus.DELIVERED]: 'Доставлен',
   [OrderStatus.CLOSED]: 'Закрыт',
@@ -320,6 +310,12 @@ export enum OrderType {
   DELIVERY = 'DELIVERY',
   TAKEOUT = 'TAKEOUT',
 }
+
+export const deliveryTypeOptions: Record<OrderType, TTab> = {
+  [OrderType.DELIVERY]: { value: OrderType.DELIVERY, label: 'Доставка курьером' },
+  [OrderType.TAKEOUT]: { value: OrderType.TAKEOUT, label: 'Самовывоз' },
+};
+
 export enum CartStatus {
   ACTIVE = 'ACTIVE',
   CANCELED = 'CANCELED',

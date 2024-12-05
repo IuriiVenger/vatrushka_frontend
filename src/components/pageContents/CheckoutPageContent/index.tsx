@@ -9,7 +9,6 @@ import { HiOutlineCreditCard } from 'react-icons/hi';
 import { IoIosArrowBack } from 'react-icons/io';
 
 import sbp_icon from '../../../assets/images/payments/sbp_icon.svg';
-// import sbp_logo from '../../../assets/images/payments/sbp_logo.svg';
 
 import CheckoutItem from './CheckoutItem';
 import CourierDelivery from './CourierDelivery';
@@ -33,10 +32,10 @@ import {
   CurrencySymbol,
   DeliveryTimeOptions,
   deliveryTimeOptions,
-  DeliveryTypeOptions,
   deliveryTypeOptions,
   OnlinePaymentOptions,
   onlinePaymentOptions,
+  OrderType,
   PaymentOptions,
   paymentOptions,
 } from '@/constants';
@@ -55,7 +54,7 @@ const CheckoutPageContent: FC = () => {
   const { activeCart, cartCardsData, isCartInitialized } = useCart();
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const [deliveryType, setDeliveryType] = useState<DeliveryTypeOptions>(DeliveryTypeOptions.COURIER);
+  const [deliveryType, setDeliveryType] = useState<OrderType>(OrderType.DELIVERY);
   const [deliveryTime, setDeliveryTime] = useState<DeliveryTimeOptions>(DeliveryTimeOptions.ASAP);
   const [paymentType, setPaymentType] = useState<PaymentOptions>(PaymentOptions.ONLINE);
   // const [cutleryCount, setCutleryCount] = useState(0);
@@ -88,7 +87,7 @@ const CheckoutPageContent: FC = () => {
   // Условие для дизейбла
   // const totalSum = 400;
   const deliveryTypeSegmentedItems = getSegmentedItems(deliveryTypeOptions, (option) => ({
-    disabled: option.value === DeliveryTypeOptions.COURIER && totalSum < 500,
+    disabled: option.value === OrderType.DELIVERY && totalSum < 500,
   }));
 
   const timeSegmentedItems = getSegmentedItems(deliveryTimeOptions);
@@ -148,10 +147,10 @@ const CheckoutPageContent: FC = () => {
     setAvailableDeliveryTimeframes(data.timeframes);
   };
 
-  const onDeliveryTypeChange = (value: DeliveryTypeOptions) => {
+  const onDeliveryTypeChange = (value: OrderType) => {
     setDeliveryType(value);
 
-    if (value === DeliveryTypeOptions.COURIER) {
+    if (value === OrderType.DELIVERY) {
       register('userAddress');
       address && setValue('userAddress', convertAddressToAddressFormData(address));
       unregister('branchAddress');
@@ -194,48 +193,42 @@ const CheckoutPageContent: FC = () => {
   //   resetField('bonusPoints');
   // };
 
-  // TODO: удалить корзину сразу после создания заказа
-  const submitHandler: SubmitHandler<TCheckoutForm> = async (data) => {
-    const specialInstructions = data.change ? `Подготовить сдачу с ${data.change}. ${data.message}` : data.message;
+  const submitHandler: SubmitHandler<TCheckoutForm> = async (formData) => {
+    const specialInstructions = `${deliveryTime === DeliveryTimeOptions.ASAP ? 'Доставить как можно скорее. ' : ''}${
+      formData.change ? `Подготовить сдачу с ${formData.change}. ` : ''
+    }${formData.message}`;
 
     const paymentId =
       paymentType === PaymentOptions.CASH
         ? availablePaymentMethods.find((method) => method.iiko_code === CashPaymentOptions.CASH)?.id ||
           CashPaymentOptions.CASH
-        : data.onlinePaymentType;
+        : formData.onlinePaymentType;
 
-    const timeOfDelivery = deliveryTime === DeliveryTimeOptions.ASAP ? deliveryTime : data.time;
+    const firstAvailableInterval = availableDeliveryTimeframes[0].intervals[0].start;
 
+    const timeOfDelivery =
+      deliveryTime === DeliveryTimeOptions.ASAP ? firstAvailableInterval : formData.time || firstAvailableInterval;
+
+    if (!activeCart.data?.id || !paymentId) throw new Error();
+
+    // TODO: удалить корзину сразу после создания заказа
     try {
-      console.log(
-        'cart_id:',
-        activeCart.data?.id,
-        'address_id:',
-        '719ccdd9-8456-4eaf-b8d8-e3ed891ef451',
-        'special_instructions:',
-        specialInstructions,
-        'delivery_time:',
-        timeOfDelivery,
-        'type:',
-        deliveryType,
-        'payment_method_id:',
-        paymentId,
-        'sum:',
-        activeCart.data?.total_sum,
-        // {
-        //   "cart_id": activeCart.data?.id,
-        //   "address_id": '719ccdd9-8456-4eaf-b8d8-e3ed891ef451',
-        //   "special_instructions": specialInstructions,
-        //   "delivery_time": timeOfDelivery,
-        //   "type": deliveryType,
-        //   "payment_methods": [
-        //     {
-        //       "payment_method_id": paymentId,
-        //       "sum": activeCart.data?.total_sum
-        //     }
-        //   ]
-        // }
-      );
+      const { data } = await orders.create({
+        cart_id: activeCart.data?.id,
+        // TODO: поменять на геометку
+        address_id: '719ccdd9-8456-4eaf-b8d8-e3ed891ef451',
+        special_instructions: specialInstructions,
+        delivery_time: timeOfDelivery,
+        type: deliveryType,
+        payment_methods: [
+          {
+            payment_method_id: paymentId,
+            sum: activeCart.data?.total_sum,
+          },
+        ],
+      });
+
+      console.log(data);
       if (paymentType === PaymentOptions.CASH) {
         setIsConfirmationModalOpen(true);
       }
@@ -271,7 +264,9 @@ const CheckoutPageContent: FC = () => {
   }, [activeCart.data?.total_sum]);
 
   useEffect(() => {
-    if (totalSum < 500) onDeliveryTypeChange(DeliveryTypeOptions.PICKUP);
+    if (totalSum >= 500 || totalSum === 0) return;
+
+    onDeliveryTypeChange(OrderType.TAKEOUT);
   }, [totalSum]);
 
   if (!isCartInitialized || !user)
@@ -304,11 +299,11 @@ const CheckoutPageContent: FC = () => {
               <Segmented
                 options={deliveryTypeSegmentedItems}
                 value={deliveryType}
-                onChange={(value) => onDeliveryTypeChange(value as DeliveryTypeOptions)}
+                onChange={(value) => onDeliveryTypeChange(value as OrderType)}
                 block
                 className="-mt-2 text-lg leading-lg max-lg:text-base max-lg:leading-base"
               />
-              {deliveryType === DeliveryTypeOptions.COURIER ? (
+              {deliveryType === OrderType.DELIVERY ? (
                 <CourierDelivery
                   selectedAddress={address}
                   setSelectedAddress={setSelectedAddress}
@@ -386,17 +381,23 @@ const CheckoutPageContent: FC = () => {
 
                         if (!is_online) return null;
 
+                        const isSelected = watch('onlinePaymentType') === id;
+
                         return (
-                          <Radio value={id} className="flex items-start gap-2">
-                            <div className="flex items-center gap-2">
-                              <p>{onlinePaymentOptions[iiko_code as OnlinePaymentOptions].label}</p>
-                              {iiko_code === OnlinePaymentOptions.SBP ? (
-                                <img src={sbp_icon.src} alt="СБП" height={24} width={19} />
-                              ) : (
-                                <HiOutlineCreditCard fontSize={24} />
-                              )}
-                            </div>
-                          </Radio>
+                          <div
+                            className={`rounded-2xl border  p-4 ${isSelected ? 'border-primary' : 'border-borderSecondary'}`}
+                          >
+                            <Radio value={id} className="flex items-start gap-2">
+                              <div className="flex items-center gap-2">
+                                <p>{onlinePaymentOptions[iiko_code as OnlinePaymentOptions].label || iiko_code}</p>
+                                {iiko_code === OnlinePaymentOptions.SBP ? (
+                                  <img src={sbp_icon.src} alt="СБП" height={24} width={19} className="mb-1" />
+                                ) : (
+                                  <HiOutlineCreditCard fontSize={24} className="mb-1" />
+                                )}
+                              </div>
+                            </Radio>
+                          </div>
                         );
                       })}
                     </RadioGroup>

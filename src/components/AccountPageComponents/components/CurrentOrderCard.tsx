@@ -58,12 +58,15 @@ const CurrentOrderCard: FC<TCurrentOrderCardProps> = ({ order }) => {
               <p className="text-nowrap text-lg leading-lg max-sm:text-base max-sm:leading-base">создан {createdAt}</p>
             </div>
             {isOrderClosedOrCancelled ? (
-              // TODO: бэйдж
-              <p className="text-nowrap text-lg leading-lg text-primary max-sm:text-base max-sm:leading-base">
+              <div className="max-sm:text-xs max-sm:leading-xs self-center text-nowrap rounded-2xl border border-primary px-2 py-0.5 text-base leading-base text-primary">
                 {orderStatusLabels[status]}
-              </p>
+              </div>
             ) : (
-              <Button type="link" className="h-6 p-0 text-primary underline underline-offset-4" onClick={onViewStatus}>
+              <Button
+                type="link"
+                className="h-6 p-0 text-primary underline underline-offset-4 hover:text-primaryHover"
+                onClick={onViewStatus}
+              >
                 Статус заказа
               </Button>
             )}
@@ -79,11 +82,16 @@ const CurrentOrderCard: FC<TCurrentOrderCardProps> = ({ order }) => {
           type={deliveryTypeOptions[type].label}
           address={orderAddress}
           time={deliveryTime}
-          paymentMethod={paymentMethod || ''}
+          paymentMethod={paymentMethod || payment_methods[0].iiko_code}
         />
       </div>
       {!isOrderClosedOrCancelled && (
-        <OrderStatusModal isOpen={isViewStatusModalOpen} setIsOpen={setIsViewStatusModalOpen} orderStatus={status} />
+        <OrderStatusModal
+          isOpen={isViewStatusModalOpen}
+          setIsOpen={setIsViewStatusModalOpen}
+          orderStatus={status}
+          deliveryType={type}
+        />
       )}
     </>
   );

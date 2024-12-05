@@ -48,8 +48,7 @@ const SeoContent: FC = () => {
         </div>
         <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">
           Заказать обед или бизнес-ланч вы можете на нашем сайте или позвонив оператору по телефону{' '}
-          {companyInfo.mainPhone}
-          ежедневно без праздников и выходных.
+          {companyInfo.mainPhone} ежедневно без праздников и выходных.
         </p>
       </div>
       {isCollapsed && (

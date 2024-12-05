@@ -1,4 +1,4 @@
-import { Collapse, CollapseProps, Divider } from 'antd';
+import { Button, Collapse, CollapseProps, Divider } from 'antd';
 import dayjs from 'dayjs';
 import { FC } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
@@ -77,13 +77,14 @@ const OrdersHistoryCard: FC<TOrdersHistoryCardProps> = ({ order }) => {
             //  discounts={discounts}
             items={cart.items}
             totalPrice={total_price}
+            isHistoryOrder
           />
           <Divider className="hidden max-lg:block" />
           <Fulfillment
             type={deliveryTypeOptions[type].label}
             address={orderAddress}
             time={deliveryTime}
-            paymentMethod={paymentMethod || ''}
+            paymentMethod={paymentMethod || payment_methods[0].iiko_code}
           />
         </div>
       ),

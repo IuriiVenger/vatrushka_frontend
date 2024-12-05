@@ -45,10 +45,6 @@ const Header: FC = () => {
     dispatch(toggleMenu(!isMenuOpened));
   };
 
-  const onCartClick = () => {
-    router.push('/cart');
-  };
-
   const onCloseAll = () => {
     dispatch(resetAll());
   };
@@ -95,7 +91,6 @@ const Header: FC = () => {
               onDeleteButtonClick={removeGroupedCartItem}
               onStepperCountChange={onGroupedCartItemQuantityChange}
               isCartDropdownHidden={isCartDropdownHidden}
-              onCartClick={onCartClick}
             />
           </div>
         </div>

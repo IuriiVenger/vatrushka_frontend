@@ -13,6 +13,7 @@ type CurrentOrdersTabProps = {
   isLoading: boolean;
 };
 
+// TODO: обновлять заказы когда заходишь на эту вкладку и убрать инициализацию заказов для анонимного юзера
 const CurrentOrdersTab: FC<CurrentOrdersTabProps> = (props) => {
   const { orders, loadMoreOrders, isLoadMoreAvailable, isLoading } = props;
 

@@ -8,7 +8,6 @@ import Input from '@/components/ui/Form/Input';
 import Map from '@/components/ui/Map';
 
 import useDebounce from '@/hooks/useDebounce';
-import { userInfo } from '@/mocks';
 import { TAddressForm, TCheckoutForm } from '@/types';
 import { convertDadataAddressToAddress, convertAddressToCityStreetBuildingFlat } from '@/utils/converters';
 
@@ -99,7 +98,7 @@ const CourierDelivery: FC<TCourierDeliveryProps> = (props) => {
       <div className="flex flex-col gap-8">
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Адрес доставки</h3>
-          {isUserLoggedIn && userInfo.addresses.length && (
+          {isUserLoggedIn && !!addresses?.length && (
             <Button type="link" onClick={onMyAddressesClick} className="h-6 p-0">
               Мои адреса
             </Button>

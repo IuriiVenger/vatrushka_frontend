@@ -13,6 +13,7 @@ import OrderPaymentStatusModal from '@/components/modals/OrderPaymentStatusModal
 import SeoContent from '@/components/SeoContent';
 
 import useCart from '@/hooks/useCart';
+// TODO: заполнить акции и тянуть оттуда
 import { slides } from '@/mocks';
 import { TCard, TProductSliderSlide } from '@/types';
 import { conertCategoryRecommendedProductsToCards } from '@/utils/converters';
