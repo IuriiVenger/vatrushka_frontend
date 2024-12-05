@@ -55,8 +55,8 @@ export type CartSliceState = {
 };
 
 export type OrdersSliceState = {
-  activeOrders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
-  inactiveOrders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
+  activeOrders: StoreDataWithStatusAndMeta<API.Orders.OrdersData | null>;
+  inactiveOrders: StoreDataWithStatusAndMeta<API.Orders.OrdersData | null>;
 };
 
 export type RootState = ReturnType<typeof store.getState>;

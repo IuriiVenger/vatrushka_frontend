@@ -136,6 +136,7 @@ export type TUserInfo = {
 export type TTab = {
   value: string;
   label: string;
+  disabled?: boolean;
 };
 
 export type TOrderStatus = {
@@ -228,7 +229,8 @@ export type TCheckoutForm = {
   phone: string;
   message: string;
   date: dayjs.Dayjs | null;
-  time: string;
+  time: string | null;
   change: number | null;
-  bonusPoints: number | null;
+  // bonusPoints: number | null;
+  onlinePaymentType: string | null;
 };

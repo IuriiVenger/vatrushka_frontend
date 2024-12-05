@@ -2,8 +2,6 @@
 
 import { Alert, Button, Divider, Spin } from 'antd';
 import { FC, Fragment, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { IoIosArrowForward } from 'react-icons/io';
 
 import EmptyCartScreen from '../../EmptyCartScreen';
 
@@ -11,7 +9,6 @@ import ItemCard from './ItemCard';
 
 import AuthModal from '@/components/modals/AuthModal';
 import ConfirmModal from '@/components/modals/ConfirmModal';
-import Input from '@/components/ui/Form/Input';
 import { CurrencySymbol } from '@/constants';
 
 import useCart from '@/hooks/useCart';
@@ -19,9 +16,9 @@ import { useAppSelector } from '@/store';
 import { selectIsNonAnonymousUser } from '@/store/slices/user';
 import { getNounWithDeclension } from '@/utils/formatters';
 
-type TDiscountForm = {
-  promoCode: string;
-};
+// type TDiscountForm = {
+//   promoCode: string;
+// };
 
 const CartPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
@@ -44,17 +41,17 @@ const CartPageContent: FC = () => {
     'товаров',
   )}`;
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors, isDirty },
-  } = useForm<TDiscountForm>({
-    mode: 'onChange',
-  });
+  // const {
+  //   handleSubmit,
+  //   control,
+  //   formState: { errors, isDirty },
+  // } = useForm<TDiscountForm>({
+  //   mode: 'onChange',
+  // });
 
-  const onCheckPromoCode: SubmitHandler<TDiscountForm> = (data) => {
-    console.log('onCheckPromoCode:', data);
-  };
+  // const onCheckPromoCode: SubmitHandler<TDiscountForm> = (data) => {
+  //   console.log('onCheckPromoCode:', data);
+  // };
 
   const onContinue = () => {
     if (!isUserLoggedIn) {
@@ -125,7 +122,7 @@ const CartPageContent: FC = () => {
                 </p>
               </div> */}
             </div>
-            <Input
+            {/* <Input
               name="promoCode"
               placeholder="Введите промокод"
               control={control}
@@ -141,7 +138,7 @@ const CartPageContent: FC = () => {
                   className="h-11 w-max px-4 py-0 text-primary hover:text-primaryHover"
                 />
               }
-            />
+            /> */}
             <div className=" flex flex-col gap-1">
               <div className="flex justify-between text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">
                 <p>Итого:</p>

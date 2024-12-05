@@ -454,8 +454,10 @@ export namespace API {
       };
 
       export type DeliveryTimeframe = {
-        date: string;
-        intervals: DeliveryInterval[];
+        timeframes: {
+          date: string;
+          intervals: DeliveryInterval[];
+        }[];
       };
     }
 
@@ -465,27 +467,30 @@ export namespace API {
         payment_status?: OrderPaymentStatus;
       };
     }
-    export type Order = {
-      id: string;
-      user_id: string;
-      cart_id: string;
-      address_id: string;
-      total_price: number;
-      special_instructions: string;
-      delivery_time: string; // example: '2024-01-25T13:45:30.123Z'
-      type: OrderType;
-      status: OrderStatus;
-      payment_status: OrderPaymentStatus;
-      created_at: string;
-      updated_at: string;
-      is_deleted: boolean;
-      payment_methods: API.Payment.PaymentMethods.PaymentMethod[];
-      order_number: string;
-      cart: Pick<API.Cart.Cart, 'items' | 'id'>;
+    export type OrdersData = {
+      data: {
+        id: string;
+        user_id: string;
+        cart_id: string;
+        address: API.Address.Address;
+        address_id: string;
+        total_price: number;
+        special_instructions: string;
+        delivery_time: string; // example: '2024-01-25T13:45:30.123Z'
+        type: OrderType;
+        status: OrderStatus;
+        payment_status: OrderPaymentStatus;
+        created_at: string;
+        updated_at: string;
+        is_deleted: boolean;
+        payment_methods: API.Payment.PaymentMethods.PaymentMethod[];
+        order_number: string;
+        cart: Pick<API.Cart.Cart, 'items' | 'id'>;
+      }[];
     };
 
     export namespace Create {
-      export type Request = Omit<Order, 'id' | 'user_id' | 'status' | 'total_price'> & {
+      export type Request = Omit<OrdersData['data'], 'id' | 'user_id' | 'status' | 'total_price'> & {
         payment_type: string; // uuid
       };
     }
@@ -506,6 +511,7 @@ export namespace API {
         delivery_zones: string;
         min_sum: string;
         max_sum: string;
+        is_online: boolean;
       };
     }
   }

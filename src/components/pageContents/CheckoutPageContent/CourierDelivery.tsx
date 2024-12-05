@@ -35,8 +35,6 @@ const CourierDelivery: FC<TCourierDeliveryProps> = (props) => {
     getValues,
   } = useFormContext<TCheckoutForm>();
 
-  const inputAddress = watch('userAddress');
-
   const debouncedCityStreetBuildingFlat = useDebounce<string>(watch('userAddress.cityStreetBuildingFlat'));
 
   const dropdownOptions = useMemo(

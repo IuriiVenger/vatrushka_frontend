@@ -143,7 +143,7 @@ export const theme = {
       titleFontSize: 30,
       titleFontSizeSM: 10,
       fontWeightStrong: 500,
-      boxShadow: '0px 4px 20px 0px rgba(64, 54, 49, 0.09)',
+      boxShadow: `0px 4px 20px 0px ${color.shadow.lightest}`,
       fontFamily: 'Gilroy',
       fontHeight: 32,
     },

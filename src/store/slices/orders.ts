@@ -16,7 +16,7 @@ export const loadActiveOrders = createAsyncThunk('orders/loadActiveOrders', asyn
   return orders;
 });
 
-export const loadMoreActiveOrders = createAsyncThunk<API.Orders.Order[], void, { state: RootState }>(
+export const loadMoreActiveOrders = createAsyncThunk<API.Orders.OrdersData, void, { state: RootState }>(
   'orders/loadMoreActiveOrders',
   async (_, { getState }) => {
     const state = getState();
@@ -31,7 +31,7 @@ export const loadInactiveOrders = createAsyncThunk('orders/loadInactiveOrders', 
   return orders;
 });
 
-export const loadMoreInactiveOrders = createAsyncThunk<API.Orders.Order[], void, { state: RootState }>(
+export const loadMoreInactiveOrders = createAsyncThunk<API.Orders.OrdersData, void, { state: RootState }>(
   'orders/loadMoreInactiveOrders',
   async (_, { getState }) => {
     const state = getState();
@@ -55,8 +55,8 @@ const ordersSlice = createSlice({
     builder.addCase(loadActiveOrders.fulfilled, (state, action) => {
       state.activeOrders.status = RequestStatus.FULFILLED;
       state.activeOrders.data = action.payload;
-      state.activeOrders.meta.offset += action.payload.length;
-      state.activeOrders.meta.isLastPage = action.payload.length < state.activeOrders.meta.first;
+      state.activeOrders.meta.offset += action.payload.data.length;
+      state.activeOrders.meta.isLastPage = action.payload.data.length < state.activeOrders.meta.first;
     });
     builder.addCase(loadActiveOrders.rejected, (state) => {
       state.activeOrders.status = RequestStatus.REJECTED;
@@ -66,11 +66,16 @@ const ordersSlice = createSlice({
     });
     builder.addCase(loadMoreActiveOrders.fulfilled, (state, action) => {
       state.activeOrders.status = RequestStatus.FULFILLED;
-      state.activeOrders.data = state.activeOrders.data
-        ? [...state.activeOrders.data, ...action.payload]
-        : action.payload;
-      state.activeOrders.meta.offset += action.payload.length;
-      state.activeOrders.meta.isLastPage = action.payload.length < state.activeOrders.meta.first;
+      state.inactiveOrders.status = RequestStatus.FULFILLED;
+      if (state.inactiveOrders.data) {
+        state.inactiveOrders.data.data = state.inactiveOrders.data.data
+          ? [...state.inactiveOrders.data.data, ...action.payload.data]
+          : action.payload.data;
+      } else {
+        state.inactiveOrders.data = { ...action.payload };
+      }
+      state.activeOrders.meta.offset += action.payload.data.length;
+      state.activeOrders.meta.isLastPage = action.payload.data.length < state.activeOrders.meta.first;
     });
     builder.addCase(loadMoreActiveOrders.rejected, (state) => {
       state.activeOrders.status = RequestStatus.REJECTED;
@@ -81,8 +86,8 @@ const ordersSlice = createSlice({
     builder.addCase(loadInactiveOrders.fulfilled, (state, action) => {
       state.inactiveOrders.status = RequestStatus.FULFILLED;
       state.inactiveOrders.data = action.payload;
-      state.inactiveOrders.meta.offset += action.payload.length;
-      state.inactiveOrders.meta.isLastPage = action.payload.length < state.inactiveOrders.meta.first;
+      state.inactiveOrders.meta.offset += action.payload.data.length;
+      state.inactiveOrders.meta.isLastPage = action.payload.data.length < state.inactiveOrders.meta.first;
     });
     builder.addCase(loadInactiveOrders.rejected, (state) => {
       state.inactiveOrders.status = RequestStatus.REJECTED;
@@ -92,11 +97,15 @@ const ordersSlice = createSlice({
     });
     builder.addCase(loadMoreInactiveOrders.fulfilled, (state, action) => {
       state.inactiveOrders.status = RequestStatus.FULFILLED;
-      state.inactiveOrders.data = state.inactiveOrders.data
-        ? [...state.inactiveOrders.data, ...action.payload]
-        : action.payload;
-      state.inactiveOrders.meta.offset += action.payload.length;
-      state.inactiveOrders.meta.isLastPage = action.payload.length < state.inactiveOrders.meta.first;
+      if (state.inactiveOrders.data) {
+        state.inactiveOrders.data.data = state.inactiveOrders.data.data
+          ? [...state.inactiveOrders.data.data, ...action.payload.data]
+          : action.payload.data;
+      } else {
+        state.inactiveOrders.data = { ...action.payload };
+      }
+      state.inactiveOrders.meta.offset += action.payload.data.length;
+      state.inactiveOrders.meta.isLastPage = action.payload.data.length < state.inactiveOrders.meta.first;
     });
     builder.addCase(loadMoreInactiveOrders.rejected, (state) => {
       state.inactiveOrders.status = RequestStatus.REJECTED;

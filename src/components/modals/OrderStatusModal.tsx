@@ -3,22 +3,29 @@ import { FC } from 'react';
 
 import Modal from './Modal';
 
-import { TModalProps, TOrderStatus } from '@/types';
+import { OrderStatus, orderStatusLabels } from '@/constants';
+import { TModalProps } from '@/types';
 
 type TOrderStatusModalProps = TModalProps & {
-  orderStatuses: TOrderStatus[];
+  orderStatus: Exclude<OrderStatus, OrderStatus.CLOSED | OrderStatus.CANCELLED>;
 };
 
-const OrderStatusModal: FC<TOrderStatusModalProps> = ({ isOpen, setIsOpen, orderStatuses }) => {
-  const items = orderStatuses.map(({ time, status, completed }) => ({
-    label: time,
-    children: status,
-    color: completed ? 'green' : 'gray',
-  }));
+const OrderStatusModal: FC<TOrderStatusModalProps> = ({ isOpen, setIsOpen, orderStatus }) => {
+  const statuses = Object.values(OrderStatus).filter(
+    (status) => status !== OrderStatus.CLOSED && status !== OrderStatus.CANCELLED,
+  );
+
+  const items = statuses.map((status, index) => {
+    const isCompleted = index <= statuses.indexOf(orderStatus);
+    return {
+      children: orderStatusLabels[status],
+      color: isCompleted ? 'green' : 'gray',
+    };
+  });
 
   return (
     <Modal title="Статус заказа" isOpen={isOpen} setIsOpen={setIsOpen} width="xsmall">
-      <Timeline mode="left" items={items} className="pt-6" />
+      <Timeline mode="left" items={items} />
     </Modal>
   );
 };

@@ -133,8 +133,8 @@ export const accountTabs: Record<AccountTabsOptions, TTab> = {
 };
 
 export enum DeliveryTypeOptions {
-  COURIER = 'courier',
-  PICKUP = 'pickup',
+  COURIER = 'DELIVERY',
+  PICKUP = 'TAKEOUT',
 }
 
 export const deliveryTypeOptions: Record<DeliveryTypeOptions, TTab> = {
@@ -160,6 +160,26 @@ export enum PaymentOptions {
 export const paymentOptions: Record<PaymentOptions, TTab> = {
   [PaymentOptions.ONLINE]: { value: PaymentOptions.ONLINE, label: 'Онлайн' },
   [PaymentOptions.CASH]: { value: PaymentOptions.CASH, label: 'Наличными' },
+};
+
+export enum OnlinePaymentOptions {
+  CARD_ONLINE = 'CARD_ONLINE',
+  SBP = 'SBP',
+}
+
+export enum CashPaymentOptions {
+  CASH = 'CASH',
+  BONUS = 'BONUS',
+}
+
+export const onlinePaymentOptions: Record<OnlinePaymentOptions, TTab> = {
+  [OnlinePaymentOptions.CARD_ONLINE]: { value: OnlinePaymentOptions.CARD_ONLINE, label: 'Картой онлайн' },
+  [OnlinePaymentOptions.SBP]: { value: OnlinePaymentOptions.SBP, label: 'СБП' },
+};
+
+export const cashPaymentOptions: Record<CashPaymentOptions, TTab> = {
+  [CashPaymentOptions.CASH]: { value: CashPaymentOptions.CASH, label: 'Наличными' },
+  [CashPaymentOptions.BONUS]: { value: CashPaymentOptions.BONUS, label: 'Бонусами' },
 };
 
 export const sortDropdownItems: MenuProps['items'] = [
@@ -189,20 +209,20 @@ export const filterOrdersTypeTranslation = {
   [FilterOrdersType.YEAR_2023]: '2023 г',
 };
 
-export const filterDropdownItems: MenuProps['items'] = [
-  {
-    key: 'all',
-    label: 'За все время',
-  },
-  {
-    key: '2024',
-    label: '2024 г',
-  },
-  {
-    key: '2023',
-    label: '2023 г',
-  },
-];
+// export const filterDropdownItems: MenuProps['items'] = [
+//   {
+//     key: 'all',
+//     label: 'За все время',
+//   },
+//   {
+//     key: '2024',
+//     label: '2024 г',
+//   },
+//   {
+//     key: '2023',
+//     label: '2023 г',
+//   },
+// ];
 
 export enum AuthModalSteps {
   AUTH_ACTION = 0,
@@ -273,6 +293,19 @@ export enum OrderStatus {
   CLOSED = 'Closed',
   CANCELLED = 'Cancelled',
 }
+
+export const orderStatusLabels: Record<OrderStatus, string> = {
+  [OrderStatus.UNCONFIRMED]: 'Получили заказ',
+  [OrderStatus.WAIT_COOKING]: 'Ожидает приготовления',
+  [OrderStatus.READY_FOR_COOKING]: 'Заказ подтверждён',
+  [OrderStatus.COOKING_STARTED]: 'Начали готовить',
+  [OrderStatus.COOKING_COMPLETED]: 'Готов',
+  [OrderStatus.WAITING]: 'Ожидает',
+  [OrderStatus.ON_WAY]: 'В пути',
+  [OrderStatus.DELIVERED]: 'Доставлен',
+  [OrderStatus.CLOSED]: 'Закрыт',
+  [OrderStatus.CANCELLED]: 'Отменён',
+};
 
 export enum OrderPaymentStatus {
   UNPAID = 'unpaid',

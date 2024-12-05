@@ -100,7 +100,7 @@ const Header: FC = () => {
           </div>
         </div>
       </header>
-      <MenuDrawer />
+      <MenuDrawer catalogOptions={categories.data} />
     </>
   );
 };

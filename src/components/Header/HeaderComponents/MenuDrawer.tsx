@@ -1,11 +1,12 @@
 import { Drawer, Button, Divider } from 'antd';
 import Link from 'next/link';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { FaPhone } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
 
 import SubMenuDrawer from './SubMenuDrawer';
 
+import { Categories } from '@/__generated__/graphql';
 import Contacts from '@/components/Contacts';
 import ContactUsModal from '@/components/modals/ContactUsModal';
 import { companyInfo, contactLinks, navigationLinks } from '@/config/links';
@@ -29,7 +30,11 @@ const contacts = Object.fromEntries(
   Object.entries(contactLinks).filter(([key]) => key !== 'mail' && key !== 'chiefMail'),
 ) as Omit<Record<ContactLinks, TContact>, 'mail' | 'chiefMail'>;
 
-const MenuDrawer = () => {
+type TMenuDrawerProps = {
+  catalogOptions: Categories[] | null;
+};
+
+const MenuDrawer: FC<TMenuDrawerProps> = ({ catalogOptions }) => {
   const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -105,7 +110,12 @@ const MenuDrawer = () => {
           </Button>
         </div>
       </Drawer>
-      <SubMenuDrawer isSubMenuOpened={isSubMenuOpened} onCloseSubMenu={onCloseSubMenu} onCloseAll={onCloseAll} />
+      <SubMenuDrawer
+        isSubMenuOpened={isSubMenuOpened}
+        onCloseSubMenu={onCloseSubMenu}
+        onCloseAll={onCloseAll}
+        catalogOptions={catalogOptions}
+      />
       <ContactUsModal isOpen={isContactUsModalOpen} setIsOpen={setIsContactUsModalOpen} />
     </>
   );

@@ -5,7 +5,7 @@ import { API } from '@/api/types';
 import AddressModal from '@/components/modals/AddressModal';
 import ConfirmModal from '@/components/modals/ConfirmModal';
 import { TAddressForm } from '@/types';
-import { convertAddressToCityStreetBuildingFlat } from '@/utils/converters';
+import { convertAddressToCityStreetBuildingFlat, convertAddressToEntranceFloorDoorphone } from '@/utils/converters';
 
 type TAddressCardProps = {
   address: API.Address.Address;
@@ -35,11 +35,14 @@ const AddressCard: FC<TAddressCardProps> = (props) => {
 
   const additionalInfo = convertAddressToCityStreetBuildingFlat(address);
 
+  const extraInfo = convertAddressToEntranceFloorDoorphone(address);
+
   return (
     <>
       <div className="w-full max-w-144 rounded-2xl border border-borderSecondary p-6 text-lg leading-lg max-sm:p-4 max-sm:text-base max-sm:leading-base">
         <h2 className="text-2xl font-medium leading-2xl max-sm:text-lg max-sm:leading-lg">{street_name}</h2>
         <p className="pt-3 max-sm:pt-2">{additionalInfo}</p>
+        <p className="pt-3 max-sm:pt-2">{extraInfo}</p>
         <div className="flex gap-6 pt-5">
           <Button
             type="link"

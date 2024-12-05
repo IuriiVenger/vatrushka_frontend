@@ -5,14 +5,17 @@ import { Alert, Button, Divider, Radio, Segmented, Spin } from 'antd';
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, DefaultValues } from 'react-hook-form';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { HiOutlineCreditCard } from 'react-icons/hi';
+import { IoIosArrowBack } from 'react-icons/io';
 
-// import sbp_icon from '../../../assets/images/payments/sbp_icon.svg';
+import sbp_icon from '../../../assets/images/payments/sbp_icon.svg';
 // import sbp_logo from '../../../assets/images/payments/sbp_logo.svg';
 
 import CheckoutItem from './CheckoutItem';
 import CourierDelivery from './CourierDelivery';
 import PickupDelivery from './PickupDelivery';
+
+import ScheduledTime from './ScheduledTime';
 
 import { address as addressesApi } from '@/api/address';
 
@@ -20,19 +23,20 @@ import { orders } from '@/api/orders';
 import { API } from '@/api/types';
 import EmptyCartScreen from '@/components/EmptyCartScreen';
 import OrderPaymentStatusModal from '@/components/modals/OrderPaymentStatusModal';
-import DatePicker from '@/components/ui/Form/DatePicker';
 import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
-import NumericInput from '@/components/ui/Form/NumericInput';
 import RadioGroup from '@/components/ui/Form/Radio';
 import TextAreaInput from '@/components/ui/Form/TextArea';
 import { companyInfo, legalLinks } from '@/config/links';
 import {
+  CashPaymentOptions,
   CurrencySymbol,
   DeliveryTimeOptions,
   deliveryTimeOptions,
   DeliveryTypeOptions,
   deliveryTypeOptions,
+  OnlinePaymentOptions,
+  onlinePaymentOptions,
   PaymentOptions,
   paymentOptions,
 } from '@/constants';
@@ -61,23 +65,35 @@ const CheckoutPageContent: FC = () => {
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [isOrderLoading, setIsOrderLoading] = useState(false);
   const [availableDeliveryTimeframes, setAvailableDeliveryTimeframes] = useState<
-    API.Orders.DeliveryTimeframes.DeliveryTimeframe[]
+    API.Orders.DeliveryTimeframes.DeliveryTimeframe['timeframes']
   >([]);
 
   const [availablePaymentMethods, setAvailablePaymentMethods] = useState<API.Payment.PaymentMethods.PaymentMethod[]>(
     [],
   );
 
-  const getSegmentedItems = (options: Record<string, TTab>) => Object.values(options).map((option) => option);
   const loadAvailablePaymentMethods = async () => {
     const { data } = await orders.paymentMethods({ sum: totalSum });
     setAvailablePaymentMethods(data);
   };
 
-  const deliveryTypeSegmentedItems = getSegmentedItems(deliveryTypeOptions);
-  const timeSegmentedItems = getSegmentedItems(deliveryTimeOptions);
+  // const getSegmentedItems = (options: Record<string, TTab>) => Object.values(options).map((option) => option);
 
+  const getSegmentedItems = (options: Record<string, TTab>, callback?: (option: TTab) => Partial<TTab>) =>
+    Object.values(options).map((option) => ({
+      ...option,
+      ...(callback ? callback(option) : {}),
+    }));
+
+  // Условие для дизейбла
+  // const totalSum = 400;
+  const deliveryTypeSegmentedItems = getSegmentedItems(deliveryTypeOptions, (option) => ({
+    disabled: option.value === DeliveryTypeOptions.COURIER && totalSum < 500,
+  }));
+
+  const timeSegmentedItems = getSegmentedItems(deliveryTimeOptions);
   const paymentSegmentedItems = getSegmentedItems(paymentOptions);
+  // const deliveryTypeSegmentedItems = getSegmentedItems(deliveryTypeOptions);
 
   const itemsCountText = `${activeCart.data?.items?.length ?? 0} ${getNounWithDeclension(activeCart.data?.items?.length ?? 0, 'товар', 'товара', 'товаров')}`;
 
@@ -90,7 +106,8 @@ const CheckoutPageContent: FC = () => {
     date: null,
     time: '',
     change: null,
-    bonusPoints: null,
+    // bonusPoints: null,
+    onlinePaymentType: null,
   };
 
   const methods = useForm<TCheckoutForm>({
@@ -100,12 +117,13 @@ const CheckoutPageContent: FC = () => {
 
   const {
     handleSubmit,
-    getValues,
+    // getValues,
     control,
     unregister,
     register,
-    resetField,
+    // resetField,
     setValue,
+    watch,
     formState: { errors, isDirty, isValid },
   } = methods;
 
@@ -127,10 +145,10 @@ const CheckoutPageContent: FC = () => {
     const { data } = await orders.deliveryTimeframes({
       address_id: '719ccdd9-8456-4eaf-b8d8-e3ed891ef451', // TODO: address_id will be changed to geo_point
     });
-    setAvailableDeliveryTimeframes(data);
+    setAvailableDeliveryTimeframes(data.timeframes);
   };
 
-  const onDeliveryTypeClick = (value: DeliveryTypeOptions) => {
+  const onDeliveryTypeChange = (value: DeliveryTypeOptions) => {
     setDeliveryType(value);
 
     if (value === DeliveryTypeOptions.COURIER) {
@@ -143,7 +161,7 @@ const CheckoutPageContent: FC = () => {
     }
   };
 
-  const onDeliveryTimeClick = (value: DeliveryTimeOptions) => {
+  const onDeliveryTimeChange = (value: DeliveryTimeOptions) => {
     setDeliveryTime(value);
 
     if (value === DeliveryTimeOptions.SCHEDULED) {
@@ -153,42 +171,69 @@ const CheckoutPageContent: FC = () => {
     }
   };
 
-  const onPaymentClick = (value: PaymentOptions) => {
+  const onPaymentTypeChange = (value: PaymentOptions) => {
     setPaymentType(value);
 
     if (value === PaymentOptions.CASH) {
       register('change');
+      unregister('onlinePaymentType');
     } else {
       unregister('change');
+      register('onlinePaymentType');
     }
   };
 
-  const onRedeemBonusPoints = () => {
-    const inputValue = getValues('bonusPoints');
+  // const onRedeemBonusPoints = () => {
+  //   const inputValue = getValues('bonusPoints');
 
-    if (!inputValue) return;
+  //   if (!inputValue) return;
 
-    setUserBonusPoint((prevBonusPoints) => prevBonusPoints - inputValue);
-    setTotalSum((prevBonusPoints) => prevBonusPoints - inputValue);
+  //   setUserBonusPoint((prevBonusPoints) => prevBonusPoints - inputValue);
+  //   setTotalSum((prevBonusPoints) => prevBonusPoints - inputValue);
 
-    resetField('bonusPoints');
-  };
+  //   resetField('bonusPoints');
+  // };
 
   const submitHandler: SubmitHandler<TCheckoutForm> = async (data) => {
+    const specialInstructions = data.change ? `Подготовить сдачу с ${data.change}. ${data.message}` : data.message;
+
+    const paymentId =
+      paymentType === PaymentOptions.CASH
+        ? availablePaymentMethods.find((method) => method.iiko_code === CashPaymentOptions.CASH)?.id ||
+          CashPaymentOptions.CASH
+        : data.onlinePaymentType;
+
+    const timeOfDelivery = deliveryTime === DeliveryTimeOptions.ASAP ? deliveryTime : data.time;
+
     try {
       console.log(
-        'checkout order',
-        data,
-        'address:',
-        address,
-        'time:',
-        deliveryTime === DeliveryTimeOptions.ASAP ? deliveryTime : ` ${(data.date?.toDate(), data.time)}`,
-        'payment:',
-        paymentType === PaymentOptions.ONLINE ? paymentType : data.change,
-        // 'cutlery:',
-        // cutleryCount,
-        'data.change,',
-        data.change,
+        'cart_id:',
+        activeCart.data?.id,
+        'address_id:',
+        '719ccdd9-8456-4eaf-b8d8-e3ed891ef451',
+        'special_instructions:',
+        specialInstructions,
+        'delivery_time:',
+        timeOfDelivery,
+        'type:',
+        deliveryType,
+        'payment_method_id:',
+        paymentId,
+        'sum:',
+        activeCart.data?.total_sum,
+        // {
+        //   "cart_id": activeCart.data?.id,
+        //   "address_id": '719ccdd9-8456-4eaf-b8d8-e3ed891ef451',
+        //   "special_instructions": specialInstructions,
+        //   "delivery_time": timeOfDelivery,
+        //   "type": deliveryType,
+        //   "payment_methods": [
+        //     {
+        //       "payment_method_id": paymentId,
+        //       "sum": activeCart.data?.total_sum
+        //     }
+        //   ]
+        // }
       );
       if (paymentType === PaymentOptions.CASH) {
         setIsConfirmationModalOpen(true);
@@ -215,10 +260,18 @@ const CheckoutPageContent: FC = () => {
   }, [address]);
 
   useEffect(() => {
+    setValue('time', null);
+  }, [address]);
+
+  useEffect(() => {
     if (!activeCart.data?.total_sum) return;
 
     setTotalSum(activeCart.data?.total_sum);
   }, [activeCart.data?.total_sum]);
+
+  useEffect(() => {
+    if (totalSum < 500) onDeliveryTypeChange(DeliveryTypeOptions.PICKUP);
+  }, [totalSum]);
 
   if (!isCartInitialized || !user)
     return (
@@ -250,7 +303,7 @@ const CheckoutPageContent: FC = () => {
               <Segmented
                 options={deliveryTypeSegmentedItems}
                 value={deliveryType}
-                onChange={(value) => onDeliveryTypeClick(value as DeliveryTypeOptions)}
+                onChange={(value) => onDeliveryTypeChange(value as DeliveryTypeOptions)}
                 block
                 className="-mt-2 text-lg leading-lg max-lg:text-base max-lg:leading-base"
               />
@@ -271,32 +324,18 @@ const CheckoutPageContent: FC = () => {
                   <Segmented
                     options={timeSegmentedItems}
                     value={deliveryTime}
-                    onChange={(value) => onDeliveryTimeClick(value as DeliveryTimeOptions)}
+                    onChange={(value) => onDeliveryTimeChange(value as DeliveryTimeOptions)}
                     block
                     className="outlined text-lg leading-lg max-lg:text-base max-lg:leading-base"
                   />
                   {deliveryTime === DeliveryTimeOptions.SCHEDULED && (
                     <>
-                      <div className="flex gap-4">
-                        <DatePicker
-                          placeholder="Выберите дату"
-                          className="h-12 w-full"
-                          required
-                          name="date"
-                          label="Дата"
-                          control={control}
-                          errors={!!errors.date}
-                        />
-                        <Input
-                          className="w-full"
-                          name="time"
-                          placeholder="Выберите время"
-                          label="Время"
-                          control={control}
-                          errors={!!errors.time}
-                          required
-                        />
-                      </div>
+                      <ScheduledTime
+                        timeframes={availableDeliveryTimeframes}
+                        date={watch('date')}
+                        control={control}
+                        errors={errors}
+                      />
                       <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">
                         Время изготовления заказа может быть скорректировано в зависимости от состава
                       </p>
@@ -335,24 +374,30 @@ const CheckoutPageContent: FC = () => {
                   <Segmented
                     options={paymentSegmentedItems}
                     value={paymentType}
-                    onChange={(value) => onPaymentClick(value as PaymentOptions)}
+                    onChange={(value) => onPaymentTypeChange(value as PaymentOptions)}
                     block
                     className="outlined text-lg leading-lg max-lg:text-base max-lg:leading-base"
                   />
                   {paymentType === PaymentOptions.ONLINE ? (
-                    <RadioGroup className="flex flex-col gap-4" name="branchAddress" control={control} required>
-                      {/* {availablePaymentMethods.map(({id, name, is_online}) => {
+                    <RadioGroup className="flex flex-col gap-4" name="onlinePaymentType" control={control} required>
+                      {availablePaymentMethods.map((method) => {
+                        const { id, is_online, iiko_code } = method;
+
                         if (!is_online) return null;
 
                         return (
                           <Radio value={id} className="flex items-start gap-2">
-                            <div className="flex gap-2">
-                              <p>{name}</p>
-                              {name === 'sbp' ? <img src={sbp_icon.src} alt="СБП" /> : <HiOutlineCreditCard />}
+                            <div className="flex items-center gap-2">
+                              <p>{onlinePaymentOptions[iiko_code as OnlinePaymentOptions].label}</p>
+                              {iiko_code === OnlinePaymentOptions.SBP ? (
+                                <img src={sbp_icon.src} alt="СБП" height={24} width={19} />
+                              ) : (
+                                <HiOutlineCreditCard fontSize={24} />
+                              )}
                             </div>
                           </Radio>
                         );
-                      })} */}
+                      })}
                     </RadioGroup>
                   ) : (
                     <Input
@@ -419,7 +464,7 @@ const CheckoutPageContent: FC = () => {
                     <Segmented
                       options={paymentSegmentedItems}
                       value={paymentType}
-                      onChange={(value) => onPaymentClick(value as PaymentOptions)}
+                      onChange={(value) => onPaymentTypeChange(value as PaymentOptions)}
                       block
                       className="outlined text-base leading-base"
                     />

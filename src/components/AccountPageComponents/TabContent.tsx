@@ -16,8 +16,8 @@ type TTabContentProps = {
   user: API.Auth.Me | null;
   addresses: API.Address.Address[] | null;
   getSuggestions: (value: string) => Promise<API.Dadata.Suggestions.Suggestion[]>;
-  activeOrders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
-  inactiveOrders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
+  activeOrders: StoreDataWithStatusAndMeta<API.Orders.OrdersData | null>;
+  inactiveOrders: StoreDataWithStatusAndMeta<API.Orders.OrdersData | null>;
   updateUserAddress: (address_id: string, data: TAddressForm) => Promise<void>;
   createUserAddress: (data: TAddressForm) => Promise<void>;
   deleteUserAddress: (id: string) => Promise<void>;

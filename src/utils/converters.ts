@@ -208,6 +208,18 @@ export const convertAddressToCityStreetBuildingFlat = (address: Partial<API.Addr
   return fullAddress;
 };
 
+export const convertAddressToEntranceFloorDoorphone = (address: Partial<API.Address.Address>): string => {
+  const addressParts = [
+    { name: 'подъезд', value: address.entrance },
+    { name: 'этаж', value: address.floor },
+    { name: 'домофон', value: address.doorphone },
+  ];
+  const validAddressParts = addressParts.filter((addressPart) => !!addressPart.value);
+  const extraInfo = validAddressParts.map((addressPart) => `${addressPart.name} ${addressPart.value}`).join(', ');
+
+  return extraInfo;
+};
+
 export const convertAddressToAddressFormData = (address: Partial<API.Address.Address>): TAddressForm => {
   const cityStreetBuildingFlat = convertAddressToCityStreetBuildingFlat(address);
 
