@@ -58,6 +58,7 @@ const CurrentOrderCard: FC<TCurrentOrderCardProps> = ({ order }) => {
               <p className="text-nowrap text-lg leading-lg max-sm:text-base max-sm:leading-base">создан {createdAt}</p>
             </div>
             {isOrderClosedOrCancelled ? (
+              // TODO: бэйдж
               <p className="text-nowrap text-lg leading-lg text-primary max-sm:text-base max-sm:leading-base">
                 {orderStatusLabels[status]}
               </p>

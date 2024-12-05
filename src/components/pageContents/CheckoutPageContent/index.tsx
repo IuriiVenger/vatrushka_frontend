@@ -194,6 +194,7 @@ const CheckoutPageContent: FC = () => {
   //   resetField('bonusPoints');
   // };
 
+  // TODO: удалить корзину сразу после создания заказа
   const submitHandler: SubmitHandler<TCheckoutForm> = async (data) => {
     const specialInstructions = data.change ? `Подготовить сдачу с ${data.change}. ${data.message}` : data.message;
 
