@@ -11,7 +11,7 @@ import Select from '@/components/ui/Form/Select';
 import { TCheckoutForm } from '@/types';
 
 type TScheduledTimeProps = {
-  timeframes: API.Orders.DeliveryTimeframes.DeliveryTimeframe['timeframes'];
+  timeframes: API.Orders.DeliveryTimeframes.DeliveryTimeframe[];
   date: dayjs.Dayjs | null;
   control: Control<TCheckoutForm, any>;
   errors: FieldErrors<TCheckoutForm>;
