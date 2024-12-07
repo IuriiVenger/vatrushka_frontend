@@ -64,7 +64,7 @@ const CheckoutPageContent: FC = () => {
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [isOrderLoading, setIsOrderLoading] = useState(false);
   const [availableDeliveryTimeframes, setAvailableDeliveryTimeframes] = useState<
-    API.Orders.DeliveryTimeframes.DeliveryTimeframe['timeframes']
+    API.Orders.DeliveryTimeframes.DeliveryTimeframe[]
   >([]);
 
   const [availablePaymentMethods, setAvailablePaymentMethods] = useState<API.Payment.PaymentMethods.PaymentMethod[]>(
