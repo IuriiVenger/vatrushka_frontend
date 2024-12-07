@@ -51,8 +51,7 @@ const CheckoutPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const { userAddresses } = useAppSelector(selectAddresses);
   const { user } = useAppSelector(selectUser);
-  const { activeCart, cartCardsData, isCartInitialized } = useCart();
-
+  const { activeCart, cartCardsData, isCartInitialized, initCart, deleteActiveCart } = useCart();
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [deliveryType, setDeliveryType] = useState<OrderType>(OrderType.DELIVERY);
   const [deliveryTime, setDeliveryTime] = useState<DeliveryTimeOptions>(DeliveryTimeOptions.ASAP);
@@ -228,7 +227,9 @@ const CheckoutPageContent: FC = () => {
         ],
       });
 
-      console.log(data);
+      await deleteActiveCart();
+      await initCart();
+
       if (paymentType === PaymentOptions.CASH) {
         setIsConfirmationModalOpen(true);
       }

@@ -29,6 +29,13 @@ const useCart = () => {
     showMessage({ text: `${deletingItems[0].product.name} удален из корзины`, type: 'success' });
   };
 
+  const deleteActiveCart = async () => {
+    if (!activeCart.data?.id) {
+      throw new Error('Cart id is not defined');
+    }
+    await dispatch(deleteCart(activeCart.data.id));
+  };
+
   const deleteCartItems = async () => {
     const deletingItems = groupedCartItems.map((item) => item.rawCartItems).flat();
     const data = deletingItems.map((item) => ({ cart_item_id: item.id }));
@@ -97,6 +104,7 @@ const useCart = () => {
     isCartInitialized,
     initCart,
     mergeCartItems,
+    deleteActiveCart,
   };
 };
 
