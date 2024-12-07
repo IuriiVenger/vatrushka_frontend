@@ -115,7 +115,7 @@ const AccountTab: FC<TAccountTabProps> = ({ user, updateUserMetadata }) => {
               type="primary"
               className="w-max max-sm:text-base max-sm:leading-base max-xs:w-full"
               htmlType="submit"
-              disabled={!isValid || !isDirty}
+              disabled={!isValid && isDirty}
               loading={isAccountUpdating}
             >
               Сохранить изменения

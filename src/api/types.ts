@@ -443,10 +443,6 @@ export namespace API {
 
   export namespace Orders {
     export namespace DeliveryTimeframes {
-      export type Request = {
-        address_id: string;
-      };
-
       export type DeliveryInterval = {
         start: string;
         end: string;
@@ -454,10 +450,16 @@ export namespace API {
       };
 
       export type DeliveryTimeframe = {
-        timeframes: {
-          date: string;
-          intervals: DeliveryInterval[];
-        }[];
+        date: string;
+        intervals: DeliveryInterval[];
+      };
+
+      export type Request = {
+        address_id: string;
+      };
+
+      export type Response = {
+        timeframes: DeliveryTimeframe[];
       };
     }
 
