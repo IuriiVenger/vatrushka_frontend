@@ -94,7 +94,7 @@ const SignIn: FC<TSignInModalProps> = ({ setProcessType, setStep, setPhone, getP
           type="primary"
           className="w-full max-sm:text-base max-sm:leading-base"
           htmlType="submit"
-          disabled={!isValid || !isDirty}
+          disabled={!isValid && isDirty}
           loading={isPending}
         >
           Войти

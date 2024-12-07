@@ -142,7 +142,7 @@ export const ConfirmPhone: FC<TConfirmPhoneModalProps> = (props) => {
         <Button
           type="primary"
           className="w-full max-sm:text-base max-sm:leading-base"
-          disabled={!isValid || !isDirty}
+          disabled={!isValid && isDirty}
           htmlType="submit"
           loading={isLoading}
         >

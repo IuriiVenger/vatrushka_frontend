@@ -116,7 +116,7 @@ const RequestProductModal: FC<TRequestProductModalProps> = (props) => {
             type="primary"
             className="w-max max-sm:text-base max-sm:leading-base"
             htmlType="submit"
-            disabled={!isValid || !isDirty}
+            disabled={!isValid && isDirty}
           >
             Отправить
           </Button>

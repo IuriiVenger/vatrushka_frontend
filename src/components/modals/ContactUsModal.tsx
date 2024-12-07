@@ -94,7 +94,7 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             type="primary"
             className="w-full max-sm:text-base max-sm:leading-base"
             htmlType="submit"
-            disabled={!isValid || !isDirty || !isAgree}
+            disabled={(!isValid && isDirty) || !isAgree}
           >
             Отправить
           </Button>
@@ -140,7 +140,7 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             type="primary"
             className="w-full max-sm:text-base max-sm:leading-base"
             htmlType="submit"
-            disabled={!isValid || !isDirty || !isAgree}
+            disabled={(!isValid && isDirty) || !isAgree}
           >
             Отправить
           </Button>

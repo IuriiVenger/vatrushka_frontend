@@ -80,7 +80,7 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
               className="w-full max-sm:text-base max-sm:leading-base"
               onClick={showSuccess}
               htmlType="submit"
-              disabled={!isValid || !isDirty}
+              disabled={!isValid && isDirty}
             >
               Отправить
             </Button>
