@@ -1,8 +1,11 @@
 'use client';
 
-import { Alert, Button, Divider, Radio, Segmented, Spin } from 'antd';
+import { Alert, Button, Divider, Radio, Segmented, Spin, message } from 'antd';
+
+import cn from 'classnames';
 
 import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
 import { FC, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, DefaultValues } from 'react-hook-form';
 import { HiOutlineCreditCard } from 'react-icons/hi';
@@ -49,17 +52,19 @@ import { getNounWithDeclension } from '@/utils/formatters';
 
 const CheckoutPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
-  const { userAddresses } = useAppSelector(selectAddresses);
+  const { userAddresses, organizationAddresses } = useAppSelector(selectAddresses);
   const { user } = useAppSelector(selectUser);
   const { activeCart, cartCardsData, isCartInitialized, initCart, deleteActiveCart } = useCart();
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
+  const router = useRouter();
+
   const [deliveryType, setDeliveryType] = useState<OrderType>(OrderType.DELIVERY);
   const [deliveryTime, setDeliveryTime] = useState<DeliveryTimeOptions>(DeliveryTimeOptions.ASAP);
   const [paymentType, setPaymentType] = useState<PaymentOptions>(PaymentOptions.ONLINE);
   // const [cutleryCount, setCutleryCount] = useState(0);
   const [userBonusPoint, setUserBonusPoint] = useState(0); // TODO: add user bonus points
   const [totalSum, setTotalSum] = useState(0);
-  const [address, setAddress] = useState<API.Address.Create.Request | null>(null);
+  const [deliveryAddress, setAddress] = useState<API.Address.Create.Request | null>(null);
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [isOrderLoading, setIsOrderLoading] = useState(false);
   const [availableDeliveryTimeframes, setAvailableDeliveryTimeframes] = useState<
@@ -98,7 +103,7 @@ const CheckoutPageContent: FC = () => {
   const defaultFormData: DefaultValues<TCheckoutForm> = {
     userAddress: { cityStreetBuildingFlat: '', entrance: '', floor: '', doorphone: '' },
     branchAddress: companyInfo.branches[0].id,
-    name: '', // TODO add user name
+    name: user?.user_metadata?.first_name || '',
     phone: user?.phone || '',
     message: '',
     date: null,
@@ -127,6 +132,14 @@ const CheckoutPageContent: FC = () => {
 
   const dateFields: (keyof TCheckoutForm)[] = ['date', 'time'];
 
+  const terminalAddressId = watch('branchAddress');
+
+  const isAddressSelected = !!deliveryAddress?.latitude || !!terminalAddressId;
+
+  const isOrderButtonDisabled = !isValid || isOrderLoading || !isAddressSelected;
+
+  const terminalAddress = organizationAddresses.data?.find((terminal) => terminal.id === terminalAddressId);
+
   const setSelectedAddress = async (formData: TAddressForm) => {
     setIsAddressLoading(true);
     const convertedAddress = await convertAddressFormDataToAddress(formData);
@@ -140,9 +153,25 @@ const CheckoutPageContent: FC = () => {
   };
 
   const loadAvailableDeliveryTimeframes = async () => {
-    const { data } = await orders.deliveryTimeframes({
-      address_id: '719ccdd9-8456-4eaf-b8d8-e3ed891ef451', // TODO: address_id will be changed to geo_point
-    });
+    if (deliveryType === OrderType.DELIVERY && (!deliveryAddress?.latitude || !deliveryAddress?.longitude)) return;
+    if (deliveryType === OrderType.TAKEOUT && !terminalAddress) return;
+
+    const requestData: API.Orders.DeliveryTimeframes.Request =
+      deliveryType === OrderType.DELIVERY
+        ? {
+            latitude: deliveryAddress!.latitude!,
+            longitude: deliveryAddress!.longitude!,
+            delivery_type: OrderType.DELIVERY,
+          }
+        : {
+            terminal_id: terminalAddress!.id,
+            delivery_type: OrderType.TAKEOUT,
+            latitude: terminalAddress!.latitude,
+            longitude: terminalAddress!.longitude,
+          };
+
+    const { data } = await orders.deliveryTimeframes(requestData);
+
     setAvailableDeliveryTimeframes(data.timeframes);
   };
 
@@ -151,7 +180,7 @@ const CheckoutPageContent: FC = () => {
 
     if (value === OrderType.DELIVERY) {
       register('userAddress');
-      address && setValue('userAddress', convertAddressToAddressFormData(address));
+      deliveryAddress && setValue('userAddress', convertAddressToAddressFormData(deliveryAddress));
       unregister('branchAddress');
     } else {
       register('branchAddress');
@@ -210,12 +239,11 @@ const CheckoutPageContent: FC = () => {
 
     if (!activeCart.data?.id || !paymentId) throw new Error();
 
-    // TODO: удалить корзину сразу после создания заказа
     try {
+      setIsOrderLoading(true);
       const { data } = await orders.create({
         cart_id: activeCart.data?.id,
-        // TODO: поменять на геометку
-        address_id: '719ccdd9-8456-4eaf-b8d8-e3ed891ef451',
+        delivery_address: deliveryAddress!,
         special_instructions: specialInstructions,
         delivery_time: timeOfDelivery,
         type: deliveryType,
@@ -227,11 +255,12 @@ const CheckoutPageContent: FC = () => {
         ],
       });
 
-      await deleteActiveCart();
-      await initCart();
-
-      if (paymentType === PaymentOptions.CASH) {
-        setIsConfirmationModalOpen(true);
+      if (data.payment_link) {
+        router.push(data.payment_link);
+      } else {
+        isUserLoggedIn ? router.push('/account?tab=current-orders') : router.push('/');
+        message.success('Заказ успешно создан'); // TODO implement global successOrder message
+        await initCart();
       }
     } finally {
       setIsOrderLoading(false);
@@ -242,7 +271,6 @@ const CheckoutPageContent: FC = () => {
     if (user?.phone) {
       setValue('phone', user.phone);
       user?.user_metadata?.first_name && setValue('name', user.user_metadata.first_name);
-      // TODO: add user name
     }
   }, [user]);
 
@@ -251,12 +279,17 @@ const CheckoutPageContent: FC = () => {
   }, [totalSum]);
 
   useEffect(() => {
+    setAddress(null);
+    setValue('branchAddress', null);
+  }, [deliveryType]);
+
+  useEffect(() => {
     loadAvailableDeliveryTimeframes();
-  }, [address]);
+  }, [deliveryAddress, terminalAddress]);
 
   useEffect(() => {
     setValue('time', null);
-  }, [address]);
+  }, [deliveryAddress]);
 
   useEffect(() => {
     if (!activeCart.data?.total_sum) return;
@@ -280,41 +313,48 @@ const CheckoutPageContent: FC = () => {
   if (!cartCardsData.length) return <EmptyCartScreen />;
 
   return (
-    <>
-      <section className="flex flex-col items-start gap-6 max-sm:gap-4">
-        <Link href="/cart">
-          <Button className="h-10 border-none p-0 text-lg leading-lg max-sm:mb-6 max-sm:h-8 max-sm:text-base max-sm:leading-base max-xs:mb-0">
-            <IoIosArrowBack />В корзину
-          </Button>
-        </Link>
+    <section className="flex flex-col items-start gap-6 max-sm:gap-4">
+      <Link href="/cart">
+        <Button className="h-10 border-none p-0 text-lg leading-lg max-sm:mb-6 max-sm:h-8 max-sm:text-base max-sm:leading-base max-xs:mb-0">
+          <IoIosArrowBack />В корзину
+        </Button>
+      </Link>
 
-        <FormProvider {...methods}>
-          <Form onSubmit={handleSubmit(submitHandler)} className="flex gap-24 max-xl:gap-10 max-lg:flex-col">
-            <div className="flex max-w-full flex-col gap-10 max-sm:gap-8">
-              <div className="flex flex-col gap-4 max-sm:gap-2">
-                <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">
-                  Оформление заказа
-                </h1>
-                <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">{`Заказы доставляются ежедневно с 8:00 до 20:00. По вопросам доставки можно обратиться по номеру ${companyInfo.mainPhone} с 8:00 до 20:00.`}</p>
-              </div>
-              <Segmented
-                options={deliveryTypeSegmentedItems}
-                value={deliveryType}
-                onChange={(value) => onDeliveryTypeChange(value as OrderType)}
-                block
-                className="-mt-2 text-lg leading-lg max-lg:text-base max-lg:leading-base"
+      <FormProvider {...methods}>
+        <Form onSubmit={handleSubmit(submitHandler)} className="flex gap-24 max-xl:gap-10 max-lg:flex-col">
+          <div className="flex max-w-full flex-col gap-10 max-sm:gap-8">
+            <div className="flex flex-col gap-4 max-sm:gap-2">
+              <h1 className="text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">Оформление заказа</h1>
+              <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">{`Заказы доставляются ежедневно с 8:00 до 20:00. По вопросам доставки можно обратиться по номеру ${companyInfo.mainPhone} с 8:00 до 20:00.`}</p>
+            </div>
+            <Segmented
+              options={deliveryTypeSegmentedItems}
+              value={deliveryType}
+              onChange={(value) => onDeliveryTypeChange(value as OrderType)}
+              block
+              className="-mt-2 text-lg leading-lg max-lg:text-base max-lg:leading-base"
+            />
+            {deliveryType === OrderType.DELIVERY ? (
+              <CourierDelivery
+                selectedAddress={deliveryAddress}
+                setSelectedAddress={setSelectedAddress}
+                getSuggestions={getSuggestionsHandler}
+                isUserLoggedIn={isUserLoggedIn}
+                addresses={userAddresses.data}
               />
-              {deliveryType === OrderType.DELIVERY ? (
-                <CourierDelivery
-                  selectedAddress={address}
-                  setSelectedAddress={setSelectedAddress}
-                  getSuggestions={getSuggestionsHandler}
-                  isUserLoggedIn={isUserLoggedIn}
-                  addresses={userAddresses.data}
-                />
-              ) : (
-                <PickupDelivery />
+            ) : (
+              <PickupDelivery addresses={organizationAddresses.data || []} />
+            )}
+            {!isAddressSelected && <Alert message="Выберите адрес доставки" type="warning" showIcon />}
+
+            <div
+              className={cn(
+                'relative flex flex-col gap-10 max-sm:gap-8',
+                !isAddressSelected && 'cursor-not-allowed opacity-70 grayscale',
               )}
+            >
+              {!isAddressSelected && <div className="absolute left-0 top-0 z-10 h-full w-full" />}
+
               <div className="flex flex-col gap-5">
                 <h3 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Дата и время</h3>
                 <div className="flex flex-col gap-4">
@@ -427,70 +467,71 @@ const CheckoutPageContent: FC = () => {
                 />
               </div>
             </div>
+          </div>
 
-            <div className="sticky right-0 top-6 flex h-max min-w-96 flex-col gap-6 rounded-2xl border border-borderSecondary p-6 max-xl:min-w-0 max-lg:static max-lg:grid max-lg:max-w-full max-lg:grid-cols-2 max-lg:flex-row max-sm:flex max-sm:w-full max-sm:flex-col max-sm:gap-4 max-sm:border-none max-sm:p-0">
-              <div className="flex w-full flex-col gap-6 max-sm:gap-4">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Ваш заказ</h2>
-                  <Link href="/cart">
-                    <Button type="link" className="h-6 p-0">
-                      Изменить
-                    </Button>
-                  </Link>
-                </div>
-                <div className="flex flex-col">
-                  {cartCardsData.map((item) => (
-                    <div className="flex flex-col" key={item.id}>
-                      <CheckoutItem
-                        name={item.name}
-                        weight={item.weight}
-                        description={item.description}
-                        quantity={item.quantity}
-                        price={item.price}
-                      />
-                      <Divider />
-                    </div>
-                  ))}
-                  {/* <div className="flex items-center justify-between">
+          <div className="sticky right-0 top-6 flex h-max min-w-96 flex-col gap-6 rounded-2xl border border-borderSecondary p-6 max-xl:min-w-0 max-lg:static max-lg:grid max-lg:max-w-full max-lg:grid-cols-2 max-lg:flex-row max-sm:flex max-sm:w-full max-sm:flex-col max-sm:gap-4 max-sm:border-none max-sm:p-0">
+            <div className="flex w-full flex-col gap-6 max-sm:gap-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Ваш заказ</h2>
+                <Link href="/cart">
+                  <Button type="link" className="h-6 p-0">
+                    Изменить
+                  </Button>
+                </Link>
+              </div>
+              <div className="flex flex-col">
+                {cartCardsData.map((item) => (
+                  <div className="flex flex-col" key={item.id}>
+                    <CheckoutItem
+                      name={item.name}
+                      weight={item.weight}
+                      description={item.description}
+                      quantity={item.quantity}
+                      price={item.price}
+                    />
+                    <Divider />
+                  </div>
+                ))}
+                {/* <div className="flex items-center justify-between">
                     <p className="text-lg leading-lg max-sm:text-base max-sm:leading-base">Приборы</p>
                     <div className="w-min">
                       <StepperButton count={cutleryCount} setCount={setCutleryCount} />
                     </div>
                   </div> */}
+              </div>
+            </div>
+            <div className="flex w-full flex-col gap-6 max-sm:gap-4">
+              <Alert message="Время приготовления заказа от 45 минут" type="warning" showIcon />
+              <div className="hidden flex-col gap-6 max-sm:flex">
+                <h3 className="text-xl leading-xl">Оплата</h3>
+                <div className="flex flex-col gap-4">
+                  <Segmented
+                    options={paymentSegmentedItems}
+                    value={paymentType}
+                    onChange={(value) => onPaymentTypeChange(value as PaymentOptions)}
+                    block
+                    className="outlined text-base leading-base"
+                  />
+                  {paymentType === PaymentOptions.CASH && (
+                    <Input
+                      label="Подготовим сдачу"
+                      placeholder="Введите сумму"
+                      name="change"
+                      control={control}
+                      errors={!!errors.change}
+                      autoComplete="off"
+                    />
+                  )}
                 </div>
               </div>
-              <div className="flex w-full flex-col gap-6 max-sm:gap-4">
-                <Alert message="Время приготовления заказа от 45 минут" type="warning" showIcon />
-                <div className="hidden flex-col gap-6 max-sm:flex">
-                  <h3 className="text-xl leading-xl">Оплата</h3>
-                  <div className="flex flex-col gap-4">
-                    <Segmented
-                      options={paymentSegmentedItems}
-                      value={paymentType}
-                      onChange={(value) => onPaymentTypeChange(value as PaymentOptions)}
-                      block
-                      className="outlined text-base leading-base"
-                    />
-                    {paymentType === PaymentOptions.CASH && (
-                      <Input
-                        label="Подготовим сдачу"
-                        placeholder="Введите сумму"
-                        name="change"
-                        control={control}
-                        errors={!!errors.change}
-                        autoComplete="off"
-                      />
-                    )}
-                  </div>
+              <div className="flex flex-col gap-2 pt-2 max-sm:gap-1">
+                <div className="flex items-center justify-between">
+                  <p>{itemsCountText} на сумму</p>
+                  <p>
+                    {activeCart.data?.total_sum} {CurrencySymbol.RUB}
+                  </p>
                 </div>
-                <div className="flex flex-col gap-2 pt-2 max-sm:gap-1">
-                  <div className="flex items-center justify-between">
-                    <p>{itemsCountText} на сумму</p>
-                    <p>
-                      {activeCart.data?.total_sum} {CurrencySymbol.RUB}
-                    </p>
-                  </div>
-                  {/* <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                     <p>Скидка по промокоду</p>
                     <p>
                       {order.discounts[0].discount} {CurrencySymbol.RUB}
@@ -500,13 +541,13 @@ const CheckoutPageContent: FC = () => {
                     <p>Стоимость доставки</p>
                     <p>200 {CurrencySymbol.RUB}</p>
                   </div> */}
+              </div>
+              <div className="flex flex-col gap-3">
+                <div className="flex justify-between text-nowrap text-lg font-medium leading-lg">
+                  <p>Бонусов</p>
+                  <p>{user.user_metadata.walletBalances?.[0].balance ?? 0} Б</p>
                 </div>
-                <div className="flex flex-col gap-3">
-                  <div className="flex justify-between text-nowrap text-lg font-medium leading-lg">
-                    <p>Бонусов</p>
-                    <p>{user.user_metadata.walletBalances?.[0].balance ?? 0} Б</p>
-                  </div>
-                  {/* <NumericInput
+                {/* <NumericInput
                     type="number"
                     inputMode="numeric"
                     name="bonusPoints"
@@ -529,43 +570,37 @@ const CheckoutPageContent: FC = () => {
                       />
                     }
                   /> */}
-                </div>
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-1">
-                    <div className="flex justify-between text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">
-                      <p>Итого:</p>
-                      <p>
-                        {totalSum} {CurrencySymbol.RUB}
-                      </p>
-                    </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1">
+                  <div className="flex justify-between text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">
+                    <p>Итого:</p>
+                    <p>
+                      {totalSum} {CurrencySymbol.RUB}
+                    </p>
                   </div>
-                  <Button
-                    type="primary"
-                    className="text-lg leading-lg max-sm:text-base max-sm:leading-base"
-                    htmlType="submit"
-                    disabled={!isDirty || !isValid}
-                    loading={isOrderLoading}
-                  >
-                    Заказать
-                  </Button>
-                  <p className="text-sm leading-sm">
-                    Нажимая кнопку «заказать», я подтверждаю согласие с&nbsp;условиями{' '}
-                    <a href={legalLinks.privacyPolicy} className="text-primary hover:text-primaryHover">
-                      политики конфиденциальности
-                    </a>
-                  </p>
                 </div>
+                <Button
+                  type="primary"
+                  className="text-lg leading-lg max-sm:text-base max-sm:leading-base"
+                  htmlType="submit"
+                  disabled={isOrderButtonDisabled}
+                  loading={isOrderLoading}
+                >
+                  Заказать
+                </Button>
+                <p className="text-sm leading-sm">
+                  Нажимая кнопку «заказать», я подтверждаю согласие с&nbsp;условиями{' '}
+                  <a href={legalLinks.privacyPolicy} className="text-primary hover:text-primaryHover">
+                    политики конфиденциальности
+                  </a>
+                </p>
               </div>
             </div>
-          </Form>
-        </FormProvider>
-      </section>
-      <OrderPaymentStatusModal
-        isOpen={isConfirmationModalOpen}
-        setIsOpen={setIsConfirmationModalOpen}
-        paymentMethod={PaymentOptions.CASH}
-      />
-    </>
+          </div>
+        </Form>
+      </FormProvider>
+    </section>
   );
 };
 

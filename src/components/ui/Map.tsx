@@ -6,7 +6,7 @@ import { FC, useEffect, useState, useRef } from 'react';
 import { defaultPlacemarkOptions, selectedPlacemarkOptions } from '@/constants';
 
 type TMapProps = {
-  placemarks: { id: string; coords: number[] | undefined; isSelected: boolean }[];
+  placemarks: { id: string; coords: string[] | undefined; isSelected: boolean }[];
   width?: string | number;
   mapZoom?: number;
 };

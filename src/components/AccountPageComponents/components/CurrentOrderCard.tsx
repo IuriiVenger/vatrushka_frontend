@@ -20,7 +20,7 @@ import {
 import { convertAddressToCityStreetBuildingFlat, convertAddressToEntranceFloorDoorphone } from '@/utils/converters';
 
 type TCurrentOrderCardProps = {
-  order: API.Orders.OrdersData['data'][number];
+  order: API.Orders.Order;
 };
 
 const CurrentOrderCard: FC<TCurrentOrderCardProps> = ({ order }) => {
@@ -36,8 +36,8 @@ const CurrentOrderCard: FC<TCurrentOrderCardProps> = ({ order }) => {
 
   const createdAt = dayjs(created_at).format('DD.MM.YYYY');
 
-  const additionalInfo = convertAddressToCityStreetBuildingFlat(address);
-  const extraInfo = convertAddressToEntranceFloorDoorphone(address);
+  const additionalInfo = address ? convertAddressToCityStreetBuildingFlat(address) : '';
+  const extraInfo = address ? convertAddressToEntranceFloorDoorphone(address) : '';
   const orderAddress = `${additionalInfo}, ${extraInfo}`;
 
   const deliveryTime = dayjs(delivery_time).format('DD.MM.YYYY с HH:mm');

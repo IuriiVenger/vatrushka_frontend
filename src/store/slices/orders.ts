@@ -3,7 +3,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { orders as ordersApi } from '@/api/orders';
 import { API } from '@/api/types';
-import { RequestStatus, defaultPaginationParams, emptyStoreDataWithStatusAndMeta } from '@/constants';
+import {
+  OrderStatus,
+  RequestStatus,
+  activeOrderStatuses,
+  inactiveOrderStatuses,
+  defaultPaginationParams,
+  emptyStoreDataWithStatusAndMeta,
+} from '@/constants';
 import { OrdersSliceState, RootState } from '@/store/types';
 
 const initialState: OrdersSliceState = {
@@ -12,31 +19,45 @@ const initialState: OrdersSliceState = {
 };
 
 export const loadActiveOrders = createAsyncThunk('orders/loadActiveOrders', async () => {
-  const { data: orders } = await ordersApi.getAll(defaultPaginationParams); // TODO: add order_status
+  const { data: orders } = await ordersApi.getAll({
+    ...defaultPaginationParams,
+    // order_status: activeOrderStatuses, TODO FIX on BACKEND
+  });
   return orders;
 });
 
-export const loadMoreActiveOrders = createAsyncThunk<API.Orders.OrdersData, void, { state: RootState }>(
+export const loadMoreActiveOrders = createAsyncThunk<API.Orders.OrderList, void, { state: RootState }>(
   'orders/loadMoreActiveOrders',
   async (_, { getState }) => {
     const state = getState();
     const { offset, first: limit } = state.orders.activeOrders.meta;
-    const { data: orders } = await ordersApi.getAll({ offset, limit }); // TODO: add order_status
+    const { data: orders } = await ordersApi.getAll({
+      offset,
+      limit,
+      // order_status: activeOrderStatuses, TODO FIX on BACKEND
+    });
     return orders;
   },
 );
 
 export const loadInactiveOrders = createAsyncThunk('orders/loadInactiveOrders', async () => {
-  const { data: orders } = await ordersApi.getAll(defaultPaginationParams); // TODO: add order_status
+  const { data: orders } = await ordersApi.getAll({
+    ...defaultPaginationParams,
+    // order_status: inactiveOrderStatuses, TODO FIX on BACKEND
+  });
   return orders;
 });
 
-export const loadMoreInactiveOrders = createAsyncThunk<API.Orders.OrdersData, void, { state: RootState }>(
+export const loadMoreInactiveOrders = createAsyncThunk<API.Orders.OrderList, void, { state: RootState }>(
   'orders/loadMoreInactiveOrders',
   async (_, { getState }) => {
     const state = getState();
     const { offset, first: limit } = state.orders.inactiveOrders.meta;
-    const { data: orders } = await ordersApi.getAll({ offset, limit }); // TODO: add order_status
+    const { data: orders } = await ordersApi.getAll({
+      offset,
+      limit,
+      // order_status: inactiveOrderStatuses  TODO FIX on BACKEND
+    });
     return orders;
   },
 );

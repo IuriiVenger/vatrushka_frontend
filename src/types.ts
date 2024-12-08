@@ -80,7 +80,7 @@ export type TBranch = {
   address: string;
   phone: string;
   businessHours: TBusinessHours;
-  coords?: number[];
+  coords?: string[];
 };
 
 export type TCompanyInfo = {
