@@ -7,7 +7,7 @@ import OrdersHistoryCard from './components/OrdersHistoryCard';
 import { API } from '@/api/types';
 
 type OrdersHistoryTabProps = {
-  orders: API.Orders.OrdersData | null;
+  orders: API.Orders.OrderList | null;
   loadMoreOrders: () => void;
   isLoadMoreAvailable: boolean;
   isLoading: boolean;

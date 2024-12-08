@@ -60,8 +60,8 @@ export namespace API {
       city: string | null;
       country: string | null;
       zip_code: string | null;
-      latitude: number | null;
-      longitude: number | null;
+      latitude: string | null;
+      longitude: string | null;
       id: string;
       street_classifier_id: string | null;
       entrance: string | null;
@@ -87,10 +87,10 @@ export namespace API {
       building: string | null;
       entrance: string | null;
       phone: string | null;
-      latitude: number;
+      latitude: string;
       zip_code: string | null;
       doorphone: string | null;
-      longitude: number;
+      longitude: string;
       is_deleted: boolean;
       street_name: string;
       working_hours: {
@@ -454,9 +454,18 @@ export namespace API {
         intervals: DeliveryInterval[];
       };
 
-      export type Request = {
-        address_id: string;
-      };
+      export type Request =
+        | {
+            latitude: string;
+            longitude: string;
+            delivery_type: OrderType.DELIVERY;
+          }
+        | {
+            delivery_type: OrderType.TAKEOUT;
+            terminal_id: string;
+            latitude: string;
+            longitude: string;
+          };
 
       export type Response = {
         timeframes: DeliveryTimeframe[];
@@ -465,37 +474,43 @@ export namespace API {
 
     export namespace List {
       export type Request = Common.Pagination.REST.RequestArgs & {
-        order_status?: OrderStatus;
-        payment_status?: OrderPaymentStatus;
+        order_status?: OrderStatus[];
+        payment_status?: OrderPaymentStatus[];
       };
     }
-    export type OrdersData = {
-      data: {
-        id: string;
-        user_id: string;
-        cart_id: string;
-        address: API.Address.Address;
-        address_id: string;
-        total_price: number;
-        special_instructions: string;
-        delivery_time: string; // example: '2024-01-25T13:45:30.123Z'
-        type: OrderType;
-        status: OrderStatus;
-        payment_status: OrderPaymentStatus;
-        created_at: string;
-        updated_at: string;
-        is_deleted: boolean;
-        payment_methods: API.Payment.PaymentMethods.PaymentMethod[];
-        order_number: string;
-        cart: Pick<API.Cart.Cart, 'items' | 'id'>;
-      }[];
+    export type Order = {
+      id: string;
+      user_id: string;
+      cart_id: string;
+      address: API.Address.Address | null;
+      total_price: number;
+      special_instructions: string;
+      delivery_time: string; // example: '2024-01-25T13:45:30.123Z'
+      type: OrderType;
+      status: OrderStatus;
+      payment_status: OrderPaymentStatus;
+      created_at: string;
+      updated_at: string;
+      is_deleted: boolean;
+      payment_link?: string | null;
+      payment_methods: API.Payment.PaymentMethods.PaymentMethod[];
+      order_number: string;
+      cart: Pick<API.Cart.Cart, 'items' | 'id'>;
+    };
+
+    export type OrderList = {
+      total: number;
+      has_more: boolean;
+      data: Order[];
     };
 
     export namespace Create {
-      export type Request = Pick<
-        OrdersData['data'][number],
-        'cart_id' | 'address_id' | 'special_instructions' | 'delivery_time' | 'type'
-      > & {
+      export type Request = {
+        cart_id: string;
+        delivery_address: Omit<API.Address.Address, 'id' | 'user_id'>;
+        special_instructions: string;
+        delivery_time: string;
+        type: OrderType;
         payment_methods: {
           payment_method_id: string; // uuid
           sum: number;

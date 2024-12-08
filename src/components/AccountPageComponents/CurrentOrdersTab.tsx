@@ -7,7 +7,7 @@ import CurrentOrderCard from './components/CurrentOrderCard';
 import { API } from '@/api/types';
 
 type CurrentOrdersTabProps = {
-  orders: API.Orders.OrdersData | null;
+  orders: API.Orders.OrderList | null;
   loadMoreOrders: () => void;
   isLoadMoreAvailable: boolean;
   isLoading: boolean;

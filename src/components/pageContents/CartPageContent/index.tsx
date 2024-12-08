@@ -1,6 +1,7 @@
 'use client';
 
 import { Alert, Button, Divider, Spin } from 'antd';
+import { useRouter } from 'next-nprogress-bar';
 import { FC, Fragment, useState } from 'react';
 
 import EmptyCartScreen from '../../EmptyCartScreen';
@@ -24,6 +25,7 @@ const CartPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const router = useRouter();
 
   const {
     activeCart,
@@ -56,6 +58,8 @@ const CartPageContent: FC = () => {
   const onContinue = () => {
     if (!isUserLoggedIn) {
       setIsAuthModalOpen(true);
+    } else {
+      router.push('/checkout');
     }
   };
 
@@ -159,11 +163,11 @@ const CartPageContent: FC = () => {
                 showIcon
               />
             </div>
+
             <Button
               type="primary"
               className="text-lg leading-lg max-sm:text-base max-sm:leading-base"
               onClick={onContinue}
-              href={isUserLoggedIn ? '/checkout' : undefined}
             >
               Перейти к оформлению
             </Button>

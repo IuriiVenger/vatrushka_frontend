@@ -18,7 +18,7 @@ export const companyInfo: TCompanyInfo = {
       id: '1',
       name: companyName,
       address: 'ул. Энтузиастов, 12',
-      coords: [55.15654, 61.3755],
+      coords: ['55.15654', '61.3755'],
       phone: '+7 (351) 700-79-82',
       businessHours: {
         weekdays: { open: '08:00', close: '22:00' },
@@ -30,7 +30,7 @@ export const companyInfo: TCompanyInfo = {
       id: '2',
       name: companyName,
       address: 'ул. Ленина, 71',
-      coords: [55.15949, 61.38393],
+      coords: ['55.15949', '61.38393'],
       phone: '+7 (992) 527-45-20',
       businessHours: {
         weekdays: { open: '07:30', close: '22:00' },
@@ -44,7 +44,7 @@ export const companyInfo: TCompanyInfo = {
       id: '3',
       name: 'Пекарня-кондитерская «Galette»',
       address: 'ул. Свободы, 80',
-      coords: [55.15715, 61.412507],
+      coords: ['55.15715', '61.412507'],
       phone: '+7 (351) 700-79-83',
       businessHours: {
         weekdays: { open: '07:30', close: '22:00' },

@@ -297,6 +297,18 @@ export const orderStatusLabels: Record<OrderStatus, string> = {
   [OrderStatus.CANCELLED]: 'Отменён',
 };
 
+export const activeOrderStatuses = [
+  OrderStatus.COOKING_COMPLETED,
+  OrderStatus.UNCONFIRMED,
+  OrderStatus.WAIT_COOKING,
+  OrderStatus.READY_FOR_COOKING,
+  OrderStatus.COOKING_STARTED,
+  OrderStatus.WAITING,
+  OrderStatus.ON_WAY,
+];
+
+export const inactiveOrderStatuses = [OrderStatus.DELIVERED, OrderStatus.CLOSED, OrderStatus.CANCELLED];
+
 export enum OrderPaymentStatus {
   UNPAID = 'unpaid',
   PAID = 'paid',

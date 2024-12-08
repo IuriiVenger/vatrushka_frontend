@@ -1,5 +1,6 @@
 import { address as addressApi } from '@/api/address';
 import { API } from '@/api/types';
+import { DayOfWeek } from '@/constants';
 import { CategoryItemsConnectionType, GroupedCartItem, TAddressForm, TCard, TRecCategoryEdge } from '@/types';
 
 export const convertCategoryItemsQueryProductsToCards = (categoryItems: CategoryItemsConnectionType): TCard[] =>
@@ -135,8 +136,8 @@ export const convertDadataAddressToAddress = (
     building: null,
     flat: null,
     zip_code: dadataAddress.postal_code,
-    latitude: +dadataAddress.geo_lat,
-    longitude: +dadataAddress.geo_lon,
+    latitude: dadataAddress.geo_lat,
+    longitude: dadataAddress.geo_lon,
     country: dadataAddress.country,
     entrance: null,
     floor: null,
@@ -229,4 +230,67 @@ export const convertAddressToAddressFormData = (address: Partial<API.Address.Add
     entrance: address.entrance || '',
     floor: address.floor || '',
   };
+};
+
+export const covertScheduleToBusinessHours = (schedule: API.Address.Schedule): string => {
+  const daysOrder = Object.values(DayOfWeek);
+  const daysMap = {
+    [DayOfWeek.MONDAY]: 'пн',
+    [DayOfWeek.TUESDAY]: 'вт',
+    [DayOfWeek.WEDNESDAY]: 'ср',
+    [DayOfWeek.THURSDAY]: 'чт',
+    [DayOfWeek.FRIDAY]: 'пт',
+    [DayOfWeek.SATURDAY]: 'сб',
+    [DayOfWeek.SUNDAY]: 'вс',
+  };
+
+  const groups: { days: DayOfWeek[]; hours: string }[] = [];
+  let currentGroup: DayOfWeek[] = [];
+  let currentHours: string | null = null;
+
+  const allHours = daysOrder.map((day) => {
+    const { start, end } = schedule[day];
+    return `${start}-${end}`;
+  });
+
+  const isAllDaysSame = allHours.every((hours) => hours === allHours[0]);
+
+  if (isAllDaysSame) {
+    const [start, end] = allHours[0].split('-');
+    return `пн-вс: с ${start} до ${end}`;
+  }
+
+  daysOrder.forEach((day, index) => {
+    const { start, end } = schedule[day];
+    const hours = `${start}-${end}`;
+
+    if (currentHours === null || currentHours === hours) {
+      currentGroup.push(day);
+      currentHours = hours;
+    } else {
+      groups.push({ days: currentGroup, hours: currentHours });
+      currentGroup = [day];
+      currentHours = hours;
+    }
+
+    if (index === daysOrder.length - 1) {
+      groups.push({ days: currentGroup, hours: currentHours });
+    }
+  });
+
+  return groups
+    .map((group) => {
+      const { days, hours } = group;
+      const [start, end] = hours.split('-');
+
+      if (days.length === 5 && days[0] === DayOfWeek.MONDAY && days[4] === DayOfWeek.FRIDAY) {
+        return `пн-пт: с ${start} до ${end}`;
+      }
+      if (days.length === 2 && days[0] === DayOfWeek.SATURDAY && days[1] === DayOfWeek.SUNDAY) {
+        return `сб-вс: с ${start} до ${end}`;
+      }
+      const dayNames = days.map((day) => daysMap[day]).join('-');
+      return `${dayNames}: с ${start} до ${end}`;
+    })
+    .join('\n');
 };
