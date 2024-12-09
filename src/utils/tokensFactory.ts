@@ -1,25 +1,26 @@
 // import { auth } from '@/api/auth';
-import { getFromLocalStorage } from './common';
+
+import { deleteCookieClientSide, getCookieClientSide, setCookieClientSide } from './common';
 
 import { auth } from '@/api/auth';
 import { API } from '@/api/types';
 
-export function getTokens() {
+export async function getTokens() {
   return {
-    access_token: getFromLocalStorage('access_token'),
-    refresh_token: getFromLocalStorage('refresh_token'),
+    access_token: await getCookieClientSide('access_token'),
+    refresh_token: await getCookieClientSide('refresh_token'),
   };
 }
 
 export function setTokens({ access_token, refresh_token }: API.Auth.Tokens) {
   if (access_token && refresh_token) {
-    localStorage.setItem('access_token', access_token);
-    localStorage.setItem('refresh_token', refresh_token);
+    setCookieClientSide('access_token', access_token);
+    setCookieClientSide('refresh_token', refresh_token);
   }
 }
 export function deleteTokens() {
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('refresh_token');
+  deleteCookieClientSide('access_token');
+  deleteCookieClientSide('refresh_token');
 }
 
 export async function refreshTokens(refreshToken: string) {

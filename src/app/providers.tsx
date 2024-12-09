@@ -7,6 +7,7 @@ import cn from 'classnames';
 import { AppProgressBar } from 'next-nprogress-bar';
 import { FC, PropsWithChildren, Suspense, useEffect } from 'react';
 
+import GlobalModalsContainer from '@/components/modals/GlobalModalsContainer';
 import ScrollTopButton from '@/components/ui/ScrollTopButton';
 import { theme } from '@/config/theme';
 import useInitApp from '@/hooks/useInitApp';
@@ -30,6 +31,7 @@ const Providers: FC<PropsWithChildren> = ({ children }) => {
           <>
             {children}
             <ScrollTopButton />
+            <GlobalModalsContainer />
           </>
         </App>
       </AntdRegistry>

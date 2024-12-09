@@ -350,3 +350,29 @@ export enum DayOfWeek {
   SATURDAY = 'saturday',
   SUNDAY = 'sunday',
 }
+
+export enum GlobalModalNames {
+  ORDER_PAYMENT_STATUS = 'orderPaymentStatus',
+}
+
+export enum SecondsTime {
+  ONE_SECOND = 1,
+  HALF_MINUTE = 30,
+  ONE_MINUTE = 60,
+  ONE_HOUR = 60 * 60,
+  ONE_DAY = 24 * 60 * 60,
+  ONE_WEEK = 7 * 24 * 60 * 60,
+  ONE_MONTH = 30 * 24 * 60 * 60,
+  ONE_YEAR = 365 * 24 * 60 * 60,
+}
+
+export enum MillisecondsTime {
+  ONE_SECOND = SecondsTime.ONE_SECOND * 1000,
+  HALF_MINUTE = SecondsTime.HALF_MINUTE * 1000,
+  ONE_MINUTE = SecondsTime.ONE_MINUTE * 1000,
+  ONE_HOUR = SecondsTime.ONE_HOUR * 1000,
+  ONE_DAY = SecondsTime.ONE_DAY * 1000,
+  ONE_WEEK = SecondsTime.ONE_WEEK * 1000,
+  ONE_MONTH = SecondsTime.ONE_MONTH * 1000,
+  ONE_YEAR = SecondsTime.ONE_YEAR * 1000,
+}

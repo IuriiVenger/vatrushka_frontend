@@ -4,7 +4,8 @@ import { store } from '.';
 
 import { Categories } from '@/__generated__/graphql';
 import { API } from '@/api/types';
-import { RequestStatus } from '@/constants';
+import { TOrderPaymentStatusModalProps } from '@/components/modals/OrderPaymentStatusModal';
+import { GlobalModalNames, RequestStatus } from '@/constants';
 import { TCard } from '@/types';
 
 export type StoreDataWithStatus<T> = {
@@ -32,6 +33,9 @@ export type UISliceState = {
   isMenuOpened: boolean;
   isSubMenuOpened: boolean;
   isMobileSearchOpened: boolean;
+  modalVisibility: {
+    [GlobalModalNames.ORDER_PAYMENT_STATUS]: boolean;
+  };
 };
 
 export type EntitiesSliceState = {
@@ -57,6 +61,7 @@ export type CartSliceState = {
 export type OrdersSliceState = {
   activeOrders: StoreDataWithStatusAndMeta<API.Orders.OrderList | null>;
   inactiveOrders: StoreDataWithStatusAndMeta<API.Orders.OrderList | null>;
+  paymentStatusModalParams: Pick<TOrderPaymentStatusModalProps, 'isPaymentSuccessful' | 'phoneNumber' | 'orderNumber'>;
 };
 
 export type RootState = ReturnType<typeof store.getState>;
