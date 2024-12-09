@@ -95,7 +95,7 @@ const useAuth = (dispatch: AppDispatch) => {
   };
 
   const initUser = async () => {
-    const { access_token } = getTokens();
+    const { access_token } = await getTokens();
     if (!access_token) {
       await initAnonymousUser();
     } else {

@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { orders as ordersApi } from '@/api/orders';
 import { API } from '@/api/types';
+import { TOrderPaymentStatusModalProps } from '@/components/modals/OrderPaymentStatusModal';
 import {
   OrderStatus,
   RequestStatus,
@@ -16,6 +17,11 @@ import { OrdersSliceState, RootState } from '@/store/types';
 const initialState: OrdersSliceState = {
   activeOrders: emptyStoreDataWithStatusAndMeta,
   inactiveOrders: emptyStoreDataWithStatusAndMeta,
+  paymentStatusModalParams: {
+    isPaymentSuccessful: false,
+    phoneNumber: null,
+    orderNumber: null,
+  },
 };
 
 export const loadActiveOrders = createAsyncThunk('orders/loadActiveOrders', async () => {
@@ -68,7 +74,11 @@ const ordersSlice = createSlice({
   selectors: {
     selectOrders: (state) => state,
   },
-  reducers: {},
+  reducers: {
+    setPaymentStatusModalParams: (state, action: PayloadAction<TOrderPaymentStatusModalProps>) => {
+      state.paymentStatusModalParams = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loadActiveOrders.pending, (state) => {
       state.activeOrders.status = RequestStatus.PENDING;
@@ -136,5 +146,6 @@ const ordersSlice = createSlice({
 
 export const {
   reducer: orders,
+  actions: { setPaymentStatusModalParams },
   selectors: { selectOrders },
 } = ordersSlice;

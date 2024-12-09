@@ -24,18 +24,20 @@ import { address as addressesApi } from '@/api/address';
 import { orders } from '@/api/orders';
 import { API } from '@/api/types';
 import EmptyCartScreen from '@/components/EmptyCartScreen';
-import OrderPaymentStatusModal from '@/components/modals/OrderPaymentStatusModal';
+import { TOrderPaymentStatusModalProps } from '@/components/modals/OrderPaymentStatusModal';
 import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
 import RadioGroup from '@/components/ui/Form/Radio';
 import TextAreaInput from '@/components/ui/Form/TextArea';
 import { companyInfo, legalLinks } from '@/config/links';
 import {
+  AccountTabsOptions,
   CashPaymentOptions,
   CurrencySymbol,
   DeliveryTimeOptions,
   deliveryTimeOptions,
   deliveryTypeOptions,
+  GlobalModalNames,
   OnlinePaymentOptions,
   onlinePaymentOptions,
   OrderType,
@@ -43,14 +45,17 @@ import {
   paymentOptions,
 } from '@/constants';
 import useCart from '@/hooks/useCart';
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { selectAddresses } from '@/store/slices/address';
+import { setPaymentStatusModalParams } from '@/store/slices/orders';
+import { setModalVisible } from '@/store/slices/ui';
 import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
 import { TAddressForm, TCheckoutForm, TTab } from '@/types';
 import { convertAddressFormDataToAddress, convertAddressToAddressFormData } from '@/utils/converters';
 import { getNounWithDeclension } from '@/utils/formatters';
 
 const CheckoutPageContent: FC = () => {
+  const dispatch = useAppDispatch();
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const { userAddresses, organizationAddresses } = useAppSelector(selectAddresses);
   const { user } = useAppSelector(selectUser);
@@ -259,7 +264,16 @@ const CheckoutPageContent: FC = () => {
       if (data.payment_link) {
         router.push(data.payment_link);
       } else {
-        isUserLoggedIn ? router.push('/account?tab=current-orders') : router.push('/');
+        const paymentStatusModalProps: TOrderPaymentStatusModalProps = {
+          isPaymentSuccessful: paymentType === PaymentOptions.CASH,
+          isCashPayment: paymentType === PaymentOptions.CASH,
+          isUserLoggedIn: !user?.is_anonymous,
+          phoneNumber: user?.phone || null,
+          orderNumber: data.order_number,
+        };
+        dispatch(setPaymentStatusModalParams(paymentStatusModalProps));
+        dispatch(setModalVisible(GlobalModalNames.ORDER_PAYMENT_STATUS));
+        router.push('/');
         message.success('Заказ успешно создан'); // TODO implement global successOrder message
         await initCart();
       }

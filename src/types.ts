@@ -235,3 +235,7 @@ export type TCheckoutForm = {
   // bonusPoints: number | null;
   onlinePaymentType: string | null;
 };
+
+export type NextPageParams = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};

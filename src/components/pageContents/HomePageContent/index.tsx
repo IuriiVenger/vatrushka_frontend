@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next-nprogress-bar';
-import { FC, Suspense, useState } from 'react';
+import { FC } from 'react';
 
 import Catalog from '../../Catalog/Catalog';
 
@@ -9,7 +9,7 @@ import { CategoriesConnection } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import ProductSlider from '@/components/Carousels/ProductSlider';
 import PromoCarousel from '@/components/Carousels/PromoCarousel';
-import OrderPaymentStatusModal from '@/components/modals/OrderPaymentStatusModal';
+
 import SeoContent from '@/components/SeoContent';
 
 import useCart from '@/hooks/useCart';
@@ -24,8 +24,6 @@ type THomePageContentProps = {
 };
 
 const HomePageContent: FC<THomePageContentProps> = ({ categories, recomendations }) => {
-  const [isOrderPaymentStatusModalOpen, setIsOrderPaymentStatusModalOpen] = useState(false);
-
   const catalogCategories = categories.edges.map((edge) => edge.node);
   const recomendatedProductsData = recomendations && conertCategoryRecommendedProductsToCards(recomendations);
   const { addToCart } = useCart();
@@ -63,9 +61,6 @@ const HomePageContent: FC<THomePageContentProps> = ({ categories, recomendations
       <Catalog categories={catalogCategories} />
       {!!recomendatedProductsData && <ProductSlider title="Рекомендуем" slides={productSliderSlides} />}
       <SeoContent />
-      <Suspense>
-        <OrderPaymentStatusModal isOpen={isOrderPaymentStatusModalOpen} setIsOpen={setIsOrderPaymentStatusModalOpen} />
-      </Suspense>
     </>
   );
 };
