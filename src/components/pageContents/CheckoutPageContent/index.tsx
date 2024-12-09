@@ -91,7 +91,7 @@ const CheckoutPageContent: FC = () => {
   // Условие для дизейбла
   // const totalSum = 400;
   const deliveryTypeSegmentedItems = getSegmentedItems(deliveryTypeOptions, (option) => ({
-    disabled: option.value === OrderType.DELIVERY && totalSum < 500,
+    disabled: option.value === OrderType.DELIVERY && totalSum < companyInfo.minSumForCourierDelivery,
   }));
 
   const timeSegmentedItems = getSegmentedItems(deliveryTimeOptions);
@@ -133,6 +133,7 @@ const CheckoutPageContent: FC = () => {
   const dateFields: (keyof TCheckoutForm)[] = ['date', 'time'];
 
   const terminalAddressId = watch('branchAddress');
+  const deliveryDate = watch('date');
 
   const isAddressSelected = !!deliveryAddress?.latitude || !!terminalAddressId;
 
@@ -289,7 +290,7 @@ const CheckoutPageContent: FC = () => {
 
   useEffect(() => {
     setValue('time', null);
-  }, [deliveryAddress]);
+  }, [deliveryDate, deliveryAddress]);
 
   useEffect(() => {
     if (!activeCart.data?.total_sum) return;
@@ -298,7 +299,7 @@ const CheckoutPageContent: FC = () => {
   }, [activeCart.data?.total_sum]);
 
   useEffect(() => {
-    if (totalSum >= 500 || totalSum === 0) return;
+    if (totalSum >= companyInfo.minSumForCourierDelivery || totalSum === 0) return;
 
     onDeliveryTypeChange(OrderType.TAKEOUT);
   }, [totalSum]);
@@ -369,7 +370,7 @@ const CheckoutPageContent: FC = () => {
                     <>
                       <ScheduledTime
                         timeframes={availableDeliveryTimeframes}
-                        date={watch('date')}
+                        date={deliveryDate}
                         control={control}
                         errors={errors}
                       />

@@ -10,6 +10,7 @@ import ItemCard from './ItemCard';
 
 import AuthModal from '@/components/modals/AuthModal';
 import ConfirmModal from '@/components/modals/ConfirmModal';
+import { companyInfo } from '@/config/links';
 import { CurrencySymbol } from '@/constants';
 
 import useCart from '@/hooks/useCart';
@@ -158,7 +159,7 @@ const CartPageContent: FC = () => {
             <div className="flex flex-col gap-4 py-2 max-sm:gap-2">
               <Alert message="Время приготовления заказа от 45 минут" type="warning" showIcon />
               <Alert
-                message={`Сумма заказа на доставку курьером должна быть не менее 500 ${CurrencySymbol.RUB}`}
+                message={`Сумма заказа на доставку курьером должна быть не менее ${companyInfo.minSumForCourierDelivery} ${CurrencySymbol.RUB}`}
                 type="warning"
                 showIcon
               />

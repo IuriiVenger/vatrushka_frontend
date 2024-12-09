@@ -92,6 +92,7 @@ export type TCompanyInfo = {
   telegramBot: string;
   branches: TBranch[];
   partners: TBranch[];
+  minSumForCourierDelivery: number;
 };
 
 export type TPromotion = {

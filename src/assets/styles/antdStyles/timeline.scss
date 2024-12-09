@@ -2,8 +2,8 @@
   @apply ms-6 max-sm:text-base max-sm:leading-base;
 }
 
-.ant-timeline-item-last > .ant-timeline-item-tail {
-  @apply block;
+.ant-timeline-item-last {
+  @apply pb-0;
 }
 
 .ant-timeline-item-last > .ant-timeline-item-content {

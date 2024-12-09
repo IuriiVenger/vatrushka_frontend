@@ -53,6 +53,7 @@ export const companyInfo: TCompanyInfo = {
       },
     },
   ],
+  minSumForCourierDelivery: 500,
 };
 
 export const legalLinks = {
