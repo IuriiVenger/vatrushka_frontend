@@ -6,7 +6,6 @@ import { RequestStatus } from '@/constants';
 
 import { useAppDispatch } from '@/store';
 
-import { loadOrganizationAddresses } from '@/store/slices/address';
 import { setWebAppInitialized } from '@/store/slices/config';
 import { loadCategories } from '@/store/slices/entities';
 
@@ -15,7 +14,7 @@ const useInitApp = () => {
   const initializeStatusRef = useRef(RequestStatus.NONE);
 
   const commonInitRequests = async () => {
-    await Promise.all([dispatch(loadCategories()), dispatch(loadOrganizationAddresses())]);
+    await Promise.all([dispatch(loadCategories())]);
   };
 
   const { initUser } = useAuth(dispatch);
