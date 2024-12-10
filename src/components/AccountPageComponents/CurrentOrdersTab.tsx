@@ -4,7 +4,6 @@ import { FC } from 'react';
 
 import CurrentOrderCard from './components/CurrentOrderCard';
 
-import { API } from '@/api/types';
 import { TOrderListWithTerminalAddress } from '@/types';
 
 type CurrentOrdersTabProps = {

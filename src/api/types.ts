@@ -1,5 +1,5 @@
 import { GetAllPromotionsQuery, InputMaybe, ProductBySlugQuery, Scalars } from '@/__generated__/graphql';
-import { AddressType, DayOfWeek, OrderPaymentStatus, OrderStatus, OrderType, SortingDirection } from '@/constants';
+import { DayOfWeek, OrderPaymentStatus, OrderStatus, OrderType, SortingDirection } from '@/constants';
 import { SupabaseUser } from '@/types';
 
 export namespace API {

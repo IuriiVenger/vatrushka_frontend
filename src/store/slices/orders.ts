@@ -3,10 +3,8 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { address } from '@/api/address';
 import { orders as ordersApi } from '@/api/orders';
-import { API } from '@/api/types';
 import { TOrderPaymentStatusModalProps } from '@/components/modals/OrderPaymentStatusModal';
 import {
-  OrderStatus,
   RequestStatus,
   activeOrderStatuses,
   inactiveOrderStatuses,

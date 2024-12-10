@@ -1,4 +1,4 @@
-import { Button, Collapse, CollapseProps, Divider } from 'antd';
+import { Collapse, CollapseProps, Divider } from 'antd';
 import dayjs from 'dayjs';
 import { FC, useMemo } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
@@ -6,7 +6,6 @@ import { IoIosArrowDown } from 'react-icons/io';
 import Fulfillment from './cardComponents/Fulfillment';
 import OrderContent from './cardComponents/OrderContent';
 
-import { API } from '@/api/types';
 import { color } from '@/config/variables';
 import {
   cashPaymentOptions,
