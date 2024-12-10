@@ -9,7 +9,7 @@ import { useRouter } from 'next-nprogress-bar';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, DefaultValues } from 'react-hook-form';
 import { HiOutlineCreditCard } from 'react-icons/hi';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowBack } from 'react-icons/io';
 
 import sbp_icon from '../../../assets/images/payments/sbp_icon.svg';
 
@@ -27,12 +27,10 @@ import EmptyCartScreen from '@/components/EmptyCartScreen';
 import { TOrderPaymentStatusModalProps } from '@/components/modals/OrderPaymentStatusModal';
 import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
-import NumericInput from '@/components/ui/Form/NumericInput';
 import RadioGroup from '@/components/ui/Form/Radio';
 import TextAreaInput from '@/components/ui/Form/TextArea';
 import { companyInfo, legalLinks } from '@/config/links';
 import {
-  AccountTabsOptions,
   CashPaymentOptions,
   CurrencySymbol,
   DeliveryTimeOptions,
@@ -72,7 +70,7 @@ const CheckoutPageContent: FC = () => {
   const [userBonusPoints, setUserBonusPoints] = useState(0);
   const [usedBonusPoint, setUsedBonusPoint] = useState(0);
   const [deliveryAddress, setAddress] = useState<API.Address.Create.Request | null>(null);
-  const [isAddressLoading, setIsAddressLoading] = useState(false);
+
   const [isOrderLoading, setIsOrderLoading] = useState(false);
   const [availableDeliveryTimeframes, setAvailableDeliveryTimeframes] = useState<
     API.Orders.DeliveryTimeframes.DeliveryTimeframe[]
@@ -170,10 +168,8 @@ const CheckoutPageContent: FC = () => {
   const terminalAddress = organizationAddresses.data?.find((terminal) => terminal.id === terminalAddressId);
 
   const setSelectedAddress = async (formData: TAddressForm) => {
-    setIsAddressLoading(true);
     const convertedAddress = await convertAddressFormDataToAddress(formData);
     setAddress(convertedAddress);
-    setIsAddressLoading(false);
   };
 
   const getSuggestionsHandler = async (value: string) => {

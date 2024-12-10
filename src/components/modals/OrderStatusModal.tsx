@@ -20,7 +20,7 @@ const OrderStatusModal: FC<TOrderStatusModalProps> = ({ isOpen, setIsOpen, order
   const statuses = Object.values(OrderStatus).filter((status) => !excludedStatuses.includes(status));
 
   const items = statuses.map((status, index) => {
-    const isCompleted = index <= statuses.indexOf(OrderStatus.COOKING_COMPLETED);
+    const isCompleted = index <= statuses.indexOf(orderStatus);
     return {
       children: orderStatusLabels[status],
       color: isCompleted ? 'green' : 'gray',

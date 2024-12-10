@@ -3,7 +3,7 @@
 import { MenuProps, Button, Grid } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next-nprogress-bar';
+
 import { FC, useEffect } from 'react';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { RxCross2 } from 'react-icons/rx';
@@ -34,7 +34,6 @@ const Header: FC = () => {
 
   const { cartCardsData, activeCart, removeGroupedCartItem, onGroupedCartItemQuantityChange } = useCart();
 
-  const router = useRouter();
   const pathname = usePathname();
 
   const totalPrice = activeCart.data?.total_sum ?? 0;

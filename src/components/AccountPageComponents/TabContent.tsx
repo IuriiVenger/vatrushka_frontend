@@ -27,7 +27,7 @@ type TTabContentProps = {
 };
 
 const TabContent: FC<TTabContentProps> = (props) => {
-  const { tab, user, addresses, activeOrders, inactiveOrders, loadMoreActiveOrders, loadMoreInactiveOrders } = props;
+  const { tab, user, activeOrders, inactiveOrders, loadMoreActiveOrders, loadMoreInactiveOrders } = props;
   const bonusBalance =
     user?.user_metadata?.walletBalances?.find((balance) => balance.type === WalletBalanceType.BONUS)?.balance ?? 0;
 

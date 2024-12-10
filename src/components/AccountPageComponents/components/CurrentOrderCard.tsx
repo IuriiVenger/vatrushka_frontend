@@ -6,7 +6,6 @@ import { FC, useMemo, useState } from 'react';
 import Fulfillment from './cardComponents/Fulfillment';
 import OrderContent from './cardComponents/OrderContent';
 
-import { API } from '@/api/types';
 import OrderStatusModal from '@/components/modals/OrderStatusModal';
 import {
   cashPaymentOptions,

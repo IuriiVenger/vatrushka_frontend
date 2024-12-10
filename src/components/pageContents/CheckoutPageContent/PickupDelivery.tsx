@@ -7,7 +7,7 @@ import { API } from '@/api/types';
 import RadioGroup from '@/components/ui/Form/Radio';
 import Map from '@/components/ui/Map';
 
-import { TBranch, TCheckoutForm } from '@/types';
+import { TCheckoutForm } from '@/types';
 import { convertAddressToCityStreetBuildingFlat, covertScheduleToBusinessHours } from '@/utils/converters';
 
 type PickupDeliveryProps = {
@@ -18,8 +18,6 @@ const PickupDelivery: FC<PickupDeliveryProps> = ({ addresses }) => {
   const { control, watch } = useFormContext<TCheckoutForm>();
 
   const selectedAddress = watch('branchAddress');
-
-  console.log(addresses);
 
   const allMarks = addresses.map((address) => ({
     id: address.terminal_group_id,
