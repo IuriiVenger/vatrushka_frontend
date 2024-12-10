@@ -1,15 +1,15 @@
 'use client';
 
-import { Alert, Button, Divider, Radio, Segmented, Spin, message } from 'antd';
+import { Alert, Button, Divider, Radio, Segmented, Slider, Spin, message } from 'antd';
 
 import cn from 'classnames';
 
 import Link from 'next/link';
 import { useRouter } from 'next-nprogress-bar';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, DefaultValues } from 'react-hook-form';
 import { HiOutlineCreditCard } from 'react-icons/hi';
-import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 import sbp_icon from '../../../assets/images/payments/sbp_icon.svg';
 
@@ -27,6 +27,7 @@ import EmptyCartScreen from '@/components/EmptyCartScreen';
 import { TOrderPaymentStatusModalProps } from '@/components/modals/OrderPaymentStatusModal';
 import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
+import NumericInput from '@/components/ui/Form/NumericInput';
 import RadioGroup from '@/components/ui/Form/Radio';
 import TextAreaInput from '@/components/ui/Form/TextArea';
 import { companyInfo, legalLinks } from '@/config/links';
@@ -67,8 +68,9 @@ const CheckoutPageContent: FC = () => {
   const [deliveryTime, setDeliveryTime] = useState<DeliveryTimeOptions>(DeliveryTimeOptions.ASAP);
   const [paymentType, setPaymentType] = useState<PaymentOptions>(PaymentOptions.ONLINE);
   // const [cutleryCount, setCutleryCount] = useState(0);
-  const [userBonusPoint, setUserBonusPoint] = useState(0); // TODO: add user bonus points
-  const [totalSum, setTotalSum] = useState(0);
+  const [availableToSpendBonusPoints, setAvailableToSpendBonusPoints] = useState(0);
+  const [userBonusPoints, setUserBonusPoints] = useState(0);
+  const [usedBonusPoint, setUsedBonusPoint] = useState(0);
   const [deliveryAddress, setAddress] = useState<API.Address.Create.Request | null>(null);
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [isOrderLoading, setIsOrderLoading] = useState(false);
@@ -76,12 +78,36 @@ const CheckoutPageContent: FC = () => {
     API.Orders.DeliveryTimeframes.DeliveryTimeframe[]
   >([]);
 
+  const orderAmount = activeCart.data?.total_sum || 0;
+  const totalSum = orderAmount - usedBonusPoint;
+  const isDeliveryTypeDisabled = orderAmount < companyInfo.minSumForCourierDelivery;
+
   const [availablePaymentMethods, setAvailablePaymentMethods] = useState<API.Payment.PaymentMethods.PaymentMethod[]>(
     [],
   );
 
+  const bonusPaymentMethod = useMemo(
+    () => availablePaymentMethods.find((method) => method.is_loyalty),
+    [availablePaymentMethods],
+  );
+
+  const loadAvailableToSpendBonusPoints = async () => {
+    if (!user?.phone || !orderAmount) {
+      setAvailableToSpendBonusPoints(0);
+      return;
+    }
+
+    const { data: availableToSpend } = await orders.loyalty.bonus.calculate({
+      order_amount: orderAmount,
+      phone: user.phone,
+    });
+
+    setAvailableToSpendBonusPoints(availableToSpend.payable);
+    setUserBonusPoints(availableToSpend.available);
+  };
+
   const loadAvailablePaymentMethods = async () => {
-    const { data } = await orders.paymentMethods({ sum: totalSum });
+    const { data } = await orders.paymentMethods({ sum: orderAmount });
     setAvailablePaymentMethods(data);
   };
 
@@ -94,9 +120,9 @@ const CheckoutPageContent: FC = () => {
     }));
 
   // Условие для дизейбла
-  // const totalSum = 400;
+  // const orderAmount = 400;
   const deliveryTypeSegmentedItems = getSegmentedItems(deliveryTypeOptions, (option) => ({
-    disabled: option.value === OrderType.DELIVERY && totalSum < companyInfo.minSumForCourierDelivery,
+    disabled: option.value === OrderType.DELIVERY && isDeliveryTypeDisabled,
   }));
 
   const timeSegmentedItems = getSegmentedItems(deliveryTimeOptions);
@@ -114,7 +140,6 @@ const CheckoutPageContent: FC = () => {
     date: null,
     time: '',
     change: null,
-    // bonusPoints: null,
     onlinePaymentType: null,
   };
 
@@ -125,14 +150,12 @@ const CheckoutPageContent: FC = () => {
 
   const {
     handleSubmit,
-    // getValues,
     control,
     unregister,
     register,
-    // resetField,
     setValue,
     watch,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isValid },
   } = methods;
 
   const dateFields: (keyof TCheckoutForm)[] = ['date', 'time'];
@@ -216,17 +239,6 @@ const CheckoutPageContent: FC = () => {
     }
   };
 
-  // const onRedeemBonusPoints = () => {
-  //   const inputValue = getValues('bonusPoints');
-
-  //   if (!inputValue) return;
-
-  //   setUserBonusPoint((prevBonusPoints) => prevBonusPoints - inputValue);
-  //   setTotalSum((prevBonusPoints) => prevBonusPoints - inputValue);
-
-  //   resetField('bonusPoints');
-  // };
-
   const submitHandler: SubmitHandler<TCheckoutForm> = async (formData) => {
     const specialInstructions = `${deliveryTime === DeliveryTimeOptions.ASAP ? 'Доставить как можно скорее. ' : ''}${
       formData.change ? `Подготовить сдачу с ${formData.change}. ` : ''
@@ -248,6 +260,20 @@ const CheckoutPageContent: FC = () => {
     try {
       setIsOrderLoading(true);
 
+      const payment_methods = [
+        {
+          payment_method_id: paymentId,
+          sum: totalSum,
+        },
+      ];
+
+      if (bonusPaymentMethod && usedBonusPoint > 0) {
+        payment_methods.push({
+          payment_method_id: bonusPaymentMethod.id,
+          sum: usedBonusPoint,
+        });
+      }
+
       const requestData: API.Orders.Create.Request =
         deliveryType === OrderType.DELIVERY
           ? {
@@ -256,12 +282,7 @@ const CheckoutPageContent: FC = () => {
               special_instructions: specialInstructions,
               delivery_time: timeOfDelivery,
               type: deliveryType,
-              payment_methods: [
-                {
-                  payment_method_id: paymentId,
-                  sum: activeCart.data?.total_sum,
-                },
-              ],
+              payment_methods,
             }
           : {
               cart_id: activeCart.data?.id,
@@ -269,12 +290,7 @@ const CheckoutPageContent: FC = () => {
               special_instructions: specialInstructions,
               delivery_time: timeOfDelivery,
               type: deliveryType,
-              payment_methods: [
-                {
-                  payment_method_id: paymentId,
-                  sum: activeCart.data?.total_sum,
-                },
-              ],
+              payment_methods,
             };
 
       const { data } = await orders.create(requestData);
@@ -310,7 +326,7 @@ const CheckoutPageContent: FC = () => {
 
   useEffect(() => {
     loadAvailablePaymentMethods();
-  }, [totalSum]);
+  }, [orderAmount]);
 
   useEffect(() => {
     setAddress(null);
@@ -326,16 +342,14 @@ const CheckoutPageContent: FC = () => {
   }, [deliveryDate, deliveryAddress]);
 
   useEffect(() => {
-    if (!activeCart.data?.total_sum) return;
-
-    setTotalSum(activeCart.data?.total_sum);
-  }, [activeCart.data?.total_sum]);
-
-  useEffect(() => {
-    if (totalSum >= companyInfo.minSumForCourierDelivery || totalSum === 0) return;
+    if (!isDeliveryTypeDisabled || orderAmount === 0) return;
 
     onDeliveryTypeChange(OrderType.TAKEOUT);
-  }, [totalSum]);
+  }, [orderAmount]);
+
+  useEffect(() => {
+    loadAvailableToSpendBonusPoints();
+  }, [orderAmount, userBonusPoints]);
 
   if (!isCartInitialized || !user)
     return (
@@ -535,7 +549,16 @@ const CheckoutPageContent: FC = () => {
               </div>
             </div>
             <div className="flex w-full flex-col gap-6 max-sm:gap-4">
-              <Alert message="Время приготовления заказа от 45 минут" type="warning" showIcon />
+              <div className="flex flex-col gap-2 ">
+                <Alert message="Время приготовления заказа от 45 минут" type="warning" showIcon />
+                {isDeliveryTypeDisabled && (
+                  <Alert
+                    message={`Сумма заказа на доставку курьером должна быть не менее ${companyInfo.minSumForCourierDelivery} ${CurrencySymbol.RUB}`}
+                    type="warning"
+                    showIcon
+                  />
+                )}
+              </div>
               <div className="hidden flex-col gap-6 max-sm:flex">
                 <h3 className="text-xl leading-xl">Оплата</h3>
                 <div className="flex flex-col gap-4">
@@ -576,39 +599,49 @@ const CheckoutPageContent: FC = () => {
                     <p>200 {CurrencySymbol.RUB}</p>
                   </div> */}
               </div>
-              <div className="flex flex-col gap-3">
-                <div className="flex justify-between text-nowrap text-lg font-medium leading-lg">
-                  <p>Бонусов</p>
-                  <p>{user.user_metadata.walletBalances?.[0].balance ?? 0} Б</p>
-                </div>
-                {/* <NumericInput
-                    type="number"
-                    inputMode="numeric"
-                    name="bonusPoints"
-                    placeholder="Сколько хотите списать?"
-                    control={control}
-                    errors={!!errors.bonusPoints}
-                    max={userBonusPoint}
+              {!!userBonusPoints && (
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-1">
+                    <div className="flex justify-between text-nowrap text-lg font-medium leading-lg">
+                      <p>Бонусов</p>
+                      <p>{userBonusPoints} Б</p>
+                    </div>
+                    <div className="flex justify-between text-nowrap text-lg leading-lg">
+                      <p>Доступно к списанию</p>
+                      <p>{availableToSpendBonusPoints} Б</p>
+                    </div>
+                    {!!availableToSpendBonusPoints && (
+                      <div className="flex justify-between text-nowrap text-lg leading-lg">
+                        <p>Использовано</p>
+                        <p>{usedBonusPoint} Б</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="text-lg leading-lg">Сколько хотите списать?</p>
+                  <Slider
+                    marks={{
+                      0: {
+                        label: <span className="whitespace-nowrap text-lg leading-lg">0</span>,
+                      },
+                      [availableToSpendBonusPoints]: {
+                        label: (
+                          <span className="whitespace-nowrap text-lg leading-lg">{`${availableToSpendBonusPoints}`}</span>
+                        ),
+                      },
+                    }}
+                    className="cursor-pointer"
                     min={0}
-                    disabled={!userBonusPoint}
-                    autoComplete="off"
-                    className="w-full"
-                    addonAfter={
-                      <Button
-                        type="link"
-                        aria-label="Списать бонусы"
-                        icon={<IoIosArrowForward className="h-4 w-4" />}
-                        onClick={onRedeemBonusPoints}
-                        disabled={!isDirty || !userBonusPoint}
-                        className="h-12 w-max px-4 py-0 text-primary hover:text-primaryHover"
-                      />
-                    }
-                  /> */}
-              </div>
+                    max={availableToSpendBonusPoints}
+                    value={usedBonusPoint}
+                    onChange={setUsedBonusPoint}
+                  />
+                </div>
+              )}
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
                   <div className="flex justify-between text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">
-                    <p>Итого:</p>
+                    <p>К оплате:</p>
                     <p>
                       {totalSum} {CurrencySymbol.RUB}
                     </p>

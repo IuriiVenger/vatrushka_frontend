@@ -233,7 +233,6 @@ export type TCheckoutForm = {
   date: dayjs.Dayjs | null;
   time: string | null;
   change: number | null;
-  // bonusPoints: number | null;
   onlinePaymentType: string | null;
 };
 

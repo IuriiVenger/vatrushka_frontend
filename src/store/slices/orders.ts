@@ -133,7 +133,7 @@ const ordersSlice = createSlice({
     builder.addCase(loadActiveOrders.fulfilled, (state, action) => {
       state.activeOrders.status = RequestStatus.FULFILLED;
       state.activeOrders.data = action.payload;
-      state.activeOrders.meta.offset += action.payload.data.length;
+      state.activeOrders.meta.offset = action.payload.data.length;
       state.activeOrders.meta.isLastPage = action.payload.data.length < state.activeOrders.meta.first;
     });
     builder.addCase(loadActiveOrders.rejected, (state) => {
@@ -144,13 +144,12 @@ const ordersSlice = createSlice({
     });
     builder.addCase(loadMoreActiveOrders.fulfilled, (state, action) => {
       state.activeOrders.status = RequestStatus.FULFILLED;
-      state.inactiveOrders.status = RequestStatus.FULFILLED;
-      if (state.inactiveOrders.data) {
-        state.inactiveOrders.data.data = state.inactiveOrders.data.data
-          ? [...state.inactiveOrders.data.data, ...action.payload.data]
+      if (state.activeOrders.data) {
+        state.activeOrders.data.data = state.activeOrders.data.data
+          ? [...state.activeOrders.data.data, ...action.payload.data]
           : action.payload.data;
       } else {
-        state.inactiveOrders.data = { ...action.payload };
+        state.activeOrders.data = { ...action.payload };
       }
       state.activeOrders.meta.offset += action.payload.data.length;
       state.activeOrders.meta.isLastPage = action.payload.data.length < state.activeOrders.meta.first;
@@ -164,7 +163,7 @@ const ordersSlice = createSlice({
     builder.addCase(loadInactiveOrders.fulfilled, (state, action) => {
       state.inactiveOrders.status = RequestStatus.FULFILLED;
       state.inactiveOrders.data = action.payload;
-      state.inactiveOrders.meta.offset += action.payload.data.length;
+      state.inactiveOrders.meta.offset = action.payload.data.length;
       state.inactiveOrders.meta.isLastPage = action.payload.data.length < state.inactiveOrders.meta.first;
     });
     builder.addCase(loadInactiveOrders.rejected, (state) => {

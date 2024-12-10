@@ -27,10 +27,6 @@ export const auth = {
         postRequest<API.Auth.VerifyOtp.Response>('/auth/verify/phone/otp', { data: { phone, token } }),
     },
   },
-  signUp: {
-    password: (email: string, password: string) =>
-      postRequest<API.Auth.SupabaseGetSessionResponse>('/auth/signup/password', { data: { email, password } }),
-  },
   refresh: {
     refresh_token: (refresh_token: string) =>
       postRequest<API.Auth.Tokens>('/auth/refresh/refresh_token', { data: { refresh_token } }),
