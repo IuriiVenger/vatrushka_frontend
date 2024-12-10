@@ -19,7 +19,13 @@ import { useUrlParams } from '@/hooks/useUrlParams';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { createUserAddress, deleteUserAddress, selectAddresses, updateUserAddress } from '@/store/slices/address';
 import { selectConfig } from '@/store/slices/config';
-import { loadMoreActiveOrders, loadMoreInactiveOrders, selectOrders } from '@/store/slices/orders';
+import {
+  loadActiveOrders,
+  loadInactiveOrders,
+  loadMoreActiveOrders,
+  loadMoreInactiveOrders,
+  selectOrders,
+} from '@/store/slices/orders';
 import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
 import { TAddressForm } from '@/types';
 import { convertAddressFormDataToAddress } from '@/utils/converters';
@@ -39,7 +45,8 @@ const AccountPageContent: FC = () => {
 
   const [tab, setTab] = useState<AccountTabsOptions | null>(null);
 
-  // const isHistoryTab = tab === accountTabs[AccountTabsOptions.ORDER_HISTORY].value; hide orderHistory filter
+  const isOrderHistoryTab = tab === accountTabs[AccountTabsOptions.ORDER_HISTORY].value;
+  const isCurrentOrdersTab = tab === accountTabs[AccountTabsOptions.CURRENT_ORDERS].value;
   const isProfileTab = tab === accountTabs[AccountTabsOptions.PROFILE].value;
 
   const isValidTabParam = (value: string): value is AccountTabsOptions =>
@@ -109,6 +116,15 @@ const AccountPageContent: FC = () => {
       setCurrentTab(AccountTabsOptions.PROFILE);
     }
   }, [screens.md, paramValue]);
+
+  useEffect(() => {
+    isCurrentOrdersTab && dispatch(loadActiveOrders());
+    isOrderHistoryTab && dispatch(loadInactiveOrders());
+  }, [isCurrentOrdersTab, isOrderHistoryTab]);
+
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   if (!isWebAppInitialized)
     return (

@@ -29,7 +29,7 @@ const Accordion: FC<TAccordionProps> = ({ title, text }) => {
 
   return (
     <Collapse
-      className="max-sm:small-padding border "
+      className="max-sm:small-padding border transition-all hover:shadow-accordion"
       bordered={false}
       expandIcon={ExpandIcon}
       expandIconPosition="end"

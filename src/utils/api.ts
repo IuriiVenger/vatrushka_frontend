@@ -17,8 +17,8 @@ export const createCustomAxiosInstance = (baseUrl: string) => {
   let isTokenRefreshing = false;
   let requestQueue: (() => void)[] = [];
 
-  axiosInstance.interceptors.request.use((config) => {
-    const { access_token } = getTokens();
+  axiosInstance.interceptors.request.use(async (config) => {
+    const { access_token } = await getTokens();
 
     const modifiedHeaders = {
       ...config.headers,
@@ -36,7 +36,7 @@ export const createCustomAxiosInstance = (baseUrl: string) => {
     async (error) => {
       if (error?.response?.status === ResponseStatus.UNAUTHORIZED) {
         const { response, config: failedRequest } = error;
-        const { refresh_token } = getTokens();
+        const { refresh_token } = await getTokens();
 
         const defaultErrorMessageForUnauthorized = 'You are not authorized. Please log in.';
 

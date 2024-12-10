@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 
 import AccountTab from './AccountTab';
 import AddressesTab from './AddressesTab';
@@ -9,15 +9,15 @@ import OrdersHistoryTab from './OrdersHistoryTab';
 import { API } from '@/api/types';
 import { AccountTabsOptions, RequestStatus, WalletBalanceType, accountTabs } from '@/constants';
 import { StoreDataWithStatusAndMeta } from '@/store/types';
-import { TAddressForm } from '@/types';
+import { TAddressForm, TOrderListWithTerminalAddress } from '@/types';
 
 type TTabContentProps = {
   tab: AccountTabsOptions | null;
   user: API.Auth.Me | null;
   addresses: API.Address.Address[] | null;
   getSuggestions: (value: string) => Promise<API.Dadata.Suggestions.Suggestion[]>;
-  activeOrders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
-  inactiveOrders: StoreDataWithStatusAndMeta<API.Orders.Order[] | null>;
+  activeOrders: StoreDataWithStatusAndMeta<TOrderListWithTerminalAddress | null>;
+  inactiveOrders: StoreDataWithStatusAndMeta<TOrderListWithTerminalAddress | null>;
   updateUserAddress: (address_id: string, data: TAddressForm) => Promise<void>;
   createUserAddress: (data: TAddressForm) => Promise<void>;
   deleteUserAddress: (id: string) => Promise<void>;
@@ -27,48 +27,40 @@ type TTabContentProps = {
 };
 
 const TabContent: FC<TTabContentProps> = (props) => {
-  const { tab, user, addresses, activeOrders, inactiveOrders, loadMoreActiveOrders, loadMoreInactiveOrders } = props;
+  const { tab, user, activeOrders, inactiveOrders, loadMoreActiveOrders, loadMoreInactiveOrders } = props;
   const bonusBalance =
     user?.user_metadata?.walletBalances?.find((balance) => balance.type === WalletBalanceType.BONUS)?.balance ?? 0;
 
   const isInactiveOrdersLoading = inactiveOrders.status === RequestStatus.PENDING;
   const isActiveOrdersLoading = activeOrders.status === RequestStatus.PENDING;
 
-  const content = useMemo(() => {
-    switch (tab) {
-      case accountTabs[AccountTabsOptions.PROFILE].value:
-        return <AccountTab {...props} />;
+  const tabContentMap = {
+    [accountTabs[AccountTabsOptions.PROFILE].value]: <AccountTab {...props} />,
+    [accountTabs[AccountTabsOptions.BONUSES].value]: <BonusesTab bonusBalance={bonusBalance} />,
+    [accountTabs[AccountTabsOptions.CURRENT_ORDERS].value]: (
+      <CurrentOrdersTab
+        orders={activeOrders.data}
+        loadMoreOrders={loadMoreActiveOrders}
+        isLoadMoreAvailable={!activeOrders.meta.isLastPage}
+        isLoading={isActiveOrdersLoading}
+      />
+    ),
+    [accountTabs[AccountTabsOptions.ORDER_HISTORY].value]: (
+      <OrdersHistoryTab
+        orders={inactiveOrders.data}
+        loadMoreOrders={loadMoreInactiveOrders}
+        isLoading={isInactiveOrdersLoading}
+        isLoadMoreAvailable={!inactiveOrders.meta.isLastPage}
+      />
+    ),
+    [accountTabs[AccountTabsOptions.ADDRESSES].value]: <AddressesTab {...props} />,
+  };
 
-      case accountTabs[AccountTabsOptions.BONUSES].value:
-        return <BonusesTab bonusBalance={bonusBalance} />;
+  if (!tab) {
+    return null;
+  }
 
-      case accountTabs[AccountTabsOptions.CURRENT_ORDERS].value:
-        return (
-          <CurrentOrdersTab
-            orders={activeOrders.data}
-            loadMoreOrders={loadMoreActiveOrders}
-            isLoadMoreAvailable={!activeOrders.meta.isLastPage}
-            isLoading={isActiveOrdersLoading}
-          />
-        );
-
-      case accountTabs[AccountTabsOptions.ORDER_HISTORY].value:
-        return (
-          <OrdersHistoryTab
-            orders={inactiveOrders.data}
-            loadMoreOrders={loadMoreInactiveOrders}
-            isLoading={isInactiveOrdersLoading}
-            isLoadMoreAvailable={!inactiveOrders.meta.isLastPage}
-          />
-        );
-
-      case accountTabs[AccountTabsOptions.ADDRESSES].value:
-        return <AddressesTab {...props} />;
-
-      default:
-        return null;
-    }
-  }, [tab, user, addresses]);
+  const content = tabContentMap[tab];
 
   return <div>{content}</div>;
 };

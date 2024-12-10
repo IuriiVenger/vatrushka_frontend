@@ -6,6 +6,7 @@ import { FieldValues, Validate } from 'react-hook-form';
 import { GetProductsByCategorySlugQuery } from './__generated__/graphql';
 import { API } from './api/types';
 import { TagType } from './constants';
+import { StoreDataWithStatusAndMeta } from './store/types';
 
 export type TValueOf<T> = T[keyof T];
 
@@ -80,7 +81,7 @@ export type TBranch = {
   address: string;
   phone: string;
   businessHours: TBusinessHours;
-  coords?: number[];
+  coords?: string[];
 };
 
 export type TCompanyInfo = {
@@ -92,6 +93,7 @@ export type TCompanyInfo = {
   telegramBot: string;
   branches: TBranch[];
   partners: TBranch[];
+  minSumForCourierDelivery: number;
 };
 
 export type TPromotion = {
@@ -136,6 +138,7 @@ export type TUserInfo = {
 export type TTab = {
   value: string;
   label: string;
+  disabled?: boolean;
 };
 
 export type TOrderStatus = {
@@ -228,7 +231,23 @@ export type TCheckoutForm = {
   phone: string;
   message: string;
   date: dayjs.Dayjs | null;
-  time: string;
+  time: string | null;
   change: number | null;
-  bonusPoints: number | null;
+  onlinePaymentType: string | null;
 };
+
+export type NextPageParams = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export type TOrderWithTerminalAddress = API.Orders.Order & {
+  terminal_address: API.Address.TerminalAddress | null;
+};
+
+export type TOrderListWithTerminalAddress = {
+  total: number;
+  has_more: boolean;
+  data: TOrderWithTerminalAddress[];
+};
+
+export type TOrderStoreData = StoreDataWithStatusAndMeta<TOrderListWithTerminalAddress | null>;

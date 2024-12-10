@@ -110,6 +110,7 @@ const colors = {
   shadow: color.shadow.default,
   shadowMedium: color.shadow.medium,
   shadowLight: color.shadow.light,
+  shadowLightest: color.shadow.lightest,
 
   success: color.success.default,
   successBg: color.success.bg,
@@ -167,6 +168,7 @@ const config: Config = {
     lineHeight,
     boxShadow: {
       card: `0px 6px 16px 0px ${colors.shadowMedium}, 0px 3px 6px -4px ${colors.shadow}, 0px 9px 28px 8px ${colors.shadowLight}`,
+      accordion: `0px 4px 20px 0px ${colors.shadowLightest}`,
     },
   },
   plugins: [],

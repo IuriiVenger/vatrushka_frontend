@@ -3,22 +3,33 @@ import { FC } from 'react';
 
 import Modal from './Modal';
 
-import { TModalProps, TOrderStatus } from '@/types';
+import { OrderStatus, orderStatusLabels, OrderType } from '@/constants';
+import { TModalProps } from '@/types';
 
 type TOrderStatusModalProps = TModalProps & {
-  orderStatuses: TOrderStatus[];
+  orderStatus: Exclude<OrderStatus, OrderStatus.CLOSED | OrderStatus.CANCELLED>;
+  deliveryType: OrderType;
 };
 
-const OrderStatusModal: FC<TOrderStatusModalProps> = ({ isOpen, setIsOpen, orderStatuses }) => {
-  const items = orderStatuses.map(({ time, status, completed }) => ({
-    label: time,
-    children: status,
-    color: completed ? 'green' : 'gray',
-  }));
+const OrderStatusModal: FC<TOrderStatusModalProps> = ({ isOpen, setIsOpen, orderStatus, deliveryType }) => {
+  const excludedStatuses =
+    deliveryType === OrderType.TAKEOUT
+      ? [OrderStatus.CLOSED, OrderStatus.CANCELLED]
+      : [OrderStatus.WAITING, OrderStatus.ON_WAY, OrderStatus.DELIVERED, OrderStatus.CLOSED, OrderStatus.CANCELLED];
+
+  const statuses = Object.values(OrderStatus).filter((status) => !excludedStatuses.includes(status));
+
+  const items = statuses.map((status, index) => {
+    const isCompleted = index <= statuses.indexOf(orderStatus);
+    return {
+      children: orderStatusLabels[status],
+      color: isCompleted ? 'green' : 'gray',
+    };
+  });
 
   return (
     <Modal title="Статус заказа" isOpen={isOpen} setIsOpen={setIsOpen} width="xsmall">
-      <Timeline mode="left" items={items} className="pt-6" />
+      <Timeline mode="left" items={items} />
     </Modal>
   );
 };

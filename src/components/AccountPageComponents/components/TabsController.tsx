@@ -1,16 +1,10 @@
 import { Button, Divider, Grid, Segmented, Skeleton } from 'antd';
 import cn from 'classnames';
-import { Dispatch, FC, Fragment, SetStateAction, useState } from 'react';
+import { Dispatch, FC, Fragment, SetStateAction } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import {
-  AccountTabsOptions,
-  accountTabs,
-  // filterDropdownItems, hide orderHistory filter
-  FilterOrdersType,
-  // filterOrdersTypeTranslation, hide orderHistory filter
-} from '@/constants';
+import { AccountTabsOptions, accountTabs } from '@/constants';
 import useAuth from '@/hooks/useAuth';
 import { useUrlParams } from '@/hooks/useUrlParams';
 import { useAppDispatch } from '@/store';
@@ -18,17 +12,10 @@ import { useAppDispatch } from '@/store';
 type TTabsControllerProps = {
   tab: AccountTabsOptions | null;
   setTab: Dispatch<SetStateAction<AccountTabsOptions | null>>;
-  // isHistoryTab: boolean; hide orderHistory filter
   isProfileTab: boolean;
 };
 
-const TabsController: FC<TTabsControllerProps> = ({
-  tab,
-  setTab,
-  // isHistoryTab, hide orderHistory filter
-  isProfileTab,
-}) => {
-  // const [filter, setFilter] = useState<FilterOrdersType>(FilterOrdersType.ALL); hide orderHistory filter
+const TabsController: FC<TTabsControllerProps> = ({ tab, setTab, isProfileTab }) => {
   const dispatch = useAppDispatch();
   const { signOut } = useAuth(dispatch);
   const { useBreakpoint } = Grid;
@@ -69,12 +56,7 @@ const TabsController: FC<TTabsControllerProps> = ({
     );
 
   return (
-    <div
-      className={cn(
-        'flex justify-between pb-14 pt-10 max-lg:pb-10 max-lg:pt-6',
-        // isHistoryTab && 'max-lg:flex-col max-lg:gap-6',
-      )}
-    >
+    <div className={cn('flex justify-between pb-14 pt-10 max-lg:pb-10 max-lg:pt-6')}>
       <Segmented
         options={segmentedItems}
         value={tab}
@@ -87,14 +69,6 @@ const TabsController: FC<TTabsControllerProps> = ({
           Выйти из аккаунта
         </Button>
       )}
-      {/* {isHistoryTab && ( hide orderHistory filter
-        <Dropdown
-          sort={filter}
-          setSort={setFilter}
-          items={filterDropdownItems}
-          translations={filterOrdersTypeTranslation}
-        />
-      )} */}
     </div>
   );
 };

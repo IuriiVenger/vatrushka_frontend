@@ -1,5 +1,5 @@
 import { GetAllPromotionsQuery, InputMaybe, ProductBySlugQuery, Scalars } from '@/__generated__/graphql';
-import { AddressType, DayOfWeek, OrderPaymentStatus, OrderStatus, OrderType } from '@/constants';
+import { DayOfWeek, OrderPaymentStatus, OrderStatus, OrderType, SortingDirection } from '@/constants';
 import { SupabaseUser } from '@/types';
 
 export namespace API {
@@ -60,8 +60,8 @@ export namespace API {
       city: string | null;
       country: string | null;
       zip_code: string | null;
-      latitude: number | null;
-      longitude: number | null;
+      latitude: string | null;
+      longitude: string | null;
       id: string;
       street_classifier_id: string | null;
       entrance: string | null;
@@ -87,10 +87,10 @@ export namespace API {
       building: string | null;
       entrance: string | null;
       phone: string | null;
-      latitude: number;
+      latitude: string;
       zip_code: string | null;
       doorphone: string | null;
-      longitude: number;
+      longitude: string;
       is_deleted: boolean;
       street_name: string;
       working_hours: {
@@ -442,11 +442,23 @@ export namespace API {
   }
 
   export namespace Orders {
-    export namespace DeliveryTimeframes {
-      export type Request = {
-        address_id: string;
-      };
+    export namespace Loyalty {
+      export namespace Bonus {
+        export namespace Calculate {
+          export type Request = {
+            order_amount: number;
+            phone: string;
+          };
 
+          export type Response = {
+            payable: number;
+            available: number;
+            order_amount: number;
+          };
+        }
+      }
+    }
+    export namespace DeliveryTimeframes {
       export type DeliveryInterval = {
         start: string;
         end: string;
@@ -457,19 +469,30 @@ export namespace API {
         date: string;
         intervals: DeliveryInterval[];
       };
-    }
 
-    export namespace List {
-      export type Request = Common.Pagination.REST.RequestArgs & {
-        order_status?: OrderStatus;
-        payment_status?: OrderPaymentStatus;
+      export type Request =
+        | {
+            latitude: string;
+            longitude: string;
+            delivery_type: OrderType.DELIVERY;
+          }
+        | {
+            delivery_type: OrderType.TAKEOUT;
+            terminal_id: string;
+            latitude: string;
+            longitude: string;
+          };
+
+      export type Response = {
+        timeframes: DeliveryTimeframe[];
       };
     }
+
     export type Order = {
       id: string;
       user_id: string;
       cart_id: string;
-      address_id: string;
+      delivery_address: API.Address.Address | null;
       total_price: number;
       special_instructions: string;
       delivery_time: string; // example: '2024-01-25T13:45:30.123Z'
@@ -479,15 +502,49 @@ export namespace API {
       created_at: string;
       updated_at: string;
       is_deleted: boolean;
+      payment_link?: string | null;
       payment_methods: API.Payment.PaymentMethods.PaymentMethod[];
       order_number: string;
       cart: Pick<API.Cart.Cart, 'items' | 'id'>;
+      terminal_id?: string;
     };
 
-    export namespace Create {
-      export type Request = Omit<Order, 'id' | 'user_id' | 'status' | 'total_price'> & {
-        payment_type: string; // uuid
+    export namespace List {
+      export type Request = Common.Pagination.REST.RequestArgs & {
+        order_status?: string; // OrderStatusArray split by comma
+        payment_status?: string; // OrderPaymentStatusArray split by comma
+        sorting_direction: SortingDirection;
+        sorting_field?: 'created_at' | 'updated_at' | 'total_price' | 'status' | 'payment_status';
       };
+
+      export type Response = {
+        total: number;
+        has_more: boolean;
+        data: Order[];
+      };
+    }
+
+    export namespace Create {
+      export type CommonRequestParams = {
+        cart_id: string;
+        special_instructions: string;
+        delivery_time: string;
+        payment_methods: {
+          payment_method_id: string; // uuid
+          sum: number;
+        }[];
+      };
+      export type DeliveryRequestParams = CommonRequestParams & {
+        delivery_address: Omit<API.Address.Address, 'id' | 'user_id'>;
+        type: OrderType.DELIVERY;
+        terminal_id?: undefined;
+      };
+      export type TakeoutRequestParams = CommonRequestParams & {
+        terminal_id: string;
+        type: OrderType.TAKEOUT;
+        delivery_address?: undefined;
+      };
+      export type Request = DeliveryRequestParams | TakeoutRequestParams;
     }
   }
 
@@ -506,6 +563,8 @@ export namespace API {
         delivery_zones: string;
         min_sum: string;
         max_sum: string;
+        is_online: boolean;
+        is_loyalty: boolean;
       };
     }
   }

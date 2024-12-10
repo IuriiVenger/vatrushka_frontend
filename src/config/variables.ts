@@ -55,6 +55,7 @@ export const color = {
     default: 'rgba(127, 86, 64, 0.12)',
     medium: 'rgba(127, 86, 64, 0.08)',
     light: 'rgba(127, 86, 64, 0.05)',
+    lightest: 'rgba(64, 54, 49, 0.09)',
   },
 
   tag: {

@@ -38,7 +38,7 @@ const DeliveryPageContent: FC = () => {
                   <div className="flex flex-col gap-2">
                     <a
                       className="font-medium text-primary transition-all hover:text-primaryHover"
-                      href="www.pirogvatrushka.ru"
+                      href="https://pirogvatrushka.ru"
                     >
                       www.pirogvatrushka.ru
                     </a>
