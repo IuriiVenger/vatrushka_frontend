@@ -6,7 +6,7 @@ import { Categories } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import { TOrderPaymentStatusModalProps } from '@/components/modals/OrderPaymentStatusModal';
 import { GlobalModalNames, RequestStatus } from '@/constants';
-import { TCard } from '@/types';
+import { TCard, TOrderStoreData } from '@/types';
 
 export type StoreDataWithStatus<T> = {
   status: RequestStatus;
@@ -59,8 +59,8 @@ export type CartSliceState = {
 };
 
 export type OrdersSliceState = {
-  activeOrders: StoreDataWithStatusAndMeta<API.Orders.OrderList | null>;
-  inactiveOrders: StoreDataWithStatusAndMeta<API.Orders.OrderList | null>;
+  activeOrders: TOrderStoreData;
+  inactiveOrders: TOrderStoreData;
   paymentStatusModalParams: Pick<TOrderPaymentStatusModalProps, 'isPaymentSuccessful' | 'phoneNumber' | 'orderNumber'>;
 };
 

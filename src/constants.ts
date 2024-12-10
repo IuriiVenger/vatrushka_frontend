@@ -274,7 +274,6 @@ export const selectedPlacemarkOptions = {
 export enum OrderStatus {
   UNCONFIRMED = 'Unconfirmed',
   WAIT_COOKING = 'WaitCooking',
-  READY_FOR_COOKING = 'ReadyForCooking',
   COOKING_STARTED = 'CookingStarted',
   COOKING_COMPLETED = 'CookingCompleted',
   WAITING = 'Waiting',
@@ -287,7 +286,6 @@ export enum OrderStatus {
 export const orderStatusLabels: Record<OrderStatus, string> = {
   [OrderStatus.UNCONFIRMED]: 'Получили заказ',
   [OrderStatus.WAIT_COOKING]: 'Ожидает приготовления',
-  [OrderStatus.READY_FOR_COOKING]: 'Заказ подтверждён',
   [OrderStatus.COOKING_STARTED]: 'Начали готовить',
   [OrderStatus.COOKING_COMPLETED]: 'Готов',
   [OrderStatus.WAITING]: 'Ожидает курьера',
@@ -301,7 +299,6 @@ export const activeOrderStatuses = [
   OrderStatus.COOKING_COMPLETED,
   OrderStatus.UNCONFIRMED,
   OrderStatus.WAIT_COOKING,
-  OrderStatus.READY_FOR_COOKING,
   OrderStatus.COOKING_STARTED,
   OrderStatus.WAITING,
   OrderStatus.ON_WAY,
@@ -375,4 +372,9 @@ export enum MillisecondsTime {
   ONE_WEEK = SecondsTime.ONE_WEEK * 1000,
   ONE_MONTH = SecondsTime.ONE_MONTH * 1000,
   ONE_YEAR = SecondsTime.ONE_YEAR * 1000,
+}
+
+export enum SortingDirection {
+  ASC = 'ASC',
+  DESC = 'DESC',
 }

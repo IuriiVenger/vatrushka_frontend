@@ -12,7 +12,6 @@ export type TOrderPaymentStatusModalProps = {
   isCashPayment?: boolean;
   isPaymentSuccessful: boolean;
   isUserLoggedIn: boolean;
-  isUserLoading?: boolean;
   phoneNumber: string | null;
   orderNumber: string | null;
 };
@@ -23,7 +22,6 @@ const OrderPaymentStatusModal: FC<TOrderPaymentStatusModalProps & TModalProps> =
   setIsOpen,
   isPaymentSuccessful,
   isUserLoggedIn,
-  isUserLoading,
   phoneNumber,
   orderNumber,
 }) => {

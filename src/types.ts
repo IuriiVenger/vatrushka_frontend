@@ -6,6 +6,7 @@ import { FieldValues, Validate } from 'react-hook-form';
 import { GetProductsByCategorySlugQuery } from './__generated__/graphql';
 import { API } from './api/types';
 import { TagType } from './constants';
+import { StoreDataWithStatusAndMeta } from './store/types';
 
 export type TValueOf<T> = T[keyof T];
 
@@ -239,3 +240,15 @@ export type TCheckoutForm = {
 export type NextPageParams = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export type TOrderWithTerminalAddress = API.Orders.Order & {
+  terminal_address: API.Address.TerminalAddress | null;
+};
+
+export type TOrderListWithTerminalAddress = {
+  total: number;
+  has_more: boolean;
+  data: TOrderWithTerminalAddress[];
+};
+
+export type TOrderStoreData = StoreDataWithStatusAndMeta<TOrderListWithTerminalAddress | null>;

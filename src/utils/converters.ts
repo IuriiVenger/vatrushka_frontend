@@ -1,7 +1,14 @@
 import { address as addressApi } from '@/api/address';
 import { API } from '@/api/types';
 import { DayOfWeek } from '@/constants';
-import { CategoryItemsConnectionType, GroupedCartItem, TAddressForm, TCard, TRecCategoryEdge } from '@/types';
+import {
+  CategoryItemsConnectionType,
+  GroupedCartItem,
+  TAddressForm,
+  TCard,
+  TOrderWithTerminalAddress,
+  TRecCategoryEdge,
+} from '@/types';
 
 export const convertCategoryItemsQueryProductsToCards = (categoryItems: CategoryItemsConnectionType): TCard[] =>
   categoryItems?.edges.map(({ node }) => {
@@ -293,4 +300,21 @@ export const covertScheduleToBusinessHours = (schedule: API.Address.Schedule): s
       return `${dayNames}: с ${start} до ${end}`;
     })
     .join('\n');
+};
+
+export const convertOrdersToOrdersCards = (
+  ordersList: API.Orders.List.Response,
+  organizationAddresses: API.Address.TerminalAddress[],
+): TOrderWithTerminalAddress[] => {
+  const ordersCardsData = ordersList.data.map((orderItem) => {
+    const terminal_address =
+      organizationAddresses.find(({ terminal_group_id }) => terminal_group_id === orderItem.terminal_id) || null;
+
+    return {
+      ...orderItem,
+      terminal_address,
+    };
+  });
+
+  return ordersCardsData;
 };
