@@ -8,6 +8,7 @@ import { ProductBySlugQuery, Productsizeimages, Productsizes } from '@/__generat
 import { API } from '@/api/types';
 import ProductPageContent, { ModifiersGroups, TProductProps } from '@/components/pageContents/ProductPageContent';
 import useCart from '@/hooks/useCart';
+import { TAddToCardData } from '@/types';
 
 type ClientProductPageProps = {
   product: ProductBySlugQuery;
@@ -109,7 +110,7 @@ const ClientProductPage: FC<ClientProductPageProps> = (props) => {
     recommendedProducts,
   };
 
-  const onOrder = async (data: API.Cart.CartItem.Create.RequestItem[]) => {
+  const onOrder = async (data: TAddToCardData) => {
     await addToCart(data);
   };
 

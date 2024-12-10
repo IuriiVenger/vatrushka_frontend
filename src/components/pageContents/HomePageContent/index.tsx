@@ -33,7 +33,7 @@ const HomePageContent: FC<THomePageContentProps> = ({ categories, recomendations
     if (!item.productId || !item.sizeId) {
       return;
     }
-    await addToCart([{ product_id: item.productId, size_id: item.sizeId, modifiers: [] }]);
+    await addToCart([{ product_id: item.productId, size_id: item.sizeId, modifiers: [], label: item.name }]);
   };
 
   const linkHandler = (item: TCard) => {

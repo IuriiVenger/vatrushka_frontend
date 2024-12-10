@@ -20,7 +20,7 @@ import ProductModificator from '@/components/Product/ProductModificator';
 import PromoTag from '@/components/ui/PromoTag';
 import StepperButton from '@/components/ui/StepperButton';
 import { CurrencySymbol } from '@/constants';
-import { TProductSliderSlide } from '@/types';
+import { TAddToCardData, TAddToCardDataItem, TProductSliderSlide } from '@/types';
 import { conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 
 export type ActiveModifierGroupIds = {
@@ -53,7 +53,7 @@ export type TProductProps = {
     sizesImages: Productsizeimages[];
     title?: string;
   };
-  onOrder: (data: API.Cart.CartItem.Create.RequestItem[]) => Promise<void>;
+  onOrder: (data: TAddToCardData) => Promise<void>;
 };
 
 const getModifierGroupData = (modifiersGroups: ModifiersGroups[]) =>
@@ -144,7 +144,9 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
   const recomendatedProductsSlides: TProductSliderSlide[] = recomendatedProductsData.map((item) => {
     const onBuyButtonClick = async () => {
       if (item.buttonType === 'button') {
-        await onOrder([{ product_id: item.productId || '', size_id: item.sizeId || '', modifiers: [] }]);
+        await onOrder([
+          { product_id: item.productId || '', size_id: item.sizeId || '', modifiers: [], label: item.name },
+        ]);
       } else {
         router.push(item.href);
       }
@@ -181,10 +183,11 @@ const ProductPageContent: FC<TProductProps> = ({ productInfo, onOrder }) => {
       return;
     }
 
-    const orderDataItem: API.Cart.CartItem.Create.RequestItem = {
+    const orderDataItem: TAddToCardDataItem = {
       product_id: id,
       size_id: activeSize?.id,
       modifiers: activeModifiers.map((modifier) => ({ id: modifier.id, quantity: 1 })),
+      label: title || '',
     };
 
     const orderDataItems = new Array(amount).fill(orderDataItem);

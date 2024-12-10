@@ -49,7 +49,9 @@ const ClientCategoryPage: FC<ClientCategoryPageProps> = (props) => {
 
   const onBuyButtonClick = async (card: TCard) => {
     if (card.buttonType === 'button') {
-      await addToCart([{ product_id: card.productId || '', size_id: card.sizeId || '', modifiers: [] }]);
+      await addToCart([
+        { product_id: card.productId || '', size_id: card.sizeId || '', modifiers: [], label: card.name },
+      ]);
     } else {
       router.push(card.href);
     }

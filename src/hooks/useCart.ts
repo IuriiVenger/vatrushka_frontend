@@ -4,7 +4,7 @@ import { API } from '@/api/types';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import { addCartItem, deleteCart, deleteCartItem, initCartThunk, selectCart } from '@/store/slices/cart';
-import { TCard } from '@/types';
+import { TAddToCardData, TCard } from '@/types';
 import { getGroupedCartItems } from '@/utils/converters';
 
 const useCart = () => {
@@ -13,9 +13,14 @@ const useCart = () => {
   const { showMessage } = useMessage();
   const groupedCartItems = getGroupedCartItems(activeCart.data?.items ?? []);
 
-  const addToCart = async (data: API.Cart.CartItem.Create.RequestItem[]) => {
-    await dispatch(addCartItem({ data }));
-    showMessage({ text: 'Товар добавлен в корзину', type: 'success' });
+  const addToCart = async (data: TAddToCardData) => {
+    await dispatch(addCartItem({ data: data.map(({ label, ...rest }) => rest) }));
+
+    const labels = Array.from(new Set(data.map(({ label }) => label)));
+    const text =
+      labels.length > 1 ? `Товары добавлены в корзину: ${labels.join(', ')}` : `Товар добавлен в корзину: ${labels[0]}`;
+
+    showMessage({ text, type: 'success' });
   };
 
   const removeGroupedCartItem = async (groupId: string) => {
@@ -56,6 +61,7 @@ const useCart = () => {
         product_id: findingItems[index].product_id,
         size_id: findingItems[index].size_id,
         modifiers: findingItems[index].modifiers,
+        label: findingItems[index].product.name,
       }));
       await addToCart(addingItems);
     }

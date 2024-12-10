@@ -251,3 +251,6 @@ export type TOrderListWithTerminalAddress = {
 };
 
 export type TOrderStoreData = StoreDataWithStatusAndMeta<TOrderListWithTerminalAddress | null>;
+export type TAddToCardDataItem = API.Cart.CartItem.Create.RequestItem & { label: string };
+
+export type TAddToCardData = Array<TAddToCardDataItem>;
