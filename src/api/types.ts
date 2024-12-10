@@ -564,6 +564,7 @@ export namespace API {
         min_sum: string;
         max_sum: string;
         is_online: boolean;
+        is_loyalty: boolean;
       };
     }
   }

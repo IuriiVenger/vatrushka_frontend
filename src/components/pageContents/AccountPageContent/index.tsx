@@ -122,6 +122,10 @@ const AccountPageContent: FC = () => {
     isOrderHistoryTab && dispatch(loadInactiveOrders());
   }, [isCurrentOrdersTab, isOrderHistoryTab]);
 
+  useEffect(() => {
+    loadUser();
+  }, []);
+
   if (!isWebAppInitialized)
     return (
       <div className="flex min-h-100 items-center justify-center">

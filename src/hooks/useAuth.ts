@@ -108,30 +108,6 @@ const useAuth = (dispatch: AppDispatch) => {
     }
   };
 
-  const signUp = async () => {
-    setLoadingStatus(RequestStatus.PENDING);
-
-    try {
-      const { data } = await auth.signUp.password(email, password);
-      const { error, user, session } = data;
-      if (error) {
-        setLoadingStatus(RequestStatus.REJECTED);
-
-        throw error;
-      }
-      session && setTokens(session);
-
-      dispatch(setUser(user));
-      await loadUserContent();
-
-      setLoadingStatus(RequestStatus.FULFILLED);
-    } catch (e) {
-      setLoadingStatus(RequestStatus.REJECTED);
-
-      throw e;
-    }
-  };
-
   const signIn = async () => {
     setLoadingStatus(RequestStatus.PENDING);
 
@@ -228,24 +204,25 @@ const useAuth = (dispatch: AppDispatch) => {
     setLoadingStatus(RequestStatus.PENDING);
 
     try {
-      const { data } = await auth.verify.phone.otp(phone, otp);
+      const {
+        data: { error, access_token, refresh_token },
+      } = await auth.verify.phone.otp(phone, otp);
 
-      if (data.error) {
+      if (error) {
         setLoadingStatus(RequestStatus.REJECTED);
 
-        throw data.error;
+        throw error;
       }
 
-      if (data.access_token) {
+      if (access_token) {
         const tokens = {
-          access_token: data.access_token,
-          refresh_token: data.refresh_token,
+          access_token,
+          refresh_token,
         };
         setTokens(tokens);
       }
 
-      dispatch(setUser(data.user));
-      await loadUserContent();
+      await initExistingUser();
       setLoadingStatus(RequestStatus.FULFILLED);
     } catch (e) {
       setLoadingStatus(RequestStatus.REJECTED);
@@ -270,7 +247,6 @@ const useAuth = (dispatch: AppDispatch) => {
     signIn,
     verifyEmailOtp,
     verifyPhoneOtp,
-    signUp,
     signOut,
     initExistingUser,
     setEmail,
