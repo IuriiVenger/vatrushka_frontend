@@ -4,10 +4,10 @@ import { FC } from 'react';
 
 import OrdersHistoryCard from './components/OrdersHistoryCard';
 
-import { API } from '@/api/types';
+import { TOrderListWithTerminalAddress } from '@/types';
 
 type OrdersHistoryTabProps = {
-  orders: API.Orders.OrderList | null;
+  orders: TOrderListWithTerminalAddress | null;
   loadMoreOrders: () => void;
   isLoadMoreAvailable: boolean;
   isLoading: boolean;
@@ -25,7 +25,7 @@ const OrdersHistoryTab: FC<OrdersHistoryTabProps> = (props) => {
         </div>
       ) : (
         <div className="flex flex-col rounded-2xl border border-borderSecondary p-6 text-lg leading-lg max-sm:p-4">
-          <h2 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Нет активных заказов</h2>
+          <h2 className="text-2xl font-medium leading-2xl max-sm:text-xl max-sm:leading-xl">Нет завершенных заказов</h2>
           <p className="pt-2 text-lg leading-lg max-sm:text-base max-sm:leading-base">
             Чтобы сделать заказ, перейдите в каталог и добавьте товары в корзину
           </p>

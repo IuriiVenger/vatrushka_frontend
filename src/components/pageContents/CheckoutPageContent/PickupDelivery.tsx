@@ -19,8 +19,10 @@ const PickupDelivery: FC<PickupDeliveryProps> = ({ addresses }) => {
 
   const selectedAddress = watch('branchAddress');
 
+  console.log(addresses);
+
   const allMarks = addresses.map((address) => ({
-    id: address.id,
+    id: address.terminal_group_id,
     coords: [address.latitude, address.longitude],
     isSelected: address.id === selectedAddress,
   }));

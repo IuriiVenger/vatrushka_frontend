@@ -1,5 +1,5 @@
 import { GetAllPromotionsQuery, InputMaybe, ProductBySlugQuery, Scalars } from '@/__generated__/graphql';
-import { AddressType, DayOfWeek, OrderPaymentStatus, OrderStatus, OrderType } from '@/constants';
+import { AddressType, DayOfWeek, OrderPaymentStatus, OrderStatus, OrderType, SortingDirection } from '@/constants';
 import { SupabaseUser } from '@/types';
 
 export namespace API {
@@ -442,6 +442,22 @@ export namespace API {
   }
 
   export namespace Orders {
+    export namespace Loyalty {
+      export namespace Bonus {
+        export namespace Calculate {
+          export type Request = {
+            order_amount: number;
+            phone: string;
+          };
+
+          export type Response = {
+            payable: number;
+            available: number;
+            order_amount: number;
+          };
+        }
+      }
+    }
     export namespace DeliveryTimeframes {
       export type DeliveryInterval = {
         start: string;
@@ -472,17 +488,11 @@ export namespace API {
       };
     }
 
-    export namespace List {
-      export type Request = Common.Pagination.REST.RequestArgs & {
-        order_status?: OrderStatus[];
-        payment_status?: OrderPaymentStatus[];
-      };
-    }
     export type Order = {
       id: string;
       user_id: string;
       cart_id: string;
-      address: API.Address.Address | null;
+      delivery_address: API.Address.Address | null;
       total_price: number;
       special_instructions: string;
       delivery_time: string; // example: '2024-01-25T13:45:30.123Z'
@@ -496,26 +506,45 @@ export namespace API {
       payment_methods: API.Payment.PaymentMethods.PaymentMethod[];
       order_number: string;
       cart: Pick<API.Cart.Cart, 'items' | 'id'>;
+      terminal_id?: string;
     };
 
-    export type OrderList = {
-      total: number;
-      has_more: boolean;
-      data: Order[];
-    };
+    export namespace List {
+      export type Request = Common.Pagination.REST.RequestArgs & {
+        order_status?: string; // OrderStatusArray split by comma
+        payment_status?: string; // OrderPaymentStatusArray split by comma
+        sorting_direction: SortingDirection;
+        sorting_field?: 'created_at' | 'updated_at' | 'total_price' | 'status' | 'payment_status';
+      };
+
+      export type Response = {
+        total: number;
+        has_more: boolean;
+        data: Order[];
+      };
+    }
 
     export namespace Create {
-      export type Request = {
+      export type CommonRequestParams = {
         cart_id: string;
-        delivery_address: Omit<API.Address.Address, 'id' | 'user_id'>;
         special_instructions: string;
         delivery_time: string;
-        type: OrderType;
         payment_methods: {
           payment_method_id: string; // uuid
           sum: number;
         }[];
       };
+      export type DeliveryRequestParams = CommonRequestParams & {
+        delivery_address: Omit<API.Address.Address, 'id' | 'user_id'>;
+        type: OrderType.DELIVERY;
+        terminal_id?: undefined;
+      };
+      export type TakeoutRequestParams = CommonRequestParams & {
+        terminal_id: string;
+        type: OrderType.TAKEOUT;
+        delivery_address?: undefined;
+      };
+      export type Request = DeliveryRequestParams | TakeoutRequestParams;
     }
   }
 

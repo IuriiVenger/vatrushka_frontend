@@ -47,7 +47,7 @@ import {
 import useCart from '@/hooks/useCart';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { selectAddresses } from '@/store/slices/address';
-import { setPaymentStatusModalParams } from '@/store/slices/orders';
+import { loadActiveOrders, setPaymentStatusModalParams } from '@/store/slices/orders';
 import { setModalVisible } from '@/store/slices/ui';
 import { selectIsNonAnonymousUser, selectUser } from '@/store/slices/user';
 import { TAddressForm, TCheckoutForm, TTab } from '@/types';
@@ -59,7 +59,7 @@ const CheckoutPageContent: FC = () => {
   const isUserLoggedIn = useAppSelector(selectIsNonAnonymousUser);
   const { userAddresses, organizationAddresses } = useAppSelector(selectAddresses);
   const { user } = useAppSelector(selectUser);
-  const { activeCart, cartCardsData, isCartInitialized, initCart, deleteActiveCart } = useCart();
+  const { activeCart, cartCardsData, isCartInitialized, initCart } = useCart();
 
   const router = useRouter();
 
@@ -170,7 +170,7 @@ const CheckoutPageContent: FC = () => {
             delivery_type: OrderType.DELIVERY,
           }
         : {
-            terminal_id: terminalAddress!.id,
+            terminal_id: terminalAddress!.terminal_group_id,
             delivery_type: OrderType.TAKEOUT,
             latitude: terminalAddress!.latitude,
             longitude: terminalAddress!.longitude,
@@ -247,19 +247,37 @@ const CheckoutPageContent: FC = () => {
 
     try {
       setIsOrderLoading(true);
-      const { data } = await orders.create({
-        cart_id: activeCart.data?.id,
-        delivery_address: deliveryAddress!,
-        special_instructions: specialInstructions,
-        delivery_time: timeOfDelivery,
-        type: deliveryType,
-        payment_methods: [
-          {
-            payment_method_id: paymentId,
-            sum: activeCart.data?.total_sum,
-          },
-        ],
-      });
+
+      const requestData: API.Orders.Create.Request =
+        deliveryType === OrderType.DELIVERY
+          ? {
+              cart_id: activeCart.data?.id,
+              delivery_address: deliveryAddress!,
+              special_instructions: specialInstructions,
+              delivery_time: timeOfDelivery,
+              type: deliveryType,
+              payment_methods: [
+                {
+                  payment_method_id: paymentId,
+                  sum: activeCart.data?.total_sum,
+                },
+              ],
+            }
+          : {
+              cart_id: activeCart.data?.id,
+              terminal_id: terminalAddress!.terminal_group_id,
+              special_instructions: specialInstructions,
+              delivery_time: timeOfDelivery,
+              type: deliveryType,
+              payment_methods: [
+                {
+                  payment_method_id: paymentId,
+                  sum: activeCart.data?.total_sum,
+                },
+              ],
+            };
+
+      const { data } = await orders.create(requestData);
 
       if (data.payment_link) {
         router.push(data.payment_link);
@@ -276,6 +294,7 @@ const CheckoutPageContent: FC = () => {
         router.push('/');
         message.success('Заказ успешно создан'); // TODO implement global successOrder message
         await initCart();
+        dispatch(loadActiveOrders());
       }
     } finally {
       setIsOrderLoading(false);

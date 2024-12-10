@@ -9,15 +9,15 @@ import OrdersHistoryTab from './OrdersHistoryTab';
 import { API } from '@/api/types';
 import { AccountTabsOptions, RequestStatus, WalletBalanceType, accountTabs } from '@/constants';
 import { StoreDataWithStatusAndMeta } from '@/store/types';
-import { TAddressForm } from '@/types';
+import { TAddressForm, TOrderListWithTerminalAddress } from '@/types';
 
 type TTabContentProps = {
   tab: AccountTabsOptions | null;
   user: API.Auth.Me | null;
   addresses: API.Address.Address[] | null;
   getSuggestions: (value: string) => Promise<API.Dadata.Suggestions.Suggestion[]>;
-  activeOrders: StoreDataWithStatusAndMeta<API.Orders.OrderList | null>;
-  inactiveOrders: StoreDataWithStatusAndMeta<API.Orders.OrderList | null>;
+  activeOrders: StoreDataWithStatusAndMeta<TOrderListWithTerminalAddress | null>;
+  inactiveOrders: StoreDataWithStatusAndMeta<TOrderListWithTerminalAddress | null>;
   updateUserAddress: (address_id: string, data: TAddressForm) => Promise<void>;
   createUserAddress: (data: TAddressForm) => Promise<void>;
   deleteUserAddress: (id: string) => Promise<void>;

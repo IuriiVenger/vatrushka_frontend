@@ -5,15 +5,15 @@ import { FC } from 'react';
 import CurrentOrderCard from './components/CurrentOrderCard';
 
 import { API } from '@/api/types';
+import { TOrderListWithTerminalAddress } from '@/types';
 
 type CurrentOrdersTabProps = {
-  orders: API.Orders.OrderList | null;
+  orders: TOrderListWithTerminalAddress | null;
   loadMoreOrders: () => void;
   isLoadMoreAvailable: boolean;
   isLoading: boolean;
 };
 
-// TODO: обновлять заказы когда заходишь на эту вкладку и убрать инициализацию заказов для анонимного юзера
 const CurrentOrdersTab: FC<CurrentOrdersTabProps> = (props) => {
   const { orders, loadMoreOrders, isLoadMoreAvailable, isLoading } = props;
 

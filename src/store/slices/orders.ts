@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { address } from '@/api/address';
 import { orders as ordersApi } from '@/api/orders';
 import { API } from '@/api/types';
 import { TOrderPaymentStatusModalProps } from '@/components/modals/OrderPaymentStatusModal';
@@ -11,8 +12,11 @@ import {
   inactiveOrderStatuses,
   defaultPaginationParams,
   emptyStoreDataWithStatusAndMeta,
+  SortingDirection,
 } from '@/constants';
 import { OrdersSliceState, RootState } from '@/store/types';
+import { TOrderListWithTerminalAddress } from '@/types';
+import { convertOrdersToOrdersCards } from '@/utils/converters';
 
 const initialState: OrdersSliceState = {
   activeOrders: emptyStoreDataWithStatusAndMeta,
@@ -24,47 +28,90 @@ const initialState: OrdersSliceState = {
   },
 };
 
-export const loadActiveOrders = createAsyncThunk('orders/loadActiveOrders', async () => {
-  const { data: orders } = await ordersApi.getAll({
-    ...defaultPaginationParams,
-    // order_status: activeOrderStatuses, TODO FIX on BACKEND
-  });
-  return orders;
-});
+export const loadActiveOrders = createAsyncThunk<TOrderListWithTerminalAddress, void, { state: RootState }>(
+  'orders/loadActiveOrders',
+  async (_, { getState }) => {
+    const state = getState();
+    const { data: orders } = await ordersApi.getAll({
+      ...defaultPaginationParams,
+      order_status: activeOrderStatuses.join(','),
+      sorting_direction: SortingDirection.DESC,
+      sorting_field: 'created_at',
+    });
+    const organizationAddresses = state.address.organizationAddresses.data
+      ? state.address.organizationAddresses.data
+      : (await address.getOrganizationAddresses()).data[0].terminal_addresses;
 
-export const loadMoreActiveOrders = createAsyncThunk<API.Orders.OrderList, void, { state: RootState }>(
+    const ordersWithTerminalAddress = convertOrdersToOrdersCards(orders, organizationAddresses);
+
+    return { data: ordersWithTerminalAddress, total: orders.total, has_more: orders.has_more };
+  },
+);
+
+export const loadMoreActiveOrders = createAsyncThunk<TOrderListWithTerminalAddress, void, { state: RootState }>(
   'orders/loadMoreActiveOrders',
   async (_, { getState }) => {
     const state = getState();
     const { offset, first: limit } = state.orders.activeOrders.meta;
+    const organizationAddresses = state.address.organizationAddresses.data
+      ? state.address.organizationAddresses.data
+      : (await address.getOrganizationAddresses()).data[0].terminal_addresses;
+
     const { data: orders } = await ordersApi.getAll({
       offset,
       limit,
-      // order_status: activeOrderStatuses, TODO FIX on BACKEND
+      order_status: activeOrderStatuses.join(','),
+      sorting_direction: SortingDirection.DESC,
+      sorting_field: 'created_at',
     });
-    return orders;
+
+    const ordersWithTerminalAddress = convertOrdersToOrdersCards(orders, organizationAddresses);
+
+    return { data: ordersWithTerminalAddress, total: orders.total, has_more: orders.has_more };
   },
 );
 
-export const loadInactiveOrders = createAsyncThunk('orders/loadInactiveOrders', async () => {
-  const { data: orders } = await ordersApi.getAll({
-    ...defaultPaginationParams,
-    // order_status: inactiveOrderStatuses, TODO FIX on BACKEND
-  });
-  return orders;
-});
+export const loadInactiveOrders = createAsyncThunk<TOrderListWithTerminalAddress, void, { state: RootState }>(
+  'orders/loadInactiveOrders',
+  async (_, { getState }) => {
+    const state = getState();
+    const organizationAddresses = state.address.organizationAddresses.data
+      ? state.address.organizationAddresses.data
+      : (await address.getOrganizationAddresses()).data[0].terminal_addresses;
 
-export const loadMoreInactiveOrders = createAsyncThunk<API.Orders.OrderList, void, { state: RootState }>(
+    const { data: orders } = await ordersApi.getAll({
+      ...defaultPaginationParams,
+      order_status: inactiveOrderStatuses.join(','),
+      sorting_direction: SortingDirection.DESC,
+      sorting_field: 'created_at',
+    });
+
+    const ordersWithTerminalAddress = convertOrdersToOrdersCards(orders, organizationAddresses);
+
+    return { data: ordersWithTerminalAddress, total: orders.total, has_more: orders.has_more };
+  },
+);
+
+export const loadMoreInactiveOrders = createAsyncThunk<TOrderListWithTerminalAddress, void, { state: RootState }>(
   'orders/loadMoreInactiveOrders',
   async (_, { getState }) => {
     const state = getState();
     const { offset, first: limit } = state.orders.inactiveOrders.meta;
+    const organizationAddresses = state.address.organizationAddresses.data
+      ? state.address.organizationAddresses.data
+      : (await address.getOrganizationAddresses()).data[0].terminal_addresses;
+
     const { data: orders } = await ordersApi.getAll({
       offset,
       limit,
-      // order_status: inactiveOrderStatuses  TODO FIX on BACKEND
+      order_status: inactiveOrderStatuses.join(','),
+      sorting_direction: SortingDirection.DESC,
+      sorting_field: 'created_at',
     });
-    return orders;
+
+    const ordersWithTerminalAddress = convertOrdersToOrdersCards(orders, organizationAddresses);
+
+    return { data: ordersWithTerminalAddress, total: orders.total, has_more: orders.has_more };
   },
 );
 

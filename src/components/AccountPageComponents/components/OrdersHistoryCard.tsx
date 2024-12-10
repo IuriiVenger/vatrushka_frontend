@@ -1,6 +1,6 @@
 import { Button, Collapse, CollapseProps, Divider } from 'antd';
 import dayjs from 'dayjs';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
 import Fulfillment from './cardComponents/Fulfillment';
@@ -17,10 +17,11 @@ import {
   OrderStatus,
   orderStatusLabels,
 } from '@/constants';
+import { TOrderWithTerminalAddress } from '@/types';
 import { convertAddressToCityStreetBuildingFlat, convertAddressToEntranceFloorDoorphone } from '@/utils/converters';
 
 type TOrdersHistoryCardProps = {
-  order: API.Orders.Order;
+  order: TOrderWithTerminalAddress;
 };
 
 const ExpandIcon: CollapseProps['expandIcon'] = ({ isActive }) => (
@@ -33,15 +34,36 @@ const ExpandIcon: CollapseProps['expandIcon'] = ({ isActive }) => (
 );
 
 const OrdersHistoryCard: FC<TOrdersHistoryCardProps> = ({ order }) => {
-  const { order_number, created_at, cart, status, total_price, type, address, delivery_time, payment_methods } = order;
+  const {
+    order_number,
+    created_at,
+    cart,
+    status,
+    total_price,
+    type,
+    delivery_address,
+    delivery_time,
+    payment_methods,
+    terminal_address,
+  } = order;
 
   const isOrderClosedOrCancelled = status === OrderStatus.CANCELLED || status === OrderStatus.CLOSED;
 
   const createdAt = dayjs(created_at).format('DD.MM.YYYY');
 
-  const additionalInfo = address ? convertAddressToCityStreetBuildingFlat(address) : '';
-  const extraInfo = address ? convertAddressToEntranceFloorDoorphone(address) : '';
-  const orderAddress = `${additionalInfo}, ${extraInfo}`;
+  const additionalInfo = useMemo(() => {
+    if (delivery_address) {
+      return convertAddressToCityStreetBuildingFlat(delivery_address);
+    }
+
+    if (terminal_address) {
+      return convertAddressToCityStreetBuildingFlat(terminal_address);
+    }
+
+    return null;
+  }, [delivery_address, terminal_address]);
+  const extraInfo = delivery_address ? convertAddressToEntranceFloorDoorphone(delivery_address) : null;
+  const orderAddress = [additionalInfo, extraInfo].filter(Boolean).join(', ');
 
   const deliveryTime = dayjs(delivery_time).format('DD.MM.YYYY с HH:mm');
 
