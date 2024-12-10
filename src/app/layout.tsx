@@ -18,10 +18,10 @@ export const metadata: Metadata = {
     description:
       'Доставим свежий ароматный хлеб, выпечку, вкусные пироги, великолепные торты и пирожные, готовые рационы питания для всей семьи, полуфабрикаты и многое другое. Ждем ваших заявок по телефону: 8 (351)-700-79-81',
     siteName: 'Онлайн фудмаркет Ватрушка',
-    url: 'https://pirogvatrushka.ru/',
+    url: process.env.APP_DOMAIN,
     images: [
       {
-        url: 'https://pirogvatrushka.ru/img/header/logo.svg',
+        url: `${process.env.APP_DOMAIN}/img/logo.svg`,
         width: 800,
         height: 600,
         alt: 'Logo',
