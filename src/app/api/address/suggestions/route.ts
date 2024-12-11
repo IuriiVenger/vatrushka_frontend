@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { dadataLocationBoost } from '@/config/network';
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const address = searchParams.get('address');
@@ -15,7 +17,10 @@ export async function GET(request: NextRequest) {
       Accept: 'application/json',
       Authorization: `Token ${process.env.DADATA_API_KEY}`,
     },
-    body: JSON.stringify({ query: address }),
+    body: JSON.stringify({
+      query: address,
+      locations_boost: [{ kladr_id: dadataLocationBoost }],
+    }),
   });
 
   const responseData = await res.json();

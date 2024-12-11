@@ -12,3 +12,4 @@ export const rateLimiter = {
   minuteCount: process.env.RATE_LIMITER_MINUTE_COUNT || 3,
   hourCount: process.env.RATE_LIMITER_HOUR_COUNT || 10,
 };
+export const dadataLocationBoost = process.env.DADATA_LOCATION_BOOST;
