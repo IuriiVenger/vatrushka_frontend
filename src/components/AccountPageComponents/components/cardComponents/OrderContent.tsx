@@ -24,7 +24,7 @@ const OrderContent: FC<TOrderContentProps> = ({ discounts, items, totalPrice, is
       <div className="flex flex-col gap-6 max-sm:gap-4">
         <div className="flex flex-col gap-3 max-sm:gap-2">
           {groupedCartItems.map((item) => {
-            const modifiers = item.modifiers.map((modifier) => modifier.name).join(', ');
+            const modifiers = item.modifiers?.map((modifier) => modifier.name).join(', ');
 
             return (
               <div className="flex items-end justify-between gap-10" key={item.product.id}>
@@ -32,7 +32,7 @@ const OrderContent: FC<TOrderContentProps> = ({ discounts, items, totalPrice, is
                   {item.product.name}
                   {modifiers && <span>, {modifiers}</span>}
                 </p>
-                <p className="whitespace-nowrap">{`${item.quantity} x ${item.size.price} ${CurrencySymbol.RUB}`}</p>
+                <p className="whitespace-nowrap">{`${item.quantity} x ${item.item_total} ${CurrencySymbol.RUB}`}</p>
               </div>
             );
           })}

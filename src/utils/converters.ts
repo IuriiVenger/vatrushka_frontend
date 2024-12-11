@@ -92,8 +92,8 @@ export const getGroupedCartItems = (cartItems: API.Cart.CartItem.CartItem[]): Gr
       (product) =>
         product.product_id === item.product_id &&
         product.size_id === item.size_id &&
-        product.modifiers.length === item.modifiers.length &&
-        product.modifiers.every((mod, index) => mod.id === item.modifiers[index].id),
+        product.modifiers?.length === item.modifiers?.length &&
+        product.modifiers?.every((mod, index) => mod.id === item.modifiers?.[index]?.id),
     );
 
     if (existingProduct) {
@@ -126,7 +126,7 @@ export const convertGroupedCartItemsToCards = (groupedCartItems: GroupedCartItem
     quantity: item.quantity,
     inStock: true,
     href: '',
-    description: item.modifiers.map((modifier) => modifier.name).join(', '),
+    description: item.modifiers?.map((modifier) => modifier.name).join(', ') || '',
     weight: item.size.portion_weight_grams,
     sizeId: item.size.size_id,
     productId: item.product.id,

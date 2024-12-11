@@ -213,7 +213,7 @@ export namespace API {
           quantity: number;
           price: number;
           modifier_total_price: number;
-        }>;
+        }> | null;
       }
 
       export interface CartItem extends CartListItem {
@@ -293,7 +293,7 @@ export namespace API {
           by_default: number;
           is_hidden: boolean;
           modifier_total_price: number;
-        }>;
+        }> | null;
       }
 
       export namespace Create {
@@ -520,7 +520,7 @@ export namespace API {
       delivery_address: API.Address.Address | null;
       total_price: number;
       special_instructions: string;
-      delivery_time: string; // example: '2024-01-25T13:45:30.123Z'
+      delivery_time: string | null; // example: '2024-01-25T13:45:30.123Z'
       type: OrderType;
       status: OrderStatus;
       payment_status: OrderPaymentStatus;
