@@ -1,8 +1,8 @@
-import { Timeline } from 'antd';
 import { FC } from 'react';
 
 import Modal from './Modal';
 
+import CustomTimeline from '@/components/ui/CustomTimeline';
 import { OrderStatus, orderStatusLabels, OrderType } from '@/constants';
 import { TModalProps } from '@/types';
 
@@ -19,7 +19,7 @@ const OrderStatusModal: FC<TOrderStatusModalProps> = ({ isOpen, setIsOpen, order
 
   const statuses = Object.values(OrderStatus).filter((status) => !excludedStatuses.includes(status));
 
-  const items = statuses.map((status, index) => {
+  const points = statuses.map((status, index) => {
     const isCompleted = index <= statuses.indexOf(orderStatus);
     return {
       children: orderStatusLabels[status],
@@ -29,7 +29,7 @@ const OrderStatusModal: FC<TOrderStatusModalProps> = ({ isOpen, setIsOpen, order
 
   return (
     <Modal title="Статус заказа" isOpen={isOpen} setIsOpen={setIsOpen} width="xsmall">
-      <Timeline mode="left" items={items} />
+      <CustomTimeline items={points} mode="left" />
     </Modal>
   );
 };
