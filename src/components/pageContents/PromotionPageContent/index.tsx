@@ -1,6 +1,7 @@
 'use client';
 
 import { Breadcrumb } from 'antd';
+import DOMPurify from 'isomorphic-dompurify';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -17,7 +18,7 @@ const PromotionPageContent: FC<PromotionPageContentProps> = ({ promotion }) => {
       title: <Link href="/">Главная</Link>,
     },
     {
-      title: 'Акции',
+      title: <Link href="/promotions">Акции</Link>,
     },
     {
       title: promotion.name,
@@ -40,7 +41,12 @@ const PromotionPageContent: FC<PromotionPageContentProps> = ({ promotion }) => {
           />
         )}
         <h1 className="pb-6 pt-10 text-4xl font-medium leading-4xl max-sm:text-2xl max-sm:leading-2xl">{name}</h1>
-        <div className="flex flex-col gap-6 max-md:gap-4">{promotion.description}</div>
+        {!!promotion.description && (
+          <div
+            className="flex flex-col gap-1"
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(promotion.description) }}
+          />
+        )}
       </section>
     </div>
   );

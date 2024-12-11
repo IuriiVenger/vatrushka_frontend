@@ -692,3 +692,17 @@ export const GET_PROMOTION_BY_ID = gql`
     }
   }
 `;
+
+export const GET_MAINPAGE_PROMOBANNERS = gql`
+  query GetMainpagePromoBanners {
+    promotionsCollection(filter: { homepageBanner: { like: "%" }, homepageEnabled: { eq: true } }) {
+      edges {
+        node {
+          homepageBanner
+          id
+          productPagesEnabled
+        }
+      }
+    }
+  }
+`;

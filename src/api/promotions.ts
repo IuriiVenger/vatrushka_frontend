@@ -1,8 +1,13 @@
-import { GET_ALL_PROMOTIONS, GET_PROMOTION_BY_ID } from './queries';
+import { GET_ALL_PROMOTIONS, GET_MAINPAGE_PROMOBANNERS, GET_PROMOTION_BY_ID } from './queries';
 
 import { apolloClient } from '.';
 
-import { GetAllPromotionsQuery, GetAllPromotionsQueryVariables, GetPromotionByIdQuery } from '@/__generated__/graphql';
+import {
+  GetAllPromotionsQuery,
+  GetAllPromotionsQueryVariables,
+  GetMainpagePromoBannersQuery,
+  GetPromotionByIdQuery,
+} from '@/__generated__/graphql';
 
 export const promotions = {
   getAll: (variables: GetAllPromotionsQueryVariables) =>
@@ -18,5 +23,9 @@ export const promotions = {
           id: { eq: id },
         },
       },
+    }),
+  getMainpagePromoBanners: () =>
+    apolloClient.query<GetMainpagePromoBannersQuery>({
+      query: GET_MAINPAGE_PROMOBANNERS,
     }),
 };

@@ -8,22 +8,21 @@ import Catalog from '../../Catalog/Catalog';
 import { CategoriesConnection } from '@/__generated__/graphql';
 import { API } from '@/api/types';
 import ProductSlider from '@/components/Carousels/ProductSlider';
-import PromoCarousel from '@/components/Carousels/PromoCarousel';
+import PromoCarousel, { TCarouselSlide } from '@/components/Carousels/PromoCarousel';
 
 import SeoContent from '@/components/SeoContent';
 
 import useCart from '@/hooks/useCart';
-// TODO: заполнить акции и тянуть оттуда
-import { slides } from '@/mocks';
 import { TCard, TProductSliderSlide } from '@/types';
 import { conertCategoryRecommendedProductsToCards } from '@/utils/converters';
 
 type THomePageContentProps = {
   categories: CategoriesConnection;
   recomendations?: API.Products.Recomedation[];
+  promoBanners: TCarouselSlide[];
 };
 
-const HomePageContent: FC<THomePageContentProps> = ({ categories, recomendations }) => {
+const HomePageContent: FC<THomePageContentProps> = ({ categories, recomendations, promoBanners }) => {
   const catalogCategories = categories.edges.map((edge) => edge.node);
   const recomendatedProductsData = recomendations && conertCategoryRecommendedProductsToCards(recomendations);
   const { addToCart } = useCart();
@@ -57,7 +56,7 @@ const HomePageContent: FC<THomePageContentProps> = ({ categories, recomendations
 
   return (
     <>
-      <PromoCarousel slides={slides} />
+      <PromoCarousel slides={promoBanners} />
       <Catalog categories={catalogCategories} />
       {!!recomendatedProductsData && <ProductSlider title="Рекомендуем" slides={productSliderSlides} />}
       <SeoContent />

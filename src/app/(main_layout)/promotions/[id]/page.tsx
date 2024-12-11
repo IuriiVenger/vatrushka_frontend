@@ -20,7 +20,7 @@ const PromotionPage: FC<PromotionPageProps> = async ({ params: { id } }) => {
 
     const promotion = data.promotionsCollection.edges[0]?.node ?? null;
 
-    if (!promotion) {
+    if (!promotion || !promotion.productPagesEnabled) {
       return notFound();
     }
 
