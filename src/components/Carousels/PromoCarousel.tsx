@@ -15,7 +15,7 @@ type TCarouselProps = {
 };
 
 const PromoCarousel: FC<TCarouselProps> = ({ slides }) => (
-  <section className="custom grid grid-cols-1">
+  <section className="custom grid w-full grid-cols-1">
     <AntCarousel
       autoplay
       arrows={slides.length > 1}
