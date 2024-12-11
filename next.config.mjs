@@ -5,6 +5,7 @@ const nextConfig = {
     REST_API_URL: process.env.REST_API_URL,
     API_KEY: process.env.API_KEY,
     IMAGE_CDN: process.env.IMAGE_CDN,
+    EMAIL_TO: process.env.EMAIL_TO,
   },
 
   images: {

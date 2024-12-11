@@ -7,6 +7,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 import SubMenuDrawer from './SubMenuDrawer';
 
 import { Categories } from '@/__generated__/graphql';
+import { email } from '@/api/email';
 import Contacts from '@/components/Contacts';
 import ContactUsModal from '@/components/modals/ContactUsModal';
 import { companyInfo, contactLinks, navigationLinks } from '@/config/links';
@@ -116,7 +117,7 @@ const MenuDrawer: FC<TMenuDrawerProps> = ({ catalogOptions }) => {
         onCloseAll={onCloseAll}
         catalogOptions={catalogOptions}
       />
-      <ContactUsModal isOpen={isContactUsModalOpen} setIsOpen={setIsContactUsModalOpen} />
+      <ContactUsModal isOpen={isContactUsModalOpen} setIsOpen={setIsContactUsModalOpen} onSubmit={email.contactMe} />
     </>
   );
 };

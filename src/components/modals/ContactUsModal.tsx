@@ -18,8 +18,13 @@ type TContactUsModalForm = {
   message: string;
 };
 
-const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
+type TContactUsModalProps = TModalProps & {
+  onSubmit: (data: TContactUsModalForm) => Promise<void> | void;
+};
+
+const ContactUsModal: FC<TContactUsModalProps> = ({ isOpen, setIsOpen, onSubmit }) => {
   const [isAgree, setIsAgree] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { showSuccess } = useSuccessModal({
     setIsOpen,
@@ -35,13 +40,20 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
     handleSubmit,
     control,
     formState: { errors, isValid, isDirty },
+    reset,
   } = useForm<TContactUsModalForm>({
     mode: 'onChange',
   });
 
-  const submitHandler: SubmitHandler<TContactUsModalForm> = (data) => {
-    console.log('contact me:', data);
-    showSuccess();
+  const submitHandler: SubmitHandler<TContactUsModalForm> = async (data) => {
+    try {
+      setIsLoading(true);
+      await onSubmit(data);
+      showSuccess();
+      reset();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const items: TabsProps['items'] = [
@@ -95,6 +107,7 @@ const ContactUsModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             className="w-full max-sm:text-base max-sm:leading-base"
             htmlType="submit"
             disabled={(!isValid && isDirty) || !isAgree}
+            loading={isLoading}
           >
             Отправить
           </Button>

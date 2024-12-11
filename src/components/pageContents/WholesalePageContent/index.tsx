@@ -4,6 +4,7 @@ import { Breadcrumb, Button } from 'antd';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { email } from '@/api/email';
 import LeaveRequestModal from '@/components/modals/LeaveRequestModal';
 import { companyInfo } from '@/config/links';
 
@@ -63,15 +64,15 @@ const WholesalePageContent = () => {
                 <Button type="primary" onClick={onClick} className="max-sm:text-base">
                   Оставить заявку
                 </Button>
-                <Button href="https://www.google.com" className="max-sm:text-base">
+                {/* <Button href="https://www.google.com" className="max-sm:text-base">
                   Скачать прайс-лист/бланк заказа
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
         </section>
       </div>
-      <LeaveRequestModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+      <LeaveRequestModal onSubmit={email.wholesaleRequest} isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </>
   );
 };
