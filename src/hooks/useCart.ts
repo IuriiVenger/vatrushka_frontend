@@ -14,6 +14,7 @@ const useCart = () => {
   const groupedCartItems = getGroupedCartItems(activeCart.data?.items ?? []);
 
   const addToCart = async (data: TAddToCardData) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     await dispatch(addCartItem({ data: data.map(({ label, ...rest }) => rest) }));
 
     const labels = Array.from(new Set(data.map(({ label }) => label)));
