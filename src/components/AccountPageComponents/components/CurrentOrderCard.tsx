@@ -65,7 +65,7 @@ const CurrentOrderCard: FC<TCurrentOrderCardProps> = ({ order }) => {
   );
   const orderAddress = [additionalInfo, extraInfo].filter(Boolean).join(', ');
 
-  const deliveryTime = dayjs(delivery_time).format('DD.MM.YYYY с HH:mm');
+  const deliveryTime = delivery_time ? dayjs(delivery_time).format('DD.MM.YYYY с HH:mm') : null;
 
   const paymentMethod = payment_methods[0].is_online
     ? onlinePaymentOptions[payment_methods[0].iiko_code as OnlinePaymentOptions]?.label

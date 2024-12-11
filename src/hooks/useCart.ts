@@ -61,7 +61,7 @@ const useCart = () => {
         cart_id: activeCart.data?.id,
         product_id: findingItems[index].product_id,
         size_id: findingItems[index].size_id,
-        modifiers: findingItems[index].modifiers,
+        modifiers: findingItems[index].modifiers || [],
         label: findingItems[index].product.name,
       }));
       await addToCart(addingItems);
@@ -78,7 +78,7 @@ const useCart = () => {
       cart_id: activeCart.data?.id,
       product_id: item.product_id,
       size_id: item.size_id,
-      modifiers: item.modifiers,
+      modifiers: item.modifiers || [],
     }));
     await dispatch(addCartItem({ data: addingItems }));
     showMessage({ text: 'Корзина обновлена, данные со старой корзины перенесены в новую', type: 'success' });
@@ -94,7 +94,7 @@ const useCart = () => {
       inStock: true,
       buttonType: 'button',
       href: '',
-      description: item.modifiers.map((modifier) => modifier.name).join(', '),
+      description: item.modifiers?.map((modifier) => modifier.name).join(', ') || '',
       weight: item.size.portion_weight_grams,
       sizeId: item.size.id,
       productId: item.product.id,

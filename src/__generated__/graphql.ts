@@ -200,10 +200,14 @@ export type Mutation = {
   deleteFromcategoriesCollection: CategoriesDeleteResponse;
   /** Deletes zero or more records from the `categoryitems` collection */
   deleteFromcategoryitemsCollection: CategoryitemsDeleteResponse;
+  /** Deletes zero or more records from the `integration_yookassa_callback` collection */
+  deleteFromintegration_yookassa_callbackCollection: Integration_Yookassa_CallbackDeleteResponse;
   /** Deletes zero or more records from the `modifierallergens` collection */
   deleteFrommodifierallergensCollection: ModifierallergensDeleteResponse;
   /** Deletes zero or more records from the `orders` collection */
   deleteFromordersCollection: OrdersDeleteResponse;
+  /** Deletes zero or more records from the `organizations` collection */
+  deleteFromorganizationsCollection: OrganizationsDeleteResponse;
   /** Deletes zero or more records from the `payment_methods` collection */
   deleteFrompayment_methodsCollection: Payment_MethodsDeleteResponse;
   /** Deletes zero or more records from the `productSizeModifierGroups` collection */
@@ -230,6 +234,10 @@ export type Mutation = {
   deleteFromrec_categoryCollection: Rec_CategoryDeleteResponse;
   /** Deletes zero or more records from the `rec_product` collection */
   deleteFromrec_productCollection: Rec_ProductDeleteResponse;
+  /** Deletes zero or more records from the `terminal_addresses` collection */
+  deleteFromterminal_addressesCollection: Terminal_AddressesDeleteResponse;
+  /** Deletes zero or more records from the `terminal_groups` collection */
+  deleteFromterminal_groupsCollection: Terminal_GroupsDeleteResponse;
   /** Deletes zero or more records from the `user_dats` collection */
   deleteFromuser_datsCollection: User_DatsDeleteResponse;
   /** Adds one or more `addresses` records to the collection */
@@ -244,10 +252,14 @@ export type Mutation = {
   insertIntocategoriesCollection?: Maybe<CategoriesInsertResponse>;
   /** Adds one or more `categoryitems` records to the collection */
   insertIntocategoryitemsCollection?: Maybe<CategoryitemsInsertResponse>;
+  /** Adds one or more `integration_yookassa_callback` records to the collection */
+  insertIntointegration_yookassa_callbackCollection?: Maybe<Integration_Yookassa_CallbackInsertResponse>;
   /** Adds one or more `modifierallergens` records to the collection */
   insertIntomodifierallergensCollection?: Maybe<ModifierallergensInsertResponse>;
   /** Adds one or more `orders` records to the collection */
   insertIntoordersCollection?: Maybe<OrdersInsertResponse>;
+  /** Adds one or more `organizations` records to the collection */
+  insertIntoorganizationsCollection?: Maybe<OrganizationsInsertResponse>;
   /** Adds one or more `payment_methods` records to the collection */
   insertIntopayment_methodsCollection?: Maybe<Payment_MethodsInsertResponse>;
   /** Adds one or more `productSizeModifierGroups` records to the collection */
@@ -274,10 +286,14 @@ export type Mutation = {
   insertIntorec_categoryCollection?: Maybe<Rec_CategoryInsertResponse>;
   /** Adds one or more `rec_product` records to the collection */
   insertIntorec_productCollection?: Maybe<Rec_ProductInsertResponse>;
+  /** Adds one or more `terminal_addresses` records to the collection */
+  insertIntoterminal_addressesCollection?: Maybe<Terminal_AddressesInsertResponse>;
+  /** Adds one or more `terminal_groups` records to the collection */
+  insertIntoterminal_groupsCollection?: Maybe<Terminal_GroupsInsertResponse>;
   /** Adds one or more `user_dats` records to the collection */
   insertIntouser_datsCollection?: Maybe<User_DatsInsertResponse>;
   /** Updates zero or more records in the `addresses` collection */
-  updateUserAddressesCollection: AddressesUpdateResponse;
+  updateaddressesCollection: AddressesUpdateResponse;
   /** Updates zero or more records in the `allergengroups` collection */
   updateallergengroupsCollection: AllergengroupsUpdateResponse;
   /** Updates zero or more records in the `cart` collection */
@@ -288,10 +304,14 @@ export type Mutation = {
   updatecategoriesCollection: CategoriesUpdateResponse;
   /** Updates zero or more records in the `categoryitems` collection */
   updatecategoryitemsCollection: CategoryitemsUpdateResponse;
+  /** Updates zero or more records in the `integration_yookassa_callback` collection */
+  updateintegration_yookassa_callbackCollection: Integration_Yookassa_CallbackUpdateResponse;
   /** Updates zero or more records in the `modifierallergens` collection */
   updatemodifierallergensCollection: ModifierallergensUpdateResponse;
   /** Updates zero or more records in the `orders` collection */
   updateordersCollection: OrdersUpdateResponse;
+  /** Updates zero or more records in the `organizations` collection */
+  updateorganizationsCollection: OrganizationsUpdateResponse;
   /** Updates zero or more records in the `payment_methods` collection */
   updatepayment_methodsCollection: Payment_MethodsUpdateResponse;
   /** Updates zero or more records in the `productSizeModifierGroups` collection */
@@ -318,6 +338,10 @@ export type Mutation = {
   updaterec_categoryCollection: Rec_CategoryUpdateResponse;
   /** Updates zero or more records in the `rec_product` collection */
   updaterec_productCollection: Rec_ProductUpdateResponse;
+  /** Updates zero or more records in the `terminal_addresses` collection */
+  updateterminal_addressesCollection: Terminal_AddressesUpdateResponse;
+  /** Updates zero or more records in the `terminal_groups` collection */
+  updateterminal_groupsCollection: Terminal_GroupsUpdateResponse;
   /** Updates zero or more records in the `user_dats` collection */
   updateuser_datsCollection: User_DatsUpdateResponse;
 };
@@ -366,6 +390,13 @@ export type MutationDeleteFromcategoryitemsCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
+export type MutationDeleteFromintegration_Yookassa_CallbackCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<Integration_Yookassa_CallbackFilter>;
+};
+
+
+/** The root type for creating and mutating data */
 export type MutationDeleteFrommodifierallergensCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<ModifierallergensFilter>;
@@ -376,6 +407,13 @@ export type MutationDeleteFrommodifierallergensCollectionArgs = {
 export type MutationDeleteFromordersCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<OrdersFilter>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationDeleteFromorganizationsCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<OrganizationsFilter>;
 };
 
 
@@ -471,6 +509,20 @@ export type MutationDeleteFromrec_ProductCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
+export type MutationDeleteFromterminal_AddressesCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<Terminal_AddressesFilter>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationDeleteFromterminal_GroupsCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<Terminal_GroupsFilter>;
+};
+
+
+/** The root type for creating and mutating data */
 export type MutationDeleteFromuser_DatsCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<User_DatsFilter>;
@@ -514,6 +566,12 @@ export type MutationInsertIntocategoryitemsCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
+export type MutationInsertIntointegration_Yookassa_CallbackCollectionArgs = {
+  objects: Array<Integration_Yookassa_CallbackInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
 export type MutationInsertIntomodifierallergensCollectionArgs = {
   objects: Array<ModifierallergensInsertInput>;
 };
@@ -522,6 +580,12 @@ export type MutationInsertIntomodifierallergensCollectionArgs = {
 /** The root type for creating and mutating data */
 export type MutationInsertIntoordersCollectionArgs = {
   objects: Array<OrdersInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationInsertIntoorganizationsCollectionArgs = {
+  objects: Array<OrganizationsInsertInput>;
 };
 
 
@@ -604,13 +668,25 @@ export type MutationInsertIntorec_ProductCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
+export type MutationInsertIntoterminal_AddressesCollectionArgs = {
+  objects: Array<Terminal_AddressesInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationInsertIntoterminal_GroupsCollectionArgs = {
+  objects: Array<Terminal_GroupsInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
 export type MutationInsertIntouser_DatsCollectionArgs = {
   objects: Array<User_DatsInsertInput>;
 };
 
 
 /** The root type for creating and mutating data */
-export type MutationupdateUserAddressesCollectionArgs = {
+export type MutationUpdateaddressesCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<AddressesFilter>;
   set: AddressesUpdateInput;
@@ -658,6 +734,14 @@ export type MutationUpdatecategoryitemsCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
+export type MutationUpdateintegration_Yookassa_CallbackCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<Integration_Yookassa_CallbackFilter>;
+  set: Integration_Yookassa_CallbackUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
 export type MutationUpdatemodifierallergensCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<ModifierallergensFilter>;
@@ -670,6 +754,14 @@ export type MutationUpdateordersCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<OrdersFilter>;
   set: OrdersUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationUpdateorganizationsCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<OrganizationsFilter>;
+  set: OrganizationsUpdateInput;
 };
 
 
@@ -778,6 +870,22 @@ export type MutationUpdaterec_ProductCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
+export type MutationUpdateterminal_AddressesCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<Terminal_AddressesFilter>;
+  set: Terminal_AddressesUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationUpdateterminal_GroupsCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<Terminal_GroupsFilter>;
+  set: Terminal_GroupsUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
 export type MutationUpdateuser_DatsCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<User_DatsFilter>;
@@ -830,12 +938,16 @@ export type Query = {
   categoriesCollection?: Maybe<CategoriesConnection>;
   /** A pagable collection of type `categoryitems` */
   categoryitemsCollection?: Maybe<CategoryitemsConnection>;
+  /** A pagable collection of type `integration_yookassa_callback` */
+  integration_yookassa_callbackCollection?: Maybe<Integration_Yookassa_CallbackConnection>;
   /** A pagable collection of type `modifierallergens` */
   modifierallergensCollection?: Maybe<ModifierallergensConnection>;
   /** Retrieve a record by its `ID` */
   node?: Maybe<Node>;
   /** A pagable collection of type `orders` */
   ordersCollection?: Maybe<OrdersConnection>;
+  /** A pagable collection of type `organizations` */
+  organizationsCollection?: Maybe<OrganizationsConnection>;
   /** A pagable collection of type `payment_methods` */
   payment_methodsCollection?: Maybe<Payment_MethodsConnection>;
   /** A pagable collection of type `productSizeModifierGroups` */
@@ -862,6 +974,10 @@ export type Query = {
   rec_categoryCollection?: Maybe<Rec_CategoryConnection>;
   /** A pagable collection of type `rec_product` */
   rec_productCollection?: Maybe<Rec_ProductConnection>;
+  /** A pagable collection of type `terminal_addresses` */
+  terminal_addressesCollection?: Maybe<Terminal_AddressesConnection>;
+  /** A pagable collection of type `terminal_groups` */
+  terminal_groupsCollection?: Maybe<Terminal_GroupsConnection>;
   /** A pagable collection of type `user_dats` */
   user_datsCollection?: Maybe<User_DatsConnection>;
 };
@@ -940,6 +1056,18 @@ export type QueryCategoryitemsCollectionArgs = {
 
 
 /** The root type for querying data */
+export type QueryIntegration_Yookassa_CallbackCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<Integration_Yookassa_CallbackFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<Integration_Yookassa_CallbackOrderBy>>;
+};
+
+
+/** The root type for querying data */
 export type QueryModifierallergensCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -966,6 +1094,18 @@ export type QueryOrdersCollectionArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<OrdersOrderBy>>;
+};
+
+
+/** The root type for querying data */
+export type QueryOrganizationsCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<OrganizationsFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
 };
 
 
@@ -1126,6 +1266,30 @@ export type QueryRec_ProductCollectionArgs = {
 
 
 /** The root type for querying data */
+export type QueryTerminal_AddressesCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<Terminal_AddressesFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<Terminal_AddressesOrderBy>>;
+};
+
+
+/** The root type for querying data */
+export type QueryTerminal_GroupsCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<Terminal_GroupsFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<Terminal_GroupsOrderBy>>;
+};
+
+
+/** The root type for querying data */
 export type QueryUser_DatsCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1202,13 +1366,18 @@ export type UuidListFilter = {
 
 export type Addresses = Node & {
   __typename?: 'addresses';
+  address_string?: Maybe<Scalars['String']['output']>;
   building?: Maybe<Scalars['String']['output']>;
   city: Scalars['String']['output'];
+  comment?: Maybe<Scalars['String']['output']>;
   country?: Maybe<Scalars['String']['output']>;
   doorphone?: Maybe<Scalars['String']['output']>;
+  entrance?: Maybe<Scalars['String']['output']>;
   flat?: Maybe<Scalars['String']['output']>;
+  floor?: Maybe<Scalars['String']['output']>;
   house: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
+  is_deleted: Scalars['Boolean']['output'];
   latitude: Scalars['BigFloat']['output'];
   longitude: Scalars['BigFloat']['output'];
   /** Globally Unique Record Identifier */
@@ -1252,15 +1421,20 @@ export type AddressesEdge = {
 };
 
 export type AddressesFilter = {
+  address_string?: InputMaybe<StringFilter>;
   /** Returns true only if all its inner filters are true, otherwise returns false */
   and?: InputMaybe<Array<AddressesFilter>>;
   building?: InputMaybe<StringFilter>;
   city?: InputMaybe<StringFilter>;
+  comment?: InputMaybe<StringFilter>;
   country?: InputMaybe<StringFilter>;
   doorphone?: InputMaybe<StringFilter>;
+  entrance?: InputMaybe<StringFilter>;
   flat?: InputMaybe<StringFilter>;
+  floor?: InputMaybe<StringFilter>;
   house?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
+  is_deleted?: InputMaybe<BooleanFilter>;
   latitude?: InputMaybe<BigFloatFilter>;
   longitude?: InputMaybe<BigFloatFilter>;
   nodeId?: InputMaybe<IdFilter>;
@@ -1275,13 +1449,18 @@ export type AddressesFilter = {
 };
 
 export type AddressesInsertInput = {
+  address_string?: InputMaybe<Scalars['String']['input']>;
   building?: InputMaybe<Scalars['String']['input']>;
   city?: InputMaybe<Scalars['String']['input']>;
+  comment?: InputMaybe<Scalars['String']['input']>;
   country?: InputMaybe<Scalars['String']['input']>;
   doorphone?: InputMaybe<Scalars['String']['input']>;
+  entrance?: InputMaybe<Scalars['String']['input']>;
   flat?: InputMaybe<Scalars['String']['input']>;
+  floor?: InputMaybe<Scalars['String']['input']>;
   house?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
   latitude?: InputMaybe<Scalars['BigFloat']['input']>;
   longitude?: InputMaybe<Scalars['BigFloat']['input']>;
   street_classifier_id?: InputMaybe<Scalars['String']['input']>;
@@ -1299,13 +1478,18 @@ export type AddressesInsertResponse = {
 };
 
 export type AddressesOrderBy = {
+  address_string?: InputMaybe<OrderByDirection>;
   building?: InputMaybe<OrderByDirection>;
   city?: InputMaybe<OrderByDirection>;
+  comment?: InputMaybe<OrderByDirection>;
   country?: InputMaybe<OrderByDirection>;
   doorphone?: InputMaybe<OrderByDirection>;
+  entrance?: InputMaybe<OrderByDirection>;
   flat?: InputMaybe<OrderByDirection>;
+  floor?: InputMaybe<OrderByDirection>;
   house?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
+  is_deleted?: InputMaybe<OrderByDirection>;
   latitude?: InputMaybe<OrderByDirection>;
   longitude?: InputMaybe<OrderByDirection>;
   street_classifier_id?: InputMaybe<OrderByDirection>;
@@ -1315,13 +1499,18 @@ export type AddressesOrderBy = {
 };
 
 export type AddressesUpdateInput = {
+  address_string?: InputMaybe<Scalars['String']['input']>;
   building?: InputMaybe<Scalars['String']['input']>;
   city?: InputMaybe<Scalars['String']['input']>;
+  comment?: InputMaybe<Scalars['String']['input']>;
   country?: InputMaybe<Scalars['String']['input']>;
   doorphone?: InputMaybe<Scalars['String']['input']>;
+  entrance?: InputMaybe<Scalars['String']['input']>;
   flat?: InputMaybe<Scalars['String']['input']>;
+  floor?: InputMaybe<Scalars['String']['input']>;
   house?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
   latitude?: InputMaybe<Scalars['BigFloat']['input']>;
   longitude?: InputMaybe<Scalars['BigFloat']['input']>;
   street_classifier_id?: InputMaybe<Scalars['String']['input']>;
@@ -1447,6 +1636,7 @@ export type Cart = Node & {
   nodeId: Scalars['ID']['output'];
   ordersCollection?: Maybe<OrdersConnection>;
   status: Cart_Status;
+  total_sum: Scalars['BigFloat']['output'];
   updated_at?: Maybe<Scalars['Datetime']['output']>;
   user_id: Scalars['UUID']['output'];
 };
@@ -1504,6 +1694,7 @@ export type CartFilter = {
   /** Returns true if at least one of its inner filters is true, otherwise returns false */
   or?: InputMaybe<Array<CartFilter>>;
   status?: InputMaybe<Cart_StatusFilter>;
+  total_sum?: InputMaybe<BigFloatFilter>;
   updated_at?: InputMaybe<DatetimeFilter>;
   user_id?: InputMaybe<UuidFilter>;
 };
@@ -1512,6 +1703,7 @@ export type CartInsertInput = {
   created_at?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
   status?: InputMaybe<Cart_Status>;
+  total_sum?: InputMaybe<Scalars['BigFloat']['input']>;
   updated_at?: InputMaybe<Scalars['Datetime']['input']>;
   user_id?: InputMaybe<Scalars['UUID']['input']>;
 };
@@ -1528,6 +1720,7 @@ export type CartOrderBy = {
   created_at?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
   status?: InputMaybe<OrderByDirection>;
+  total_sum?: InputMaybe<OrderByDirection>;
   updated_at?: InputMaybe<OrderByDirection>;
   user_id?: InputMaybe<OrderByDirection>;
 };
@@ -1536,6 +1729,7 @@ export type CartUpdateInput = {
   created_at?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
   status?: InputMaybe<Cart_Status>;
+  total_sum?: InputMaybe<Scalars['BigFloat']['input']>;
   updated_at?: InputMaybe<Scalars['Datetime']['input']>;
   user_id?: InputMaybe<Scalars['UUID']['input']>;
 };
@@ -1552,7 +1746,8 @@ export enum Cart_Status {
   Active = 'ACTIVE',
   Canceled = 'CANCELED',
   Expired = 'EXPIRED',
-  Merged = 'MERGED'
+  Merged = 'MERGED',
+  Ordered = 'ORDERED'
 }
 
 /** Boolean expression comparing fields on type "cart_status" */
@@ -1569,6 +1764,7 @@ export type Cartitems = Node & {
   cart_id: Scalars['UUID']['output'];
   created_at?: Maybe<Scalars['Datetime']['output']>;
   id: Scalars['UUID']['output'];
+  item_total?: Maybe<Scalars['BigFloat']['output']>;
   modifiers?: Maybe<Array<Maybe<Scalars['JSON']['output']>>>;
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
@@ -1605,6 +1801,7 @@ export type CartitemsFilter = {
   cart_id?: InputMaybe<UuidFilter>;
   created_at?: InputMaybe<DatetimeFilter>;
   id?: InputMaybe<UuidFilter>;
+  item_total?: InputMaybe<BigFloatFilter>;
   nodeId?: InputMaybe<IdFilter>;
   /** Negates a filter */
   not?: InputMaybe<CartitemsFilter>;
@@ -1619,6 +1816,7 @@ export type CartitemsInsertInput = {
   cart_id?: InputMaybe<Scalars['UUID']['input']>;
   created_at?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  item_total?: InputMaybe<Scalars['BigFloat']['input']>;
   modifiers?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   product_id?: InputMaybe<Scalars['UUID']['input']>;
   size_id?: InputMaybe<Scalars['UUID']['input']>;
@@ -1637,6 +1835,7 @@ export type CartitemsOrderBy = {
   cart_id?: InputMaybe<OrderByDirection>;
   created_at?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
+  item_total?: InputMaybe<OrderByDirection>;
   product_id?: InputMaybe<OrderByDirection>;
   size_id?: InputMaybe<OrderByDirection>;
   updated_at?: InputMaybe<OrderByDirection>;
@@ -1646,6 +1845,7 @@ export type CartitemsUpdateInput = {
   cart_id?: InputMaybe<Scalars['UUID']['input']>;
   created_at?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  item_total?: InputMaybe<Scalars['BigFloat']['input']>;
   modifiers?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   product_id?: InputMaybe<Scalars['UUID']['input']>;
   size_id?: InputMaybe<Scalars['UUID']['input']>;
@@ -1891,6 +2091,73 @@ export type CategoryitemsUpdateResponse = {
   records: Array<Categoryitems>;
 };
 
+export type Integration_Yookassa_Callback = Node & {
+  __typename?: 'integration_yookassa_callback';
+  data: Scalars['JSON']['output'];
+  id: Scalars['BigInt']['output'];
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID']['output'];
+};
+
+export type Integration_Yookassa_CallbackConnection = {
+  __typename?: 'integration_yookassa_callbackConnection';
+  edges: Array<Integration_Yookassa_CallbackEdge>;
+  pageInfo: PageInfo;
+};
+
+export type Integration_Yookassa_CallbackDeleteResponse = {
+  __typename?: 'integration_yookassa_callbackDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Integration_Yookassa_Callback>;
+};
+
+export type Integration_Yookassa_CallbackEdge = {
+  __typename?: 'integration_yookassa_callbackEdge';
+  cursor: Scalars['String']['output'];
+  node: Integration_Yookassa_Callback;
+};
+
+export type Integration_Yookassa_CallbackFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<Integration_Yookassa_CallbackFilter>>;
+  id?: InputMaybe<BigIntFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<Integration_Yookassa_CallbackFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<Integration_Yookassa_CallbackFilter>>;
+};
+
+export type Integration_Yookassa_CallbackInsertInput = {
+  data?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type Integration_Yookassa_CallbackInsertResponse = {
+  __typename?: 'integration_yookassa_callbackInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Integration_Yookassa_Callback>;
+};
+
+export type Integration_Yookassa_CallbackOrderBy = {
+  id?: InputMaybe<OrderByDirection>;
+};
+
+export type Integration_Yookassa_CallbackUpdateInput = {
+  data?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type Integration_Yookassa_CallbackUpdateResponse = {
+  __typename?: 'integration_yookassa_callbackUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Integration_Yookassa_Callback>;
+};
+
 export type Modifierallergens = Node & {
   __typename?: 'modifierallergens';
   allergen_group_id?: Maybe<Scalars['UUID']['output']>;
@@ -1970,13 +2237,15 @@ export type ModifierallergensUpdateResponse = {
 };
 
 export enum Order_Status {
-  Cancelled = 'CANCELLED',
-  Confirmed = 'CONFIRMED',
-  Delivered = 'DELIVERED',
-  OnTheWay = 'ON_THE_WAY',
-  Preparing = 'PREPARING',
-  Ready = 'READY',
-  Unconfirmed = 'UNCONFIRMED'
+  Cancelled = 'Cancelled',
+  Closed = 'Closed',
+  CookingCompleted = 'CookingCompleted',
+  CookingStarted = 'CookingStarted',
+  Delivered = 'Delivered',
+  OnWay = 'OnWay',
+  Unconfirmed = 'Unconfirmed',
+  WaitCooking = 'WaitCooking',
+  Waiting = 'Waiting'
 }
 
 /** Boolean expression comparing fields on type "order_status" */
@@ -2007,19 +2276,23 @@ export type Orders = Node & {
   cart?: Maybe<Cart>;
   cart_id?: Maybe<Scalars['UUID']['output']>;
   created_at?: Maybe<Scalars['Datetime']['output']>;
+  delivery_address?: Maybe<Scalars['JSON']['output']>;
   delivery_time?: Maybe<Scalars['Datetime']['output']>;
   id: Scalars['UUID']['output'];
+  is_deleted: Scalars['Boolean']['output'];
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
-  payment_methods?: Maybe<Payment_Methods>;
+  order_number?: Maybe<Scalars['String']['output']>;
+  payment_methods?: Maybe<Array<Maybe<Scalars['JSON']['output']>>>;
   payment_status: Payment_Status;
-  payment_type?: Maybe<Scalars['UUID']['output']>;
   special_instructions?: Maybe<Scalars['String']['output']>;
   status: Order_Status;
+  terminal_groups?: Maybe<Terminal_Groups>;
+  terminal_id?: Maybe<Scalars['UUID']['output']>;
   total_price: Scalars['BigFloat']['output'];
   type: Order_Type;
   updated_at?: Maybe<Scalars['Datetime']['output']>;
-  user_id?: Maybe<Scalars['UUID']['output']>;
+  user_id: Scalars['UUID']['output'];
 };
 
 export type OrdersConnection = {
@@ -2050,15 +2323,17 @@ export type OrdersFilter = {
   created_at?: InputMaybe<DatetimeFilter>;
   delivery_time?: InputMaybe<DatetimeFilter>;
   id?: InputMaybe<UuidFilter>;
+  is_deleted?: InputMaybe<BooleanFilter>;
   nodeId?: InputMaybe<IdFilter>;
   /** Negates a filter */
   not?: InputMaybe<OrdersFilter>;
   /** Returns true if at least one of its inner filters is true, otherwise returns false */
   or?: InputMaybe<Array<OrdersFilter>>;
+  order_number?: InputMaybe<StringFilter>;
   payment_status?: InputMaybe<Payment_StatusFilter>;
-  payment_type?: InputMaybe<UuidFilter>;
   special_instructions?: InputMaybe<StringFilter>;
   status?: InputMaybe<Order_StatusFilter>;
+  terminal_id?: InputMaybe<UuidFilter>;
   total_price?: InputMaybe<BigFloatFilter>;
   type?: InputMaybe<Order_TypeFilter>;
   updated_at?: InputMaybe<DatetimeFilter>;
@@ -2069,12 +2344,16 @@ export type OrdersInsertInput = {
   address_id?: InputMaybe<Scalars['UUID']['input']>;
   cart_id?: InputMaybe<Scalars['UUID']['input']>;
   created_at?: InputMaybe<Scalars['Datetime']['input']>;
+  delivery_address?: InputMaybe<Scalars['JSON']['input']>;
   delivery_time?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
+  order_number?: InputMaybe<Scalars['String']['input']>;
+  payment_methods?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   payment_status?: InputMaybe<Payment_Status>;
-  payment_type?: InputMaybe<Scalars['UUID']['input']>;
   special_instructions?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Order_Status>;
+  terminal_id?: InputMaybe<Scalars['UUID']['input']>;
   total_price?: InputMaybe<Scalars['BigFloat']['input']>;
   type?: InputMaybe<Order_Type>;
   updated_at?: InputMaybe<Scalars['Datetime']['input']>;
@@ -2095,10 +2374,12 @@ export type OrdersOrderBy = {
   created_at?: InputMaybe<OrderByDirection>;
   delivery_time?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
+  is_deleted?: InputMaybe<OrderByDirection>;
+  order_number?: InputMaybe<OrderByDirection>;
   payment_status?: InputMaybe<OrderByDirection>;
-  payment_type?: InputMaybe<OrderByDirection>;
   special_instructions?: InputMaybe<OrderByDirection>;
   status?: InputMaybe<OrderByDirection>;
+  terminal_id?: InputMaybe<OrderByDirection>;
   total_price?: InputMaybe<OrderByDirection>;
   type?: InputMaybe<OrderByDirection>;
   updated_at?: InputMaybe<OrderByDirection>;
@@ -2109,12 +2390,16 @@ export type OrdersUpdateInput = {
   address_id?: InputMaybe<Scalars['UUID']['input']>;
   cart_id?: InputMaybe<Scalars['UUID']['input']>;
   created_at?: InputMaybe<Scalars['Datetime']['input']>;
+  delivery_address?: InputMaybe<Scalars['JSON']['input']>;
   delivery_time?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
+  order_number?: InputMaybe<Scalars['String']['input']>;
+  payment_methods?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   payment_status?: InputMaybe<Payment_Status>;
-  payment_type?: InputMaybe<Scalars['UUID']['input']>;
   special_instructions?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Order_Status>;
+  terminal_id?: InputMaybe<Scalars['UUID']['input']>;
   total_price?: InputMaybe<Scalars['BigFloat']['input']>;
   type?: InputMaybe<Order_Type>;
   updated_at?: InputMaybe<Scalars['Datetime']['input']>;
@@ -2129,29 +2414,108 @@ export type OrdersUpdateResponse = {
   records: Array<Orders>;
 };
 
+export type Organizations = Node & {
+  __typename?: 'organizations';
+  id: Scalars['UUID']['output'];
+  iiko_org_id?: Maybe<Scalars['UUID']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID']['output'];
+  terminal_groupsCollection?: Maybe<Terminal_GroupsConnection>;
+};
+
+
+export type OrganizationsTerminal_GroupsCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<Terminal_GroupsFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<Terminal_GroupsOrderBy>>;
+};
+
+export type OrganizationsConnection = {
+  __typename?: 'organizationsConnection';
+  edges: Array<OrganizationsEdge>;
+  pageInfo: PageInfo;
+};
+
+export type OrganizationsDeleteResponse = {
+  __typename?: 'organizationsDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Organizations>;
+};
+
+export type OrganizationsEdge = {
+  __typename?: 'organizationsEdge';
+  cursor: Scalars['String']['output'];
+  node: Organizations;
+};
+
+export type OrganizationsFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<OrganizationsFilter>>;
+  id?: InputMaybe<UuidFilter>;
+  iiko_org_id?: InputMaybe<UuidFilter>;
+  name?: InputMaybe<StringFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<OrganizationsFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<OrganizationsFilter>>;
+};
+
+export type OrganizationsInsertInput = {
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  iiko_org_id?: InputMaybe<Scalars['UUID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type OrganizationsInsertResponse = {
+  __typename?: 'organizationsInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Organizations>;
+};
+
+export type OrganizationsOrderBy = {
+  id?: InputMaybe<OrderByDirection>;
+  iiko_org_id?: InputMaybe<OrderByDirection>;
+  name?: InputMaybe<OrderByDirection>;
+};
+
+export type OrganizationsUpdateInput = {
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  iiko_org_id?: InputMaybe<Scalars['UUID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type OrganizationsUpdateResponse = {
+  __typename?: 'organizationsUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Organizations>;
+};
+
 export type Payment_Methods = Node & {
   __typename?: 'payment_methods';
   delivery_zones?: Maybe<Scalars['UUID']['output']>;
   enabled: Scalars['Boolean']['output'];
   id: Scalars['UUID']['output'];
   iiko_code: Scalars['String']['output'];
+  iiko_type_kind: Scalars['String']['output'];
+  is_loyalty: Scalars['Boolean']['output'];
+  is_online: Scalars['Boolean']['output'];
   max_sum?: Maybe<Scalars['BigFloat']['output']>;
   min_sum?: Maybe<Scalars['BigFloat']['output']>;
   name: Scalars['String']['output'];
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
-  ordersCollection?: Maybe<OrdersConnection>;
-};
-
-
-export type Payment_MethodsOrdersCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  filter?: InputMaybe<OrdersFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<OrdersOrderBy>>;
 };
 
 export type Payment_MethodsConnection = {
@@ -2181,6 +2545,9 @@ export type Payment_MethodsFilter = {
   enabled?: InputMaybe<BooleanFilter>;
   id?: InputMaybe<UuidFilter>;
   iiko_code?: InputMaybe<StringFilter>;
+  iiko_type_kind?: InputMaybe<StringFilter>;
+  is_loyalty?: InputMaybe<BooleanFilter>;
+  is_online?: InputMaybe<BooleanFilter>;
   max_sum?: InputMaybe<BigFloatFilter>;
   min_sum?: InputMaybe<BigFloatFilter>;
   name?: InputMaybe<StringFilter>;
@@ -2196,6 +2563,9 @@ export type Payment_MethodsInsertInput = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
   iiko_code?: InputMaybe<Scalars['String']['input']>;
+  iiko_type_kind?: InputMaybe<Scalars['String']['input']>;
+  is_loyalty?: InputMaybe<Scalars['Boolean']['input']>;
+  is_online?: InputMaybe<Scalars['Boolean']['input']>;
   max_sum?: InputMaybe<Scalars['BigFloat']['input']>;
   min_sum?: InputMaybe<Scalars['BigFloat']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -2214,6 +2584,9 @@ export type Payment_MethodsOrderBy = {
   enabled?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
   iiko_code?: InputMaybe<OrderByDirection>;
+  iiko_type_kind?: InputMaybe<OrderByDirection>;
+  is_loyalty?: InputMaybe<OrderByDirection>;
+  is_online?: InputMaybe<OrderByDirection>;
   max_sum?: InputMaybe<OrderByDirection>;
   min_sum?: InputMaybe<OrderByDirection>;
   name?: InputMaybe<OrderByDirection>;
@@ -2224,6 +2597,9 @@ export type Payment_MethodsUpdateInput = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
   iiko_code?: InputMaybe<Scalars['String']['input']>;
+  iiko_type_kind?: InputMaybe<Scalars['String']['input']>;
+  is_loyalty?: InputMaybe<Scalars['Boolean']['input']>;
+  is_online?: InputMaybe<Scalars['Boolean']['input']>;
   max_sum?: InputMaybe<Scalars['BigFloat']['input']>;
   min_sum?: InputMaybe<Scalars['BigFloat']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -2238,11 +2614,12 @@ export type Payment_MethodsUpdateResponse = {
 };
 
 export enum Payment_Status {
-  Cancelled = 'CANCELLED',
-  Completed = 'COMPLETED',
-  Declined = 'DECLINED',
-  Expired = 'EXPIRED',
-  New = 'NEW'
+  Canceled = 'canceled',
+  Expired = 'expired',
+  Paid = 'paid',
+  PartiallyPaid = 'partially_paid',
+  Refunded = 'refunded',
+  Unpaid = 'unpaid'
 }
 
 /** Boolean expression comparing fields on type "payment_status" */
@@ -3618,6 +3995,282 @@ export type Rec_ProductUpdateResponse = {
   records: Array<Rec_Product>;
 };
 
+export type Terminal_Addresses = Node & {
+  __typename?: 'terminal_addresses';
+  address_string?: Maybe<Scalars['String']['output']>;
+  building?: Maybe<Scalars['String']['output']>;
+  city: Scalars['String']['output'];
+  comment?: Maybe<Scalars['String']['output']>;
+  country?: Maybe<Scalars['String']['output']>;
+  delivery_delay: Scalars['BigFloat']['output'];
+  delivery_limit: Scalars['BigFloat']['output'];
+  delivery_timeframe: Scalars['BigFloat']['output'];
+  doorphone?: Maybe<Scalars['String']['output']>;
+  entrance?: Maybe<Scalars['String']['output']>;
+  flat?: Maybe<Scalars['String']['output']>;
+  floor?: Maybe<Scalars['String']['output']>;
+  house: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  is_deleted: Scalars['Boolean']['output'];
+  latitude: Scalars['BigFloat']['output'];
+  longitude: Scalars['BigFloat']['output'];
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID']['output'];
+  phone?: Maybe<Scalars['String']['output']>;
+  street_classifier_id: Scalars['String']['output'];
+  street_name: Scalars['String']['output'];
+  terminal_group_id: Scalars['UUID']['output'];
+  terminal_groups: Terminal_Groups;
+  working_hours: Scalars['JSON']['output'];
+  zip_code?: Maybe<Scalars['String']['output']>;
+};
+
+export type Terminal_AddressesConnection = {
+  __typename?: 'terminal_addressesConnection';
+  edges: Array<Terminal_AddressesEdge>;
+  pageInfo: PageInfo;
+};
+
+export type Terminal_AddressesDeleteResponse = {
+  __typename?: 'terminal_addressesDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Terminal_Addresses>;
+};
+
+export type Terminal_AddressesEdge = {
+  __typename?: 'terminal_addressesEdge';
+  cursor: Scalars['String']['output'];
+  node: Terminal_Addresses;
+};
+
+export type Terminal_AddressesFilter = {
+  address_string?: InputMaybe<StringFilter>;
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<Terminal_AddressesFilter>>;
+  building?: InputMaybe<StringFilter>;
+  city?: InputMaybe<StringFilter>;
+  comment?: InputMaybe<StringFilter>;
+  country?: InputMaybe<StringFilter>;
+  delivery_delay?: InputMaybe<BigFloatFilter>;
+  delivery_limit?: InputMaybe<BigFloatFilter>;
+  delivery_timeframe?: InputMaybe<BigFloatFilter>;
+  doorphone?: InputMaybe<StringFilter>;
+  entrance?: InputMaybe<StringFilter>;
+  flat?: InputMaybe<StringFilter>;
+  floor?: InputMaybe<StringFilter>;
+  house?: InputMaybe<StringFilter>;
+  id?: InputMaybe<UuidFilter>;
+  is_deleted?: InputMaybe<BooleanFilter>;
+  latitude?: InputMaybe<BigFloatFilter>;
+  longitude?: InputMaybe<BigFloatFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<Terminal_AddressesFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<Terminal_AddressesFilter>>;
+  phone?: InputMaybe<StringFilter>;
+  street_classifier_id?: InputMaybe<StringFilter>;
+  street_name?: InputMaybe<StringFilter>;
+  terminal_group_id?: InputMaybe<UuidFilter>;
+  zip_code?: InputMaybe<StringFilter>;
+};
+
+export type Terminal_AddressesInsertInput = {
+  address_string?: InputMaybe<Scalars['String']['input']>;
+  building?: InputMaybe<Scalars['String']['input']>;
+  city?: InputMaybe<Scalars['String']['input']>;
+  comment?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  delivery_delay?: InputMaybe<Scalars['BigFloat']['input']>;
+  delivery_limit?: InputMaybe<Scalars['BigFloat']['input']>;
+  delivery_timeframe?: InputMaybe<Scalars['BigFloat']['input']>;
+  doorphone?: InputMaybe<Scalars['String']['input']>;
+  entrance?: InputMaybe<Scalars['String']['input']>;
+  flat?: InputMaybe<Scalars['String']['input']>;
+  floor?: InputMaybe<Scalars['String']['input']>;
+  house?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
+  latitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  longitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  street_classifier_id?: InputMaybe<Scalars['String']['input']>;
+  street_name?: InputMaybe<Scalars['String']['input']>;
+  terminal_group_id?: InputMaybe<Scalars['UUID']['input']>;
+  working_hours?: InputMaybe<Scalars['JSON']['input']>;
+  zip_code?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Terminal_AddressesInsertResponse = {
+  __typename?: 'terminal_addressesInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Terminal_Addresses>;
+};
+
+export type Terminal_AddressesOrderBy = {
+  address_string?: InputMaybe<OrderByDirection>;
+  building?: InputMaybe<OrderByDirection>;
+  city?: InputMaybe<OrderByDirection>;
+  comment?: InputMaybe<OrderByDirection>;
+  country?: InputMaybe<OrderByDirection>;
+  delivery_delay?: InputMaybe<OrderByDirection>;
+  delivery_limit?: InputMaybe<OrderByDirection>;
+  delivery_timeframe?: InputMaybe<OrderByDirection>;
+  doorphone?: InputMaybe<OrderByDirection>;
+  entrance?: InputMaybe<OrderByDirection>;
+  flat?: InputMaybe<OrderByDirection>;
+  floor?: InputMaybe<OrderByDirection>;
+  house?: InputMaybe<OrderByDirection>;
+  id?: InputMaybe<OrderByDirection>;
+  is_deleted?: InputMaybe<OrderByDirection>;
+  latitude?: InputMaybe<OrderByDirection>;
+  longitude?: InputMaybe<OrderByDirection>;
+  phone?: InputMaybe<OrderByDirection>;
+  street_classifier_id?: InputMaybe<OrderByDirection>;
+  street_name?: InputMaybe<OrderByDirection>;
+  terminal_group_id?: InputMaybe<OrderByDirection>;
+  zip_code?: InputMaybe<OrderByDirection>;
+};
+
+export type Terminal_AddressesUpdateInput = {
+  address_string?: InputMaybe<Scalars['String']['input']>;
+  building?: InputMaybe<Scalars['String']['input']>;
+  city?: InputMaybe<Scalars['String']['input']>;
+  comment?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  delivery_delay?: InputMaybe<Scalars['BigFloat']['input']>;
+  delivery_limit?: InputMaybe<Scalars['BigFloat']['input']>;
+  delivery_timeframe?: InputMaybe<Scalars['BigFloat']['input']>;
+  doorphone?: InputMaybe<Scalars['String']['input']>;
+  entrance?: InputMaybe<Scalars['String']['input']>;
+  flat?: InputMaybe<Scalars['String']['input']>;
+  floor?: InputMaybe<Scalars['String']['input']>;
+  house?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  is_deleted?: InputMaybe<Scalars['Boolean']['input']>;
+  latitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  longitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  street_classifier_id?: InputMaybe<Scalars['String']['input']>;
+  street_name?: InputMaybe<Scalars['String']['input']>;
+  terminal_group_id?: InputMaybe<Scalars['UUID']['input']>;
+  working_hours?: InputMaybe<Scalars['JSON']['input']>;
+  zip_code?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Terminal_AddressesUpdateResponse = {
+  __typename?: 'terminal_addressesUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Terminal_Addresses>;
+};
+
+export type Terminal_Groups = Node & {
+  __typename?: 'terminal_groups';
+  id: Scalars['UUID']['output'];
+  iiko_id?: Maybe<Scalars['String']['output']>;
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID']['output'];
+  ordersCollection?: Maybe<OrdersConnection>;
+  organization_id?: Maybe<Scalars['UUID']['output']>;
+  organizations?: Maybe<Organizations>;
+  terminal_addressesCollection?: Maybe<Terminal_AddressesConnection>;
+};
+
+
+export type Terminal_GroupsOrdersCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<OrdersFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrdersOrderBy>>;
+};
+
+
+export type Terminal_GroupsTerminal_AddressesCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<Terminal_AddressesFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<Terminal_AddressesOrderBy>>;
+};
+
+export type Terminal_GroupsConnection = {
+  __typename?: 'terminal_groupsConnection';
+  edges: Array<Terminal_GroupsEdge>;
+  pageInfo: PageInfo;
+};
+
+export type Terminal_GroupsDeleteResponse = {
+  __typename?: 'terminal_groupsDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Terminal_Groups>;
+};
+
+export type Terminal_GroupsEdge = {
+  __typename?: 'terminal_groupsEdge';
+  cursor: Scalars['String']['output'];
+  node: Terminal_Groups;
+};
+
+export type Terminal_GroupsFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<Terminal_GroupsFilter>>;
+  id?: InputMaybe<UuidFilter>;
+  iiko_id?: InputMaybe<StringFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<Terminal_GroupsFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<Terminal_GroupsFilter>>;
+  organization_id?: InputMaybe<UuidFilter>;
+};
+
+export type Terminal_GroupsInsertInput = {
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  iiko_id?: InputMaybe<Scalars['String']['input']>;
+  organization_id?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+export type Terminal_GroupsInsertResponse = {
+  __typename?: 'terminal_groupsInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Terminal_Groups>;
+};
+
+export type Terminal_GroupsOrderBy = {
+  id?: InputMaybe<OrderByDirection>;
+  iiko_id?: InputMaybe<OrderByDirection>;
+  organization_id?: InputMaybe<OrderByDirection>;
+};
+
+export type Terminal_GroupsUpdateInput = {
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  iiko_id?: InputMaybe<Scalars['String']['input']>;
+  organization_id?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+export type Terminal_GroupsUpdateResponse = {
+  __typename?: 'terminal_groupsUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<Terminal_Groups>;
+};
+
 export type User_Dats = Node & {
   __typename?: 'user_dats';
   birthday?: Maybe<Scalars['Date']['output']>;
@@ -3793,6 +4446,11 @@ export type GetPromotionByIdQueryVariables = Exact<{
 
 export type GetPromotionByIdQuery = { __typename: 'Query', promotionsCollection?: { __typename: 'promotionsConnection', edges: Array<{ __typename: 'promotionsEdge', node: { __typename: 'promotions', id: string, name?: string | null, description?: string | null, homepageBanner?: string | null, productButtonText?: string | null, productButtonType?: string | null, homepageEnabled?: boolean | null, productPagesEnabled?: boolean | null } }> } | null };
 
+export type GetMainpagePromoBannersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMainpagePromoBannersQuery = { __typename: 'Query', promotionsCollection?: { __typename: 'promotionsConnection', edges: Array<{ __typename: 'promotionsEdge', node: { __typename: 'promotions', homepageBanner?: string | null, id: string, productPagesEnabled?: boolean | null } }> } | null };
+
 
 export const GetCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"last"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Cursor"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Cursor"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"categoriesFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"categoriesOrderBy"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"last"},"value":{"kind":"Variable","name":{"kind":"Name","value":"last"}}},{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPreviousPage"}}]}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"button_image_url"}},{"kind":"Field","name":{"kind":"Name","value":"header_image_url"}},{"kind":"Field","name":{"kind":"Name","value":"isHidden"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCategoriesQuery, GetCategoriesQueryVariables>;
 export const GetCommonRecProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCommonRecProducts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"rec_categoryCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"products"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"productsizesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"button_image_url"}},{"kind":"Field","name":{"kind":"Name","value":"nodeId"}},{"kind":"Field","name":{"kind":"Name","value":"is_default"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"size_id"}},{"kind":"Field","name":{"kind":"Name","value":"products"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"short_description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nodeId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"nodeId"}},{"kind":"Field","name":{"kind":"Name","value":"categoryitemsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"nodeId"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCommonRecProductsQuery, GetCommonRecProductsQueryVariables>;
@@ -3805,3 +4463,4 @@ export const GetProductSizeImagesDocument = {"kind":"Document","definitions":[{"
 export const GetProductSizeModifiersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProductSizeModifiers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"productSizeModifierGroupsFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"productSizeModifierGroupsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"by_default"}},{"kind":"Field","name":{"kind":"Name","value":"can_be_divided"}},{"kind":"Field","name":{"kind":"Name","value":"child_modifiers_have_min_max_restrictions"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"external_group_id"}},{"kind":"Field","name":{"kind":"Name","value":"free_quantity"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"is_hidden"}},{"kind":"Field","name":{"kind":"Name","value":"max_quantity"}},{"kind":"Field","name":{"kind":"Name","value":"min_quantity"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"product_id"}},{"kind":"Field","name":{"kind":"Name","value":"productsize_id"}},{"kind":"Field","name":{"kind":"Name","value":"sku"}},{"kind":"Field","name":{"kind":"Name","value":"productSizeModifiersCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"button_image"}},{"kind":"Field","name":{"kind":"Name","value":"by_default"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"external_modifier_group_id"}},{"kind":"Field","name":{"kind":"Name","value":"external_modifier_id"}},{"kind":"Field","name":{"kind":"Name","value":"free_quantity"}},{"kind":"Field","name":{"kind":"Name","value":"group_id"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"is_hidden"}},{"kind":"Field","name":{"kind":"Name","value":"max_quantity"}},{"kind":"Field","name":{"kind":"Name","value":"min_quantity"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nutrition_per_hundred_grams"}},{"kind":"Field","name":{"kind":"Name","value":"portion_weight_grams"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"product_id"}},{"kind":"Field","name":{"kind":"Name","value":"sku"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetProductSizeModifiersQuery, GetProductSizeModifiersQueryVariables>;
 export const GetAllPromotionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllPromotions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"promotionsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"homepageBanner"}},{"kind":"Field","name":{"kind":"Name","value":"homepageEnabled"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"productButtonText"}},{"kind":"Field","name":{"kind":"Name","value":"productButtonType"}},{"kind":"Field","name":{"kind":"Name","value":"productPagesEnabled"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllPromotionsQuery, GetAllPromotionsQueryVariables>;
 export const GetPromotionByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPromotionById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"promotionsFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"promotionsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"homepageBanner"}},{"kind":"Field","name":{"kind":"Name","value":"productButtonText"}},{"kind":"Field","name":{"kind":"Name","value":"productButtonType"}},{"kind":"Field","name":{"kind":"Name","value":"homepageEnabled"}},{"kind":"Field","name":{"kind":"Name","value":"productPagesEnabled"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPromotionByIdQuery, GetPromotionByIdQueryVariables>;
+export const GetMainpagePromoBannersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMainpagePromoBanners"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"promotionsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"homepageBanner"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"like"},"value":{"kind":"StringValue","value":"%","block":false}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"homepageEnabled"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"homepageBanner"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"productPagesEnabled"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMainpagePromoBannersQuery, GetMainpagePromoBannersQueryVariables>;

@@ -11,7 +11,9 @@ const PromotionsPage: FC = async () => {
     throw new Error('Error fetching promotions');
   }
 
-  const promotionsData = data.promotionsCollection.edges.map((promotion) => promotion.node);
+  const promotionsData = data.promotionsCollection.edges
+    .map((promotion) => promotion.node)
+    .filter((promotion) => promotion.productPagesEnabled);
 
   return <PromotionsPageContent promotions={promotionsData} />;
 };

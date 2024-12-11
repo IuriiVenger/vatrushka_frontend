@@ -9,7 +9,7 @@ type TProductCardProps = {
 };
 
 const PromotionCard: FC<TProductCardProps> = ({ item }) => {
-  const { name, homepageBanner, description } = item;
+  const { name, homepageBanner } = item;
 
   return (
     <Link
@@ -28,7 +28,6 @@ const PromotionCard: FC<TProductCardProps> = ({ item }) => {
       <div className="flex h-full flex-grow flex-col justify-between p-6 max-md:p-4">
         <div className="flex flex-col">
           <p className="text-xl font-medium leading-xl max-md:text-lg max-md:leading-lg">{name}</p>
-          <p className="line-clamp-3 pt-4 max-md:text-base max-md:leading-base">{description}</p>
         </div>
       </div>
     </Link>
