@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useSuccessModal } from '../../hooks/useSuccessModal';
@@ -17,7 +17,13 @@ type TLeaveRequestModalForm = {
   email: string;
 };
 
-const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
+type TLeaveRequestModalProps = TModalProps & {
+  onSubmit: (data: TLeaveRequestModalForm) => Promise<void> | void;
+};
+
+const LeaveRequestModal: FC<TLeaveRequestModalProps> = ({ isOpen, setIsOpen, onSubmit }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { showSuccess } = useSuccessModal({
     setIsOpen,
     title: 'Заявка отправлена',
@@ -28,13 +34,20 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
     handleSubmit,
     control,
     formState: { errors, isValid, isDirty },
+    reset,
   } = useForm<TLeaveRequestModalForm>({
     mode: 'onChange',
   });
 
-  const submitHandler: SubmitHandler<TLeaveRequestModalForm> = (data) => {
-    console.log('request for', data);
-    showSuccess();
+  const submitHandler: SubmitHandler<TLeaveRequestModalForm> = async (data) => {
+    try {
+      setIsLoading(true);
+      await onSubmit(data);
+      showSuccess();
+      reset();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -78,9 +91,9 @@ const LeaveRequestModal: FC<TModalProps> = ({ isOpen, setIsOpen }) => {
             <Button
               type="primary"
               className="w-full max-sm:text-base max-sm:leading-base"
-              onClick={showSuccess}
               htmlType="submit"
               disabled={!isValid && isDirty}
+              loading={isLoading}
             >
               Отправить
             </Button>

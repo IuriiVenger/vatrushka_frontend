@@ -5,6 +5,7 @@ import { FC, useState } from 'react';
 
 import Contacts from '../Contacts';
 
+import { email } from '@/api/email';
 import ContactUsModal from '@/components/modals/ContactUsModal';
 import { companyInfo, contactLinks } from '@/config/links';
 import { ContactLinks } from '@/constants';
@@ -37,7 +38,7 @@ const PreHeader: FC = () => {
           </div>
         </div>
       </div>
-      <ContactUsModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+      <ContactUsModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} onSubmit={email.contactMe} />
     </>
   );
 };

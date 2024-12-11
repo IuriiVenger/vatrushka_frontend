@@ -441,6 +441,31 @@ export namespace API {
     }
   }
 
+  export namespace Email {
+    export namespace ContactMe {
+      export type Request = {
+        name: string;
+        phone: string;
+        message: string;
+      };
+    }
+
+    export namespace LeaveRequest {
+      export type Request = {
+        name: string;
+        phone: string;
+        email: string;
+      };
+    }
+
+    export namespace Send {
+      export type Request = {
+        subject: string;
+        text: string;
+      };
+    }
+  }
+
   export namespace Orders {
     export namespace Loyalty {
       export namespace Bonus {

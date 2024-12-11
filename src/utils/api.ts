@@ -3,6 +3,8 @@ import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } 
 
 import { deleteTokens, getTokens, refreshTokens, setTokens } from './tokensFactory';
 
+import { isString } from './typeguards';
+
 import { commonHeaders } from '@/api';
 import { ResponseStatus } from '@/constants';
 import { logout } from '@/store/slices/user';
@@ -70,8 +72,13 @@ export const createCustomAxiosInstance = (baseUrl: string) => {
           });
         });
       }
+
       const errorMessage =
-        error?.response?.data?.message || error?.response?.data?.error || error?.message || 'Something went wrong';
+        error?.response?.data?.message ||
+        (isString(error?.response?.data?.error) && error?.response?.data?.error) ||
+        (isString(error?.response?.data) && error?.response?.data) ||
+        error?.message ||
+        'Something went wrong';
 
       message.error(errorMessage);
       return Promise.reject(error);

@@ -10,6 +10,7 @@ import ContactUsModal from '../modals/ContactUsModal';
 
 import LinksList from './LinksList';
 
+import { email } from '@/api/email';
 import { companyInfo, contactLinks, legalLinks, navigationLinks } from '@/config/links';
 import { ContactLinks } from '@/constants';
 import { TContact, TNavigationLink } from '@/types';
@@ -68,7 +69,7 @@ const Footer: FC = () => {
           </Link>
         </div>
       </footer>
-      <ContactUsModal isOpen={isContactUsModalOpen} setIsOpen={setIsContactUsModalOpen} />
+      <ContactUsModal isOpen={isContactUsModalOpen} setIsOpen={setIsContactUsModalOpen} onSubmit={email.contactMe} />
     </>
   );
 };
