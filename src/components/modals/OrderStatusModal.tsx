@@ -13,7 +13,7 @@ type TOrderStatusModalProps = TModalProps & {
 
 const OrderStatusModal: FC<TOrderStatusModalProps> = ({ isOpen, setIsOpen, orderStatus, deliveryType }) => {
   const excludedStatuses =
-    deliveryType === OrderType.TAKEOUT
+    deliveryType === OrderType.DELIVERY
       ? [OrderStatus.CLOSED, OrderStatus.CANCELLED]
       : [OrderStatus.WAITING, OrderStatus.ON_WAY, OrderStatus.DELIVERED, OrderStatus.CLOSED, OrderStatus.CANCELLED];
 
