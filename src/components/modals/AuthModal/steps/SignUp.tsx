@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -9,6 +9,7 @@ import Form from '@/components/ui/Form/Form';
 import Input from '@/components/ui/Form/Input';
 import { legalLinks } from '@/config/links';
 import { AuthModalProcessType } from '@/constants';
+import { formatPhoneNumberInput } from '@/utils/formatters';
 
 type TSignUpModalForm = {
   name: string;
@@ -30,6 +31,8 @@ const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone, getPh
     control,
     formState: { errors, isValid, isDirty },
     watch,
+    setValue,
+    trigger,
   } = useForm<TSignUpModalForm>({
     mode: 'onChange',
     defaultValues: { name: '', phone: '', email: null, getPromotions: true },
@@ -37,6 +40,11 @@ const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone, getPh
 
   const [isPending, setIsPending] = useState(false);
   const formPhoneValue = watch('phone');
+
+  const onPhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue('phone', formatPhoneNumberInput(e.target.value));
+    trigger();
+  };
 
   const submitHandler: SubmitHandler<TSignUpModalForm> = async () => {
     try {
@@ -78,6 +86,7 @@ const SignUp: FC<TSignUpProps> = ({ setNextStep, setProcessType, setPhone, getPh
           required
           control={control}
           errors={!!errors.phone}
+          onChange={onPhoneChange}
           autoComplete="tel"
         />
         <Input
