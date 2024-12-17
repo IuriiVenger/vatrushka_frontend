@@ -13,7 +13,7 @@ const PromotionCard: FC<TProductCardProps> = ({ item }) => {
 
   return (
     <Link
-      className="flex h-full w-full cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-lg"
+      className="flex w-full cursor-pointer flex-col rounded-2xl border border-border transition-all hover:border-accentActive max-md:rounded-lg"
       href={`/promotions/${item.id}`}
     >
       {homepageBanner && (
