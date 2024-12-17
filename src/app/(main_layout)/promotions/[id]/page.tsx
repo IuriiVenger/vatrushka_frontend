@@ -13,8 +13,6 @@ type PromotionPageProps = {
 const PromotionPage: FC<PromotionPageProps> = async ({ params: { id } }) => {
   try {
     const { data, error } = await promotions.getById(id);
-    console.log('promo ID', id);
-    console.log('promo data', data.promotionsCollection?.edges[0]?.node);
 
     if (error || !data?.promotionsCollection?.edges?.length) {
       return notFound();
